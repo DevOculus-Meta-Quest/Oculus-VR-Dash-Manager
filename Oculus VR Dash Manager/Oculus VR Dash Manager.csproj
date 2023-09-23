@@ -41,6 +41,7 @@ https://github.com/KrisIsBackAU/Oculus-VR-Dash-Manager</PackageReleaseNotes>
 
   <ItemGroup>
     <PackageReference Include="AdvancedSharpAdbClient" Version="2.5.4" />
+    <PackageReference Include="AudioSwitcher.AudioApi.CoreAudio" Version="3.0.3" />
     <PackageReference Include="BrettHewitt.PlaybackDeviceSwitcher" Version="1.0.5" />
     <PackageReference Include="InputSimulator" Version="1.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

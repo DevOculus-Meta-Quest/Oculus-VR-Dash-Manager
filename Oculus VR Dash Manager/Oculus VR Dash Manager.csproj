@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net481</TargetFramework>
+	<LangVersion>8.0</LangVersion>
     <RootNamespace>OVR_Dash_Manager</RootNamespace>
     <UseWPF>true</UseWPF>
     <AssemblyName>Oculus VR Dash Manager</AssemblyName>
@@ -16,12 +17,13 @@
     <Authors>KrisIsBack (AU)</Authors>
     <PackageReleaseNotes>Official &amp; Oculus Killer - Supported with Updates
 https://github.com/KrisIsBackAU/Oculus-VR-Dash-Manager</PackageReleaseNotes>
-    <NeutralLanguage>en-AU</NeutralLanguage>
+    <NeutralLanguage>en-US</NeutralLanguage>
     <RepositoryUrl>https://github.com/KrisIsBackAU/Oculus-VR-Dash-Manager</RepositoryUrl>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AssemblyVersion>1.0.3.4</AssemblyVersion>
     <FileVersion>1.0.3.4</FileVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

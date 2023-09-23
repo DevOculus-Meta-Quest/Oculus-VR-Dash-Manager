@@ -42,7 +42,7 @@ namespace OVR_Dash_Manager.Software
                 else
                 {
                     Process[] ADBs = Process.GetProcessesByName("adb");
-                    if (ADBs != null)
+                    if (ADBs.Length > 0)
                     {
                         String MyADBLocation = Path.Combine(Environment.CurrentDirectory, "ADB", "adb.exe");
                         foreach (Process item in ADBs)
@@ -77,8 +77,9 @@ namespace OVR_Dash_Manager.Software
                 {
                     ADBServer.Kill();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Debug.WriteLine(ex.Message);
                 }
             }
         }

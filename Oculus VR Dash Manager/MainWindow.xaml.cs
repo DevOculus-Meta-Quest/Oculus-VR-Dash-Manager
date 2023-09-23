@@ -18,11 +18,11 @@ namespace OVR_Dash_Manager
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Boolean Elevated = false;
-        private Boolean FireUIEvents = false;
+        private bool Elevated = false;
+        private bool FireUIEvents = false;
         private Hover_Button Oculus_Dash;
         private Hover_Button Exit_Link;
-        private InputSimulator Keyboard_Simuator;
+        private InputSimulator Keyboard_Simulator;
         public bool Debug_EmulateReleaseMode = false;
 
         public MainWindow()
@@ -393,7 +393,7 @@ namespace OVR_Dash_Manager
 
         #region Forms
 
-        private void OpenForm(Window Form, Boolean DialogMode = true)
+        private void OpenForm(Window Form, bool DialogMode = true)
         {
             Topmost = false;
 
@@ -423,7 +423,7 @@ namespace OVR_Dash_Manager
             OpenForm(Settings);
         }
 
-        private bool Get_Properties_Setting(String SettingName)
+        private bool Get_Properties_Setting(string SettingName)
         {
             bool Setting = false;
 
@@ -482,10 +482,10 @@ namespace OVR_Dash_Manager
 
         public void Cancel_TaskView_And_Focus()
         {
-            if (Keyboard_Simuator == null)
-                Keyboard_Simuator = new InputSimulator();
+            if (Keyboard_Simulator == null)
+                Keyboard_Simulator = new InputSimulator();
 
-            Keyboard_Simuator.Keyboard.KeyPress(VirtualKeyCode.ESCAPE);
+            Keyboard_Simulator.Keyboard.KeyPress(VirtualKeyCode.ESCAPE);
 
             this.Topmost = true;
             this.BringIntoView();
@@ -533,46 +533,17 @@ namespace OVR_Dash_Manager
                                                Environment.NewLine +
                                                e.Message +
                                                Environment.NewLine +
-                                               e.StackTrace +
-                                               Environment.NewLine +
-                                               e.TargetSite);
+                                               e.StackTrace);
         }
 
-        private static void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs ex)
+        private void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            Exception e = ex.Exception;
-
-            // log or handle exception
-            ex.Handled = true;
-            File.AppendAllText("ErrorLog.txt", Environment.NewLine +
-                       Environment.NewLine +
-                       " ------ " +
-                       DateTime.Now.ToString(CultureInfo.InvariantCulture) +
-                       " ------" +
-                       Environment.NewLine +
-                       e.Message +
-                       Environment.NewLine +
-                       e.StackTrace +
-                       Environment.NewLine +
-                       e.TargetSite);
+            ErrorLog(e.Exception);
         }
 
-        private static void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs ex)
+        private void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Exception e = (Exception)ex.ExceptionObject;
-            File.AppendAllText("ErrorLog.txt", Environment.NewLine +
-                                   Environment.NewLine +
-                                   " ------ " +
-                                   DateTime.Now.ToString(CultureInfo.InvariantCulture) +
-                                   " ------" +
-                                   Environment.NewLine +
-                                   e.Message +
-                                   Environment.NewLine +
-                                   e.StackTrace +
-                                   Environment.NewLine +
-                                   e.TargetSite);
-
-            // log or handle exception
+            ErrorLog((Exception)e.ExceptionObject);
         }
     }
 }

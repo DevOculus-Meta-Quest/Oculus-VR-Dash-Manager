@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows;
@@ -12,38 +13,37 @@ namespace OVR_Dash_Manager.Software
 {
     public static class Auto_Launch_Programs
     {
-        public static List<Auto_Program> Programs;
+        public static List<Auto_Program> Programs { get; private set; } = new List<Auto_Program>();
 
         public static List<Auto_Program> Generate_List()
         {
-            if (Programs != null)
-                Programs.Clear();
-
-            Programs = new List<Auto_Program>();
+            Programs.Clear();
 
             try
             {
-                String ProgramData = Properties.Settings.Default.Auto_Programs_JSON;
+                string programData = Properties.Settings.Default.Auto_Programs_JSON;
 
-                List<Slim_Auto_Program> Slim_Programs = Functions.JSON_Functions.DeseralizeClass<List<Slim_Auto_Program>>(ProgramData);
-                if (Slim_Programs.Count > 0)
+                var slimPrograms = Functions.JSON_Functions.DeseralizeClass<List<Slim_Auto_Program>>(programData);
+                if (slimPrograms.Count > 0)
                 {
-                    foreach (Slim_Auto_Program item in Slim_Programs)
+                    foreach (var item in slimPrograms)
                     {
                         try
                         {
                             Programs.Add(new Auto_Program(item.FullPath, item.Startup_Launch, item.Closing_Launch));
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
+                            Debug.WriteLine(ex.Message);
                         }
                     }
                 }
 
-                Slim_Programs = null;
+                slimPrograms = null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
             }
 
             return Programs;
@@ -51,66 +51,54 @@ namespace OVR_Dash_Manager.Software
 
         public static void Run_Startup_Programs()
         {
-            if (Programs != null)
+            foreach (var item in Programs)
             {
-                foreach (Auto_Program item in Programs)
-                {
-                    if (item.Startup_Launch)
-                        Functions.Process_Functions.StartProcess(item.Full_Path);
-                }
+                if (item.Startup_Launch)
+                    Functions.Process_Functions.StartProcess(item.Full_Path);
             }
         }
 
         public static void Run_Closing_Programs()
         {
-            if (Programs != null)
+            foreach (var item in Programs)
             {
-                foreach (Auto_Program item in Programs)
-                {
-                    if (item.Closing_Launch)
-                        Functions.Process_Functions.StartProcess(item.Full_Path);
-                }
+                if (item.Closing_Launch)
+                    Functions.Process_Functions.StartProcess(item.Full_Path);
             }
         }
 
         public static void Save_Program_List()
         {
-            if (Programs != null)
+            var slimPrograms = new List<Slim_Auto_Program>();
+
+            foreach (var item in Programs)
             {
-                List<Slim_Auto_Program> Slim_Programs = new List<Slim_Auto_Program>();
-
-                foreach (Auto_Program item in Programs)
-                {
-                    Slim_Programs.Add(new Slim_Auto_Program(item.Full_Path, item.Startup_Launch, item.Closing_Launch));
-                    item.Changed = false;
-                }
-
-                Properties.Settings.Default.Auto_Programs_JSON = Functions.JSON_Functions.SerializeClass(Slim_Programs);
-                Properties.Settings.Default.Save();
+                slimPrograms.Add(new Slim_Auto_Program(item.Full_Path, item.Startup_Launch, item.Closing_Launch));
+                item.Changed = false;
             }
+
+            Properties.Settings.Default.Auto_Programs_JSON = Functions.JSON_Functions.SerializeClass(slimPrograms);
+            Properties.Settings.Default.Save();
         }
 
-        public static void Add_New_Program(String Path)
+        public static void Add_New_Program(string path)
         {
-            if (Programs != null)
+            if (File.Exists(path))
             {
-                if (File.Exists(Path))
+                try
                 {
-                    try
-                    {
-                        Programs.Add(new Auto_Program(Path, false, false, true));
-                    }
-                    catch (Exception)
-                    {
-                    }
+                    Programs.Add(new Auto_Program(path, false, false, true));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
                 }
             }
         }
 
-        public static void Remove_Program(Auto_Program Program)
+        public static void Remove_Program(Auto_Program program)
         {
-            if (Programs != null)
-                Programs.Remove(Program);
+            Programs.Remove(program);
         }
     }
 
@@ -119,16 +107,16 @@ namespace OVR_Dash_Manager.Software
         public Slim_Auto_Program()
         { }
 
-        public Slim_Auto_Program(String FullPath, Boolean Startup_Launch, Boolean Closing_Launch)
+        public Slim_Auto_Program(string fullPath, bool startupLaunch, bool closingLaunch)
         {
-            this.FullPath = FullPath;
-            this.Startup_Launch = Startup_Launch;
-            this.Closing_Launch = Closing_Launch;
+            FullPath = fullPath;
+            Startup_Launch = startupLaunch;
+            Closing_Launch = closingLaunch;
         }
 
-        public String FullPath { get; set; }
-        public Boolean Startup_Launch { get; set; }
-        public Boolean Closing_Launch { get; set; }
+        public string FullPath { get; set; }
+        public bool Startup_Launch { get; set; }
+        public bool Closing_Launch { get; set; }
     }
 
     public class Auto_Program : INotifyPropertyChanged
@@ -139,42 +127,39 @@ namespace OVR_Dash_Manager.Software
 
         private void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion Notify Property Changed Members
 
-        public Auto_Program(String FilePath, Boolean Startup_Launch, Boolean Closing_Launch, Boolean Changed = false)
+        public Auto_Program(string filePath, bool startupLaunch, bool closingLaunch, bool changed = false)
         {
-            Full_Path = FilePath;
-            _File_Name = Path.GetFileName(FilePath);
-            _Folder_Path = Path.GetDirectoryName(FilePath);
-            _Program_Found = File.Exists(FilePath);
-            _Startup_Launch = Startup_Launch;
-            _Closing_Launch = Closing_Launch;
-            this.Changed = Changed;
+            Full_Path = filePath;
+            _File_Name = Path.GetFileName(filePath);
+            _Folder_Path = Path.GetDirectoryName(filePath);
+            _Program_Found = File.Exists(filePath);
+            _Startup_Launch = startupLaunch;
+            _Closing_Launch = closingLaunch;
+            Changed = changed;
             _Program_Icon = null;
 
             if (_Program_Found)
             {
                 try
                 {
-                    using (Icon ico = Icon.ExtractAssociatedIcon(FilePath))
+                    using (var ico = Icon.ExtractAssociatedIcon(filePath))
                     {
                         _Program_Icon = Imaging.CreateBitmapSourceFromHIcon(ico.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Debug.WriteLine(ex.Message);
                 }
             }
         }
 
-        public String Full_Path { get; set; }
+        public string Full_Path { get; set; }
 
         private ImageSource _Program_Icon;
 

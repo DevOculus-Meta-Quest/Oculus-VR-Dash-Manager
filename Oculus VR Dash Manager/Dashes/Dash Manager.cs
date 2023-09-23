@@ -11,31 +11,45 @@ namespace OVR_Dash_Manager.Dashes
         private static OVR_Dash SteamVR_Dash;
         private static MainWindow MainForm;
 
+        /// <summary>
+        /// Passes the main form instance to the Dash_Manager.
+        /// </summary>
+        /// <param name="Form">Instance of the main form.</param>
         public static void PassMainForm(MainWindow Form)
         {
             MainForm = Form;
         }
 
+        /// <summary>
+        /// Fixes the task view issue on the main form.
+        /// </summary>
         public static void MainForm_FixTaskViewIssue()
         {
             if (MainForm != null)
                 Functions_Old.DoAction(MainForm, new Action(delegate () { MainForm.Cancel_TaskView_And_Focus(); }));
         }
 
+        /// <summary>
+        /// Checks the runtime on the main form.
+        /// </summary>
         public static void MainForm_CheckRunTime()
         {
             if (MainForm != null)
                 Functions_Old.DoAction(MainForm, new Action(delegate () { MainForm.CheckRunTime(); }));
         }
 
+        /// <summary>
+        /// Emulates the release mode.
+        /// </summary>
+        /// <returns>True if in debug mode, false otherwise.</returns>
         public static bool EmulateReleaseMode()
         {
-            if (MainForm != null)
-                return MainForm.Debug_EmulateReleaseMode;
-            else
-                return false;
+            return MainForm?.Debug_EmulateReleaseMode ?? false;
         }
 
+        /// <summary>
+        /// Generates the dashes.
+        /// </summary>
         public static void GenerateDashes()
         {
             Software.Oculus.Check_Current_Dash();
@@ -49,6 +63,9 @@ namespace OVR_Dash_Manager.Dashes
             CheckInstalled();
         }
 
+        /// <summary>
+        /// Checks if the dashes are installed.
+        /// </summary>
         private static void CheckInstalled()
         {
             Oculus_Dash.CheckInstalled();
@@ -59,77 +76,64 @@ namespace OVR_Dash_Manager.Dashes
 
             Software.Oculus.Check_Current_Dash();
 
-            if (!Oculus_Dash.Installed)
+            if (!Oculus_Dash.Installed && Software.Oculus.Normal_Dash)
             {
-                if (Software.Oculus.Normal_Dash)
-                {
-                    // Copy Default Oculus Dash if not already done
-                    File.Copy(Software.Oculus.Oculus_Dash_File, Path.Combine(Software.Oculus.Oculus_Dash_Directory, Oculus_Dash.DashFileName), true);
-                    Oculus_Dash.CheckInstalled();
-                }
+                // Copy Default Oculus Dash if not already done
+                File.Copy(Software.Oculus.Oculus_Dash_File, Path.Combine(Software.Oculus.Oculus_Dash_Directory, Oculus_Dash.DashFileName), true);
+                Oculus_Dash.CheckInstalled();
             }
-            else
+            else if (Software.Oculus.Normal_Dash)
             {
                 // Check if Oculus Updated and check is Oculus Dash has changed by "Length"
-                if (Software.Oculus.Normal_Dash)
-                {
-                    FileInfo CurrentDash = new FileInfo(Path.Combine(Software.Oculus.Oculus_Dash_Directory, Oculus_Dash.DashFileName));
-                    FileInfo OculusDashFile = new FileInfo(Software.Oculus.Oculus_Dash_File);
+                FileInfo CurrentDash = new FileInfo(Path.Combine(Software.Oculus.Oculus_Dash_Directory, Oculus_Dash.DashFileName));
+                FileInfo OculusDashFile = new FileInfo(Software.Oculus.Oculus_Dash_File);
 
-                    // Update File
-                    if (CurrentDash.Length != OculusDashFile.Length)
-                        File.Copy(Software.Oculus.Oculus_Dash_File, Path.Combine(Software.Oculus.Oculus_Dash_Directory, Oculus_Dash.DashFileName), true);
-                }
+                // Update File
+                if (CurrentDash.Length != OculusDashFile.Length)
+                    File.Copy(Software.Oculus.Oculus_Dash_File, Path.Combine(Software.Oculus.Oculus_Dash_Directory, Oculus_Dash.DashFileName), true);
             }
         }
 
-        public static Boolean IsInstalled(Dash_Type Dash)
+        /// <summary>
+        /// Checks if a specific dash is installed.
+        /// </summary>
+        /// <param name="Dash">Type of dash to check.</param>
+        /// <returns>True if installed, false otherwise.</returns>
+        public static bool IsInstalled(Dash_Type Dash)
         {
-            switch (Dash)
+            return Dash switch
             {
-                case Dash_Type.Normal:
-                    if (Oculus_Dash != null)
-                        return Oculus_Dash.Installed;
-                    else
-                        return false;
-
-                case Dash_Type.OculusKiller:
-                    if (SteamVR_Dash != null)
-                        return SteamVR_Dash.Installed;
-                    else
-                        return false;
-
-                default:
-                    return false;
-            }
+                Dash_Type.Normal => Oculus_Dash?.Installed ?? false,
+                Dash_Type.OculusKiller => SteamVR_Dash?.Installed ?? false,
+                _ => false,
+            };
         }
 
+        /// <summary>
+        /// Sets the active dash.
+        /// </summary>
+        /// <param name="Dash">Type of dash to set active.</param>
+        /// <returns>True if activated, false otherwise.</returns>
         private static bool SetActiveDash(Dash_Type Dash)
         {
-            Boolean Activated = false;
+            bool activated = false;
 
             switch (Dash)
             {
                 case Dash_Type.Normal:
                     Software.Steam.ManagerCalledExit = true;
-                    if (!Properties.Settings.Default.FastSwitch)
-                        Activated = Oculus_Dash.Activate_Dash();
-                    else
-                        Activated = Oculus_Dash.Activate_Dash_Fast_v2();
+                    activated = Properties.Settings.Default.FastSwitch ? Oculus_Dash.Activate_Dash_Fast_v2() : Oculus_Dash.Activate_Dash();
                     break;
 
                 case Dash_Type.OculusKiller:
-                    if (!Properties.Settings.Default.FastSwitch)
-                        Activated = SteamVR_Dash.Activate_Dash();
-                    else
-                        Activated = SteamVR_Dash.Activate_Dash_Fast_v2();
+                    activated = Properties.Settings.Default.FastSwitch ? SteamVR_Dash.Activate_Dash_Fast_v2() : SteamVR_Dash.Activate_Dash();
                     break;
 
                 default:
                     break;
             }
 
-            return Activated;
+            return activated;
         }
 
         public static Dash_Type CheckWhosDash(String File_ProductName)

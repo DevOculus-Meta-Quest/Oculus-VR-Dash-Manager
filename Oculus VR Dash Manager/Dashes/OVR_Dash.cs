@@ -6,7 +6,7 @@ namespace OVR_Dash_Manager.Dashes
 {
     public class OVR_Dash
     {
-        public OVR_Dash(String DisplayName, String DashFileName, String ProductName = "", String RepoName = "", String ProjectName = "", String AssetName = "", String ProcessToStop = "")
+        public OVR_Dash(string DisplayName, string DashFileName, string ProductName = "", string RepoName = "", string ProjectName = "", string AssetName = "", string ProcessToStop = "")
         {
             this.DisplayName = DisplayName;
             this.DashFileName = DashFileName;
@@ -17,19 +17,18 @@ namespace OVR_Dash_Manager.Dashes
             this.ProcessToStop = ProcessToStop;
         }
 
-        public readonly String DisplayName = "Dash";
-
-        public String DashFileName = "Dash.exe";
-        public String ProductName = "";
-
-        public String RepoName = "";
-        public String ProjectName = "";
-        public String AssetName = "";
-        public String ProcessToStop = "";
+        public string DisplayName { get; } = "Dash";
+        public string DashFileName { get; set; } = "Dash.exe";
+        public string ProductName { get; set; } = string.Empty;
+        public string RepoName { get; set; } = string.Empty;
+        public string ProjectName { get; set; } = string.Empty;
+        public string AssetName { get; set; } = string.Empty;
+        public string ProcessToStop { get; set; } = string.Empty;
 
         private long _Size = -1;
-
         private bool _DashActive;
+        private bool _NeedUpdate;
+        private bool _Installed;
 
         public bool DashActive
         {
@@ -37,15 +36,11 @@ namespace OVR_Dash_Manager.Dashes
             private set { _DashActive = value; }
         }
 
-        private bool _NeedUpdate;
-
         public bool NeedUpdate
         {
             get { return _NeedUpdate; }
             private set { _NeedUpdate = value; }
         }
-
-        private bool _Installed;
 
         public bool Installed
         {
@@ -69,7 +64,7 @@ namespace OVR_Dash_Manager.Dashes
             private set { _AvaliableVersion = value; }
         }
 
-        public bool IsThisYourDash(String Dash_ProductName)
+        public bool IsThisYourDash(string Dash_ProductName)
         {
             return Dash_ProductName == ProductName;
         }
@@ -78,7 +73,7 @@ namespace OVR_Dash_Manager.Dashes
         {
             if (Directory.Exists(Software.Oculus.Oculus_Dash_Directory))
             {
-                String DashPath = Path.Combine(Software.Oculus.Oculus_Dash_Directory, DashFileName);
+                string DashPath = Path.Combine(Software.Oculus.Oculus_Dash_Directory, DashFileName);
 
                 if (File.Exists(DashPath))
                     _Installed = true;
@@ -89,9 +84,9 @@ namespace OVR_Dash_Manager.Dashes
         {
             if (_Installed)
             {
-                if (!String.IsNullOrEmpty(RepoName) && !String.IsNullOrEmpty(ProjectName) && !String.IsNullOrEmpty(AssetName))
+                if (!string.IsNullOrEmpty(RepoName) && !string.IsNullOrEmpty(ProjectName) && !string.IsNullOrEmpty(AssetName))
                 {
-                    String DashPath = Path.Combine(Software.Oculus.Oculus_Dash_Directory, DashFileName);
+                    string DashPath = Path.Combine(Software.Oculus.Oculus_Dash_Directory, DashFileName);
                     FileInfo CurrentDash = new FileInfo(DashPath);
                     _Size = CurrentDash.Length;
 
@@ -250,11 +245,11 @@ namespace OVR_Dash_Manager.Dashes
 
         public bool Activate_Dash_Fast_v2()
         {
-            Boolean Activated = false;
+            bool Activated = false;
 
             if (Installed)
             {
-                String DashPath = Path.Combine(Software.Oculus.Oculus_Dash_Directory, DashFileName);
+                string DashPath = Path.Combine(Software.Oculus.Oculus_Dash_Directory, DashFileName);
 
                 try
                 {
@@ -315,7 +310,7 @@ namespace OVR_Dash_Manager.Dashes
 
                 try
                 {
-                    if (!String.IsNullOrEmpty(ProcessToStop))
+                    if (!string.IsNullOrEmpty(ProcessToStop))
                     {
                         Debug.WriteLine("Attempting to kill: " + ProcessToStop);
                         CloseProcessBeforeIfRequired();
@@ -331,11 +326,10 @@ namespace OVR_Dash_Manager.Dashes
             return Activated;
         }
 
-        private bool SwitchFiles(String NewFile, String OldFile)
+        private bool SwitchFiles(string NewFile, string OldFile)
         {
             bool Activated = false;
 
-            String DashPath = Path.Combine(Software.Oculus.Oculus_Dash_Directory, DashFileName);
             if (File.Exists(NewFile))
             {
                 File.Copy(NewFile, OldFile, true);
@@ -352,7 +346,7 @@ namespace OVR_Dash_Manager.Dashes
 
         private void CloseProcessBeforeIfRequired()
         {
-            if (!String.IsNullOrEmpty(ProcessToStop))
+            if (!string.IsNullOrEmpty(ProcessToStop))
             {
                 Process[] SteamVR = Process.GetProcessesByName(ProcessToStop);
                 foreach (Process VR in SteamVR)

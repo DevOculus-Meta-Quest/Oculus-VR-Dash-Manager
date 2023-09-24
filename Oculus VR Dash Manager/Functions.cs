@@ -14,101 +14,87 @@ namespace OVR_Dash_Manager
 {
     public static class Functions_Old
     {
-        public static void ShowFileInDirectory(String FullPath)
+        public static void ShowFileInDirectory(string fullPath)
         {
-            Process.Start("explorer.exe", $@"/select,""{FullPath}""");
+            Process.Start("explorer.exe", $@"/select,""{fullPath}""");
         }
 
-        public static String GetPageHTML(String pURL, String Method = "GET", CookieContainer Cookies = null, String FormParams = "", String ContentType = "")
+        public static string GetPageHTML(string url, string method = "GET", CookieContainer cookies = null, string formParams = "", string contentType = "")
         {
-            if (pURL.Contains("&amp;"))
-                pURL = pURL.Replace("&amp;", "&");
+            if (url.Contains("&amp;"))
+                url = url.Replace("&amp;", "&");
 
             string result = "";
-            if (Uri.IsWellFormedUriString(pURL, UriKind.Absolute))
+            if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {
-                HttpWebRequest pWebRequest = (HttpWebRequest)WebRequest.Create(pURL);
-                pWebRequest.Method = Method;
-                pWebRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0";
-                pWebRequest.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";
-                if (ContentType != "")
-                    pWebRequest.ContentType = ContentType;
-                pWebRequest.AllowAutoRedirect = true;
-                pWebRequest.MaximumAutomaticRedirections = 3;
-                pWebRequest.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+                HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
+                webRequest.Method = method;
+                webRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0";
+                webRequest.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";
+                if (contentType != "")
+                    webRequest.ContentType = contentType;
+                webRequest.AllowAutoRedirect = true;
+                webRequest.MaximumAutomaticRedirections = 3;
+                webRequest.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
-                if (Cookies != null)
-                    pWebRequest.CookieContainer = Cookies;
+                if (cookies != null)
+                    webRequest.CookieContainer = cookies;
 
-                if (FormParams != "")
+                if (formParams != "")
                 {
-                    byte[] bytes = System.Text.Encoding.ASCII.GetBytes(FormParams);
-                    pWebRequest.ContentLength = bytes.Length;
-                    using (Stream os = pWebRequest.GetRequestStream())
+                    byte[] bytes = Encoding.ASCII.GetBytes(formParams);
+                    webRequest.ContentLength = bytes.Length;
+                    using (Stream os = webRequest.GetRequestStream())
                         os.Write(bytes, 0, bytes.Length);
                 }
 
-                WebResponse pWebResponce = null;
-                StreamReader pStreamRead = null;
+                WebResponse webResponse = null;
+                StreamReader streamRead = null;
 
                 try
                 {
-                    pWebResponce = pWebRequest.GetResponse();
-                    pStreamRead = new StreamReader(pWebResponce.GetResponseStream(), Encoding.UTF8);
-                    result = pStreamRead.ReadToEnd();
+                    webResponse = webRequest.GetResponse();
+                    streamRead = new StreamReader(webResponse.GetResponseStream(), Encoding.UTF8);
+                    result = streamRead.ReadToEnd();
                 }
                 catch (Exception ex)
                 {
-                    if (ex.Message.Contains("an error"))
-                    {
-                        if (Regex.IsMatch(ex.Message, @"\(\d{3}\)"))
-                        {
-                            result = Regex.Match(ex.Message, @"\(\d{3}\)").Value;
-                            result = result.Substring(1, 3);
-                        }
-                    }
-                    else if (ex.Message == "Unable to connect to the remote server")
-                    {
-                        result = "Offline";
-                    }
-                    else
-                    {
-                        result = "404";
-                    }
+                    result = HandleWebException(ex);
                 }
-
-                if (pStreamRead != null)
+                finally
                 {
-                    pStreamRead.Close();
-                    pStreamRead.Dispose();
-                }
-
-                if (pWebResponce != null)
-                {
-                    pWebResponce.Close();
-                    pWebResponce.Dispose();
+                    streamRead?.Dispose();
+                    webResponse?.Dispose();
                 }
             }
 
-            if (result.Contains("error"))
-            {
-                if (!result.StartsWith("<html") && !result.ToLower().StartsWith("<!doctype") && !result.StartsWith("{") && !result.StartsWith("["))
-                {
-                    result = "500";
-                }
-            }
             return result;
         }
 
-        public static Boolean Get_File(String pFullURL, String pSaveTo)
+        private static string HandleWebException(Exception ex)
+        {
+            if (ex.Message.Contains("an error") && Regex.IsMatch(ex.Message, @"\(\d{3}\)"))
+            {
+                return Regex.Match(ex.Message, @"\(\d{3}\)").Value.Substring(1, 3);
+            }
+
+            if (ex.Message == "Unable to connect to the remote server")
+            {
+                return "Offline";
+            }
+
+            return "404";
+        }
+
+        public static bool Get_File(string fullUrl, string saveTo)
         {
             try
             {
-                WebClient myWebClient = new WebClient
+                using (WebClient myWebClient = new WebClient())
                 {
-                    CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore)
-                };
-                myWebClient.DownloadFile(pFullURL, pSaveTo);
+                    myWebClient.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+                    myWebClient.DownloadFile(fullUrl, saveTo);
+                }
                 return true;
             }
             catch (Exception)
@@ -117,9 +103,9 @@ namespace OVR_Dash_Manager
             }
         }
 
-        public static void OpenURL(String URL)
+        public static void OpenURL(string url)
         {
-            ProcessStartInfo ps = new ProcessStartInfo(URL)
+            ProcessStartInfo ps = new ProcessStartInfo(url)
             {
                 UseShellExecute = true,
                 Verb = "open"
@@ -127,9 +113,9 @@ namespace OVR_Dash_Manager
             Process.Start(ps);
         }
 
-        public static void DoAction(Window Form, Action DoAction)
+        public static void DoAction(Window form, Action doAction)
         {
-            Form.Dispatcher.Invoke(DoAction, DispatcherPriority.Normal);
+            form.Dispatcher.Invoke(doAction, DispatcherPriority.Normal);
         }
 
         [DllImport("User32.dll")]
@@ -140,20 +126,20 @@ namespace OVR_Dash_Manager
             SetCursorPos(X, Y);
         }
 
-        public static String RemoveStringFromEnd(String Text, String Remove)
+        public static string RemoveStringFromEnd(string text, string remove)
         {
-            if (Text.EndsWith(Remove))
-                Text = Text.Substring(0, Text.Length - Remove.Length);
+            if (text.EndsWith(remove))
+                text = text.Substring(0, text.Length - remove.Length);
 
-            return Text;
+            return text;
         }
 
-        public static String RemoveStringFromStart(String Text, String Remove)
+        public static string RemoveStringFromStart(string text, string remove)
         {
-            if (Text.StartsWith(Remove))
-                Text = Text.Substring(Remove.Length, Text.Length - Remove.Length);
+            if (text.StartsWith(remove))
+                text = text.Substring(remove.Length, text.Length - remove.Length);
 
-            return Text;
+            return text;
         }
 
         [DllImport("user32.dll")]
@@ -197,132 +183,89 @@ namespace OVR_Dash_Manager
 
     public static class Timer_Functions
     {
-        private static Dictionary<String, Timer> Timers = null;
-        private static Boolean BeenSetup = false;
+        private static Dictionary<string, Timer> Timers = new Dictionary<string, Timer>();
 
-        private static void Setup()
+        public static bool SetNewInterval(string timerID, TimeSpan interval)
         {
-            if (Timers == null)
+            if (Timers.ContainsKey(timerID))
             {
-                Timers = new Dictionary<string, Timer>();
-                BeenSetup = true;
-            }
-        }
-
-        public static Boolean SetNewInterval(String pTimerID, TimeSpan pInterval)
-        {
-            if (!BeenSetup)
-                return false;
-
-            Boolean pReturn = false;
-
-            if (Timers.ContainsKey(pTimerID))
-            {
-                Timer vTimer = Timers[pTimerID];
-                vTimer.Interval = pInterval.TotalMilliseconds;
-                pReturn = true;
+                Timer timer = Timers[timerID];
+                timer.Interval = interval.TotalMilliseconds;
+                return true;
             }
 
-            return pReturn;
+            return false;
         }
 
-        public static Boolean CreateTimer(String pTimerID, TimeSpan pInterval, ElapsedEventHandler pTickHandler, Boolean pRepeat = true)
+        public static bool CreateTimer(string timerID, TimeSpan interval, ElapsedEventHandler tickHandler, bool repeat = true)
         {
-            if (!BeenSetup)
-                Setup();
-
-            Boolean pReturn = false;
-
-            if (!Timers.ContainsKey(pTimerID))
+            if (!Timers.ContainsKey(timerID))
             {
-                Timer vTimer = new Timer
+                Timer timer = new Timer
                 {
-                    Interval = pInterval.TotalMilliseconds,
-                    AutoReset = pRepeat,
+                    Interval = interval.TotalMilliseconds,
+                    AutoReset = repeat,
                     Enabled = false
                 };
 
-                vTimer.Elapsed += pTickHandler;
-                vTimer.Start();
+                timer.Elapsed += tickHandler;
+                timer.Start();
 
-                Timers.Add(pTimerID, vTimer);
+                Timers.Add(timerID, timer);
 
-                pReturn = true;
+                return true;
             }
 
-            return pReturn;
+            return false;
         }
 
-        public static Boolean StartTimer(String pTimerID)
+        public static bool StartTimer(string timerID)
         {
-            if (!BeenSetup)
-                return false;
-
-            Boolean pReturn = false;
-
-            if (Timers.ContainsKey(pTimerID))
+            if (Timers.ContainsKey(timerID))
             {
-                Timer vTimer = Timers[pTimerID];
-                vTimer.Enabled = true;
-                pReturn = true;
+                Timer timer = Timers[timerID];
+                timer.Enabled = true;
+                return true;
             }
 
-            return pReturn;
+            return false;
         }
 
-        public static Boolean StopTimer(String pTimerID)
+        public static bool StopTimer(string timerID)
         {
-            if (!BeenSetup)
-                return false;
-
-            Boolean pReturn = false;
-
-            if (Timers.ContainsKey(pTimerID))
+            if (Timers.ContainsKey(timerID))
             {
-                Timer vTimer = Timers[pTimerID];
-                vTimer.Enabled = false;
-                pReturn = true;
+                Timer timer = Timers[timerID];
+                timer.Enabled = false;
+                return true;
             }
 
-            return pReturn;
+            return false;
         }
 
-        public static Boolean TimerExists(String pTimerID)
+        public static bool TimerExists(string timerID)
         {
-            if (!BeenSetup)
-                return false;
-
-            Boolean pReturn = false;
-
-            if (Timers.ContainsKey(pTimerID))
-                pReturn = true;
-
-            return pReturn;
+            return Timers.ContainsKey(timerID);
         }
 
-        public static void DisposeTimer(String pTimerID)
+        public static void DisposeTimer(string timerID)
         {
-            if (!BeenSetup)
-                return;
-
-            if (Timers.ContainsKey(pTimerID))
+            if (Timers.ContainsKey(timerID))
             {
-                Timer vTimer = Timers[pTimerID];
-                Timers.Remove(pTimerID);
+                Timer timer = Timers[timerID];
+                Timers.Remove(timerID);
 
-                vTimer.Stop();
+                timer.Stop();
+                timer.Dispose();
             }
         }
 
         public static void DisposeAllTimers()
         {
-            if (!BeenSetup)
-                return;
-
-            foreach (KeyValuePair<String, Timer> oTimer in Timers)
+            foreach (var timer in Timers.Values)
             {
-                oTimer.Value.Stop();
-                oTimer.Value.Dispose();
+                timer.Stop();
+                timer.Dispose();
             }
 
             Timers.Clear();

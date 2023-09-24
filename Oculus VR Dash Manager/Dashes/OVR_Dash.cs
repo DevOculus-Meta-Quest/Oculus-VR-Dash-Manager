@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace OVR_Dash_Manager.Dashes
 {
@@ -80,7 +81,7 @@ namespace OVR_Dash_Manager.Dashes
             }
         }
 
-        public void CheckUpdate()
+        public async Task CheckUpdateAsync()
         {
             if (_Installed)
             {
@@ -90,16 +91,17 @@ namespace OVR_Dash_Manager.Dashes
                     FileInfo CurrentDash = new FileInfo(DashPath);
                     _Size = CurrentDash.Length;
 
-                    Github Repo = new Github();
+                    Github github = new Github();
 
-                    long LatestSize = Repo.GetLatestSize(RepoName, ProjectName, AssetName);
-                    if (LatestSize != _Size)
+                    var size = await github.GetLatestFileSize(RepoName, ProjectName, AssetName);
+                    if (size != _Size)
                         _NeedUpdate = true;
                 }
             }
         }
 
-        public void Download()
+
+        public async Task DownloadAsync()
         {
             String Temp_DashPath = Path.Combine(Software.Oculus.Oculus_Dash_Directory, DashFileName + ".tmp");
             String DashPath = Path.Combine(Software.Oculus.Oculus_Dash_Directory, DashFileName);
@@ -110,7 +112,7 @@ namespace OVR_Dash_Manager.Dashes
             {
                 try
                 {
-                    // try and remove live version of this dash (we always have our backup incase)
+                    // try and remove live version of this dash (we always have our backup in case)
                     File.Delete(Software.Oculus.Oculus_Dash_File);
                     Active_NeedUpdateTo = true;
                 }
@@ -125,10 +127,12 @@ namespace OVR_Dash_Manager.Dashes
                 Github Repo = new Github();
                 try
                 {
-                    Repo.Download(RepoName, ProjectName, AssetName, Temp_DashPath);
+                    // Assuming RepoName, ProjectName, AssetName are class-level variables, and Temp_DashPath is the temporary file path
+                    await Repo.DownloadFile(RepoName, ProjectName, AssetName, Temp_DashPath);
                 }
                 catch (Exception)
                 {
+                    // Handle exception (e.g., log the error)
                 }
 
                 if (File.Exists(Temp_DashPath))
@@ -152,7 +156,7 @@ namespace OVR_Dash_Manager.Dashes
             if (_DashActive)
             {
                 if (!File.Exists(Software.Oculus.Oculus_Dash_File))
-                    File.Copy(DashPath, Software.Oculus.Oculus_Dash_File, true); // Copy backup file back incase something failed above
+                    File.Copy(DashPath, Software.Oculus.Oculus_Dash_File, true); // Copy backup file back in case something failed above
             }
         }
 

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.ServiceProcess;
+using System.Threading.Tasks;
 
 namespace OVR_Dash_Manager.Dashes
 {
@@ -66,13 +67,13 @@ namespace OVR_Dash_Manager.Dashes
         /// <summary>
         /// Checks if the dashes are installed.
         /// </summary>
-        private static void CheckInstalled()
+        private static async Task CheckInstalled()
         {
             Oculus_Dash.CheckInstalled();
             SteamVR_Dash.CheckInstalled();
 
             if (!SteamVR_Dash.Installed)
-                SteamVR_Dash.Download();
+                await SteamVR_Dash.DownloadAsync();
 
             Software.Oculus.Check_Current_Dash();
 

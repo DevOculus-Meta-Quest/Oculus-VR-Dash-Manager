@@ -7,38 +7,48 @@ using System.ServiceProcess;
 
 namespace OVR_Dash_Manager
 {
+    /// <summary>
+    /// Manages Windows services.
+    /// </summary>
     public static class Service_Manager
     {
-        private static Dictionary<String, ServiceController> Services = null;
+        // Dictionary to hold registered services.
+        private static Dictionary<string, ServiceController> Services = new Dictionary<string, ServiceController>();
 
-        public static void RegisterService(String ServiceName)
+        /// <summary>
+        /// Registers a service by its name.
+        /// </summary>
+        /// <param name="ServiceName">The name of the service.</param>
+        public static void RegisterService(string ServiceName)
         {
-            if (Services == null)
-                Services = new Dictionary<string, ServiceController>();
-
             if (!Services.ContainsKey(ServiceName))
             {
-                ServiceController Service = null;
-                try { Service = new ServiceController(ServiceName); } catch (Exception ex) { Debug.WriteLine($"Unable to load/find service {ServiceName} - {ex.Message}"); }
-
-                if (Service != null)
-                    Services.Add(Service.ServiceName, Service);
+                try
+                {
+                    var service = new ServiceController(ServiceName);
+                    Services.Add(ServiceName, service);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Unable to load/find service {ServiceName} - {ex.Message}");
+                }
             }
         }
 
-        public static void StopService(String ServiceName)
+        /// <summary>
+        /// Stops a registered service.
+        /// </summary>
+        /// <param name="ServiceName">The name of the service.</param>
+        public static void StopService(string ServiceName)
         {
-            if (Services == null)
-                return;
-
-            if (Services.TryGetValue(ServiceName, out ServiceController Service))
+            if (Services.TryGetValue(ServiceName, out var service))
             {
-                Service.Refresh();
-                if (Running(Service.Status))
+                service.Refresh();
+                if (Running(service.Status))
                 {
                     try
                     {
-                        Service.Stop();
+                        service.Stop();
                     }
                     catch (Exception ex)
                     {
@@ -48,19 +58,20 @@ namespace OVR_Dash_Manager
             }
         }
 
-        public static void StartService(String ServiceName)
+        /// <summary>
+        /// Starts a registered service.
+        /// </summary>
+        /// <param name="ServiceName">The name of the service.</param>
+        public static void StartService(string ServiceName)
         {
-            if (Services == null)
-                return;
-
-            if (Services.TryGetValue(ServiceName, out ServiceController Service))
+            if (Services.TryGetValue(ServiceName, out var service))
             {
-                Service.Refresh();
-                if (!Running(Service.Status))
+                service.Refresh();
+                if (!Running(service.Status))
                 {
                     try
                     {
-                        Service.Start();
+                        service.Start();
                     }
                     catch (Exception ex)
                     {
@@ -70,17 +81,18 @@ namespace OVR_Dash_Manager
             }
         }
 
-        public static void Set_Automatic_Startup(String ServiceName)
+        /// <summary>
+        /// Sets a registered service to start automatically.
+        /// </summary>
+        /// <param name="ServiceName">The name of the service.</param>
+        public static void Set_Automatic_Startup(string ServiceName)
         {
-            if (Services == null)
-                return;
-
-            if (Services.TryGetValue(ServiceName, out ServiceController Service))
+            if (Services.TryGetValue(ServiceName, out var service))
             {
                 try
                 {
-                    Service.Refresh();
-                    ServiceHelper.ChangeStartMode(Service, ServiceStartMode.Automatic);
+                    service.Refresh();
+                    ServiceHelper.ChangeStartMode(service, ServiceStartMode.Automatic);
                 }
                 catch (Exception ex)
                 {
@@ -89,17 +101,18 @@ namespace OVR_Dash_Manager
             }
         }
 
-        public static void Set_Manual_Startup(String ServiceName)
+        /// <summary>
+        /// Sets a registered service to start manually.
+        /// </summary>
+        /// <param name="ServiceName">The name of the service.</param>
+        public static void Set_Manual_Startup(string ServiceName)
         {
-            if (Services == null)
-                return;
-
-            if (Services.TryGetValue(ServiceName, out ServiceController Service))
+            if (Services.TryGetValue(ServiceName, out var service))
             {
                 try
                 {
-                    Service.Refresh();
-                    ServiceHelper.ChangeStartMode(Service, ServiceStartMode.Manual);
+                    service.Refresh();
+                    ServiceHelper.ChangeStartMode(service, ServiceStartMode.Manual);
                 }
                 catch (Exception ex)
                 {
@@ -108,79 +121,74 @@ namespace OVR_Dash_Manager
             }
         }
 
-        private static Boolean Running(ServiceControllerStatus Status)
+        /// <summary>
+        /// Checks if a service is running based on its status.
+        /// </summary>
+        /// <param name="Status">The status of the service.</param>
+        /// <returns>True if the service is running; otherwise, false.</returns>
+        private static bool Running(ServiceControllerStatus Status)
         {
             switch (Status)
             {
                 case ServiceControllerStatus.Running:
-                    return true;
-
-                case ServiceControllerStatus.Stopped:
-                    return false;
-
                 case ServiceControllerStatus.Paused:
-                    return true;
-
+                case ServiceControllerStatus.StartPending:
                 case ServiceControllerStatus.StopPending:
                     return true;
-
-                case ServiceControllerStatus.StartPending:
-                    return true;
-
                 default:
                     return false;
             }
         }
 
-        public static String GetState(String ServiceName)
+        /// <summary>
+        /// Gets the current state of a registered service.
+        /// </summary>
+        /// <param name="ServiceName">The name of the service.</param>
+        /// <returns>The current state of the service.</returns>
+        public static string GetState(string ServiceName)
         {
-            if (Services == null)
-                return "--";
-
-            String State = "Not Found";
-
-            if (Services.TryGetValue(ServiceName, out ServiceController Service))
+            if (Services.TryGetValue(ServiceName, out var service))
             {
-                Service.Refresh();
-                State = Service.Status.ToString();
+                service.Refresh();
+                return service.Status.ToString();
             }
-
-            return State;
+            return "Not Found";
         }
 
-        public static String GetStartup(String ServiceName)
+        /// <summary>
+        /// Gets the startup mode of a registered service.
+        /// </summary>
+        /// <param name="ServiceName">The name of the service.</param>
+        /// <returns>The startup mode of the service.</returns>
+        public static string GetStartup(string ServiceName)
         {
-            if (Services == null)
-                return "--";
-
-            String State = "Not Found";
-
-            if (Services.TryGetValue(ServiceName, out ServiceController Service))
+            if (Services.TryGetValue(ServiceName, out var service))
             {
-                Service.Refresh();
-                State = Service.StartType.ToString();
+                service.Refresh();
+                return service.StartType.ToString();
             }
-
-            return State;
+            return "Not Found";
         }
     }
 
-    // Created & Shared Publicly By: http://peterkellyonline.blogspot.com/2011/04/configuring-windows-service.html  https://stackoverflow.com/users/215600/peter-kelly
+    /// <summary>
+    /// Helper class to change the startup mode of a service.
+    /// </summary>
     public static class ServiceHelper
     {
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        public static extern Boolean ChangeServiceConfig(
+        public static extern bool ChangeServiceConfig(
             IntPtr hService,
-            UInt32 nServiceType,
-            UInt32 nStartType,
-            UInt32 nErrorControl,
-            String lpBinaryPathName,
-            String lpLoadOrderGroup,
+            uint nServiceType,
+            uint nStartType,
+            uint nErrorControl,
+            string lpBinaryPathName,
+            string lpLoadOrderGroup,
             IntPtr lpdwTagId,
             [In] char[] lpDependencies,
-            String lpServiceStartName,
-            String lpPassword,
-            String lpDisplayName);
+            string lpServiceStartName,
+            string lpPassword,
+            string lpDisplayName);
 
         [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         private static extern IntPtr OpenService(
@@ -198,6 +206,11 @@ namespace OVR_Dash_Manager
         private const uint SERVICE_CHANGE_CONFIG = 0x00000002;
         private const uint SC_MANAGER_ALL_ACCESS = 0x000F003F;
 
+        /// <summary>
+        /// Changes the start mode of a service.
+        /// </summary>
+        /// <param name="svc">The service controller.</param>
+        /// <param name="mode">The start mode.</param>
         public static void ChangeStartMode(ServiceController svc, ServiceStartMode mode)
         {
             var scManagerHandle = OpenSCManager(null, null, SC_MANAGER_ALL_ACCESS);

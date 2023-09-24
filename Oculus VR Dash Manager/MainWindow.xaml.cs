@@ -88,11 +88,11 @@ namespace OVR_Dash_Manager
             Oculus_Dash.Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time;
         }
 
-        private void Startup()
+        private async void Startup()
         {
             Functions.Process_Watcher.Start();
 
-            /// ADB Auto Start Created By https://github.com/quagsirus
+            // ADB Auto Start Created By https://github.com/quagsirus
             // KrisIsBack Addin - Sorted code into their own places & added warning message when setting turned on
 
             // Start listening for new device connections
@@ -109,7 +109,9 @@ namespace OVR_Dash_Manager
             if (Elevated)
             {
                 Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Checking Installed Dashes & Updates"; }));
-                Dashes.Dash_Manager.GenerateDashes();
+
+                // Await the asynchronous method here
+                await Dashes.Dash_Manager.GenerateDashesAsync();
 
                 if (!Software.Oculus.Oculus_Is_Installed)
                 {

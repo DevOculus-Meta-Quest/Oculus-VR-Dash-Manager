@@ -51,7 +51,7 @@ namespace OVR_Dash_Manager.Dashes
         /// <summary>
         /// Generates the dashes.
         /// </summary>
-        public static void GenerateDashes()
+        public static async Task GenerateDashesAsync()
         {
             Software.Oculus.Check_Current_Dash();
 
@@ -61,7 +61,7 @@ namespace OVR_Dash_Manager.Dashes
             Software.Oculus.Setup();
             Software.Oculus.Check_Oculus_Is_Installed();
 
-            CheckInstalled();
+            await CheckInstalled();
         }
 
         /// <summary>

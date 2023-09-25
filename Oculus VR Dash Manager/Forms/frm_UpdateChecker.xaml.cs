@@ -22,12 +22,12 @@ namespace OVR_Dash_Manager.Forms
 
         private void btn_DashManager_OpenWebsite_Click(object sender, RoutedEventArgs e)
         {
-            Functions_Old.OpenURL("https://github.com/KrisIsBackAU/Oculus-VR-Dash-Manager");
+            Functions_Old.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager");
         }
 
         private void btn_OpenWebsite_Click(object sender, RoutedEventArgs e)
         {
-            Functions_Old.OpenURL("https://github.com/ItsKaitlyn03/OculusKiller");
+            Functions_Old.OpenURL("https://github.com/DevOculus-Meta-Quest/OculusKiller");
         }
 
         private async Task CheckUpdates()

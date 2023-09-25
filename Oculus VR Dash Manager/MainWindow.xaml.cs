@@ -315,7 +315,7 @@ namespace OVR_Dash_Manager
 
         #region URL Links
 
-        private void lbl_ItsKaitlyn03_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void lbl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             Functions_Old.OpenURL("https://github.com/ItsKaitlyn03/OculusKiller");
         }

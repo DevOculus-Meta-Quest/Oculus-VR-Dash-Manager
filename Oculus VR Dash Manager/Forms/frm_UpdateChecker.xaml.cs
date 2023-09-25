@@ -13,7 +13,7 @@ namespace OVR_Dash_Manager.Forms
     /// </summary>
     public partial class frm_UpdateChecker : Window
     {
-        private GitHubReply ItsKaitlyn03_GitHub;
+        private GitHubReply GitHub;
 
         public frm_UpdateChecker()
         {
@@ -25,7 +25,7 @@ namespace OVR_Dash_Manager.Forms
             Functions_Old.OpenURL("https://github.com/KrisIsBackAU/Oculus-VR-Dash-Manager");
         }
 
-        private void btn_ItsKaitlyn03_OpenWebsite_Click(object sender, RoutedEventArgs e)
+        private void btn_OpenWebsite_Click(object sender, RoutedEventArgs e)
         {
             Functions_Old.OpenURL("https://github.com/ItsKaitlyn03/OculusKiller");
         }
@@ -33,7 +33,7 @@ namespace OVR_Dash_Manager.Forms
         private async Task CheckUpdates()
         {
             await Check_DashManager_Update();
-            await Check_ItsKaitlyn03_Update();
+            await Check_Update();
         }
 
         private async Task Check_DashManager_Update()
@@ -44,47 +44,47 @@ namespace OVR_Dash_Manager.Forms
             Functions_Old.DoAction(this, new Action(delegate () { lbl_DashManager_LastCheck.Content = DateTime.Now.ToString(); lbl_DashManager_CurrentVersion.Content = CurrentVersion; lbl_DashManager_AvaliableVersion.Content = Version; }));
         }
 
-        private async Task Check_ItsKaitlyn03_Update()
+        private async Task Check_Update()
         {
             Dashes.OVR_Dash ItsKaitlyn03 = Dashes.Dash_Manager.GetDash(Dashes.Dash_Type.OculusKiller);
 
             if (ItsKaitlyn03 == null)
-                Functions_Old.DoAction(this, new Action(delegate () { lbl_ItsKaitlyn03_CurrentVersion.Content = "Not Loaded"; }));
+                Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = "Not Loaded"; }));
             else if (!ItsKaitlyn03.Installed)
-                Functions_Old.DoAction(this, new Action(delegate () { lbl_ItsKaitlyn03_CurrentVersion.Content = "Not Downloaded"; }));
+                Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = "Not Downloaded"; }));
             else
             {
                 FileVersionInfo Info = FileVersionInfo.GetVersionInfo(Path.Combine(Software.Oculus.Oculus_Dash_Directory, ItsKaitlyn03.DashFileName));
-                Functions_Old.DoAction(this, new Action(delegate () { lbl_ItsKaitlyn03_CurrentVersion.Content = Info.FileVersion; }));
+                Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = Info.FileVersion; }));
             }
 
             Github Check = new Github();
-            ItsKaitlyn03_GitHub = await Check.GetLatestReleaseDetails("ItsKaitlyn03", "OculusKiller");
-            Functions_Old.DoAction(this, new Action(delegate () { lbl_ItsKaitlyn03_LastCheck.Content = DateTime.Now.ToString(); lbl_ItsKaitlyn03_AvaliableVersion.Content = ItsKaitlyn03_GitHub.ReleaseVersion; }));
+            GitHub = await Check.GetLatestReleaseDetails("ItsKaitlyn03", "OculusKiller");
+            Functions_Old.DoAction(this, new Action(delegate () { lbl_LastCheck.Content = DateTime.Now.ToString(); lbl_AvaliableVersion.Content = GitHub.ReleaseVersion; }));
 
-            if (ItsKaitlyn03_GitHub.AssetUrls.ContainsKey("OculusDash.exe"))
-                Functions_Old.DoAction(this, new Action(delegate () { btn_ItsKaitlyn03_Download.IsEnabled = true; }));
+            if (GitHub.AssetUrls.ContainsKey("OculusDash.exe"))
+                Functions_Old.DoAction(this, new Action(delegate () { btn_Download.IsEnabled = true; }));
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             lbl_DashManager_LastCheck.Content = "Checking";
-            lbl_ItsKaitlyn03_LastCheck.Content = "Checking";
+            lbl_LastCheck.Content = "Checking";
 
             lbl_DashManager_CurrentVersion.Content = "";
             lbl_DashManager_AvaliableVersion.Content = "";
 
-            lbl_ItsKaitlyn03_CurrentVersion.Content = "";
-            lbl_ItsKaitlyn03_AvaliableVersion.Content = "";
+            lbl_CurrentVersion.Content = "";
+            lbl_AvaliableVersion.Content = "";
 
             await CheckUpdates();
         }
 
-        private async void btn_ItsKaitlyn03_Download_Click(object sender, RoutedEventArgs e)
+        private async void btn_Download_Click(object sender, RoutedEventArgs e)
         {
             Dashes.OVR_Dash ItsKaitlyn03 = Dashes.Dash_Manager.GetDash(Dashes.Dash_Type.OculusKiller);
             await ItsKaitlyn03.DownloadAsync();  // If Download is async, use await here
-            await Check_ItsKaitlyn03_Update();
+            await Check_Update();
         }
 
     }

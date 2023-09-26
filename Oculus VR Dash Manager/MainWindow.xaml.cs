@@ -70,7 +70,7 @@ namespace OVR_Dash_Manager
         {
             Software.Windows_Audio_v2.Set_To_Normal_Speaker_Auto();
             Software.ADB.Stop();
-            Functions.Process_Watcher.Stop();
+            Functions.ProcessWatcher.Stop();
 
             Timer_Functions.StopTimer("Hover Checker");
             Timer_Functions.DisposeTimer("Hover Checker");
@@ -90,7 +90,7 @@ namespace OVR_Dash_Manager
 
         private async void Startup()
         {
-            Functions.Process_Watcher.Start();
+            Functions.ProcessWatcher.Start();
 
             // ADB Auto Start Created By https://github.com/quagsirus
             // KrisIsBack Addin - Sorted code into their own places & added warning message when setting turned on
@@ -101,10 +101,10 @@ namespace OVR_Dash_Manager
             ADB.Start();
             ///
 
-            Functions.Process_Watcher.IngoreEXEName("cmd.exe");
-            Functions.Process_Watcher.IngoreEXEName("conhost.exe");
-            Functions.Process_Watcher.IngoreEXEName("reg.exe");
-            Functions.Process_Watcher.IngoreEXEName("SearchFilterHost.exe");
+            Functions.ProcessWatcher.IgnoreExeName("cmd.exe");
+            Functions.ProcessWatcher.IgnoreExeName("conhost.exe");
+            Functions.ProcessWatcher.IgnoreExeName("reg.exe");
+            Functions.ProcessWatcher.IgnoreExeName("SearchFilterHost.exe");
 
             if (Elevated)
             {

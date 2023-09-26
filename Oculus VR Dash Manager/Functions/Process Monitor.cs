@@ -5,159 +5,84 @@ using System.Management;
 
 namespace OVR_Dash_Manager.Functions
 {
-    public static class Process_Watcher
+    public static class ProcessWatcher
     {
-        public delegate void NewProcess(String pProcessName, Int32 pProcessID);
+        public delegate void ProcessEventHandler(string processName, int processId);
 
-        public static event NewProcess ProcessStarted;
+        public static event ProcessEventHandler ProcessStarted;
+        public static event ProcessEventHandler ProcessExited;
 
-        public delegate void ClosedProcess(String pProcessName, Int32 pProcessID);
+        private static readonly ManagementEventWatcher ProcessStartEventWatcher;
+        private static readonly ManagementEventWatcher ProcessStopEventWatcher;
 
-        public static event ClosedProcess ProcessExited;
+        private static readonly HashSet<string> IgnoredExeNames = new HashSet<string>();
 
-        private static ManagementEventWatcher Process_StartEvent = null;
-        private static ManagementEventWatcher Process_StopEvent = null;
-
-        private static Boolean Running = false;
-        private static Boolean _Is_Setup = false;
-
-        private static HashSet<String> IgnoredEXE_Names;
-
-        public static void Setup()
+        static ProcessWatcher()
         {
-            if (_Is_Setup)
-                return;
+            // Initialize the ManagementEventWatchers with the appropriate WQL queries
+            ProcessStartEventWatcher = new ManagementEventWatcher("SELECT * FROM __InstanceCreationEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_Process'");
+            ProcessStopEventWatcher = new ManagementEventWatcher("SELECT * FROM __InstanceDeletionEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_Process'");
 
+            ProcessStartEventWatcher.EventArrived += OnProcessStarted;
+            ProcessStopEventWatcher.EventArrived += OnProcessExited;
+        }
+
+        public static void IgnoreExeName(string exeName) => IgnoredExeNames.Add(exeName);
+
+        public static void RemoveIgnoreExeName(string exeName) => IgnoredExeNames.Remove(exeName);
+
+        public static bool Start()
+        {
             try
             {
-                _Is_Setup = true;
-
-                if (Process_StartEvent == null)
-                {
-                    IgnoredEXE_Names = new HashSet<string>();
-
-                    // Stop Truncated ? known bug .. whyyyyyy
-                    //Process_StartEvent = new ManagementEventWatcher("SELECT * FROM Win32_ProcessStartTrace");
-                    //Process_StopEvent = new ManagementEventWatcher("SELECT * FROM Win32_ProcessStopTrace");
-
-                    Process_StartEvent = new ManagementEventWatcher("SELECT * FROM __InstanceCreationEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_Process'");
-                    Process_StopEvent = new ManagementEventWatcher("SELECT * FROM __InstanceDeletionEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_Process'");
-
-                    Process_StartEvent.EventArrived += Process_StartEvent_EventArrived;
-                    Process_StopEvent.EventArrived += Process_StopEvent_EventArrived;
-                }
+                ProcessStartEventWatcher.Start();
+                ProcessStopEventWatcher.Start();
+                return true;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                Debug.WriteLine("Error during creation of ManagementEventWatcher for __InstanceCreationEvent / __InstanceDeletionEvent");
+                return false;
             }
         }
 
-        public static void IngoreEXEName(String EXEName)
+        public static bool Stop()
         {
-            IgnoredEXE_Names?.Add(EXEName);
-        }
-
-        public static void Remove_IgnoreEXEName(String EXEName)
-        {
-            IgnoredEXE_Names?.Remove(EXEName);
-        }
-
-        public static Boolean Start()
-        {
-            Boolean pReturn = false;
-
-            Setup();
-
-            if (Process_StartEvent != null)
+            try
             {
-                if (!Running)
-                {
-                    try
-                    {
-                        Process_StartEvent.Start();
-                        Process_StopEvent.Start();
-                        pReturn = true;
-
-                        Running = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine(ex.Message);
-                    }
-                }
+                ProcessStartEventWatcher.Stop();
+                ProcessStopEventWatcher.Stop();
+                return true;
             }
-
-            return pReturn;
-        }
-
-        public static Boolean Stop()
-        {
-            Boolean pReturn = false;
-            if (Process_StartEvent != null)
+            catch (Exception ex)
             {
-                if (Running)
-                {
-                    try
-                    {
-                        Process_StartEvent.Stop();
-                        Process_StopEvent.Stop();
-                        pReturn = true;
-
-                        Running = false;
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine(ex.Message);
-                    }
-                }
+                Debug.WriteLine(ex.Message);
+                return false;
             }
-            return pReturn;
         }
 
         public static void Dispose()
         {
-            if (Process_StartEvent != null)
-            {
-                Stop();
-
-                IgnoredEXE_Names?.Clear();
-                Process_StartEvent.Dispose();
-                Process_StopEvent.Dispose();
-
-                _Is_Setup = false;
-            }
+            Stop();
+            IgnoredExeNames.Clear();
+            ProcessStartEventWatcher.Dispose();
+            ProcessStopEventWatcher.Dispose();
         }
 
-        private static void Process_StartEvent_EventArrived(object sender, EventArrivedEventArgs e)
-        {
-            if (ProcessStarted == null) return;
+        private static void OnProcessStarted(object sender, EventArrivedEventArgs e) => HandleEvent(e, ProcessStarted);
 
-            //string Name = (string)e.NewEvent.Properties["ProcessName"].Value;
-            //int ID = Convert.ToInt32(e.NewEvent.Properties["ProcessID"].Value);
+        private static void OnProcessExited(object sender, EventArrivedEventArgs e) => HandleEvent(e, ProcessExited);
+
+        private static void HandleEvent(EventArrivedEventArgs e, ProcessEventHandler handler)
+        {
+            if (handler == null) return;
 
             var targetInstance = (ManagementBaseObject)e.NewEvent["TargetInstance"];
-            var Name = targetInstance["Name"]?.ToString();
-            var ID = Convert.ToInt32(targetInstance["Handle"]?.ToString());
+            var name = targetInstance["Name"]?.ToString();
+            var id = Convert.ToInt32(targetInstance["Handle"]?.ToString());
 
-            if (!IgnoredEXE_Names.Contains(Name))
-                ProcessStarted(Name, ID);
-        }
-
-        private static void Process_StopEvent_EventArrived(object sender, EventArrivedEventArgs e)
-        {
-            if (ProcessExited == null) return;
-
-            //string Name = (string)e.NewEvent.Properties["ProcessName"].Value;
-            //int ID = Convert.ToInt32(e.NewEvent.Properties["ProcessID"].Value);
-
-            var targetInstance = (ManagementBaseObject)e.NewEvent["TargetInstance"];
-            var Name = targetInstance["Name"]?.ToString();
-            var ID = Convert.ToInt32(targetInstance["Handle"]?.ToString());
-
-            if (!IgnoredEXE_Names.Contains(Name))
-                ProcessExited(Name, ID);
+            if (!IgnoredExeNames.Contains(name))
+                handler(name, id);
         }
     }
 }

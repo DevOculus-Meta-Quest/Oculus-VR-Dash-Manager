@@ -37,8 +37,8 @@ namespace OVR_Dash_Manager.Software
             _IsSetup = true;
             CheckInstalled();
             Steam_VR_Running_State_Changed_Event += Steam_Steam_VR_Running_State_Changed_Event;
-            Functions.Process_Watcher.ProcessStarted += Process_Watcher_ProcessStarted;
-            Functions.Process_Watcher.ProcessExited += Process_Watcher_ProcessExited;
+            Functions.ProcessWatcher.ProcessStarted += Process_Watcher_ProcessStarted;
+            Functions.ProcessWatcher.ProcessExited += Process_Watcher_ProcessExited;
             Timer_Functions.CreateTimer("SteamVR Focus Fix", TimeSpan.FromSeconds(1), Check_SteamVR_FocusProblem);
 
             var processNamesToCheck = new List<string> { "steam", "vrserver", "vrmonitor" };

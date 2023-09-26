@@ -29,8 +29,8 @@ namespace OVR_Dash_Manager.Software
             if (!_IsSetup)
             {
                 _IsSetup = true;
-                Functions.Process_Watcher.ProcessStarted += Process_Watcher_ProcessStarted;
-                Functions.Process_Watcher.ProcessExited += Process_Watcher_ProcessExited;
+                Functions.ProcessWatcher.ProcessStarted += Process_Watcher_ProcessStarted;
+                Functions.ProcessWatcher.ProcessExited += Process_Watcher_ProcessExited;
             }
         }
 

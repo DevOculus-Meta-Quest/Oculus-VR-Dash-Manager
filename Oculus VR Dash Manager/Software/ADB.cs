@@ -23,7 +23,7 @@ namespace OVR_Dash_Manager.Software
                     var server = new AdbServer();
                     try
                     {
-                        Functions.Process_Watcher.ProcessStarted += Process_Watcher_ProcessStarted;
+                        Functions.ProcessWatcher.ProcessStarted += Process_Watcher_ProcessStarted;
 
                         var result = server.StartServer(@".\ADB\adb.exe", false);
                         if (result != StartServerResult.Started)
@@ -60,7 +60,7 @@ namespace OVR_Dash_Manager.Software
         private static void RemoveWatcher()
         {
             Thread.Sleep(1000);
-            Functions.Process_Watcher.ProcessStarted -= Process_Watcher_ProcessStarted;
+            Functions.ProcessWatcher.ProcessStarted -= Process_Watcher_ProcessStarted;
         }
 
         private static void Process_Watcher_ProcessStarted(string pProcessName, int pProcessID)

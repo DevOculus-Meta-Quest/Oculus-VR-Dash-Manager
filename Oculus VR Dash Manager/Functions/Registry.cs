@@ -3,126 +3,60 @@ using System;
 
 namespace OVR_Dash_Manager.Functions
 {
-    public static class Registry_Functions
+    public enum RegistryKeyType
     {
-        public static RegistryKey GetRegistryKey(RegistryKey_Type Type, String KeyLocation)
+        ClassRoot,
+        CurrentUser,
+        LocalMachine,
+        Users,
+        CurrentConfig
+    }
+
+    public static class RegistryFunctions
+    {
+        public static RegistryKey GetRegistryKey(RegistryKeyType type, string keyLocation)
         {
-            RegistryKey pReturn = null;
-
-            switch (Type)
+            RegistryKey registryKey = type switch
             {
-                case RegistryKey_Type.ClassRoot:
-                    pReturn = Registry.ClassesRoot.OpenSubKey(KeyLocation, true);
-                    break;
+                RegistryKeyType.ClassRoot => Registry.ClassesRoot.OpenSubKey(keyLocation, writable: true),
+                RegistryKeyType.CurrentUser => Registry.CurrentUser.OpenSubKey(keyLocation, writable: true),
+                RegistryKeyType.LocalMachine => Registry.LocalMachine.OpenSubKey(keyLocation, writable: true),
+                RegistryKeyType.Users => Registry.Users.OpenSubKey(keyLocation, writable: true),
+                RegistryKeyType.CurrentConfig => Registry.CurrentConfig.OpenSubKey(keyLocation, writable: true),
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
 
-                case RegistryKey_Type.CurrentUser:
-                    pReturn = Registry.CurrentUser.OpenSubKey(KeyLocation, true);
-                    break;
-
-                case RegistryKey_Type.LocalMachine:
-                    pReturn = Registry.LocalMachine.OpenSubKey(KeyLocation, true);
-                    break;
-
-                case RegistryKey_Type.Users:
-                    pReturn = Registry.Users.OpenSubKey(KeyLocation, true);
-                    break;
-
-                case RegistryKey_Type.CurrentConfig:
-                    pReturn = Registry.CurrentConfig.OpenSubKey(KeyLocation, true);
-                    break;
-
-                default:
-                    break;
-            }
-
-            return pReturn;
+            return registryKey;
         }
 
-        public static Boolean SetKeyValue(RegistryKey Key, String KeyName, String Value)
+        public static bool SetKeyValue(RegistryKey key, string keyName, string value)
         {
-            Boolean pReturn = false;
+            if (key == null) return false;
 
-            if (Key != null)
+            string oldValue = Convert.ToString(key.GetValue(keyName));
+            if (oldValue != value)
             {
-                Boolean pSetValue = false;
-
-                try
-                {
-                    string Old_Info = Key.GetValue(KeyName).ToString();
-                    if (Old_Info != Value)
-                        pSetValue = true;
-                }
-                catch (Exception ex)
-                {
-                    if (ex.Message == "Object reference not set to an instance of an object.")
-                        pSetValue = true;
-                }
-
-                if (pSetValue)
-                {
-                    Key.SetValue(KeyName, Value);
-                    pReturn = true;
-                }
+                key.SetValue(keyName, value);
+                return true;
             }
 
-            return pReturn;
+            return false;
         }
 
-        public static String GetKeyValue_String(RegistryKey Key, String KeyName)
+        public static string GetKeyValueString(RegistryKey key, string keyName)
         {
-            String pReturn = null;
-
-            if (Key != null)
-            {
-                try
-                {
-                    pReturn = Key.GetValue(KeyName).ToString();
-                }
-                catch (NullReferenceException)
-                {
-                    pReturn = null;
-                }
-                catch (Exception)
-                {
-                }
-            }
-
-            return pReturn;
+            return key?.GetValue(keyName)?.ToString();
         }
 
-        public static String GetKeyValue_String(RegistryKey_Type Type, String KeyLocation, String KeyName)
+        public static string GetKeyValueString(RegistryKeyType type, string keyLocation, string keyName)
         {
-            String pReturn = null;
-
-            RegistryKey Key = Functions.Registry_Functions.GetRegistryKey(RegistryKey_Type.LocalMachine, KeyLocation);
-
-            if (Key != null)
-            {
-                try
-                {
-                    pReturn = Key.GetValue(KeyName).ToString();
-                }
-                catch (NullReferenceException)
-                {
-                    pReturn = null;
-                }
-                catch (Exception)
-                {
-                }
-
-                CloseKey(Key);
-            }
-
-            return pReturn;
+            using RegistryKey key = GetRegistryKey(type, keyLocation);
+            return GetKeyValueString(key, keyName);
         }
 
-        public static void CloseKey(RegistryKey Key)
+        public static void CloseKey(RegistryKey key)
         {
-            if (Key != null)
-            {
-                Key.Close();
-                Key.Dispose();
-            }
+            key?.Close();
         }
     }
 }

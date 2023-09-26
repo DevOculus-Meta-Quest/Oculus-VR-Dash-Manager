@@ -75,21 +75,23 @@ namespace OVR_Dash_Manager.Software
         {
             if (Oculus.Oculus_Is_Installed)
             {
-                var runTimeKey = Functions.Registry_Functions.GetRegistryKey(RegistryKey_Type.LocalMachine, @"SOFTWARE\Khronos\OpenXR\1");
+                // Update the following line to include the correct namespace for RegistryKeyType
+                var runTimeKey = Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.LocalMachine, @"SOFTWARE\Khronos\OpenXR\1");
                 if (runTimeKey != null)
                 {
                     var oculusRunTimePath = Path.Combine(Oculus.Oculus_Main_Directory, "Support\\oculus-runtime\\oculus_openxr_64.json");
 
                     if (File.Exists(oculusRunTimePath))
                     {
-                        Functions.Registry_Functions.SetKeyValue(runTimeKey, "ActiveRuntime", oculusRunTimePath);
+                        Functions.RegistryFunctions.SetKeyValue(runTimeKey, "ActiveRuntime", oculusRunTimePath);
                     }
 
-                    Functions.Registry_Functions.CloseKey(runTimeKey);
+                    Functions.RegistryFunctions.CloseKey(runTimeKey);
 
                     Dashes.Dash_Manager.MainForm_CheckRunTime();
                 }
             }
         }
+
     }
 }

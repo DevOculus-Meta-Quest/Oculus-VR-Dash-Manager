@@ -172,7 +172,7 @@ namespace OVR_Dash_Manager
         public static extern IntPtr SetFocus(IntPtr hWnd);
     }
 
-    public enum RegistryKey_Type
+    public enum RegistryKeyType
     {
         ClassRoot = 0,
         CurrentUser = 1,

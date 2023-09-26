@@ -8,55 +8,68 @@ namespace OVR_Dash_Manager
 {
     public class Github
     {
-        private readonly HttpClient _httpClient = new HttpClient();
+        private readonly HttpClient _httpClient;
 
-        public async Task<long> GetLatestFileSize(string repo, string project, string assetName)
+        public Github()
         {
-            var json = await _httpClient.GetStringAsync($"https://api.github.com/repos/{repo}/{project}/releases/latest");
+            _httpClient = new HttpClient();
+            _httpClient.DefaultRequestHeaders.Add("User-Agent", "OVR-Dash-Manager");
+        }
+
+        public async Task<long> GetLatestSizeAsync(string repo, string project, string assetName)
+        {
+            var json = await GetJsonAsync($"https://api.github.com/repos/{repo}/{project}/releases/latest");
             var gitResponse = JsonConvert.DeserializeObject<GitResponse>(json);
-            foreach (var asset in gitResponse.Assets)
+            foreach (var asset in gitResponse.assets)
             {
-                if (asset.Name == assetName)
+                if (asset.name == assetName)
                 {
-                    return asset.Size;
+                    return asset.size;
                 }
             }
             return 0;
         }
 
-        public async Task<string> GetLatestReleaseVersion(string repo, string project)
+        public async Task<string> GetLatestReleaseNameAsync(string repo, string project)
         {
-            var json = await _httpClient.GetStringAsync($"https://api.github.com/repos/{repo}/{project}/releases/latest");
+            var json = await GetJsonAsync($"https://api.github.com/repos/{repo}/{project}/releases/latest");
             var gitResponse = JsonConvert.DeserializeObject<GitResponse>(json);
-            return gitResponse.Name;
+            return gitResponse.name;
         }
 
-        public async Task DownloadFile(string repo, string project, string assetName, string filePath)
+        public async Task DownloadAsync(string repo, string project, string assetName, string filePath)
         {
-            var json = await _httpClient.GetStringAsync($"https://api.github.com/repos/{repo}/{project}/releases/latest");
+            var json = await GetJsonAsync($"https://api.github.com/repos/{repo}/{project}/releases/latest");
             var gitResponse = JsonConvert.DeserializeObject<GitResponse>(json);
-            foreach (var asset in gitResponse.Assets)
+            foreach (var asset in gitResponse.assets)
             {
-                if (asset.Name == assetName)
+                if (asset.name == assetName)
                 {
                     using (var webClient = new System.Net.WebClient())
                     {
-                        await webClient.DownloadFileTaskAsync(new Uri(asset.Browser_download_url), filePath);
+                        await webClient.DownloadFileTaskAsync(new Uri(asset.browser_download_url), filePath);
                     }
                 }
             }
         }
 
-        public async Task<GitHubReply> GetLatestReleaseDetails(string repo, string project)
+        public async Task<GitHubReply> GetLatestReleaseInfoAsync(string repo, string project)
         {
-            var json = await _httpClient.GetStringAsync($"https://api.github.com/repos/{repo}/{project}/releases/latest");
+            var json = await GetJsonAsync($"https://api.github.com/repos/{repo}/{project}/releases/latest");
             var gitResponse = JsonConvert.DeserializeObject<GitResponse>(json);
             var assetUrls = new Dictionary<string, string>();
-            foreach (var asset in gitResponse.Assets)
+            foreach (var asset in gitResponse.assets)
             {
-                assetUrls[asset.Name] = asset.Browser_download_url;
+                assetUrls[asset.name] = asset.browser_download_url;
             }
-            return new GitHubReply(gitResponse.Name, gitResponse.Html_url, assetUrls);
+            return new GitHubReply(gitResponse.name, gitResponse.html_url, assetUrls);
+        }
+
+        private async Task<string> GetJsonAsync(string url)
+        {
+            var response = await _httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync();
         }
     }
 
@@ -76,85 +89,85 @@ namespace OVR_Dash_Manager
 
     internal class Asset
     {
-        public string Url { get; set; }
-        public int Id { get; set; }
-        public string Node_id { get; set; }
-        public string Name { get; set; }
-        public object Label { get; set; }
-        public Uploader Uploader { get; set; }
-        public string Content_type { get; set; }
-        public string State { get; set; }
-        public long Size { get; set; }
-        public int Download_count { get; set; }
-        public DateTime Created_at { get; set; }
-        public DateTime Updated_at { get; set; }
-        public string Browser_download_url { get; set; }
+        public string url { get; set; }
+        public int id { get; set; }
+        public string node_id { get; set; }
+        public string name { get; set; }
+        public object label { get; set; }
+        public Uploader uploader { get; set; }
+        public string content_type { get; set; }
+        public string state { get; set; }
+        public long size { get; set; }
+        public int download_count { get; set; }
+        public DateTime created_at { get; set; }
+        public DateTime updated_at { get; set; }
+        public string browser_download_url { get; set; }
     }
 
     internal class Author
     {
-        public string Login { get; set; }
-        public int Id { get; set; }
-        public string Node_id { get; set; }
-        public string Avatar_url { get; set; }
-        public string Gravatar_id { get; set; }
-        public string Url { get; set; }
-        public string Html_url { get; set; }
-        public string Followers_url { get; set; }
-        public string Following_url { get; set; }
-        public string Gists_url { get; set; }
-        public string Starred_url { get; set; }
-        public string Subscriptions_url { get; set; }
-        public string Organizations_url { get; set; }
-        public string Repos_url { get; set; }
-        public string Events_url { get; set; }
-        public string Received_events_url { get; set; }
-        public string Type { get; set; }
-        public bool Site_admin { get; set; }
+        public string login { get; set; }
+        public int id { get; set; }
+        public string node_id { get; set; }
+        public string avatar_url { get; set; }
+        public string gravatar_id { get; set; }
+        public string url { get; set; }
+        public string html_url { get; set; }
+        public string followers_url { get; set; }
+        public string following_url { get; set; }
+        public string gists_url { get; set; }
+        public string starred_url { get; set; }
+        public string subscriptions_url { get; set; }
+        public string organizations_url { get; set; }
+        public string repos_url { get; set; }
+        public string events_url { get; set; }
+        public string received_events_url { get; set; }
+        public string type { get; set; }
+        public bool site_admin { get; set; }
     }
 
     internal class GitResponse
     {
-        public string Url { get; set; }
-        public string Assets_url { get; set; }
-        public string Upload_url { get; set; }
-        public string Html_url { get; set; }
-        public int Id { get; set; }
-        public Author Author { get; set; }
-        public string Node_id { get; set; }
-        public string Tag_name { get; set; }
-        public string Target_commitish { get; set; }
-        public string Name { get; set; }
-        public string Draft { get; set; }
-        public Author Uploader { get; set; }
-        public string Prerelease { get; set; }
-        public DateTime Created_at { get; set; }
-        public DateTime Published_at { get; set; }
-        public List<Asset> Assets { get; set; }
-        public string Tarball_url { get; set; }
-        public string Zipball_url { get; set; }
-        public string Body { get; set; }
+        public string url { get; set; }
+        public string assets_url { get; set; }
+        public string upload_url { get; set; }
+        public string html_url { get; set; }
+        public int id { get; set; }
+        public Author author { get; set; }
+        public string node_id { get; set; }
+        public string tag_name { get; set; }
+        public string target_commitish { get; set; }
+        public string name { get; set; }
+        public bool draft { get; set; }
+        public bool prerelease { get; set; }
+        public DateTime created_at { get; set; }
+        public DateTime published_at { get; set; }
+        public List<Asset> assets { get; set; }
+        public string tarball_url { get; set; }
+        public string zipball_url { get; set; }
+        public string body { get; set; }
+        public int mentions_count { get; set; }
     }
 
-    internal class Uploader
+    public class Uploader
     {
-        public string Login { get; set; }
-        public int Id { get; set; }
-        public string Node_id { get; set; }
-        public string Avatar_url { get; set; }
-        public string Gravatar_id { get; set; }
-        public string Url { get; set; }
-        public string Html_url { get; set; }
-        public string Followers_url { get; set; }
-        public string Following_url { get; set; }
-        public string Gists_url { get; set; }
-        public string Starred_url { get; set; }
-        public string Subscriptions_url { get; set; }
-        public string Organizations_url { get; set; }
-        public string Repos_url { get; set; }
-        public string Events_url { get; set; }
-        public string Received_events_url { get; set; }
-        public string Type { get; set; }
-        public bool Site_admin { get; set; }
+        public string login { get; set; }
+        public int id { get; set; }
+        public string node_id { get; set; }
+        public string avatar_url { get; set; }
+        public string gravatar_id { get; set; }
+        public string url { get; set; }
+        public string html_url { get; set; }
+        public string followers_url { get; set; }
+        public string following_url { get; set; }
+        public string gists_url { get; set; }
+        public string starred_url { get; set; }
+        public string subscriptions_url { get; set; }
+        public string organizations_url { get; set; }
+        public string repos_url { get; set; }
+        public string events_url { get; set; }
+        public string received_events_url { get; set; }
+        public string type { get; set; }
+        public bool site_admin { get; set; }
     }
 }

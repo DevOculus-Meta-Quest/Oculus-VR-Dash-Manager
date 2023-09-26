@@ -93,7 +93,7 @@ namespace OVR_Dash_Manager.Dashes
 
                     Github github = new Github();
 
-                    var size = await github.GetLatestFileSize(RepoName, ProjectName, AssetName);
+                    var size = await github.GetLatestSizeAsync(RepoName, ProjectName, AssetName);
                     if (size != _Size)
                         _NeedUpdate = true;
                 }
@@ -128,7 +128,7 @@ namespace OVR_Dash_Manager.Dashes
                 try
                 {
                     // Assuming RepoName, ProjectName, AssetName are class-level variables, and Temp_DashPath is the temporary file path
-                    await Repo.DownloadFile(RepoName, ProjectName, AssetName, Temp_DashPath);
+                    await Repo.DownloadAsync(RepoName, ProjectName, AssetName, Temp_DashPath);
                 }
                 catch (Exception)
                 {

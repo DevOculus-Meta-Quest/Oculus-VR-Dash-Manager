@@ -43,7 +43,7 @@ namespace OVR_Dash_Manager.Functions
             else
             {
                 // try and build full url - else returns same as input
-                string URL = String_Functions.GetFullURL(Path);
+                string URL = StringFunctions.GetFullUrl(Path);
                 return Process.Start(URL, Arguments);
                 // Web Site
             }

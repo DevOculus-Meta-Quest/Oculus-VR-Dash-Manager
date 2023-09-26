@@ -66,7 +66,7 @@ namespace OVR_Dash_Manager.Functions
                 ExtentsionFilterSeperate += "|" + oFilter.Value + "|" + oFilter.Key;
             }
 
-            ExtentsionFilterSeperate = String_Functions.RemoveStringFromStart(ExtentsionFilterSeperate, "|");
+            ExtentsionFilterSeperate = StringFunctions.RemoveStringFromStart(ExtentsionFilterSeperate, "|");
 
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
             {

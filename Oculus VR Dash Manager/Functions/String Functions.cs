@@ -2,40 +2,42 @@
 
 namespace OVR_Dash_Manager.Functions
 {
-    public static class String_Functions
+    public static class StringFunctions  // Renamed to follow PascalCase naming convention
     {
-        public static string RemoveStringFromStart(string Text, string Remove)
+        /// <summary>
+        /// Removes a specified substring from the start of the given string.
+        /// </summary>
+        /// <param name="text">The original string.</param>
+        /// <param name="remove">The substring to remove.</param>
+        /// <returns>The updated string.</returns>
+        public static string RemoveStringFromStart(string text, string remove)
         {
-            if (Text.StartsWith(Remove))
-                Text = Text.Substring(Remove.Length, Text.Length - Remove.Length);
-
-            return Text;
+            return text.StartsWith(remove) ? text.Substring(remove.Length) : text;
         }
 
-        public static bool IsValidURL(string pURL)
+        /// <summary>
+        /// Checks if the given string is a valid URL.
+        /// </summary>
+        /// <param name="url">The string to check.</param>
+        /// <returns>True if the string is a valid URL, false otherwise.</returns>
+        public static bool IsValidUrl(string url)
         {
-            bool result = Uri.TryCreate(pURL, UriKind.Absolute, out Uri uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
-            if (!result)
-            {
-                if (!pURL.StartsWith("http"))
-                    result = Uri.TryCreate("http://" + pURL, UriKind.Absolute, out uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
-            }
-
-            return result;
+            return Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
         }
 
-        public static string GetFullURL(string pURL)
+        /// <summary>
+        /// Ensures the given string is a valid URL by prepending "http://" if necessary.
+        /// </summary>
+        /// <param name="url">The original string.</param>
+        /// <returns>The updated string.</returns>
+        public static string GetFullUrl(string url)
         {
-            if (IsValidURL(pURL))
+            if (IsValidUrl(url))
             {
-                if (!pURL.StartsWith("http"))
-                    pURL = "http://" + pURL;
-
-                Uri pBuild = new Uri(pURL);
-                return pBuild.AbsoluteUri;
+                return url.StartsWith("http", StringComparison.OrdinalIgnoreCase) ? url : "http://" + url;
             }
-            else
-                return pURL;
+            return url;
         }
     }
 }

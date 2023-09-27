@@ -4,19 +4,25 @@ using System.Management;
 
 namespace OVR_Dash_Manager.Functions
 {
-    public static class Device_Watcher
+    public static class DeviceWatcher
     {
+        // Delegate (if using non-generic pattern).
         public delegate void NewDevice();
 
+        // Event to be invoked when a new device is connected.
         public static event NewDevice DeviceConnected;
 
+        // ManagementEventWatcher instance to monitor device connection events.
         private static ManagementEventWatcher _connected;
 
+        // Flags to indicate whether the setup is done and whether the watcher is running.
         private static bool _isSetup;
         private static bool _running;
 
+        // Timestamp to track the last connection event.
         private static DateTime _lastConnectionTime;
 
+        // Setup method to initialize the ManagementEventWatcher instance.
         private static void Setup()
         {
             if (_isSetup) return;
@@ -41,12 +47,12 @@ namespace OVR_Dash_Manager.Functions
             }
         }
 
+        // Method to start monitoring device connection events.
         public static void Start()
         {
             Setup();
 
-            if (_connected == null) return;
-            if (_running) return;
+            if (_connected == null || _running) return;
             try
             {
                 _connected.Start();
@@ -58,10 +64,10 @@ namespace OVR_Dash_Manager.Functions
             }
         }
 
+        // Method to stop monitoring device connection events.
         public static void Stop()
         {
-            if (_connected == null) return;
-            if (!_running) return;
+            if (_connected == null || !_running) return;
             try
             {
                 _connected.Stop();
@@ -73,6 +79,7 @@ namespace OVR_Dash_Manager.Functions
             }
         }
 
+        // Event handler to process device connection events.
         private static void Handle_DeviceConnected(object sender, EventArrivedEventArgs e)
         {
             // If nothing is subscribed to the event
@@ -85,6 +92,7 @@ namespace OVR_Dash_Manager.Functions
             if (DateTime.Now - _lastConnectionTime < TimeSpan.FromSeconds(1)) return;
             _lastConnectionTime = DateTime.Now;
 
+            // Invoke the DeviceConnected event.
             DeviceConnected();
         }
     }

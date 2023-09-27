@@ -96,8 +96,8 @@ namespace OVR_Dash_Manager
             // KrisIsBack Addin - Sorted code into their own places & added warning message when setting turned on
 
             // Start listening for new device connections
-            Functions.Device_Watcher.DeviceConnected += Oculus_Link.StartLinkOnDevice;
-            Functions.Device_Watcher.Start();
+            Functions.DeviceWatcher.DeviceConnected += Oculus_Link.StartLinkOnDevice;
+            Functions.DeviceWatcher.Start();
             ADB.Start();
             ///
 

@@ -153,9 +153,9 @@ namespace OVR_Dash_Manager.Software
                     Rect location = new Rect();
                     for (int i = 0; i < 20; i++)
                     {
-                        Functions.Native_Functions.MinimizeExternalWindow(client.MainWindowHandle);
+                        Functions.NativeFunctions.MinimizeExternalWindow(client.MainWindowHandle);
                         Thread.Sleep(250);
-                        Functions.Native_Functions.GetWindowRect(client.MainWindowHandle, ref location);
+                        Functions.NativeFunctions.GetWindowRect(client.MainWindowHandle, ref location);
                         if (double.IsNaN(location.Left)) break;
                     }
 

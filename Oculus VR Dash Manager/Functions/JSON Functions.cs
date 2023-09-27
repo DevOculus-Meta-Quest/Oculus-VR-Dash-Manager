@@ -6,8 +6,9 @@ using System.Reflection;
 
 namespace OVR_Dash_Manager.Functions
 {
-    public static class JSON_Functions
+    public static class JsonFunctions
     {
+        // Default settings for JSON serialization and deserialization
         public static JsonSerializerSettings JsonSettings = new JsonSerializerSettings
         {
             DefaultValueHandling = DefaultValueHandling.Ignore,
@@ -18,48 +19,50 @@ namespace OVR_Dash_Manager.Functions
             Formatting = Formatting.None
         };
 
+        // Method to serialize an object to a JSON string
         public static string SerializeClass(object Class, JsonSerializerSettings Settings = null)
         {
-            string Serialed = "";
+            string Serialized = string.Empty;
 
-            if (Settings == null)
-                Settings = JsonSettings;
-
-            try
-            {
-                Serialed = JsonConvert.SerializeObject(Class, Settings);
-            }
-            catch (Exception)
-            {
-            }
-
-            return Serialed;
-        }
-
-        public static object DeseralizeClass(string Data, Type DataType, JsonSerializerSettings Settings = null)
-        {
-            object Deseralized = null;
-
-            if (Settings == null)
-                Settings = JsonSettings;
+            Settings ??= JsonSettings;
 
             try
             {
-                Deseralized = JsonConvert.DeserializeObject(Data, DataType, Settings);
+                Serialized = JsonConvert.SerializeObject(Class, Settings);
             }
             catch (Exception)
             {
+                // Handle exception if needed
             }
 
-            return Deseralized;
+            return Serialized;
         }
 
-        public static T DeseralizeClass<T>(string Data, JsonSerializerSettings Settings = null, params string[] IgnoreFields)
+        // Method to deserialize a JSON string to an object
+        public static object DeserializeClass(string Data, Type DataType, JsonSerializerSettings Settings = null)
         {
-            T Deseralized;
+            object Deserialized = null;
 
-            if (Settings == null)
-                Settings = JsonSettings;
+            Settings ??= JsonSettings;
+
+            try
+            {
+                Deserialized = JsonConvert.DeserializeObject(Data, DataType, Settings);
+            }
+            catch (Exception)
+            {
+                // Handle exception if needed
+            }
+
+            return Deserialized;
+        }
+
+        // Generic method to deserialize a JSON string to a specific type of object
+        public static T DeserializeClass<T>(string Data, JsonSerializerSettings Settings = null, params string[] IgnoreFields)
+        {
+            T Deserialized;
+
+            Settings ??= JsonSettings;
 
             if (IgnoreFields.Length > 0)
             {
@@ -67,20 +70,22 @@ namespace OVR_Dash_Manager.Functions
                 jsonResolver.Ignore(typeof(T), IgnoreFields);
                 JsonSerializerSettings NewSettings = DeepCopySettings(Settings);
                 NewSettings.ContractResolver = jsonResolver;
+                Settings = NewSettings;  // Update Settings to use the new contract resolver
             }
 
             try
             {
-                Deseralized = JsonConvert.DeserializeObject<T>(Data, Settings);
+                Deserialized = JsonConvert.DeserializeObject<T>(Data, Settings);
             }
             catch (Exception)
             {
-                Deseralized = default(T);
+                Deserialized = default;
             }
 
-            return Deseralized;
+            return Deserialized;
         }
 
+        // Method to create a deep copy of JsonSerializerSettings
         public static JsonSerializerSettings DeepCopySettings(JsonSerializerSettings serializer)
         {
             var copiedSerializer = new JsonSerializerSettings
@@ -118,9 +123,7 @@ namespace OVR_Dash_Manager.Functions
         }
     }
 
-    /// <summary>
-    /// Special JsonConvert resolver that allows you to ignore properties.  See https://stackoverflow.com/a/13588192/1037948
-    /// </summary>
+    // Custom contract resolver to ignore specified properties during serialization/deserialization
     public class IgnorableSerializerContractResolver : DefaultContractResolver
     {
         protected readonly Dictionary<Type, HashSet<string>> Ignores;
@@ -130,11 +133,7 @@ namespace OVR_Dash_Manager.Functions
             this.Ignores = new Dictionary<Type, HashSet<string>>();
         }
 
-        /// <summary>
-        /// Explicitly ignore the given property(s) for the given type
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="propertyName">one or more properties to ignore.  Leave empty to ignore the type entirely.</param>
+        // Explicitly ignore the given property(s) for the given type
         public void Ignore(Type type, params string[] propertyName)
         {
             // start bucket if DNE
@@ -146,12 +145,7 @@ namespace OVR_Dash_Manager.Functions
             }
         }
 
-        /// <summary>
-        /// Is the given property for the given type ignored?
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
+        // Is the given property for the given type ignored?
         public bool IsIgnored(Type type, string propertyName)
         {
             if (!this.Ignores.ContainsKey(type)) return false;
@@ -162,12 +156,7 @@ namespace OVR_Dash_Manager.Functions
             return this.Ignores[type].Contains(propertyName);
         }
 
-        /// <summary>
-        /// The decision logic goes here
-        /// </summary>
-        /// <param name="member"></param>
-        /// <param name="memberSerialization"></param>
-        /// <returns></returns>
+        // The decision logic goes here
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
             JsonProperty property = base.CreateProperty(member, memberSerialization);

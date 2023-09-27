@@ -23,7 +23,7 @@ namespace OVR_Dash_Manager.Software
             {
                 string programData = Properties.Settings.Default.Auto_Programs_JSON;
 
-                var slimPrograms = Functions.JSON_Functions.DeseralizeClass<List<Slim_Auto_Program>>(programData);
+                var slimPrograms = Functions.JsonFunctions.DeserializeClass<List<Slim_Auto_Program>>(programData);
                 if (slimPrograms.Count > 0)
                 {
                     foreach (var item in slimPrograms)
@@ -77,7 +77,7 @@ namespace OVR_Dash_Manager.Software
                 item.Changed = false;
             }
 
-            Properties.Settings.Default.Auto_Programs_JSON = Functions.JSON_Functions.SerializeClass(slimPrograms);
+            Properties.Settings.Default.Auto_Programs_JSON = Functions.JsonFunctions.SerializeClass(slimPrograms);
             Properties.Settings.Default.Save();
         }
 

@@ -1,91 +1,93 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Win32;
 
 namespace OVR_Dash_Manager.Functions
 {
-    public static class File_Browser
+    public static class FileBrowser
     {
-        public static string Open_Single(string DefaultDirectory = "", string DefaultExtenstion = "", string FileExtenstionFilters = "*.*;", bool MustExist = true)
+        public static string OpenSingle(
+            string defaultDirectory = "",
+            string defaultExtension = "",
+            string fileExtensionFilters = "*.*;",
+            bool mustExist = true)
         {
-            string pFile = string.Empty;
-
-            List<string> pFiles = Do_FileBrowser(DefaultDirectory, DefaultDirectory, FileExtenstionFilters, false, MustExist);
-
-            if (pFiles.Count == 1)
-                pFile = pFiles[0];
-
-            return pFile;
+            var files = DoFileBrowser(defaultDirectory, defaultExtension, fileExtensionFilters, false, mustExist);
+            return files.Count == 1 ? files[0] : string.Empty;
         }
 
-        public static List<string> Open_Multiple(string DefaultDirectory = "", string DefaultExtenstion = "", string FileExtenstionFilters = "*.*;", bool MustExist = true)
+        public static List<string> OpenMultiple(
+            string defaultDirectory = "",
+            string defaultExtension = "",
+            string fileExtensionFilters = "*.*;",
+            bool mustExist = true)
         {
-            List<string> pFiles = Do_FileBrowser(DefaultDirectory, DefaultDirectory, FileExtenstionFilters, true, MustExist);
-
-            return pFiles;
+            return DoFileBrowser(defaultDirectory, defaultExtension, fileExtensionFilters, true, mustExist);
         }
 
-        private static List<string> Do_FileBrowser(string DefaultDirectory, string DefaultExtenstion, string FileExtenstionFilters, bool MultipleFiles, bool MustExist)
+        private static List<string> DoFileBrowser(
+            string defaultDirectory,
+            string defaultExtension,
+            string fileExtensionFilters,
+            bool multipleFiles,
+            bool mustExist)
         {
-            List<string> pFiles = new List<string>();
+            var files = new List<string>();
 
-            if (DefaultDirectory == "")
+            if (string.IsNullOrEmpty(defaultDirectory))
             {
-                string ProcessDirectory = Process_Functions.GetCurrentProcessDirectory();
-                DefaultDirectory = ProcessDirectory;
+                defaultDirectory = OVR_Dash_Manager.Functions.ProcessFunctions.ProcessFunctions.GetCurrentProcessDirectory();
             }
 
-            Dictionary<string, string> FileTypes = new Dictionary<string, string>();
+            var fileTypes = new Dictionary<string, string>();
 
-            if (!FileExtenstionFilters.Contains("*.*"))
+            if (!fileExtensionFilters.Contains("*.*"))
             {
-                string[] pSplit = FileExtenstionFilters.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-                string Name;
-
-                foreach (string oExt in pSplit)
+                var splitFilters = fileExtensionFilters.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var ext in splitFilters)
                 {
-                    if (!FileTypes.ContainsKey(oExt))
+                    if (!fileTypes.ContainsKey(ext))
                     {
-                        Name = GetDescription(oExt.Replace("*", ""));
-
-                        if (Name == "")
-                            Name = oExt.Replace("*.", "").ToUpper() + " File";
-
-                        FileTypes.Add(oExt, Name);
+                        var name = GetDescription(ext.Replace("*", ""));
+                        name = string.IsNullOrEmpty(name) ? ext.Replace("*.", "").ToUpper() + " File" : name;
+                        fileTypes.Add(ext, name);
                     }
                 }
             }
             else
-                FileTypes.Add("*.*", "All Files");
-
-            string ExtentsionFilterSeperateAll = "Filtered Files|";
-            string ExtentsionFilterSeperate = "";
-
-            foreach (KeyValuePair<string, string> oFilter in FileTypes)
             {
-                ExtentsionFilterSeperateAll += oFilter.Key + ";";
-                ExtentsionFilterSeperate += "|" + oFilter.Value + "|" + oFilter.Key;
+                fileTypes.Add("*.*", "All Files");
             }
 
-            ExtentsionFilterSeperate = StringFunctions.RemoveStringFromStart(ExtentsionFilterSeperate, "|");
+            var extensionFilterSeparateAll = "Filtered Files|";
+            var extensionFilterSeparate = "";
 
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
+            foreach (var filter in fileTypes)
             {
-                DefaultExt = DefaultExtenstion,
-                Filter = ExtentsionFilterSeperateAll + "|" + ExtentsionFilterSeperate,
-                InitialDirectory = DefaultDirectory,
-                AddExtension = (DefaultExtenstion != "" ? true : false),
-                CheckFileExists = MustExist,
+                extensionFilterSeparateAll += filter.Key + ";";
+                extensionFilterSeparate += "|" + filter.Value + "|" + filter.Key;
+            }
+
+            extensionFilterSeparate = extensionFilterSeparate.TrimStart('|');
+
+            var dlg = new OpenFileDialog
+            {
+                DefaultExt = defaultExtension,
+                Filter = extensionFilterSeparateAll + "|" + extensionFilterSeparate,
+                InitialDirectory = defaultDirectory,
+                AddExtension = !string.IsNullOrEmpty(defaultExtension),
+                CheckFileExists = mustExist,
                 CheckPathExists = true,
                 ValidateNames = true,
-                Multiselect = MultipleFiles
+                Multiselect = multipleFiles
             };
 
             bool? result = dlg.ShowDialog();
 
             if (result == true)
-                pFiles.AddRange(dlg.FileNames);
+                files.AddRange(dlg.FileNames);
 
-            return pFiles;
+            return files;
         }
 
         private static string ReadDefaultValue(string regKey)

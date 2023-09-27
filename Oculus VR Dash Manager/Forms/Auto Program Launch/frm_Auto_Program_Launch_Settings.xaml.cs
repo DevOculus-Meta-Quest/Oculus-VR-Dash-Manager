@@ -18,7 +18,7 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
 
         private void btn_Add_Program_Click(object sender, RoutedEventArgs e)
         {
-            String FilePath = Functions.File_Browser.Open_Single();
+            String FilePath = Functions.FileBrowser.OpenSingle();
             if (!String.IsNullOrEmpty(FilePath))
             {
                 Software.Auto_Launch_Programs.Add_New_Program(FilePath);

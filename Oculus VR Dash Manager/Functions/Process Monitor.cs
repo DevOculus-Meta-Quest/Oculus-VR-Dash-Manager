@@ -10,6 +10,7 @@ namespace OVR_Dash_Manager.Functions
         public delegate void ProcessEventHandler(string processName, int processId);
 
         public static event ProcessEventHandler ProcessStarted;
+
         public static event ProcessEventHandler ProcessExited;
 
         private static readonly ManagementEventWatcher ProcessStartEventWatcher;

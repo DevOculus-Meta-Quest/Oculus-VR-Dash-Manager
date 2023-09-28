@@ -47,7 +47,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    
+
                     <GridViewColumn Header="File Path" Width="Auto" DisplayMemberBinding="{Binding Folder_Path}" />
                 </GridView>
             </ListView.View>

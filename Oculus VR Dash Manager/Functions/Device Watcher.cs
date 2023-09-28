@@ -17,6 +17,7 @@ namespace OVR_Dash_Manager.Functions
 
         // Flags to indicate whether the setup is done and whether the watcher is running.
         private static bool _isSetup;
+
         private static bool _running;
 
         // Timestamp to track the last connection event.

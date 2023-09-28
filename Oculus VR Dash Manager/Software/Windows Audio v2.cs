@@ -10,6 +10,7 @@ namespace OVR_Dash_Manager.Software
     {
         // Fields
         private static IAudioController controller;
+
         private static bool _IsSetup = false;
         public static List<IDevice_Ext> Speakers;
 
@@ -104,6 +105,7 @@ namespace OVR_Dash_Manager.Software
 
             // Properties with OnPropertyChanged notification
             private bool _Normal_Speaker;
+
             public bool Normal_Speaker
             {
                 get { return _Normal_Speaker; }
@@ -111,6 +113,7 @@ namespace OVR_Dash_Manager.Software
             }
 
             private bool _Quest_Speaker;
+
             public bool Quest_Speaker
             {
                 get { return _Quest_Speaker; }
@@ -118,6 +121,7 @@ namespace OVR_Dash_Manager.Software
             }
 
             private string _Name;
+
             public string Name
             {
                 get { return _Name; }
@@ -125,6 +129,7 @@ namespace OVR_Dash_Manager.Software
             }
 
             private Guid _ID;
+
             public Guid ID
             {
                 get { return _ID; }

@@ -90,6 +90,5 @@ namespace OVR_Dash_Manager.Software
                 }
             }
         }
-
     }
 }

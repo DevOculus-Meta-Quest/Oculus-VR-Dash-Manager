@@ -135,6 +135,7 @@ namespace OVR_Dash_Manager
                 case ServiceControllerStatus.StartPending:
                 case ServiceControllerStatus.StopPending:
                     return true;
+
                 default:
                     return false;
             }

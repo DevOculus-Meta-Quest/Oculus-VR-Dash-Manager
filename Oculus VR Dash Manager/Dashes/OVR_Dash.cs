@@ -100,7 +100,6 @@ namespace OVR_Dash_Manager.Dashes
             }
         }
 
-
         public async Task DownloadAsync()
         {
             String Temp_DashPath = Path.Combine(Software.Oculus.Oculus_Dash_Directory, DashFileName + ".tmp");

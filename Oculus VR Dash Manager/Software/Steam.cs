@@ -13,6 +13,7 @@ namespace OVR_Dash_Manager.Software
     {
         // Properties
         public static bool Steam_Installed { get; private set; }
+
         public static bool Steam_VR_Installed { get; private set; }
         public static string Steam_Directory { get; private set; }
         public static string Steam_VR_Directory { get; private set; }
@@ -23,8 +24,11 @@ namespace OVR_Dash_Manager.Software
 
         // Delegates and events for state changes
         private delegate void Steam_Running_State_Changed();
+
         private static event Steam_Running_State_Changed Steam_Running_State_Changed_Event;
+
         public delegate void Steam_VR_Running_State_Changed();
+
         public static event Steam_VR_Running_State_Changed Steam_VR_Running_State_Changed_Event;
 
         private static bool _IsSetup = false;
@@ -131,6 +135,7 @@ namespace OVR_Dash_Manager.Software
 
         // Event handlers for process started and exited
         private static void Process_Watcher_ProcessStarted(string pProcessName, int pProcessID) => Set_Running_State(pProcessName, true);
+
         private static void Process_Watcher_ProcessExited(string pProcessName, int pProcessID) => Set_Running_State(pProcessName, false);
 
         // Method to set the running state of Steam related processes

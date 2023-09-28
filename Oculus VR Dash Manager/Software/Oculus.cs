@@ -11,6 +11,7 @@ namespace OVR_Dash_Manager.Software
     {
         // Properties
         public static string Oculus_Main_Directory { get; private set; }
+
         public static string Oculus_Dash_Directory { get; private set; }
         public static string Oculus_Dash_File { get; private set; }
         public static string Oculus_Client_EXE { get; private set; }

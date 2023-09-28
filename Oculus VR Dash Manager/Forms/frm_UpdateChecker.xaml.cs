@@ -84,6 +84,5 @@ namespace OVR_Dash_Manager.Forms
             await ItsKaitlyn03.DownloadAsync();  // If Download is async, use await here
             await Check_Update();
         }
-
     }
 }

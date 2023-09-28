@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
-using Microsoft.Win32;
 
 namespace OVR_Dash_Manager.Functions
 {

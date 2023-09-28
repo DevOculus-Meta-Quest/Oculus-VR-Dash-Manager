@@ -1,8 +1,6 @@
-﻿using System;
+﻿using AdvancedSharpAdbClient;
 using System.IO;
 using System.Linq;
-using Microsoft.Win32;
-using AdvancedSharpAdbClient;
 
 namespace OVR_Dash_Manager.Software
 {

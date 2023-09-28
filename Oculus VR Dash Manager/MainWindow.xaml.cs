@@ -3,6 +3,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,9 +38,9 @@ namespace OVR_Dash_Manager
             Topmost = Properties.Settings.Default.AlwaysOnTop;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            try  // Added try-catch block for error handling
+            try
             {
                 btn_Diagnostics.IsEnabled = false;
                 btn_OpenSettings.IsEnabled = false;
@@ -55,9 +56,7 @@ namespace OVR_Dash_Manager
 
                 Software.Auto_Launch_Programs.Generate_List();
 
-                Thread Start = new Thread(Startup);
-                Start.IsBackground = true;
-                Start.Start();
+                await StartupAsync();
             }
             catch (Exception ex)
             {
@@ -95,20 +94,15 @@ namespace OVR_Dash_Manager
             Oculus_Dash.Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time;
         }
 
-        private async void Startup()  // Ensured async keyword is present
+        private async Task StartupAsync()
         {
-            try  // Added try-catch block for error handling
+            try
             {
                 Functions.ProcessWatcher.Start();
 
-                // ADB Auto Start Created By https://github.com/quagsirus
-                // KrisIsBack Addin - Sorted code into their own places & added warning message when setting turned on
-
-                // Start listening for new device connections
                 Functions.DeviceWatcher.DeviceConnected += Oculus_Link.StartLinkOnDevice;
                 Functions.DeviceWatcher.Start();
                 ADB.Start();
-                ///
 
                 Functions.ProcessWatcher.IgnoreExeName("cmd.exe");
                 Functions.ProcessWatcher.IgnoreExeName("conhost.exe");
@@ -119,7 +113,6 @@ namespace OVR_Dash_Manager
                 {
                     Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Checking Installed Dashes & Updates"; }));
 
-                    // Await the asynchronous method here
                     await Dashes.Dash_Manager.GenerateDashesAsync();
 
                     if (!Software.Oculus.Oculus_Is_Installed)
@@ -541,7 +534,7 @@ namespace OVR_Dash_Manager
 
         private void ErrorLog(Exception e)
         {
-            try  // Added try-catch block for error handling
+            try
             {
                 File.AppendAllText("ErrorLog.txt", Environment.NewLine +
                                                    Environment.NewLine +

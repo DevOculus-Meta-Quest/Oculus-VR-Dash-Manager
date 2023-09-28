@@ -10,20 +10,27 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <StartupObject>OVR_Dash_Manager.App</StartupObject>
     <Description>Oculus VR Dash Manager - Swap Between Supported Dashboard With Ease</Description>
-    <Copyright>KrisIsBack (AU)</Copyright>
+    <Copyright>2023</Copyright>
     <PackageIcon>Icon.ico</PackageIcon>
     <PackageIconUrl />
-    <Version>1.0.3.4</Version>
-    <Authors>KrisIsBack (AU)</Authors>
+    <Version>1.1.0.0</Version>
+    <Authors>Eliminater74</Authors>
     <PackageReleaseNotes>Official &amp; Oculus Killer - Supported with Updates
-https://github.com/KrisIsBackAU/Oculus-VR-Dash-Manager</PackageReleaseNotes>
+https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager</PackageReleaseNotes>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <RepositoryUrl>https://github.com/KrisIsBackAU/Oculus-VR-Dash-Manager</RepositoryUrl>
+    <RepositoryUrl>https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager</RepositoryUrl>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyVersion>1.0.3.4</AssemblyVersion>
-    <FileVersion>1.0.3.4</FileVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <Title>Oculus VR Dash Manager</Title>
+    <PackageProjectUrl>https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>oculus; quest 2; quest; steamvr; vr; manager</PackageTags>
+    <AnalysisLevel>none</AnalysisLevel>
+    <EnableNETAnalyzers>True</EnableNETAnalyzers>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -52,6 +59,10 @@ https://github.com/KrisIsBackAU/Oculus-VR-Dash-Manager</PackageReleaseNotes>
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="Icon.ico">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

@@ -21,6 +21,9 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
 
+    - name: Restore NuGet packages
+      run: msbuild -t:restore
+
     - name: Build project
       run: msbuild "Oculus VR Dash Manager\Oculus VR Dash Manager.csproj" /p:Configuration=Release
 
@@ -38,8 +41,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.event.inputs.version }}
-        release_name: Release ${{ github.event.inputs.version }}
+        tag_name: ${{ github.event.inputs.version || github.ref }}
+        release_name: Release ${{ github.event.inputs.version || github.ref }}
         draft: false
         prerelease: false
 
@@ -52,4 +55,3 @@ jobs:
         asset_path: ./artifacts.zip
         asset_name: Oculus VR Dash Manager.zip
         asset_content_type: application/zip
-

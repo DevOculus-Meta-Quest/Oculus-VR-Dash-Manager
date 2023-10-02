@@ -1,5 +1,6 @@
 ﻿using OVR_Dash_Manager.Software;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Threading;
@@ -561,6 +562,19 @@ namespace OVR_Dash_Manager
         private void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             ErrorLog((Exception)e.ExceptionObject);
+        }
+
+        private void btn_StartSteamVR_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Assuming Steam is installed in the default location
+                Process.Start(@"C:\Program Files (x86)\Steam\steam.exe", "-applaunch 250820");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to start SteamVR: " + ex.Message);
+            }
         }
     }
 }

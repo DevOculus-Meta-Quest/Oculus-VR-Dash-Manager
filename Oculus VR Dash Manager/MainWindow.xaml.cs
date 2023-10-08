@@ -175,7 +175,7 @@ namespace OVR_Dash_Manager
             {
                 ErrorLog(ex);
             }
-            bool isDesktopPlusInstalled = ProcessFunctions.IsDesktopPlusInstalled();
+            bool isDesktopPlusInstalled = ProcessFunctions.IsAppInstalled("DesktopPlus");
 
             // Update UI
             UpdateDesktopPlusStatusLabel(isDesktopPlusInstalled);
@@ -213,7 +213,7 @@ namespace OVR_Dash_Manager
 
         private void UpdateDesktopPlusStatusLabel(bool isInstalled)
         {
-            string statusText = isInstalled ? "Installed" : "Not Installed";
+            string statusText = isInstalled ? "Installed: True" : "Installed: False";
 
             // Ensure UI updates are performed on the UI thread
             Dispatcher.Invoke(() =>

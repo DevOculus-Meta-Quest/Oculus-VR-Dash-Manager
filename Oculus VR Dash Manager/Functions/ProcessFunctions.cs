@@ -16,7 +16,7 @@ namespace OVR_Dash_Manager.Functions
             return Path.GetDirectoryName(assemblyLocation);
         }
 
-        public static bool IsDesktopPlusInstalled()
+        public static bool IsAppInstalled(string appName)
         {
             try
             {
@@ -28,11 +28,10 @@ namespace OVR_Dash_Manager.Functions
                 }
 
                 List<string> libraryPaths = GetLibraryPaths(steamPath);
-                return CheckDesktopPlusInLibraryPaths(libraryPaths);
+                return CheckAppInLibraryPaths(libraryPaths, appName);
             }
             catch (Exception ex)
             {
-                // Consider how you want to handle exceptions
                 Log($"An error occurred: {ex.Message}");
                 return false;
             }
@@ -69,19 +68,19 @@ namespace OVR_Dash_Manager.Functions
             return libraryPaths;
         }
 
-        private static bool CheckDesktopPlusInLibraryPaths(List<string> libraryPaths)
+        private static bool CheckAppInLibraryPaths(List<string> libraryPaths, string appName)
         {
             foreach (string libraryPath in libraryPaths)
             {
                 Log($"Checking library path: {libraryPath}");
-                string appPath = Path.Combine(libraryPath, @"steamapps\common\DesktopPlus");
+                string appPath = Path.Combine(libraryPath, $@"steamapps\common\{appName}");
                 if (Directory.Exists(appPath))
                 {
-                    Log("Desktop+ found!");
+                    Log($"{appName} found!");
                     return true;
                 }
             }
-            Log("Desktop+ not found.");
+            Log($"{appName} not found.");
             return false;
         }
 

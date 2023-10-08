@@ -59,6 +59,6 @@
         <Label x:Name="lbl_SteamVR_Status" Content="N/A" HorizontalAlignment="Left" Margin="284,0,0,85" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
         <Button x:Name="btn_ExitSteamVR" Content="Exit SteamVR" HorizontalAlignment="Left" Margin="10,0,0,120" Width="150" VerticalAlignment="Bottom" Click="btn_ExitSteamVR_Click" IsEnabled="False"/>
         <GroupBox x:Name="groupBox" Header="Desktop+ Status" Margin="665,320,25,61" Height="60" VerticalAlignment="Center"/>
-        <Label x:Name="lbl_DesktopPlusStatus" Content="n/a" HorizontalAlignment="Left" Margin="723,352,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbl_DesktopPlusStatus" Content="n/a" Margin="678,344,0,0" VerticalAlignment="Top" Width="120" HorizontalAlignment="Left"/>
     </Grid>
 </Window>

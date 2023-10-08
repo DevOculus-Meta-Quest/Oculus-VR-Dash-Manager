@@ -16,8 +16,8 @@
 
     <Grid Background="#FF212121" HorizontalAlignment="Left" Width="835">
         <Label x:Name="lbl_Title" Content="Oculus VR Dash Manager " Margin="10,5,10,0" VerticalAlignment="Top" Height="41" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="21.333" FontWeight="Bold" Cursor="Hand" PreviewMouseDown="lbl_Title_PreviewMouseDown" FontFamily="Bodoni MT Black" />
-        <Label Content="Current Dash" Margin="10,213,10,0" VerticalAlignment="Top" Height="41" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" FontWeight="Bold" />
-        <Label x:Name="lbl_CurrentSetting" Content="Unknown" Margin="10,254,10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Height="45" VerticalAlignment="Top" />
+        <Label Content="Current Dash" Margin="240,213,200,0" VerticalAlignment="Top" Height="41" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" FontWeight="Bold" />
+        <Label x:Name="lbl_CurrentSetting" Content="Unknown" Margin="240,254,200,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Height="45" VerticalAlignment="Top" />
         <GroupBox Header="VR-Dashes" Margin="10,42,10,0" Height="171" VerticalAlignment="Top">
             <Grid x:Name="gd_DashButtons">
                 <Button x:Name="btn_Normal" Content="Official Dash&#10;&#10;(SteamVR)&#10;Hover to activate" HorizontalAlignment="Left" Width="230" Margin="0,0,0,23" Click="btn_ActivateDash_Click" MouseEnter="btn_Normal_MouseEnter" MouseLeave="btn_Normal_MouseLeave" BorderBrush="#FF515151" />

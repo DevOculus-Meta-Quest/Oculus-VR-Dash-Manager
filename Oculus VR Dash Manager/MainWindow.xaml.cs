@@ -1,8 +1,10 @@
-﻿using OVR_Dash_Manager.Software;
+﻿using OVR_Dash_Manager.Functions;
+using OVR_Dash_Manager.Software;
 using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -70,6 +72,7 @@ namespace OVR_Dash_Manager
             Functions_Old.DoAction(this, new Action(delegate ()
             {
                 lbl_SteamVR_Status.Content = Software.Steam.Steam_VR_Server_Running ? "Running" : "N/A";
+                btn_ExitSteamVR.IsEnabled = Software.Steam.Steam_VR_Server_Running; // Enable/Disable button
             }));
         }
 
@@ -172,6 +175,16 @@ namespace OVR_Dash_Manager
             {
                 ErrorLog(ex);
             }
+            bool isDesktopPlusInstalled = ProcessFunctions.IsDesktopPlusInstalled();
+
+            // Update UI
+            UpdateDesktopPlusStatusLabel(isDesktopPlusInstalled);
+
+            // Notify the user if Desktop+ is not installed.
+            if (!isDesktopPlusInstalled)
+            {
+                ShowDesktopPlusNotInstalledWarning();
+            }
         }
 
         private void NotElevated()
@@ -181,6 +194,32 @@ namespace OVR_Dash_Manager
                 lbl_CurrentSetting.Content = "Run as Admin Required";
                 MessageBox.Show(this, "This program must be run with Admin Permissions" + Environment.NewLine + Environment.NewLine + "Right click Program File then click - Run as administrator" + Environment.NewLine + Environment.NewLine + " or Right Click Program - Properties - Compatibility then Check - Run this program as an administrator", "This program must be run with Admin Permissions", MessageBoxButton.OK, MessageBoxImage.Error);
             }));
+        }
+
+        private void ShowDesktopPlusNotInstalledWarning()
+        {
+            // Assuming mainWindow is your main window that is set to always on top
+            Window mainWindow = Application.Current.MainWindow;
+
+            // Temporarily set the main window to not be topmost
+            mainWindow.Topmost = false;
+
+            // Notify the user or disable certain functionality.
+            MessageBox.Show(mainWindow, "Desktop+ is not installed. Some functionality may be limited.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+            // Set the main window back to topmost
+            mainWindow.Topmost = true;
+        }
+
+        private void UpdateDesktopPlusStatusLabel(bool isInstalled)
+        {
+            string statusText = isInstalled ? "Installed" : "Not Installed";
+
+            // Ensure UI updates are performed on the UI thread
+            Dispatcher.Invoke(() =>
+            {
+                lbl_DesktopPlusStatus.Content = statusText;
+            });
         }
 
         #region Dash Buttons
@@ -575,6 +614,11 @@ namespace OVR_Dash_Manager
             {
                 MessageBox.Show("Failed to start SteamVR: " + ex.Message);
             }
+        }
+
+        private void btn_ExitSteamVR_Click(object sender, RoutedEventArgs e)
+        {
+            Steam.Close_SteamVR_Server();
         }
     }
 }

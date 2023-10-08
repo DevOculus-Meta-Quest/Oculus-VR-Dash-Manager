@@ -14,7 +14,7 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid Background="#FF212121" HorizontalAlignment="Left" Width="835">
+    <Grid Background="#FF212121" Width="835" VerticalAlignment="Top">
         <Label x:Name="lbl_Title" Content="Oculus VR Dash Manager " Margin="10,5,10,0" VerticalAlignment="Top" Height="41" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="21.333" FontWeight="Bold" Cursor="Hand" PreviewMouseDown="lbl_Title_PreviewMouseDown" FontFamily="Bodoni MT Black" />
         <Label Content="Current Dash" Margin="240,213,200,0" VerticalAlignment="Top" Height="41" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" FontWeight="Bold" />
         <Label x:Name="lbl_CurrentSetting" Content="Unknown" Margin="240,254,200,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Height="45" VerticalAlignment="Top" />
@@ -32,7 +32,7 @@
         <Button x:Name="btn_OculusServiceManager" Content="Oculus Service Manager" HorizontalAlignment="Left" Margin="284,0,0,48" VerticalAlignment="Bottom" Click="btn_OculusServiceManager_Click" Height="30" Width="190" />
         <Button x:Name="btn_OpenSettings" Content="Settings" HorizontalAlignment="Left" Margin="10,0,0,48" VerticalAlignment="Bottom" Click="btn_OpenSettings_Click" Height="22" Width="110" />
         <Label x:Name="lbl_TestAccess" Content="Cable Link &amp; Air Link Supported" HorizontalAlignment="Right" Margin="0,39,0,0" FontStyle="Italic" Width="170" HorizontalContentAlignment="Center" PreviewMouseRightButtonDown="lbl_TestAccess_PreviewMouseRightButtonDown" Height="28" VerticalAlignment="Top" FontSize="11" />
-        <Button x:Name="btn_StartSteamVR" Content="Start SteamVR" Margin="9,0,0,125" FontFamily="Berlin Sans FB" RenderTransformOrigin="0.496,1.156" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="150" Click="btn_StartSteamVR_Click">
+        <Button x:Name="btn_StartSteamVR" Content="Start SteamVR" Margin="11,0,0,156" FontFamily="Berlin Sans FB" RenderTransformOrigin="0.496,1.156" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="150" Click="btn_StartSteamVR_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -57,5 +57,8 @@
         <Button x:Name="btn_OpenSteamVRSettings" Content="SteamVR Settings" HorizontalAlignment="Left" Margin="10,0,0,85" VerticalAlignment="Bottom" Click="btn_OpenSteamVRSettings_Click" Height="22" Width="150" IsEnabled="False" />
         <Label Content="SteamVR Status:" HorizontalAlignment="Left" Margin="165,0,0,85" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
         <Label x:Name="lbl_SteamVR_Status" Content="N/A" HorizontalAlignment="Left" Margin="284,0,0,85" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
+        <Button x:Name="btn_ExitSteamVR" Content="Exit SteamVR" HorizontalAlignment="Left" Margin="10,0,0,120" Width="150" VerticalAlignment="Bottom" Click="btn_ExitSteamVR_Click" IsEnabled="False"/>
+        <GroupBox x:Name="groupBox" Header="Desktop+ Status" Margin="665,320,25,61" Height="60" VerticalAlignment="Center"/>
+        <Label x:Name="lbl_DesktopPlusStatus" Content="n/a" HorizontalAlignment="Left" Margin="723,352,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

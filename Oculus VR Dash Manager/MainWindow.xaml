@@ -15,7 +15,22 @@
     </Window.Resources>
 
     <Grid Background="#FF212121" Width="835" VerticalAlignment="Top">
-        <Label x:Name="lbl_Title" Content="Oculus VR Dash Manager " Margin="10,5,10,0" VerticalAlignment="Top" Height="41" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="21.333" FontWeight="Bold" Cursor="Hand" PreviewMouseDown="lbl_Title_PreviewMouseDown" FontFamily="Bodoni MT Black" />
+        <Label x:Name="lbl_Title" Content="Oculus VR Dash Manager " Margin="10,5,10,0" VerticalAlignment="Top" Height="41" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontWeight="Bold" Cursor="Hand" PreviewMouseDown="lbl_Title_PreviewMouseDown" FontFamily="Copperplate Gothic Bold" >
+            <Label.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Label.Foreground>
+            <Label.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="#FF31338E" Offset="1"/>
+                    <GradientStop Color="#FF0F102D" Offset="0.319"/>
+                    <GradientStop Color="#FF0F102D" Offset="0.581"/>
+                </LinearGradientBrush>
+            </Label.BorderBrush>
+        </Label>
         <Label Content="Current Dash" Margin="240,213,200,0" VerticalAlignment="Top" Height="41" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" FontWeight="Bold" />
         <Label x:Name="lbl_CurrentSetting" Content="Unknown" Margin="240,254,200,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Height="45" VerticalAlignment="Top" />
         <GroupBox Header="VR-Dashes" Margin="10,42,10,0" Height="171" VerticalAlignment="Top">
@@ -32,7 +47,7 @@
         <Button x:Name="btn_OculusServiceManager" Content="Oculus Service Manager" HorizontalAlignment="Left" Margin="284,0,0,48" VerticalAlignment="Bottom" Click="btn_OculusServiceManager_Click" Height="30" Width="190" />
         <Button x:Name="btn_OpenSettings" Content="Settings" HorizontalAlignment="Left" Margin="10,0,0,48" VerticalAlignment="Bottom" Click="btn_OpenSettings_Click" Height="22" Width="110" />
         <Label x:Name="lbl_TestAccess" Content="Cable Link &amp; Air Link Supported" HorizontalAlignment="Right" Margin="0,39,0,0" FontStyle="Italic" Width="170" HorizontalContentAlignment="Center" PreviewMouseRightButtonDown="lbl_TestAccess_PreviewMouseRightButtonDown" Height="28" VerticalAlignment="Top" FontSize="11" />
-        <Button x:Name="btn_StartSteamVR" Content="Start SteamVR" Margin="11,0,0,156" FontFamily="Berlin Sans FB" RenderTransformOrigin="0.496,1.156" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="150" Click="btn_StartSteamVR_Click">
+        <Button x:Name="btn_StartSteamVR" Content="Start SteamVR" Margin="11,0,0,156" RenderTransformOrigin="0.496,1.156" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="150" Click="btn_StartSteamVR_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -46,14 +61,14 @@
         <Button x:Name="btn_CheckForUpdates" Content="Update Checker" HorizontalAlignment="Left" Margin="125,0,0,10" VerticalAlignment="Bottom" Click="btn_CheckForUpdates_Click" Height="30" Width="154" />
         <Button x:Name="btn_Help" Content="Help" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Click="btn_Help_Click" Height="30" Width="110" />
 
-        <UniformGrid Rows="1" Margin="479,0,10,11" Height="30" VerticalAlignment="Bottom">
+        <UniformGrid Rows="1" Margin="479,0,10,11" Height="29" VerticalAlignment="Bottom">
             <UniformGrid.Resources>
                 <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type ToggleButton}}" />
             </UniformGrid.Resources>
             <RadioButton x:Name="btn_RunTime_SteamVR" Content="SteamVR" Checked="btn_RunTime_SteamVR_Checked" VerticalContentAlignment="Center" FontSize="13" />
             <RadioButton x:Name="btn_RunTime_Oculus" Content="Oculus" Checked="btn_RunTime_Oculus_Checked" VerticalContentAlignment="Center" FontSize="13" />
         </UniformGrid>
-        <Label Content="OpenXR Runtime:" HorizontalAlignment="Left" Margin="479,0,0,48" VerticalAlignment="Bottom" Height="30" Width="168" HorizontalContentAlignment="Center" />
+        <Label Content="OpenXR Runtime:" HorizontalAlignment="Left" Margin="479,0,0,45" VerticalAlignment="Bottom" Height="30" Width="168" HorizontalContentAlignment="Center" />
         <Button x:Name="btn_OpenSteamVRSettings" Content="SteamVR Settings" HorizontalAlignment="Left" Margin="10,0,0,85" VerticalAlignment="Bottom" Click="btn_OpenSteamVRSettings_Click" Height="22" Width="150" IsEnabled="False" />
         <Label x:Name="lbl_SteamVR_Status" Content="N/A" HorizontalAlignment="Left" Margin="678,0,0,135" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
         <Button x:Name="btn_ExitSteamVR" Content="Exit SteamVR" HorizontalAlignment="Left" Margin="10,0,0,120" Width="150" VerticalAlignment="Bottom" Click="btn_ExitSteamVR_Click" IsEnabled="False"/>

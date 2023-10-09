@@ -26,5 +26,10 @@ namespace OVR_Dash_Manager.Forms
         {
             Functions_Old.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/discussions");
         }
+
+        private void btn_GetDesktopPlus_Click(object sender, RoutedEventArgs e)
+        {
+            Functions_Old.OpenURL("https://store.steampowered.com/app/1494460/Desktop/");
+        }
     }
 }

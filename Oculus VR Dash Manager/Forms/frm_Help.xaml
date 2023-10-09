@@ -18,6 +18,10 @@
     <Grid Background="#FF212121">
         <Label Content="Visit Github Page" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
         <Button x:Name="btn_GitHub" Content="GitHub" HorizontalAlignment="Left" Margin="141,10,0,0" VerticalAlignment="Top" Height="28" Width="110" Click="btn_GitHub_Click" />
-        <TextBlock Text="Need to report an issue, Post in Issues on Github." Margin="10,100,10,10" TextWrapping="Wrap" Foreground="White" Grid.ColumnSpan="2" />
+        <TextBlock Text="Need to report an issue, Post in Issues on Github." Margin="10,189,10,10" TextWrapping="Wrap" Foreground="White" />
+        <Label x:Name="label" Content="Report Issue:" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" Width="111"/>
+        <Button x:Name="btn_GitIssue" Content="Report Issues" HorizontalAlignment="Left" Margin="141,63,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.491,-0.132" Click="btn_GitIssue_Click"/>
+        <Label x:Name="label1" Content="Discussions:" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Width="111"/>
+        <Button x:Name="btn_GitDiscussions" Content="Discussions" HorizontalAlignment="Left" Margin="141,111,0,0" VerticalAlignment="Top" Width="110" Click="btn_GitDiscussions_Click"/>
     </Grid>
 </Window>

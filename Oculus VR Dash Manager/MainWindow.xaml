@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Oculus VR Dash Manager" Height="496" Width="836" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing" WindowStyle="ToolWindow">
+        Title="Oculus VR Dash Manager" Height="505" Width="855" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing" WindowStyle="ToolWindow">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -14,7 +14,7 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid Background="#FF212121" Width="835" VerticalAlignment="Top">
+    <Grid Background="#FF212121" VerticalAlignment="Top" Height="465">
         <Label x:Name="lbl_Title" Content="Oculus VR Dash Manager " Margin="10,5,10,0" VerticalAlignment="Top" Height="41" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontWeight="Bold" Cursor="Hand" PreviewMouseDown="lbl_Title_PreviewMouseDown" FontFamily="Copperplate Gothic Bold" >
             <Label.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -31,8 +31,7 @@
                 </LinearGradientBrush>
             </Label.BorderBrush>
         </Label>
-        <Label Content="Current Dash" Margin="240,213,200,0" VerticalAlignment="Top" Height="41" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" FontWeight="Bold" />
-        <Label x:Name="lbl_CurrentSetting" Content="Unknown" Margin="240,254,200,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Height="45" VerticalAlignment="Top" />
+        <Label x:Name="lbl_CurrentSetting" Content="Unknown" Margin="202,254,220,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Height="44" VerticalAlignment="Top" />
         <GroupBox Header="VR-Dashes" Margin="10,42,10,0" Height="171" VerticalAlignment="Top">
             <Grid x:Name="gd_DashButtons">
                 <Button x:Name="btn_Normal" Content="Official Dash&#10;&#10;(SteamVR)&#10;Hover to activate" HorizontalAlignment="Left" Width="230" Margin="0,0,0,23" Click="btn_ActivateDash_Click" MouseEnter="btn_Normal_MouseEnter" MouseLeave="btn_Normal_MouseLeave" BorderBrush="#FF515151" />
@@ -70,10 +69,11 @@
         </UniformGrid>
         <Label Content="OpenXR Runtime:" HorizontalAlignment="Left" Margin="479,0,0,45" VerticalAlignment="Bottom" Height="30" Width="168" HorizontalContentAlignment="Center" />
         <Button x:Name="btn_OpenSteamVRSettings" Content="SteamVR Settings" HorizontalAlignment="Left" Margin="10,0,0,85" VerticalAlignment="Bottom" Click="btn_OpenSteamVRSettings_Click" Height="22" Width="150" IsEnabled="False" />
-        <Label x:Name="lbl_SteamVR_Status" Content="N/A" HorizontalAlignment="Left" Margin="678,0,0,135" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
+        <Label x:Name="lbl_SteamVR_Status" Content="N/A" HorizontalAlignment="Left" Margin="704,0,0,124" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
         <Button x:Name="btn_ExitSteamVR" Content="Exit SteamVR" HorizontalAlignment="Left" Margin="10,0,0,120" Width="150" VerticalAlignment="Bottom" Click="btn_ExitSteamVR_Click" IsEnabled="False"/>
-        <GroupBox x:Name="groupBox" Header="Desktop+ Status" Margin="665,320,25,61" Height="60" VerticalAlignment="Center"/>
-        <Label x:Name="lbl_DesktopPlusStatus" Content="n/a" Margin="678,344,0,0" VerticalAlignment="Top" Width="120" HorizontalAlignment="Left"/>
-        <GroupBox x:Name="groupBox1" Header="SteamVR Status" Height="60" Margin="665,254,25,127" VerticalAlignment="Center"/>
+        <GroupBox x:Name="groupBox" Header="Desktop+ Status" Margin="678,349,12,0" Height="60" VerticalAlignment="Top"/>
+        <GroupBox x:Name="groupBox1" Header="SteamVR Status" Height="60" Margin="678,289,12,0" VerticalAlignment="Top"/>
+        <GroupBox x:Name="groupBox2" Header="Current Dash" Margin="185,218,208,161"/>
+        <Label x:Name="lbl_DesktopPlusStatus" Content="N/A" HorizontalAlignment="Left" Margin="704,0,0,60" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
     </Grid>
 </Window>

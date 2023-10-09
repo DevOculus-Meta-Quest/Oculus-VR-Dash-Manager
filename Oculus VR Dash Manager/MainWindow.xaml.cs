@@ -175,7 +175,7 @@ namespace OVR_Dash_Manager
             {
                 ErrorLog(ex);
             }
-            bool isDesktopPlusInstalled = ProcessFunctions.IsAppInstalled("DesktopPlus");
+            bool isDesktopPlusInstalled = SteamAppChecker.IsAppInstalled("DesktopPlus");
 
             // Update UI
             UpdateDesktopPlusStatusLabel(isDesktopPlusInstalled);

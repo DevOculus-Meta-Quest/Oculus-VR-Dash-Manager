@@ -55,10 +55,10 @@
         </UniformGrid>
         <Label Content="OpenXR Runtime:" HorizontalAlignment="Left" Margin="479,0,0,48" VerticalAlignment="Bottom" Height="30" Width="168" HorizontalContentAlignment="Center" />
         <Button x:Name="btn_OpenSteamVRSettings" Content="SteamVR Settings" HorizontalAlignment="Left" Margin="10,0,0,85" VerticalAlignment="Bottom" Click="btn_OpenSteamVRSettings_Click" Height="22" Width="150" IsEnabled="False" />
-        <Label Content="SteamVR Status:" HorizontalAlignment="Left" Margin="165,0,0,85" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
-        <Label x:Name="lbl_SteamVR_Status" Content="N/A" HorizontalAlignment="Left" Margin="284,0,0,85" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
+        <Label x:Name="lbl_SteamVR_Status" Content="N/A" HorizontalAlignment="Left" Margin="678,0,0,135" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
         <Button x:Name="btn_ExitSteamVR" Content="Exit SteamVR" HorizontalAlignment="Left" Margin="10,0,0,120" Width="150" VerticalAlignment="Bottom" Click="btn_ExitSteamVR_Click" IsEnabled="False"/>
         <GroupBox x:Name="groupBox" Header="Desktop+ Status" Margin="665,320,25,61" Height="60" VerticalAlignment="Center"/>
         <Label x:Name="lbl_DesktopPlusStatus" Content="n/a" Margin="678,344,0,0" VerticalAlignment="Top" Width="120" HorizontalAlignment="Left"/>
+        <GroupBox x:Name="groupBox1" Header="SteamVR Status" Height="60" Margin="665,254,25,127" VerticalAlignment="Center"/>
     </Grid>
 </Window>

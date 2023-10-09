@@ -37,7 +37,7 @@ namespace OVR_Dash_Manager.Forms
         private async Task Check_DashManager_Update()
         {
             Github Check = new Github();
-            String Version = await Check.GetLatestReleaseNameAsync("KrisIsBackAU", "Oculus-VR-Dash-Manager");
+            String Version = await Check.GetLatestReleaseNameAsync("DevOculus-Meta-Quest", "Oculus-VR-Dash-Manager");
             String CurrentVersion = typeof(MainWindow).Assembly.GetName().Version.ToString();
             Functions_Old.DoAction(this, new Action(delegate () { lbl_DashManager_LastCheck.Content = DateTime.Now.ToString(); lbl_DashManager_CurrentVersion.Content = CurrentVersion; lbl_DashManager_AvaliableVersion.Content = Version; }));
         }
@@ -57,7 +57,7 @@ namespace OVR_Dash_Manager.Forms
             }
 
             Github Check = new Github();
-            GitHub = await Check.GetLatestReleaseInfoAsync("ItsKaitlyn03", "OculusKiller");
+            GitHub = await Check.GetLatestReleaseInfoAsync("DevOculus-Meta-Quest", "OculusKiller");
             Functions_Old.DoAction(this, new Action(delegate () { lbl_LastCheck.Content = DateTime.Now.ToString(); lbl_AvaliableVersion.Content = GitHub.ReleaseVersion; }));
 
             if (GitHub.AssetUrls.ContainsKey("OculusDash.exe"))

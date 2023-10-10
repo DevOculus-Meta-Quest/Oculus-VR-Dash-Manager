@@ -27,10 +27,16 @@ jobs:
     - name: Build project
       run: msbuild "Oculus VR Dash Manager\Oculus VR Dash Manager.csproj" /p:Configuration=Release
 
+    - name: List files in artifacts directory
+      run: |
+        cd artifacts
+        Get-ChildItem -Recurse
+      shell: pwsh
+
     - name: Package build artifacts
       run: |
         mkdir artifacts
-        cp "Oculus VR Dash Manager\bin\Release\net481\*" artifacts
+        cp -r "Oculus VR Dash Manager\bin\Release\net481\*" artifacts
         cd artifacts
         Compress-Archive -Path * -DestinationPath ../artifacts.zip
       shell: pwsh

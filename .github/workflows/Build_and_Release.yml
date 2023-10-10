@@ -27,12 +27,6 @@ jobs:
     - name: Build project
       run: msbuild "Oculus VR Dash Manager\Oculus VR Dash Manager.csproj" /p:Configuration=Release
 
-    - name: List files in artifacts directory
-      run: |
-        cd artifacts
-        Get-ChildItem -Recurse
-      shell: pwsh
-
     - name: Package build artifacts
       run: |
         mkdir artifacts
@@ -41,12 +35,18 @@ jobs:
         Compress-Archive -Path * -DestinationPath ../artifacts.zip
       shell: pwsh
 
+    - name: List files in artifacts directory
+      run: |
+        cd artifacts
+        Get-ChildItem -Recurse
+      shell: pwsh
+
     - name: List files in current directory
       run: ls -la
       shell: bash
 
     - name: Create Release
-      id: create_release  # Ensure this ID is used to reference outputs
+      id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
@@ -61,9 +61,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}  # Ensure this references the correct step ID
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./artifacts.zip
         asset_name: Oculus VR Dash Manager.zip
         asset_content_type: application/zip
-
-        

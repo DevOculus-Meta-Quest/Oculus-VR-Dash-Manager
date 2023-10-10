@@ -29,14 +29,14 @@ jobs:
 
     - name: Package build artifacts
       run: |
-            mkdir $(Build.ArtifactStagingDirectory)
-            cp "Oculus VR Dash Manager\bin\Release\*" $(Build.ArtifactStagingDirectory)
-            cd $(Build.ArtifactStagingDirectory)
-            Compress-Archive -Path * -DestinationPath $(Build.ArtifactStagingDirectory)/artifacts.zip
+        mkdir artifacts
+        cp "Oculus VR Dash Manager\bin\Release\net481\*" artifacts
+        cd artifacts
+        Compress-Archive -Path * -DestinationPath ../artifacts.zip
       shell: pwsh
 
-    - name: List files in artifact staging directory
-      run: ls -la $(Build.ArtifactStagingDirectory)
+    - name: List files in current directory
+      run: ls -la
       shell: bash
 
     - name: Upload Build Artifact to Release
@@ -45,6 +45,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: $(Build.ArtifactStagingDirectory)/artifacts.zip
+        asset_path: ./artifacts.zip
         asset_name: Oculus VR Dash Manager.zip
         asset_content_type: application/zip
+        

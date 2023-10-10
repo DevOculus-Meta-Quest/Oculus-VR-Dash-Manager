@@ -39,13 +39,25 @@ jobs:
       run: ls -la
       shell: bash
 
+    - name: Create Release
+      id: create_release  # Ensure this ID is used to reference outputs
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
+      with:
+        tag_name: ${{ github.event.inputs.version || github.ref }}
+        release_name: Release ${{ github.event.inputs.version || github.ref }}
+        draft: false
+        prerelease: false
+
     - name: Upload Build Artifact to Release
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        upload_url: ${{ steps.create_release.outputs.upload_url }}  # Ensure this references the correct step ID
         asset_path: ./artifacts.zip
         asset_name: Oculus VR Dash Manager.zip
         asset_content_type: application/zip
+
         

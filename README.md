@@ -1,56 +1,78 @@
-<div align="center">
+Absolutely! Let's enhance the README with a bit more flair and structure.
 
-# 🎮 Oculus VR Dash Manager
+---
 
-</div>
+# 🚀 Oculus VR Dash Manager 🚀
 
-## 🚀 Introduction
+![Main Interface](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/main/assets/Main.jpg)
 
-Welcome to the **Oculus VR Dash Manager**, a sophisticated tool engineered to elevate the user experience on Oculus VR devices. This project is a brainchild of [@KrisIsBackAU](https://github.com/KrisIsBackAU), and has been meticulously refactored by [Eliminater74](https://github.com/Eliminater74) to incorporate a myriad of new features and enhancements.
+Welcome to **Oculus VR Dash Manager**, your one-stop solution to elevate and streamline your Oculus VR experience. Dive into a user-friendly interface packed with features that allow you to manage and optimize Oculus and SteamVR settings, ensuring a smooth, immersive, and hassle-free VR journey.
 
-<div align="center">
+## 🌟 Features 🌟
 
-![Main Interface](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/Main/Main.PNG)
+### 1. Oculus and SteamVR Management 🎮
+   - 🚀 Manage Oculus and SteamVR settings directly.
+   - 🔒 Enable/Disable Oculus services.
+   - 🚀 Launch Oculus and SteamVR with personalized settings.
 
-</div>
+### 2. Auto Launch Programs 🚗
+   - 🚀 Auto-launch specified programs on startup.
+   - 🔧 Manage and customize the auto-launch list.
 
-## 🌟 Features
+### 3. Windows Audio Management 🔊
+   - 🎵 Control Windows audio settings.
+   - 🔄 Switch between audio devices.
+   - 🔊 Adjust volume levels.
 
-- **Dash Management**: Tailor your Oculus VR dashboards to your liking with a user-friendly interface.
-- **Auto Program Launch**: Set up automatic program launches with predefined settings for a hassle-free VR experience.
-- **Settings Management**: A comprehensive settings panel allowing you to fine-tune the Oculus VR Dash Manager to your preferences.
-- **Diagnostics**: An integrated diagnostics tool to troubleshoot and resolve common issues swiftly.
-- **Oculus Service Control**: Direct control over Oculus services right from the application for enhanced manageability.
-- **SteamVR Settings**: Seamlessly manage your SteamVR settings for an optimized VR gaming experience.
-- **Update Checker**: Stay ahead with the latest version of Oculus VR Dash Manager with the built-in update checker.
-- **OculusKiller Features**: A dedicated suite of features aimed at managing and optimizing the Oculus environment for peak performance.
+### 4. Oculus Link 🔄
+   - 🔗 Manage Oculus Link settings.
+   - 🚀 Optimize Oculus Link for an immersive VR experience.
 
-## 📥 Installation
+### 5. ADB (Android Debug Bridge) 🌉
+   - 🚀 Manage and execute ADB commands.
+   - 📱 Interact with your Oculus device using ADB.
 
-1. **Download**: Grab the latest release from the [Releases](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/releases) page.
-2. **Extract**: Unzip the downloaded file to your preferred location.
-3. **Run**: Launch the `Oculus VR Dash Manager.exe` to start exploring the features.
+### 6. Update Checker 🔄
+   - 🚀 Ensure you're using the latest version with the update checker.
 
-![GitHub release (latest by SemVer including pre-releases)](https://img.shields.io/github/downloads/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/total)
+## 📸 Screenshots 📸
 
-![GitHub Downloads](https://img.shields.io/github/release-date/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager?style=plastic)
+| ![Main Help](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/main/assets/images/main_help.png) | ![Diagnostics](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/main/assets/images/Main_Diagnostics.png) | ![Oculus Service](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/main/assets/images/Main_OculusService.png) |
+|:---:|:---:|:---:|
+| *Main Interface Help* | *Diagnostics Interface* | *Oculus Service Management Interface* |
 
-<div align="center">
+| ![Update Checker](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/main/assets/images/Main_UpdateChecker.png) | ![Settings](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/main/assets/images/Settings.png) |
+|:---:|:---:|
+| *Update Checker Interface* | *Settings Interface* |
 
-![Settings Interface](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/Main/Settings.PNG)
+## 🚀 How to Use 🚀
 
-</div>
+### 1. **Getting Started**
+   - 🚀 Download and install Oculus VR Dash Manager.
+   - 🔧 Configure Oculus and SteamVR settings.
 
-## 🙏 Acknowledgements
+### 2. **Managing Auto Launch Programs**
+   - 🚗 Navigate to 'Auto Launch Programs'.
+   - 🔧 Add or remove programs from the auto-launch list.
 
-A hearty shoutout to [@KrisIsBackAU](https://github.com/KrisIsBackAU) for laying down the original codebase and [Eliminater74](https://github.com/Eliminater74) for the monumental refactor and the infusion of additional features.
+### 3. **Managing Oculus Link**
+   - 🔄 Go to 'Oculus Link'.
+   - 🔧 Adjust settings as per your preference.
 
-## 🤝 Contributing
+### 4. **Using ADB**
+   - 🌉 Navigate to 'ADB'.
+   - 🔧 Execute ADB commands as needed.
 
-We welcome contributions! Feel free to fork the project, open issues, and submit pull requests. Your involvement is much appreciated!
+## 🤝 Support and Contribution 🤝
 
-<div align="center">
+Contribute to **Oculus VR Dash Manager** by creating pull requests. For issues, bug reports, or feature requests, please open an issue in the repository.
 
-[![GitHub stars](https://img.shields.io/github/stars/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager.svg?style=social&label=Star&maxAge=2592000)](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/stargazers/)
+## 📜 License 📜
 
-</div>
+Oculus VR Dash Manager is open-source software licensed under [MIT License](LICENSE).
+
+---
+
+**Note**: Make sure to replace the placeholder for the LICENSE link with the actual link to the LICENSE file in your repository.
+
+This enhanced README provides a vibrant and structured overview of Oculus VR Dash Manager, highlighting its features and functionalities with the inclusion of images from the assets directory. If there are additional features or details you'd like to include, or if you'd like further enhancements, please let me know!

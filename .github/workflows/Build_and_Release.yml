@@ -29,29 +29,22 @@ jobs:
 
     - name: Package build artifacts
       run: |
-        mkdir artifacts
-        cp "Oculus VR Dash Manager\bin\Release\*" artifacts
-        cd artifacts
-        Compress-Archive -Path * -DestinationPath ../artifacts.zip
+            mkdir $(Build.ArtifactStagingDirectory)
+            cp "Oculus VR Dash Manager\bin\Release\*" $(Build.ArtifactStagingDirectory)
+            cd $(Build.ArtifactStagingDirectory)
+            Compress-Archive -Path * -DestinationPath $(Build.ArtifactStagingDirectory)/artifacts.zip
       shell: pwsh
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}  # Changed this line
-      with:
-        tag_name: ${{ github.event.inputs.version || github.ref }}
-        release_name: Release ${{ github.event.inputs.version || github.ref }}
-        draft: false
-        prerelease: false
+    - name: List files in artifact staging directory
+      run: ls -la $(Build.ArtifactStagingDirectory)
+      shell: bash
 
     - name: Upload Build Artifact to Release
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}  # Changed this line
+        GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./artifacts.zip
+        asset_path: $(Build.ArtifactStagingDirectory)/artifacts.zip
         asset_name: Oculus VR Dash Manager.zip
         asset_content_type: application/zip

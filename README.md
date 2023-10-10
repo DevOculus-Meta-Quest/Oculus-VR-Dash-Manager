@@ -10,7 +10,7 @@ Welcome to the **Oculus VR Dash Manager**, a sophisticated tool engineered to el
 
 <div align="center">
 
-![Main Interface](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/Main-Test/Main.PNG)
+![Main Interface](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/Main/Main.PNG)
 
 </div>
 
@@ -37,7 +37,7 @@ Welcome to the **Oculus VR Dash Manager**, a sophisticated tool engineered to el
 
 <div align="center">
 
-![Settings Interface](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/Main-Test/Settings.PNG)
+![Settings Interface](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/Main/Settings.PNG)
 
 </div>
 

@@ -1,7 +1,3 @@
-Great! Let's recreate the README with the updated image paths and formats.
-
----
-
 # 🚀 Oculus VR Dash Manager 🚀
 
 ![Main Interface](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/Main/assets/images/Main.png)
@@ -77,9 +73,3 @@ Contribute to **Oculus VR Dash Manager** by creating pull requests. For issues, 
 ## 📜 License 📜
 
 Oculus VR Dash Manager is open-source software licensed under [MIT License](LICENSE).
-
----
-
-**Note**: Make sure to replace the placeholder for the LICENSE link with the actual link to the LICENSE file in your repository.
-
-This enhanced README provides a vibrant and structured overview of Oculus VR Dash Manager, highlighting its features and functionalities with the inclusion of images from the assets directory. If there are additional features or details you'd like to include, or if you'd like further enhancements, please let me know!

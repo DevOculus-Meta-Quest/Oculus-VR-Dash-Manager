@@ -4,9 +4,6 @@
 
 Welcome to **Oculus VR Dash Manager**, your one-stop solution to elevate and streamline your Oculus VR experience. Dive into a user-friendly interface packed with features that allow you to manage and optimize Oculus and SteamVR settings, ensuring a smooth, immersive, and hassle-free VR journey.
 
-![GitHub release (latest by SemVer including pre-releases)](https://img.shields.io/github/downloads/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/total)
-![GitHub Downloads](https://img.shields.io/github/release-date/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager?style=plastic)
-
 ## 🌟 Features 🌟
 
 ### 1. Oculus and SteamVR Management 🎮
@@ -20,10 +17,10 @@ Welcome to **Oculus VR Dash Manager**, your one-stop solution to elevate and str
 
 ### 3. Windows Audio Management 🔊
    - 🎵 Control Windows audio settings.
-   - 🔄 Switch between audio devices.
+   - 🔃 Switch between audio devices.
    - 🔊 Adjust volume levels.
 
-### 4. Oculus Link 🔄
+### 4. Oculus Link 🔃
    - 🔗 Manage Oculus Link settings.
    - 🚀 Optimize Oculus Link for an immersive VR experience.
 
@@ -31,7 +28,7 @@ Welcome to **Oculus VR Dash Manager**, your one-stop solution to elevate and str
    - 🚀 Manage and execute ADB commands.
    - 📱 Interact with your Oculus device using ADB.
 
-### 6. Update Checker 🔄
+### 6. Update Checker 🔃
    - 🚀 Ensure you're using the latest version with the update checker.
 
 ### 7. OculusKiller 🚫
@@ -48,6 +45,13 @@ Welcome to **Oculus VR Dash Manager**, your one-stop solution to elevate and str
 |:---:|:---:|
 | *Update Checker Interface* | *Settings Interface* |
 
+## ⬇️ Download ⬇️
+
+Grab the latest release [here](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/releases).
+
+![GitHub release (latest by SemVer including pre-releases)](https://img.shields.io/github/downloads/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/total)
+![GitHub Downloads](https://img.shields.io/github/release-date/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager?style=plastic)
+
 ## 🚀 How to Use 🚀
 
 ### 1. **Getting Started**
@@ -59,7 +63,7 @@ Welcome to **Oculus VR Dash Manager**, your one-stop solution to elevate and str
    - 🔧 Add or remove programs from the auto-launch list.
 
 ### 3. **Managing Oculus Link**
-   - 🔄 Go to 'Oculus Link'.
+   - 🔃 Go to 'Oculus Link'.
    - 🔧 Adjust settings as per your preference.
 
 ### 4. **Using ADB**

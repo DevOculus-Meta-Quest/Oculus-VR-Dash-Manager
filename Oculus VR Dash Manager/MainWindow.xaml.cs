@@ -24,10 +24,10 @@ namespace OVR_Dash_Manager
     {
         private ServiceManager _serviceManager = new ServiceManager();
         private UIManager _uiManager;
+        // Declare _hoverButtonManager at the class level
+        private HoverButtonManager _hoverButtonManager;
         private bool Elevated = false;
         private bool FireUIEvents = false;
-        private Hover_Button Oculus_Dash;
-        private Hover_Button Exit_Link;
         private InputSimulator Keyboard_Simulator;
         public bool Debug_EmulateReleaseMode = false;
 
@@ -35,6 +35,12 @@ namespace OVR_Dash_Manager
         {
             InitializeComponent();
             _uiManager = new UIManager(this);
+            // Temporarily create HoverButtonManager without ActivateDash action
+            _hoverButtonManager = new HoverButtonManager(this, pb_Normal, pb_Exit, null);
+
+            // Now that _hoverButtonManager is created, assign the ActivateDash action
+            _hoverButtonManager.SetActivateDashAction(_hoverButtonManager.ActivateDash);
+
 
             Application _This = Application.Current;
             _This.DispatcherUnhandledException += AppDispatcherUnhandledException;
@@ -55,7 +61,7 @@ namespace OVR_Dash_Manager
 
                 Disable_Dash_Buttons();
                 LinkDashesToButtons();
-                Generate_Hover_Buttons();
+                _hoverButtonManager.GenerateHoverButtons();
 
                 Dashes.Dash_Manager.PassMainForm(this);
                 Software.Steam.Steam_VR_Running_State_Changed_Event += Steam_Steam_VR_Running_State_Changed_Event;
@@ -97,8 +103,8 @@ namespace OVR_Dash_Manager
         private void RefreshUI()
         {
             CheckRunTime();
-            Exit_Link.Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time;
-            Oculus_Dash.Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time;
+            _hoverButtonManager.Exit_Link.Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time;
+            _hoverButtonManager.Oculus_Dash.Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time;
         }
 
         private async Task StartupAsync()
@@ -139,7 +145,7 @@ namespace OVR_Dash_Manager
 
                     Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Hover Buttons"; }));
 
-                    Timer_Functions.CreateTimer("Hover Checker", TimeSpan.FromMilliseconds(250), Check_Hover);
+                    Timer_Functions.CreateTimer("Hover Checker", TimeSpan.FromMilliseconds(250), _hoverButtonManager.CheckHover);
                     Timer_Functions.StartTimer("Hover Checker");
 
                     Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Service Manager"; }));
@@ -166,7 +172,7 @@ namespace OVR_Dash_Manager
                         btn_OpenSettings.IsEnabled = true;
                         lbl_SteamVR_Status.Content = "Installed: " + Software.Steam.Steam_VR_Installed;
                         lbl_CurrentSetting.Content = Software.Oculus.Current_Dash_Name;
-                        Update_Dash_Buttons();
+                        _hoverButtonManager.UpdateDashButtons();
                     }));
 
                     FireUIEvents = true;
@@ -234,100 +240,26 @@ namespace OVR_Dash_Manager
             btn_SteamVR.Tag = Dashes.Dash_Type.OculusKiller;
         }
 
-        private void Generate_Hover_Buttons()
-        {
-            Oculus_Dash = new Hover_Button { Hover_Complete_Action = Oculus_Dash_Hover_Activate, Bar = pb_Normal, Check_SteamVR = true, Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time };
-            Exit_Link = new Hover_Button { Hover_Complete_Action = Exit_Link_Hover_Activate, Bar = pb_Exit, Check_SteamVR = true, Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time };
-            pb_Normal.Maximum = Properties.Settings.Default.Hover_Activation_Time * 1000;
-            pb_Exit.Maximum = Properties.Settings.Default.Hover_Activation_Time * 1000;
-        }
-
-        private void Check_Hover(object sender, ElapsedEventArgs args)
-        {
-            CheckHovering(Oculus_Dash);
-            CheckHovering(Exit_Link);
-        }
-
-        private void Enable_Hover_Button(Dashes.Dash_Type Dash)
-        {
-            switch (Dash)
-            {
-                case Dashes.Dash_Type.Exit:
-                    Exit_Link.Enabled = true;
-                    break;
-
-                case Dashes.Dash_Type.Unknown:
-                    break;
-
-                case Dashes.Dash_Type.Normal:
-                    Oculus_Dash.Enabled = true;
-                    break;
-
-                case Dashes.Dash_Type.OculusKiller:
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        private void Reset_Hover_Buttons()
-        {
-            Oculus_Dash.Reset();
-            Exit_Link.Reset();
-        }
-
-        private void Oculus_Dash_Hover_Activate()
-        {
-            Oculus_Dash.Bar.Value = 0;
-            btn_ActivateDash_Click(btn_Normal, null);
-        }
-
-        private void Exit_Link_Hover_Activate()
-        {
-            Exit_Link.Bar.Value = 0;
-            Software.Steam.Close_SteamVR_ResetLink();
-        }
-
-        private void Update_Dash_Buttons()
-        {
-            foreach (UIElement item in gd_DashButtons.Children)
-            {
-                if (item is Button button)
-                {
-                    if (button.Tag is Dashes.Dash_Type Dash)
-                    {
-                        bool Enabled = Dashes.Dash_Manager.IsInstalled(Dash);
-                        button.IsEnabled = Enabled;
-                        if (Enabled)
-                            Enable_Hover_Button(Dash);
-                    }
-                }
-            }
-
-            btn_ExitOculusLink.IsEnabled = true;
-        }
-
         #region Hover Buttons Enter/Leave
 
         private void btn_Normal_MouseEnter(object sender, MouseEventArgs e)
         {
-            Oculus_Dash.SetHovering();
+            _hoverButtonManager.Oculus_Dash.SetHovering();
         }
 
         private void btn_Normal_MouseLeave(object sender, MouseEventArgs e)
         {
-            Oculus_Dash.StopHovering();
+            _hoverButtonManager.Oculus_Dash.StopHovering();
         }
 
         private void btn_ExitOculusLink_MouseEnter(object sender, MouseEventArgs e)
         {
-            Exit_Link.SetHovering();
+            _hoverButtonManager.Exit_Link.SetHovering();
         }
 
         private void btn_ExitOculusLink_MouseLeave(object sender, MouseEventArgs e)
         {
-            Exit_Link.StopHovering();
+            _hoverButtonManager.Exit_Link.StopHovering();
         }
 
         #endregion Hover Buttons Enter/Leave
@@ -349,7 +281,7 @@ namespace OVR_Dash_Manager
         private void Thread_ReactivateButtons()
         {
             Thread.Sleep(5000);
-            Functions_Old.DoAction(this, new Action(delegate () { Update_Dash_Buttons(); }));
+            Functions_Old.DoAction(this, new Action(delegate () { _hoverButtonManager.UpdateDashButtons(); }));
         }
 
         private void btn_OpenDashLocation_Click(object sender, RoutedEventArgs e)
@@ -382,7 +314,7 @@ namespace OVR_Dash_Manager
         private void ActivateDash(Button Clicked)
         {
             MoveMouseToElement(lbl_CurrentSetting);
-            Reset_Hover_Buttons();
+            _hoverButtonManager.ResetHoverButtons();
 
             if (Clicked.Tag is Dashes.Dash_Type Dash)
             {
@@ -408,27 +340,6 @@ namespace OVR_Dash_Manager
             {
                 if (item is Button button)
                     button.IsEnabled = false;
-            }
-        }
-
-        private void CheckHovering(Hover_Button Button)
-        {
-            if (Button.Hovering)
-            {
-                if (Button.Check_SteamVR)
-                {
-                    if (!Properties.Settings.Default.Ignore_SteamVR_Status_HoverButtonAction)
-                    {
-                        if (!Software.Steam.Steam_VR_Server_Running)
-                            return;
-                    }
-                }
-
-                TimeSpan Passed = DateTime.Now.Subtract(Button.Hover_Started);
-                Functions_Old.DoAction(this, new Action(delegate () { Button.Bar.Value = Passed.TotalMilliseconds; }));
-
-                if (Passed.TotalSeconds >= Button.Hovered_Seconds_To_Activate)
-                    Functions_Old.DoAction(this, new Action(delegate () { Button.Reset(); Button.Bar.Value = Button.Bar.Maximum; MoveMouseToElement(lbl_CurrentSetting); Button.Hover_Complete_Action.Invoke(); }));
             }
         }
 

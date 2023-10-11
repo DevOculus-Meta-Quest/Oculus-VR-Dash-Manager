@@ -22,6 +22,8 @@ namespace OVR_Dash_Manager
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ServiceManager _serviceManager = new ServiceManager();
+        private UIManager _uiManager;
         private bool Elevated = false;
         private bool FireUIEvents = false;
         private Hover_Button Oculus_Dash;
@@ -32,6 +34,7 @@ namespace OVR_Dash_Manager
         public MainWindow()
         {
             InitializeComponent();
+            _uiManager = new UIManager(this);
 
             Application _This = Application.Current;
             _This.DispatcherUnhandledException += AppDispatcherUnhandledException;
@@ -47,7 +50,7 @@ namespace OVR_Dash_Manager
             {
                 btn_Diagnostics.IsEnabled = false;
                 btn_OpenSettings.IsEnabled = false;
-                lbl_CurrentSetting.Content = "Starting Up";
+                _uiManager.UpdateStatusLabel("Starting Up");
                 Elevated = Functions.Process_Functions.IsCurrentProcess_Elevated();
 
                 Disable_Dash_Buttons();
@@ -69,11 +72,11 @@ namespace OVR_Dash_Manager
 
         private void Steam_Steam_VR_Running_State_Changed_Event()
         {
-            Functions_Old.DoAction(this, new Action(delegate ()
-            {
-                lbl_SteamVR_Status.Content = Software.Steam.Steam_VR_Server_Running ? "Running" : "N/A";
-                btn_ExitSteamVR.IsEnabled = Software.Steam.Steam_VR_Server_Running; // Enable/Disable button
-            }));
+            // Assuming Software.Steam.Steam_VR_Server_Running is a boolean, 
+            // you might want to convert it to a string message to display in the UI.
+            string statusText = Software.Steam.Steam_VR_Server_Running ? "Running" : "Not Running";
+            _uiManager.UpdateSteamVRStatusLabel(statusText);
+            // Note: If you have multiple buttons to enable/disable based on SteamVR status, consider adding a method in UIManager to handle this.
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

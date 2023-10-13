@@ -115,6 +115,9 @@ namespace OVR_Dash_Manager
 
         public static void DoAction(Window form, Action doAction)
         {
+            if (form == null || doAction == null)
+                throw new ArgumentNullException(form == null ? nameof(form) : nameof(doAction));
+
             form.Dispatcher.Invoke(doAction, DispatcherPriority.Normal);
         }
 
@@ -199,21 +202,24 @@ namespace OVR_Dash_Manager
 
         public static bool CreateTimer(string timerID, TimeSpan interval, ElapsedEventHandler tickHandler, bool repeat = true)
         {
-            if (!Timers.ContainsKey(timerID))
+            lock (Timers)  // Ensure thread safety during creation
             {
-                Timer timer = new Timer
+                if (!Timers.ContainsKey(timerID))
                 {
-                    Interval = interval.TotalMilliseconds,
-                    AutoReset = repeat,
-                    Enabled = false
-                };
+                    Timer timer = new Timer
+                    {
+                        Interval = interval.TotalMilliseconds,
+                        AutoReset = repeat,
+                        Enabled = false  // Consider not starting the timer here
+                    };
 
-                timer.Elapsed += tickHandler;
-                timer.Start();
+                    timer.Elapsed += tickHandler;
+                    // timer.Start();  // Consider moving this to StartTimer
 
-                Timers.Add(timerID, timer);
+                    Timers.Add(timerID, timer);
 
-                return true;
+                    return true;
+                }
             }
 
             return false;

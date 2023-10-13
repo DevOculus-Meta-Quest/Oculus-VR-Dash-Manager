@@ -14,39 +14,54 @@ namespace OVR_Dash_Manager.Functions
 
         public void UpdateStatusLabel(string text)
         {
-            _window.lbl_CurrentSetting.Content = text;
+            _window.Dispatcher.Invoke(() =>
+            {
+                _window.lbl_CurrentSetting.Content = text;
+            });
         }
 
         public void UpdateSteamVRStatusLabel(string text)
         {
-            _window.lbl_SteamVR_Status.Content = text;
+            _window.Dispatcher.Invoke(() =>
+            {
+                _window.lbl_SteamVR_Status.Content = text;
+            });
         }
 
         public void UpdateDesktopPlusStatusLabel(bool isInstalled)
         {
-            string statusText = isInstalled ? "Installed: True" : "Installed: False";
-            _window.lbl_DesktopPlusStatus.Content = statusText;
+            _window.Dispatcher.Invoke(() =>
+            {
+                string statusText = isInstalled ? "Installed: True" : "Installed: False";
+                _window.lbl_DesktopPlusStatus.Content = statusText;
+            });
         }
 
         public void EnableButton(string buttonName, bool isEnabled)
         {
-            switch (buttonName)
+            _window.Dispatcher.Invoke(() =>
             {
-                case "Diagnostics":
-                    _window.btn_Diagnostics.IsEnabled = isEnabled;
-                    break;
-                case "OpenSettings":
-                    _window.btn_OpenSettings.IsEnabled = isEnabled;
-                    break;
-                //... Add cases for other buttons as needed ...
-                default:
-                    throw new ArgumentException("Invalid button name", nameof(buttonName));
-            }
+                switch (buttonName)
+                {
+                    case "Diagnostics":
+                        _window.btn_Diagnostics.IsEnabled = isEnabled;
+                        break;
+                    case "OpenSettings":
+                        _window.btn_OpenSettings.IsEnabled = isEnabled;
+                        break;
+                    //... Add cases for other buttons as needed ...
+                    default:
+                        throw new ArgumentException("Invalid button name", nameof(buttonName));
+                }
+            });
         }
 
         public void ShowMessageBox(string message, string title, MessageBoxButton buttons, MessageBoxImage icon)
         {
-            MessageBox.Show(_window, message, title, buttons, icon);
+            _window.Dispatcher.Invoke(() =>
+            {
+                MessageBox.Show(_window, message, title, buttons, icon);
+            });
         }
 
         private void ShowDesktopPlusNotInstalledWarning()

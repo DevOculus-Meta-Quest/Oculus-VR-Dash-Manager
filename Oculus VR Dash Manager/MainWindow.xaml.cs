@@ -54,26 +54,34 @@ namespace OVR_Dash_Manager
         {
             try
             {
-                btn_Diagnostics.IsEnabled = false;
-                btn_OpenSettings.IsEnabled = false;
-                _uiManager.UpdateStatusLabel("Starting Up");
-                Elevated = Functions.Process_Functions.IsCurrentProcess_Elevated();
-
-                Disable_Dash_Buttons();
-                LinkDashesToButtons();
-                _hoverButtonManager.GenerateHoverButtons();
-
-                Dashes.Dash_Manager.PassMainForm(this);
-                Software.Steam.Steam_VR_Running_State_Changed_Event += Steam_Steam_VR_Running_State_Changed_Event;
-
-                Software.Auto_Launch_Programs.Generate_List();
-
-                await StartupAsync();
+                await WindowLoadedAsync();
             }
             catch (Exception ex)
             {
+                Debug.WriteLine($"Exception occurred: {ex.Message}");
+                Debug.WriteLine(ex.StackTrace);
+                // Handle exception or rethrow if necessary
                 ErrorLog(ex);
             }
+        }
+
+        private async Task WindowLoadedAsync()
+        {
+            btn_Diagnostics.IsEnabled = false;
+            btn_OpenSettings.IsEnabled = false;
+            _uiManager.UpdateStatusLabel("Starting Up");
+            Elevated = Functions.Process_Functions.IsCurrentProcess_Elevated();
+
+            Disable_Dash_Buttons();
+            LinkDashesToButtons();
+            _hoverButtonManager.GenerateHoverButtons();
+
+            Dashes.Dash_Manager.PassMainForm(this);
+            Software.Steam.Steam_VR_Running_State_Changed_Event += Steam_Steam_VR_Running_State_Changed_Event;
+
+            Software.Auto_Launch_Programs.Generate_List();
+
+            await StartupAsync();
         }
 
         private void Steam_Steam_VR_Running_State_Changed_Event()

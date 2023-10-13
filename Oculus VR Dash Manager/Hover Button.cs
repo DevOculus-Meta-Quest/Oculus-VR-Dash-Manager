@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Windows;
-
+using System.Diagnostics;
 
 namespace OVR_Dash_Manager
 {
@@ -39,10 +39,18 @@ namespace OVR_Dash_Manager
         // Sets the hover state to active and initializes the progress bar
         public void SetHovering()
         {
+            Debug.WriteLine("SetHovering called");
             Hovering = true;
             Hover_Started = DateTime.Now;
-            Bar.Value = 10;
+
+            // Ensure UI update is run on the UI thread
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Bar.Value = 10;
+            });
         }
+
+
 
         // Stops the hover state and resets the progress bar
         public void StopHovering()
@@ -79,31 +87,39 @@ namespace OVR_Dash_Manager
 
         public void CheckHovering()
         {
-            if (Hovering)
+            try
             {
-                if (Check_SteamVR)
+                if (Hovering)
                 {
-                    if (!Properties.Settings.Default.Ignore_SteamVR_Status_HoverButtonAction)
+                    if (Check_SteamVR)
                     {
-                        if (!Software.Steam.Steam_VR_Server_Running)
-                            return;
+                        if (!Properties.Settings.Default.Ignore_SteamVR_Status_HoverButtonAction)
+                        {
+                            if (!Software.Steam.Steam_VR_Server_Running)
+                                return;
+                        }
+                    }
+
+                    TimeSpan Passed = DateTime.Now.Subtract(Hover_Started);
+
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        Bar.Value = Passed.TotalMilliseconds;
+                    });
+
+                    if (Passed.TotalSeconds >= Hovered_Seconds_To_Activate)
+                    {
+                        Reset();
+                        Bar.Value = Bar.Maximum;
+                        Hover_Complete_Action.Invoke();
                     }
                 }
-
-                TimeSpan Passed = DateTime.Now.Subtract(Hover_Started);
-
-                // Ensure that the UI update is performed on the UI thread
-                Application.Current.Dispatcher.Invoke(() => Bar.Value = Passed.TotalMilliseconds);
-
-                if (Passed.TotalSeconds >= Hovered_Seconds_To_Activate)
-                {
-                    Reset();
-                    Bar.Value = Bar.Maximum;
-                    Hover_Complete_Action.Invoke();
-                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception in CheckHovering: {ex.Message}");
             }
         }
-
 
     }
 }

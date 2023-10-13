@@ -33,22 +33,25 @@ namespace OVR_Dash_Manager
 
         public void GenerateHoverButtons()
         {
-            Oculus_Dash = new Hover_Button
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                Hover_Complete_Action = OculusDashHoverActivate,
-                Bar = _pbNormal,
-                Check_SteamVR = true,
-                Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time
-            };
-            Exit_Link = new Hover_Button
-            {
-                Hover_Complete_Action = ExitLinkHoverActivate,
-                Bar = _pbExit,
-                Check_SteamVR = true,
-                Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time
-            };
-            _pbNormal.Maximum = Properties.Settings.Default.Hover_Activation_Time * 1000;
-            _pbExit.Maximum = Properties.Settings.Default.Hover_Activation_Time * 1000;
+                Oculus_Dash = new Hover_Button
+                {
+                    Hover_Complete_Action = OculusDashHoverActivate,
+                    Bar = _pbNormal,
+                    Check_SteamVR = true,
+                    Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time
+                };
+                Exit_Link = new Hover_Button
+                {
+                    Hover_Complete_Action = ExitLinkHoverActivate,
+                    Bar = _pbExit,
+                    Check_SteamVR = true,
+                    Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time
+                };
+                _pbNormal.Maximum = Properties.Settings.Default.Hover_Activation_Time * 1000;
+                _pbExit.Maximum = Properties.Settings.Default.Hover_Activation_Time * 1000;
+            });
         }
 
         public void CheckHover(object sender, ElapsedEventArgs args)

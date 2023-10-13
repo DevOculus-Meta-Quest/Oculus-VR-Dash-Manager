@@ -33,7 +33,17 @@ namespace OVR_Dash_Manager
         {
             Hovering = false;
             Hover_Started = DateTime.Now;
-            Bar.Value = 0;
+
+            // Check if the current thread is the UI thread
+            if (Bar.Dispatcher.CheckAccess())
+            {
+                Bar.Value = 0;
+            }
+            else
+            {
+                // Use Dispatcher.Invoke to update the UI element on the UI thread
+                Bar.Dispatcher.Invoke(() => Bar.Value = 0);
+            }
         }
 
         // Sets the hover state to active and initializes the progress bar
@@ -81,7 +91,18 @@ namespace OVR_Dash_Manager
             else
             {
                 // If the hover has not been active long enough, update the progress bar.
-                Bar.Value = (DateTime.Now - Hover_Started).TotalSeconds * 1000; // Update progress bar
+                double newValue = (DateTime.Now - Hover_Started).TotalSeconds * 1000; // Calculate new progress bar value
+
+                // Check if the current thread is the UI thread
+                if (Bar.Dispatcher.CheckAccess())
+                {
+                    Bar.Value = newValue;
+                }
+                else
+                {
+                    // Use Dispatcher.Invoke to update the UI element on the UI thread
+                    Bar.Dispatcher.Invoke(() => Bar.Value = newValue);
+                }
             }
         }
 

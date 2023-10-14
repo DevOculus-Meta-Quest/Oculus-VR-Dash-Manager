@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using WindowsInput;
 using WindowsInput.Native;
+using YOVR_Dash_Manager.Functions;
 
 namespace OVR_Dash_Manager
 {
@@ -58,10 +59,15 @@ namespace OVR_Dash_Manager
             }
             catch (Exception ex)
             {
+                // Log the exception using ErrorLogger
+                ErrorLogger.LogError(ex, "An error occurred during window loading.");
+
+                // Optionally: Inform the user about the error
+                MessageBox.Show("An error occurred while loading the window. Please try again later.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                // Additional logging or actions can be added here if needed
                 Debug.WriteLine($"Exception occurred: {ex.Message}");
                 Debug.WriteLine(ex.StackTrace);
-                // Handle exception or rethrow if necessary
-                ErrorLog(ex);
             }
         }
 
@@ -95,17 +101,38 @@ namespace OVR_Dash_Manager
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Software.Windows_Audio_v2.Set_To_Normal_Speaker_Auto();
-            Software.ADB.Stop();
-            Functions.ProcessWatcher.Stop();
+            try
+            {
+                // Set Windows audio to normal speaker automatically
+                Software.Windows_Audio_v2.Set_To_Normal_Speaker_Auto();
 
-            Timer_Functions.StopTimer("Hover Checker");
-            Timer_Functions.DisposeTimer("Hover Checker");
+                // Stop ADB
+                Software.ADB.Stop();
 
-            Hide();
-            Software.Oculus.StopOculusServices();
+                // Stop the ProcessWatcher
+                Functions.ProcessWatcher.Stop();
 
-            Software.Auto_Launch_Programs.Run_Closing_Programs();
+                // Stop and dispose the "Hover Checker" timer
+                Timer_Functions.StopTimer("Hover Checker");
+                Timer_Functions.DisposeTimer("Hover Checker");
+
+                // Hide the window
+                Hide();
+
+                // Stop Oculus services
+                Software.Oculus.StopOculusServices();
+
+                // Run programs that are set to execute upon closing
+                Software.Auto_Launch_Programs.Run_Closing_Programs();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception using ErrorLogger
+                ErrorLogger.LogError(ex, "An error occurred while closing the window.");
+
+                // Optionally: Inform the user about the error
+                MessageBox.Show("An error occurred while closing the application. Please check the error log for details.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void RefreshUI()
@@ -119,61 +146,79 @@ namespace OVR_Dash_Manager
         {
             try
             {
+                // Start the ProcessWatcher
                 Functions.ProcessWatcher.Start();
 
+                // Set up DeviceWatcher and start it
                 Functions.DeviceWatcher.DeviceConnected += Oculus_Link.StartLinkOnDevice;
                 Functions.DeviceWatcher.Start();
+
+                // Start ADB
                 ADB.Start();
 
+                // Ignore specific executables in ProcessWatcher
                 Functions.ProcessWatcher.IgnoreExeName("cmd.exe");
                 Functions.ProcessWatcher.IgnoreExeName("conhost.exe");
                 Functions.ProcessWatcher.IgnoreExeName("reg.exe");
                 Functions.ProcessWatcher.IgnoreExeName("SearchFilterHost.exe");
 
+                // Check if elevated permissions are granted
                 if (Elevated)
                 {
+                    // Check for installed dashes and updates
                     Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Checking Installed Dashes & Updates"; }));
 
+                    // Generate dashes asynchronously
                     await Dashes.Dash_Manager.GenerateDashesAsync();
 
+                    // Check if Oculus is installed
                     if (!Software.Oculus.Oculus_Is_Installed)
                     {
                         Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Oculus Directory Not Found"; }));
                         return;
                     }
 
+                    // Check if the official Oculus Dash is installed
                     if (!Dashes.Dash_Manager.Oculus_Official_Dash_Installed())
                     {
                         Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Official Oculus Dash Not Found, Replace Original Oculus Dash"; }));
                         return;
                     }
 
+                    // Start Steam Watcher
                     Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Steam Watcher"; }));
                     Software.Steam.Setup();
 
+                    // Initialize hover buttons
                     Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Hover Buttons"; }));
 
+                    // Set up and start the hover checker timer
                     Timer_Functions.CreateTimer("Hover Checker", TimeSpan.FromMilliseconds(250), _hoverButtonManager.CheckHover);
                     Timer_Functions.StartTimer("Hover Checker");
 
+                    // Start the service manager
                     Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Service Manager"; }));
-
                     Service_Manager.RegisterService("OVRLibraryService");
                     Service_Manager.RegisterService("OVRService");
 
+                    // Start Oculus Client if set to run on startup
                     if (Properties.Settings.Default.RunOculusClientOnStartup)
                     {
                         Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Oculus Client"; }));
                         Software.Oculus.StartOculusClient();
                     }
 
+                    // Check runtime
                     CheckRunTime();
 
+                    // Set up Windows audio and set to Quest speaker
                     Software.Windows_Audio_v2.Setup();
                     Software.Windows_Audio_v2.Set_To_Quest_Speaker_Auto();
 
+                    // Run startup programs
                     Software.Auto_Launch_Programs.Run_Startup_Programs();
 
+                    // Update UI elements
                     Functions_Old.DoAction(this, new Action(delegate ()
                     {
                         btn_Diagnostics.IsEnabled = true;
@@ -183,21 +228,35 @@ namespace OVR_Dash_Manager
                         _hoverButtonManager.UpdateDashButtons();
                     }));
 
+                    // Enable UI events
                     FireUIEvents = true;
                 }
                 else
+                {
+                    // Handle non-elevated scenario
                     NotElevated();
+                }
             }
             catch (Exception ex)
             {
-                ErrorLog(ex);
+                // Log the exception using ErrorLogger
+                ErrorLogger.LogError(ex, "An error occurred during startup.");
+
+                // Inform the user about the error
+                MessageBox.Show("An error occurred during startup. Please check the error log for details.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                // Additional logging for debugging
+                Debug.WriteLine($"Exception occurred: {ex.Message}");
+                Debug.WriteLine(ex.StackTrace);
             }
+
+            // Check if Desktop+ is installed
             bool isDesktopPlusInstalled = SteamAppChecker.IsAppInstalled("DesktopPlus");
 
-            // Update UI
+            // Update UI based on Desktop+ installation status
             _uiManager.UpdateDesktopPlusStatusLabel(isDesktopPlusInstalled);
 
-            // Notify the user if Desktop+ is not installed.
+            // Notify the user if Desktop+ is not installed
             if (!isDesktopPlusInstalled)
             {
                 _uiManager.ShowDesktopPlusNotInstalledWarning();
@@ -378,17 +437,39 @@ namespace OVR_Dash_Manager
 
         private void btn_Diagnostics_Click(object sender, RoutedEventArgs e)
         {
-            Forms.frm_Diagnostics Settings = new Forms.frm_Diagnostics();
-            OpenForm(Settings);
+            try
+            {
+                Forms.frm_Diagnostics Settings = new Forms.frm_Diagnostics();
+                OpenForm(Settings);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception using ErrorLogger
+                ErrorLogger.LogError(ex, "An error occurred while opening the Diagnostics window.");
+
+                // Optionally: Inform the user about the error
+                MessageBox.Show("An error occurred while trying to open the Diagnostics window. Please try again later.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void btn_CheckForUpdates_Click(object sender, RoutedEventArgs e)
         {
-            if (!FireUIEvents)
-                return;
+            try
+            {
+                if (!FireUIEvents)
+                    return;
 
-            Forms.frm_UpdateChecker Settings = new Forms.frm_UpdateChecker();
-            OpenForm(Settings);
+                Forms.frm_UpdateChecker Settings = new Forms.frm_UpdateChecker();
+                OpenForm(Settings);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception using ErrorLogger
+                ErrorLogger.LogError(ex, "An error occurred while checking for updates.");
+
+                // Optionally: Inform the user about the error
+                MessageBox.Show("An error occurred while trying to check for updates. Please try again later.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void btn_Help_Click(object sender, RoutedEventArgs e)
@@ -460,35 +541,19 @@ namespace OVR_Dash_Manager
 
         #endregion OpenXR Runtime
 
-        private void ErrorLog(Exception e)
-        {
-            try
-            {
-                File.AppendAllText("ErrorLog.txt", Environment.NewLine +
-                                                   Environment.NewLine +
-                                                   " ------ " +
-                                                   DateTime.Now.ToString(CultureInfo.InvariantCulture) +
-                                                   " ------" +
-                                                   Environment.NewLine +
-                                                   e.Message +
-                                                   Environment.NewLine +
-                                                   e.StackTrace);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Failed to write to ErrorLog.txt: " + ex.Message);
-            }
-        }
-
         private void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            ErrorLog(e.Exception);
+            // Log the exception using ErrorLogger
+            ErrorLogger.LogError(e.Exception, "An unhandled exception occurred in the dispatcher.");
+
+            // Handle the exception to prevent the application from terminating
             e.Handled = true;
         }
 
         private void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            ErrorLog((Exception)e.ExceptionObject);
+            // Log the exception using ErrorLogger
+            ErrorLogger.LogError((Exception)e.ExceptionObject, "An unhandled exception occurred in the application domain.");
         }
 
         private void btn_StartSteamVR_Click(object sender, RoutedEventArgs e)
@@ -500,6 +565,10 @@ namespace OVR_Dash_Manager
             }
             catch (Exception ex)
             {
+                // Log the exception using ErrorLogger
+                ErrorLogger.LogError(ex, "Failed to start SteamVR.");
+
+                // Display a message box to inform the user
                 MessageBox.Show("Failed to start SteamVR: " + ex.Message);
             }
         }

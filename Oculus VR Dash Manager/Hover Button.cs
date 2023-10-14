@@ -106,41 +106,5 @@ namespace OVR_Dash_Manager
             }
         }
 
-        public void CheckHovering()
-        {
-            try
-            {
-                if (Hovering)
-                {
-                    if (Check_SteamVR)
-                    {
-                        if (!Properties.Settings.Default.Ignore_SteamVR_Status_HoverButtonAction)
-                        {
-                            if (!Software.Steam.Steam_VR_Server_Running)
-                                return;
-                        }
-                    }
-
-                    TimeSpan Passed = DateTime.Now.Subtract(Hover_Started);
-
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        Bar.Value = Passed.TotalMilliseconds;
-                    });
-
-                    if (Passed.TotalSeconds >= Hovered_Seconds_To_Activate)
-                    {
-                        Reset();
-                        Bar.Value = Bar.Maximum;
-                        Hover_Complete_Action.Invoke();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Exception in CheckHovering: {ex.Message}");
-            }
-        }
-
     }
 }

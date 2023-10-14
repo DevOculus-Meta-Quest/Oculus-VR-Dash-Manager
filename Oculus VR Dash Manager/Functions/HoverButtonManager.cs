@@ -138,13 +138,41 @@ namespace OVR_Dash_Manager
 
         private void CheckHovering(Hover_Button hoverButton)
         {
-            if (hoverButton.IsHovering())
+            try
             {
-                hoverButton.UpdateHoverState();
+                // If not hovering, exit the method early to avoid unnecessary processing.
+                if (!hoverButton.Hovering)
+                    return;
+
+                // If Check_SteamVR is true and Ignore_SteamVR_Status_HoverButtonAction is false,
+                // check if Steam_VR_Server_Running is false. If it is, exit the method early.
+                if (hoverButton.Check_SteamVR &&
+                    !Properties.Settings.Default.Ignore_SteamVR_Status_HoverButtonAction &&
+                    !Software.Steam.Steam_VR_Server_Running)
+                    return;
+
+                // Calculate the time passed since hovering started.
+                TimeSpan Passed = DateTime.Now.Subtract(hoverButton.Hover_Started);
+
+                // Update the Bar value on the UI thread to avoid potential threading issues.
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    hoverButton.Bar.Value = Passed.TotalMilliseconds;
+                });
+
+                // Check if the passed time is greater or equal to the defined threshold.
+                // If it is, reset the bar, invoke the hover complete action, and exit the method.
+                if (Passed.TotalSeconds >= hoverButton.Hovered_Seconds_To_Activate)
+                {
+                    hoverButton.Reset();
+                    hoverButton.Bar.Value = hoverButton.Bar.Maximum;
+                    hoverButton.Hover_Complete_Action.Invoke();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                hoverButton.Reset();
+                // Log any exceptions that occur for debugging and diagnostic purposes.
+                Debug.WriteLine($"Exception in CheckHovering: {ex.Message}");
             }
         }
 

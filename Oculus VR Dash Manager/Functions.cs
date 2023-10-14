@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Net.Cache;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Timers;
 using System.Windows;
 using System.Windows.Threading;
+using YOVR_Dash_Manager.Functions;
 
 namespace OVR_Dash_Manager
 {
@@ -48,23 +50,17 @@ namespace OVR_Dash_Manager
                         os.Write(bytes, 0, bytes.Length);
                 }
 
-                WebResponse webResponse = null;
-                StreamReader streamRead = null;
-
                 try
                 {
-                    webResponse = webRequest.GetResponse();
-                    streamRead = new StreamReader(webResponse.GetResponseStream(), Encoding.UTF8);
-                    result = streamRead.ReadToEnd();
+                    using (WebResponse webResponse = webRequest.GetResponse())
+                    using (StreamReader streamRead = new StreamReader(webResponse.GetResponseStream(), Encoding.UTF8))
+                    {
+                        result = streamRead.ReadToEnd();
+                    }
                 }
                 catch (Exception ex)
                 {
                     result = HandleWebException(ex);
-                }
-                finally
-                {
-                    streamRead?.Dispose();
-                    webResponse?.Dispose();
                 }
             }
 
@@ -73,17 +69,24 @@ namespace OVR_Dash_Manager
 
         private static string HandleWebException(Exception ex)
         {
+            // Log the exception details for future diagnosis.
+            ErrorLogger.LogError(ex, "Web request failed");
+
+            // Check for specific error messages and return user-friendly messages.
             if (ex.Message.Contains("an error") && Regex.IsMatch(ex.Message, @"\(\d{3}\)"))
             {
+                // Extract and return the HTTP status code from the error message.
                 return Regex.Match(ex.Message, @"\(\d{3}\)").Value.Substring(1, 3);
             }
 
             if (ex.Message == "Unable to connect to the remote server")
             {
+                // Return a user-friendly message indicating offline status.
                 return "Offline";
             }
 
-            return "404";
+            // Return a generic error message.
+            return "An error occurred while fetching the webpage.";
         }
 
         public static bool Get_File(string fullUrl, string saveTo)
@@ -92,25 +95,38 @@ namespace OVR_Dash_Manager
             {
                 using (WebClient myWebClient = new WebClient())
                 {
-                    myWebClient.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
+                    myWebClient.CachePolicy = new RequestCachePolicy(RequestCacheLevel.NoCacheNoStore);
                     myWebClient.DownloadFile(fullUrl, saveTo);
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                // Log the exception with your ErrorLogger
+                ErrorLogger.LogError(ex, $"Failed to download file from {fullUrl} to {saveTo}");
                 return false;
             }
         }
 
         public static void OpenURL(string url)
         {
-            ProcessStartInfo ps = new ProcessStartInfo(url)
+            try
             {
-                UseShellExecute = true,
-                Verb = "open"
-            };
-            Process.Start(ps);
+                ProcessStartInfo ps = new ProcessStartInfo(url)
+                {
+                    UseShellExecute = true,
+                    Verb = "open"
+                };
+                Process.Start(ps);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception with your ErrorLogger
+                ErrorLogger.LogError(ex, $"Failed to open URL: {url}");
+
+                // Optionally: Inform the user about the error
+                // MessageBox.Show("Failed to open the URL. Please check your internet connection and try again.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         public static void DoAction(Window form, Action doAction)
@@ -118,7 +134,15 @@ namespace OVR_Dash_Manager
             if (form == null || doAction == null)
                 throw new ArgumentNullException(form == null ? nameof(form) : nameof(doAction));
 
-            form.Dispatcher.Invoke(doAction, DispatcherPriority.Normal);
+            try
+            {
+                form.Dispatcher.Invoke(doAction, DispatcherPriority.Normal);
+            }
+            catch (Exception ex)
+            {
+                // Log error and handle as per your application's policy
+                ErrorLogger.LogError(ex, "Error performing UI action.");
+            }
         }
 
         [DllImport("User32.dll")]
@@ -126,7 +150,15 @@ namespace OVR_Dash_Manager
 
         public static void MoveCursor(int X, int Y)
         {
-            SetCursorPos(X, Y);
+            try
+            {
+                SetCursorPos(X, Y);
+            }
+            catch (Exception ex)
+            {
+                // Log error and handle as per your application's policy
+                ErrorLogger.LogError(ex, $"Error moving cursor to position ({X}, {Y}).");
+            }
         }
 
         public static string RemoveStringFromEnd(string text, string remove)

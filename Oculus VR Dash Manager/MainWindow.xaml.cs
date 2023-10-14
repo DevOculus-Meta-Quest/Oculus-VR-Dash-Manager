@@ -35,20 +35,24 @@ namespace OVR_Dash_Manager
         public MainWindow()
         {
             InitializeComponent();
+
             // Start the watchdog
             WatchdogManager.StartWatchdog();
+
+            // Initialize UI Manager
             _uiManager = new UIManager(this);
-            // Temporarily create HoverButtonManager without ActivateDash action
+
+            // Initialize HoverButtonManager without ActivateDash action
             _hoverButtonManager = new HoverButtonManager(this, pb_Normal, pb_Exit, null);
 
-            // Now that _hoverButtonManager is created, assign the ActivateDash action
+            // Assign the ActivateDash action now that _hoverButtonManager is created
             _hoverButtonManager.SetActivateDashAction(_hoverButtonManager.ActivateDash);
 
-
-            Application _This = Application.Current;
-            _This.DispatcherUnhandledException += AppDispatcherUnhandledException;
+            // Handle unhandled exceptions
+            Application.Current.DispatcherUnhandledException += AppDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
 
+            // Set window properties
             Title += " v" + typeof(MainWindow).Assembly.GetName().Version;
             Topmost = Properties.Settings.Default.AlwaysOnTop;
         }
@@ -61,35 +65,47 @@ namespace OVR_Dash_Manager
             }
             catch (Exception ex)
             {
-                // Log the exception using ErrorLogger
-                ErrorLogger.LogError(ex, "An error occurred during window loading.");
-
-                // Optionally: Inform the user about the error
-                MessageBox.Show("An error occurred while loading the window. Please try again later.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
-                // Additional logging or actions can be added here if needed
-                Debug.WriteLine($"Exception occurred: {ex.Message}");
-                Debug.WriteLine(ex.StackTrace);
+                HandleWindowLoadingException(ex);
             }
         }
 
         private async Task WindowLoadedAsync()
         {
+            // Disable buttons and update status label
             btn_Diagnostics.IsEnabled = false;
             btn_OpenSettings.IsEnabled = false;
             _uiManager.UpdateStatusLabel("Starting Up");
+
+            // Check if the current process is elevated
             Elevated = Functions.Process_Functions.IsCurrentProcess_Elevated();
 
+            // Configure dash buttons and hover buttons
             Disable_Dash_Buttons();
             LinkDashesToButtons();
             _hoverButtonManager.GenerateHoverButtons();
 
+            // Pass the main form and subscribe to events
             Dashes.Dash_Manager.PassMainForm(this);
             Software.Steam.Steam_VR_Running_State_Changed_Event += Steam_Steam_VR_Running_State_Changed_Event;
 
+            // Generate the list of auto-launch programs
             Software.Auto_Launch_Programs.Generate_List();
 
+            // Perform startup actions
             await StartupAsync();
+        }
+
+        private void HandleWindowLoadingException(Exception ex)
+        {
+            // Log the exception using ErrorLogger
+            ErrorLogger.LogError(ex, "An error occurred during window loading.");
+
+            // Inform the user about the error
+            MessageBox.Show("An error occurred while loading the window. Please try again later.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            // Additional logging or actions can be added here if needed
+            Debug.WriteLine($"Exception occurred: {ex.Message}");
+            Debug.WriteLine(ex.StackTrace);
         }
 
         private void Steam_Steam_VR_Running_State_Changed_Event()

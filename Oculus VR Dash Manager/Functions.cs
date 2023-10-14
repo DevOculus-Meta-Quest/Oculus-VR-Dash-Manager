@@ -218,15 +218,21 @@ namespace OVR_Dash_Manager
 
     public static class Timer_Functions
     {
+        private static readonly object TimerLock = new object();
         private static Dictionary<string, Timer> Timers = new Dictionary<string, Timer>();
 
         public static bool SetNewInterval(string timerID, TimeSpan interval)
         {
-            if (Timers.ContainsKey(timerID))
+            if (string.IsNullOrEmpty(timerID)) throw new ArgumentNullException(nameof(timerID));
+
+            lock (TimerLock)
             {
-                Timer timer = Timers[timerID];
-                timer.Interval = interval.TotalMilliseconds;
-                return true;
+                if (Timers.ContainsKey(timerID))
+                {
+                    Timer timer = Timers[timerID];
+                    timer.Interval = interval.TotalMilliseconds;
+                    return true;
+                }
             }
 
             return false;
@@ -234,7 +240,10 @@ namespace OVR_Dash_Manager
 
         public static bool CreateTimer(string timerID, TimeSpan interval, ElapsedEventHandler tickHandler, bool repeat = true)
         {
-            lock (Timers)  // Ensure thread safety during creation
+            if (string.IsNullOrEmpty(timerID)) throw new ArgumentNullException(nameof(timerID));
+            if (tickHandler == null) throw new ArgumentNullException(nameof(tickHandler));
+
+            lock (TimerLock)
             {
                 if (!Timers.ContainsKey(timerID))
                 {
@@ -242,12 +251,10 @@ namespace OVR_Dash_Manager
                     {
                         Interval = interval.TotalMilliseconds,
                         AutoReset = repeat,
-                        Enabled = false  // Consider not starting the timer here
+                        Enabled = false
                     };
 
                     timer.Elapsed += tickHandler;
-                    // timer.Start();  // Consider moving this to StartTimer
-
                     Timers.Add(timerID, timer);
 
                     return true;
@@ -259,11 +266,16 @@ namespace OVR_Dash_Manager
 
         public static bool StartTimer(string timerID)
         {
-            if (Timers.ContainsKey(timerID))
+            if (string.IsNullOrEmpty(timerID)) throw new ArgumentNullException(nameof(timerID));
+
+            lock (TimerLock)
             {
-                Timer timer = Timers[timerID];
-                timer.Enabled = true;
-                return true;
+                if (Timers.ContainsKey(timerID))
+                {
+                    Timer timer = Timers[timerID];
+                    timer.Start();
+                    return true;
+                }
             }
 
             return false;
@@ -271,11 +283,16 @@ namespace OVR_Dash_Manager
 
         public static bool StopTimer(string timerID)
         {
-            if (Timers.ContainsKey(timerID))
+            if (string.IsNullOrEmpty(timerID)) throw new ArgumentNullException(nameof(timerID));
+
+            lock (TimerLock)
             {
-                Timer timer = Timers[timerID];
-                timer.Enabled = false;
-                return true;
+                if (Timers.ContainsKey(timerID))
+                {
+                    Timer timer = Timers[timerID];
+                    timer.Stop();
+                    return true;
+                }
             }
 
             return false;
@@ -283,30 +300,43 @@ namespace OVR_Dash_Manager
 
         public static bool TimerExists(string timerID)
         {
-            return Timers.ContainsKey(timerID);
+            if (string.IsNullOrEmpty(timerID)) throw new ArgumentNullException(nameof(timerID));
+
+            lock (TimerLock)
+            {
+                return Timers.ContainsKey(timerID);
+            }
         }
 
         public static void DisposeTimer(string timerID)
         {
-            if (Timers.ContainsKey(timerID))
-            {
-                Timer timer = Timers[timerID];
-                Timers.Remove(timerID);
+            if (string.IsNullOrEmpty(timerID)) throw new ArgumentNullException(nameof(timerID));
 
-                timer.Stop();
-                timer.Dispose();
+            lock (TimerLock)
+            {
+                if (Timers.ContainsKey(timerID))
+                {
+                    Timer timer = Timers[timerID];
+                    Timers.Remove(timerID);
+
+                    timer.Stop();
+                    timer.Dispose();
+                }
             }
         }
 
         public static void DisposeAllTimers()
         {
-            foreach (var timer in Timers.Values)
+            lock (TimerLock)
             {
-                timer.Stop();
-                timer.Dispose();
-            }
+                foreach (var timer in Timers.Values)
+                {
+                    timer.Stop();
+                    timer.Dispose();
+                }
 
-            Timers.Clear();
+                Timers.Clear();
+            }
         }
     }
 }

@@ -35,6 +35,8 @@ namespace OVR_Dash_Manager
         public MainWindow()
         {
             InitializeComponent();
+            // Start the watchdog
+            WatchdogManager.StartWatchdog();
             _uiManager = new UIManager(this);
             // Temporarily create HoverButtonManager without ActivateDash action
             _hoverButtonManager = new HoverButtonManager(this, pb_Normal, pb_Exit, null);

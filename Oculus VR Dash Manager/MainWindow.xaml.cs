@@ -273,12 +273,12 @@ namespace OVR_Dash_Manager
 
         private void lbl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            Functions_Old.OpenURL("https://github.com/ItsKaitlyn03/OculusKiller");
+            Functions_Old.OpenURL("https://github.com/DevOculus-Meta-Quest/OculusKiller");
         }
 
         private void lbl_Title_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            Functions_Old.OpenURL("https://github.com/KrisIsBackAU/Oculus-VR-Dash-Manager");
+            Functions_Old.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager");
         }
 
         #endregion URL Links

@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using OVR_Dash_Manager.Software;
 
 namespace OVR_Dash_Manager.Functions
 {
-    internal class StartupManager
+    public class StartupManager
     {
+      
     }
 }
+

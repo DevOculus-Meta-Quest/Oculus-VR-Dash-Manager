@@ -148,18 +148,20 @@ namespace OVR_Dash_Manager.Dashes
             return Dash_Type.Unknown;
         }
 
-        public static String GetDashName(Dash_Type Dash)
+        public static string GetDashName(Dash_Type dash)
         {
-            switch (Dash)
+            switch (dash)
             {
                 case Dash_Type.Unknown:
                     return "Unknown";
 
                 case Dash_Type.Normal:
-                    return Oculus_Dash.DisplayName;
+                    // Check if DisplayName is not null or empty
+                    return string.IsNullOrEmpty(Oculus_Dash.DisplayName) ? "No Name Found" : Oculus_Dash.DisplayName;
 
                 case Dash_Type.OculusKiller:
-                    return SteamVR_Dash.DisplayName;
+                    // Check if DisplayName is not null or empty
+                    return string.IsNullOrEmpty(SteamVR_Dash.DisplayName) ? "No Name Found" : SteamVR_Dash.DisplayName;
 
                 default:
                     return "No Name Found";
@@ -264,25 +266,17 @@ namespace OVR_Dash_Manager.Dashes
             return Activated;
         }
 
-        private static Boolean Running(ServiceControllerStatus Status)
+        private static bool IsServiceRunningOrPending(ServiceControllerStatus status)
         {
-            switch (Status)
+            switch (status)
             {
                 case ServiceControllerStatus.Running:
-                    return true;
-
-                case ServiceControllerStatus.Stopped:
-                    return false;
-
                 case ServiceControllerStatus.Paused:
-                    return true;
-
                 case ServiceControllerStatus.StopPending:
-                    return true;
-
                 case ServiceControllerStatus.StartPending:
                     return true;
 
+                case ServiceControllerStatus.Stopped:
                 default:
                     return false;
             }

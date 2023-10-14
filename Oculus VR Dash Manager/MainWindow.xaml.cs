@@ -195,48 +195,18 @@ namespace OVR_Dash_Manager
             bool isDesktopPlusInstalled = SteamAppChecker.IsAppInstalled("DesktopPlus");
 
             // Update UI
-            UpdateDesktopPlusStatusLabel(isDesktopPlusInstalled);
+            _uiManager.UpdateDesktopPlusStatusLabel(isDesktopPlusInstalled);
 
             // Notify the user if Desktop+ is not installed.
             if (!isDesktopPlusInstalled)
             {
-                ShowDesktopPlusNotInstalledWarning();
+                _uiManager.ShowDesktopPlusNotInstalledWarning();
             }
         }
 
         private void NotElevated()
         {
-            Functions_Old.DoAction(this, new Action(delegate ()
-            {
-                lbl_CurrentSetting.Content = "Run as Admin Required";
-                MessageBox.Show(this, "This program must be run with Admin Permissions" + Environment.NewLine + Environment.NewLine + "Right click Program File then click - Run as administrator" + Environment.NewLine + Environment.NewLine + " or Right Click Program - Properties - Compatibility then Check - Run this program as an administrator", "This program must be run with Admin Permissions", MessageBoxButton.OK, MessageBoxImage.Error);
-            }));
-        }
-
-        private void ShowDesktopPlusNotInstalledWarning()
-        {
-            // Assuming mainWindow is your main window that is set to always on top
-            Window mainWindow = Application.Current.MainWindow;
-
-            // Temporarily set the main window to not be topmost
-            mainWindow.Topmost = false;
-
-            // Notify the user or disable certain functionality.
-            MessageBox.Show(mainWindow, "Desktop+ is not installed. Some functionality may be limited.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-
-            // Set the main window back to topmost
-            mainWindow.Topmost = true;
-        }
-
-        private void UpdateDesktopPlusStatusLabel(bool isInstalled)
-        {
-            string statusText = isInstalled ? "Installed: True" : "Installed: False";
-
-            // Ensure UI updates are performed on the UI thread
-            Dispatcher.Invoke(() =>
-            {
-                lbl_DesktopPlusStatus.Content = statusText;
-            });
+            _uiManager.NotifyNotElevated();
         }
 
         #region Dash Buttons
@@ -294,11 +264,7 @@ namespace OVR_Dash_Manager
 
         private void btn_OpenDashLocation_Click(object sender, RoutedEventArgs e)
         {
-            if (Software.Oculus.Oculus_Is_Installed)
-            {
-                if (Directory.Exists(Software.Oculus.Oculus_Dash_Directory))
-                    Functions_Old.ShowFileInDirectory(Software.Oculus.Oculus_Dash_Directory);
-            }
+            _uiManager.OpenDashLocation();
         }
 
         #endregion Dash Buttons

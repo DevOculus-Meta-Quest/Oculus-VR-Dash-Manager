@@ -22,6 +22,9 @@
     <Compile Update="Forms\frm_Settings.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Forms\frm_SteamApps.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Forms\frm_SteamVR_Settings.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -52,6 +55,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\frm_Settings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\frm_SteamApps.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\frm_SteamVR_Settings.xaml">

@@ -45,12 +45,24 @@ Welcome to **Oculus VR Dash Manager**, your one-stop solution to elevate and str
 |:---:|:---:|
 | *Update Checker Interface* | *Settings Interface* |
 
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/Build_and_Release.yml)
+
 ## ⬇️ Download ⬇️
 
 Grab the latest release [here](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/releases).
 
-![GitHub release (latest by SemVer including pre-releases)](https://img.shields.io/github/downloads/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/total)
+![GitHub release (latest by SemVer including pre-releases)](https://img.shields.io/github/downloads-pre/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/latest/total?style=plastic)
+
+![GitHub all releases](https://img.shields.io/github/downloads/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/total?style=plastic)
 ![GitHub Downloads](https://img.shields.io/github/release-date/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager?style=plastic)
+
+
+
+
+
+
+
+
 
 ## 🚀 How to Use 🚀
 

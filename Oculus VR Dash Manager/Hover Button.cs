@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Windows.Controls;
+using System.Windows;
+using System.Diagnostics;
 
 namespace OVR_Dash_Manager
 {
-    internal class Hover_Button
+    public class Hover_Button
     {
         // Indicates whether the hover button is enabled or not
         public bool Enabled { get; set; } = false;
@@ -31,21 +33,78 @@ namespace OVR_Dash_Manager
         {
             Hovering = false;
             Hover_Started = DateTime.Now;
-            Bar.Value = 0;
+
+            // Check if the current thread is the UI thread
+            if (Bar.Dispatcher.CheckAccess())
+            {
+                Bar.Value = 0;
+            }
+            else
+            {
+                // Use Dispatcher.Invoke to update the UI element on the UI thread
+                Bar.Dispatcher.Invoke(() => Bar.Value = 0);
+            }
         }
 
         // Sets the hover state to active and initializes the progress bar
         public void SetHovering()
         {
+            Debug.WriteLine("SetHovering called");
             Hovering = true;
             Hover_Started = DateTime.Now;
-            Bar.Value = 10;
+
+            // Ensure UI update is run on the UI thread
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Bar.Value = 10;
+            });
         }
+
+
 
         // Stops the hover state and resets the progress bar
         public void StopHovering()
         {
             Reset();
         }
+
+        public bool IsHovering()
+        {
+            // This method should return true if the button is in a hovering state.
+            // If you have a property that tracks whether the button is hovering, return that.
+            // Otherwise, you might need to implement some logic to determine whether the button is hovering.
+            return Hovering;
+        }
+
+        public void UpdateHoverState()
+        {
+            // This method should update the hover state of the button.
+            // If the button has been hovering long enough to trigger the action, trigger it and reset the hover state.
+            // Otherwise, update the progress bar to reflect the elapsed time.
+
+            if ((DateTime.Now - Hover_Started).TotalSeconds >= Hovered_Seconds_To_Activate)
+            {
+                // If the hover has been active long enough, trigger the action and reset the hover state.
+                Hover_Complete_Action.Invoke();
+                Reset();
+            }
+            else
+            {
+                // If the hover has not been active long enough, update the progress bar.
+                double newValue = (DateTime.Now - Hover_Started).TotalSeconds * 1000; // Calculate new progress bar value
+
+                // Check if the current thread is the UI thread
+                if (Bar.Dispatcher.CheckAccess())
+                {
+                    Bar.Value = newValue;
+                }
+                else
+                {
+                    // Use Dispatcher.Invoke to update the UI element on the UI thread
+                    Bar.Dispatcher.Invoke(() => Bar.Value = newValue);
+                }
+            }
+        }
+
     }
 }

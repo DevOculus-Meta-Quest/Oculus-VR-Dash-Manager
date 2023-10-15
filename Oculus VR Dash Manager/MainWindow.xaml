@@ -75,6 +75,6 @@
         <GroupBox x:Name="groupBox1" Header="SteamVR Status" Height="60" Margin="678,289,12,0" VerticalAlignment="Top"/>
         <GroupBox x:Name="groupBox2" Header="Current Dash" Margin="185,218,208,161"/>
         <Label x:Name="lbl_DesktopPlusStatus" Content="N/A" HorizontalAlignment="Left" Margin="704,0,0,60" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
-        <Button x:Name="btn_OtherTools" Content="Other Tools" HorizontalAlignment="Left" Margin="10,349,0,0" VerticalAlignment="Top" Width="110"/>
+        <Button x:Name="btn_OtherTools" Content="Other Tools" HorizontalAlignment="Left" Margin="10,349,0,0" VerticalAlignment="Top" Width="110" Click="btn_OtherTools_Click"/>
     </Grid>
 </Window>

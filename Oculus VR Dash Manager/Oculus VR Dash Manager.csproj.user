@@ -19,6 +19,9 @@
     <Compile Update="Forms\frm_Oculus_Service_Control.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Forms\frm_OtherTools.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Forms\frm_Settings.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -52,6 +55,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\frm_Oculus_Service_Control.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\frm_OtherTools.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\frm_Settings.xaml">

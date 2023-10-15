@@ -1,4 +1,5 @@
-﻿using OVR_Dash_Manager.Functions;
+﻿using OVR_Dash_Manager.Forms;
+using OVR_Dash_Manager.Functions;
 using OVR_Dash_Manager.Software;
 using System;
 using System.Diagnostics;
@@ -594,6 +595,18 @@ namespace OVR_Dash_Manager
         private void btn_ExitSteamVR_Click(object sender, RoutedEventArgs e)
         {
             Steam.Close_SteamVR_Server();
+        }
+
+        private void btn_OtherTools_Click(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of frm_OtherTools window
+            var otherToolsWindow = new frm_OtherTools();
+
+            // Set the main window as the owner of otherToolsWindow
+            otherToolsWindow.Owner = this;
+
+            // Show the window as a modal dialog box
+            otherToolsWindow.ShowDialog();
         }
     }
 }

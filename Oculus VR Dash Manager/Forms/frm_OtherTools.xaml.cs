@@ -23,5 +23,17 @@ namespace OVR_Dash_Manager.Forms
         {
             InitializeComponent();
         }
+
+        private void btn_SteamAppsShow_Click(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of frm_SteamApps window
+            var steamAppsWindow = new frm_SteamApps();
+
+            // Set the frm_OtherTools window as the owner of steamAppsWindow
+            steamAppsWindow.Owner = this;
+
+            // Show the window
+            steamAppsWindow.Show();
+        }
     }
 }

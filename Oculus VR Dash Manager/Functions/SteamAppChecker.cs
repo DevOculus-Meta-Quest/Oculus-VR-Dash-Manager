@@ -1,43 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
+using OVR_Dash_Manager.Functions; // Ensure correct namespace
+using YOVR_Dash_Manager.Functions;
 
 namespace OVR_Dash_Manager.Functions
 {
     public static class SteamAppChecker
     {
-        public static bool IsDebugEnabled { get; set; } = true; // Toggle for debugging
+        // Cache for installed apps
+        private static List<string> _installedApps;
 
+        /// <summary>
+        /// Checks if a specific Steam app is installed.
+        /// </summary>
+        /// <param name="appName">The name of the app to check.</param>
+        /// <returns>True if the app is installed; otherwise, false.</returns>
         public static bool IsAppInstalled(string appName)
         {
             try
             {
-                string steamPath = GetSteamPath();
-                if (string.IsNullOrEmpty(steamPath))
+                // Ensure the cache is populated
+                if (_installedApps == null)
                 {
-                    Log("Steam path not found or invalid.");
-                    return false;
+                    string steamPath = GetSteamPath();
+                    if (string.IsNullOrEmpty(steamPath))
+                    {
+                        ErrorLogger.LogError(new Exception("Steam path not found or invalid."));
+                        return false;
+                    }
+
+                    List<string> libraryPaths = GetLibraryPaths(steamPath);
+                    _installedApps = GetInstalledApps(libraryPaths);
                 }
 
-                List<string> libraryPaths = GetLibraryPaths(steamPath);
-                return CheckAppInLibraryPaths(libraryPaths, appName);
+                // Check the cache for the app
+                return _installedApps.Contains(appName, StringComparer.OrdinalIgnoreCase);
             }
             catch (Exception ex)
             {
-                Log($"An error occurred: {ex.Message}");
+                ErrorLogger.LogError(ex, "Error checking if app is installed.");
                 return false;
             }
         }
 
+        /// <summary>
+        /// Public method to get the names of all installed Steam apps.
+        /// </summary>
+        /// <returns>A list of installed Steam app names.</returns>
+        public static List<string> GetInstalledApps()
+        {
+            // Ensure the cache is populated
+            IsAppInstalled("AnyKnownAppName");
+
+            // Return the cached app names
+            return _installedApps;
+        }
+
+        /// <summary>
+        /// Retrieves the installation path of Steam from the registry.
+        /// </summary>
+        /// <returns>The installation path of Steam.</returns>
         private static string GetSteamPath()
         {
             string steamPath = (string)Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", null);
-            Log($"Steam path: {steamPath}");
             return steamPath;
         }
 
+        /// <summary>
+        /// Retrieves all library paths where Steam apps can be installed.
+        /// </summary>
+        /// <param name="steamPath">The installation path of Steam.</param>
+        /// <returns>A list of library paths.</returns>
         private static List<string> GetLibraryPaths(string steamPath)
         {
             List<string> libraryPaths = new List<string> { steamPath };
@@ -62,28 +98,27 @@ namespace OVR_Dash_Manager.Functions
             return libraryPaths;
         }
 
-        private static bool CheckAppInLibraryPaths(List<string> libraryPaths, string appName)
+        /// <summary>
+        /// Retrieves the names of all installed Steam apps.
+        /// </summary>
+        /// <param name="libraryPaths">A list of library paths to check.</param>
+        /// <returns>A list of installed Steam app names.</returns>
+        private static List<string> GetInstalledApps(List<string> libraryPaths)
         {
+            List<string> installedApps = new List<string>();
+
             foreach (string libraryPath in libraryPaths)
             {
-                Log($"Checking library path: {libraryPath}");
-                string appPath = Path.Combine(libraryPath, $@"steamapps\common\{appName}");
-                if (Directory.Exists(appPath))
+                string appsDirectoryPath = Path.Combine(libraryPath, @"steamapps\common");
+
+                if (Directory.Exists(appsDirectoryPath))
                 {
-                    Log($"{appName} found!");
-                    return true;
+                    var appDirectories = Directory.GetDirectories(appsDirectoryPath);
+                    installedApps.AddRange(appDirectories.Select(Path.GetFileName));
                 }
             }
-            Log($"{appName} not found.");
-            return false;
-        }
 
-        private static void Log(string message)
-        {
-            if (IsDebugEnabled)
-            {
-                Debug.WriteLine(message);
-            }
+            return installedApps;
         }
     }
 }

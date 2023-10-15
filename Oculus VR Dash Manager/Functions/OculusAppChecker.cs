@@ -1,39 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using Microsoft.Win32;
+using OVR_Dash_Manager.Functions; // Ensure correct namespace
+using YOVR_Dash_Manager.Functions;
 
 namespace OVR_Dash_Manager.Functions
 {
     public static class OculusAppChecker
     {
-        public static bool IsDebugEnabled { get; set; } = true; // Toggle for debugging
+        // Cache for installed apps
+        private static List<string> _installedApps;
 
+        /// <summary>
+        /// Checks if a specific Oculus app is installed.
+        /// </summary>
+        /// <param name="appName">The name of the app to check.</param>
+        /// <returns>True if the app is installed; otherwise, false.</returns>
         public static bool IsOculusAppInstalled(string appName)
         {
             try
             {
-                List<string> oculusPaths = GetOculusPaths();
-                foreach (string oculusPath in oculusPaths)
+                // Ensure the cache is populated
+                if (_installedApps == null)
                 {
-                    string appPath = Path.Combine(oculusPath, appName);
-                    if (Directory.Exists(appPath))
-                    {
-                        Log($"{appName} found in {oculusPath}!");
-                        return true;
-                    }
+                    List<string> oculusPaths = GetOculusPaths();
+                    _installedApps = GetInstalledApps(oculusPaths);
                 }
-                Log($"{appName} not found.");
-                return false;
+
+                // Check the cache for the app
+                return _installedApps.Contains(appName, StringComparer.OrdinalIgnoreCase);
             }
             catch (Exception ex)
             {
-                Log($"An error occurred: {ex.Message}");
+                ErrorLogger.LogError(ex, "Error checking if Oculus app is installed.");
                 return false;
             }
         }
 
+        /// <summary>
+        /// Public method to get the names of all installed Oculus apps.
+        /// </summary>
+        /// <returns>A list of installed Oculus app names.</returns>
+        public static List<string> GetInstalledApps()
+        {
+            // Ensure the cache is populated
+            IsOculusAppInstalled("AnyKnownAppName");
+
+            // Return the cached app names
+            return _installedApps;
+        }
+
+        /// <summary>
+        /// Retrieves all paths where Oculus apps are installed.
+        /// </summary>
+        /// <returns>A list of Oculus app paths.</returns>
         private static List<string> GetOculusPaths()
         {
             List<string> oculusPaths = new List<string>();
@@ -53,7 +75,6 @@ namespace OVR_Dash_Manager.Functions
                                 if (!string.IsNullOrEmpty(path) && Directory.Exists(path))
                                 {
                                     oculusPaths.Add(path);
-                                    Log($"Oculus path from registry: {path}");
                                 }
                             }
                         }
@@ -64,12 +85,25 @@ namespace OVR_Dash_Manager.Functions
             return oculusPaths;
         }
 
-        private static void Log(string message)
+        /// <summary>
+        /// Retrieves the names of all installed Oculus apps.
+        /// </summary>
+        /// <param name="oculusPaths">A list of paths to check.</param>
+        /// <returns>A list of installed Oculus app names.</returns>
+        private static List<string> GetInstalledApps(List<string> oculusPaths)
         {
-            if (IsDebugEnabled)
+            List<string> installedApps = new List<string>();
+
+            foreach (string oculusPath in oculusPaths)
             {
-                Debug.WriteLine(message);
+                if (Directory.Exists(oculusPath))
+                {
+                    var appDirectories = Directory.GetDirectories(oculusPath);
+                    installedApps.AddRange(appDirectories.Select(Path.GetFileName));
+                }
             }
+
+            return installedApps;
         }
     }
 }

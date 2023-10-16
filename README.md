@@ -45,6 +45,7 @@ Welcome to **Oculus VR Dash Manager**, your one-stop solution to elevate and str
 |:---:|:---:|
 | *Update Checker Interface* | *Settings Interface* |
 
+[![HitCount](https://hits.dwyl.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager.svg)](https://hits.dwyl.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager)
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/Build_and_Release.yml)
 
 ## ⬇️ Download ⬇️

@@ -53,7 +53,7 @@
             </Label.BorderBrush>
         </Label>
         <Label x:Name="lbl_CurrentSetting" Content="Unknown" Margin="202,254,220,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Height="44" VerticalAlignment="Top" />
-        <GroupBox Header="VR-Dashes" Margin="10,42,10,0" Height="171" VerticalAlignment="Top">
+        <GroupBox x:Name="gb_DashCommands" Header="VR-Dashes" Margin="10,42,10,0" Height="171" VerticalAlignment="Top">
             <Grid x:Name="gd_DashButtons">
                 <Button x:Name="btn_Normal" Content="Official Dash&#10;&#10;(SteamVR)&#10;Hover to activate" HorizontalAlignment="Left" Width="230" Margin="0,0,0,23" Click="btn_ActivateDash_Click" MouseEnter="btn_Normal_MouseEnter" MouseLeave="btn_Normal_MouseLeave" BorderBrush="#FF515151" />
                 <ProgressBar x:Name="pb_Normal" HorizontalAlignment="Left" Width="230" Maximum="5000" SmallChange="10" Height="23" VerticalAlignment="Bottom" />
@@ -63,11 +63,11 @@
                 <ProgressBar x:Name="pb_Exit" HorizontalAlignment="Right" Width="230" Maximum="5000" SmallChange="10" Height="23" VerticalAlignment="Bottom" />
             </Grid>
         </GroupBox>
-        <Button x:Name="btn_OpenDashLocation" Content="Open Dash Location" HorizontalAlignment="Left" Margin="284,0,0,10" VerticalAlignment="Bottom" Click="btn_OpenDashLocation_Click" Height="30" Width="190" />
-        <Button x:Name="btn_OculusServiceManager" Content="Oculus Service Manager" HorizontalAlignment="Left" Margin="284,0,0,48" VerticalAlignment="Bottom" Click="btn_OculusServiceManager_Click" Height="30" Width="190" />
-        <Button x:Name="btn_OpenSettings" Content="Settings" HorizontalAlignment="Left" Margin="10,0,0,48" VerticalAlignment="Bottom" Click="btn_OpenSettings_Click" Height="22" Width="110" />
+        <Button x:Name="btn_OpenDashLocation" Content="Open Dash Location" HorizontalAlignment="Left" Margin="294,0,0,16" VerticalAlignment="Bottom" Click="btn_OpenDashLocation_Click" Height="30" Width="190" />
+        <Button x:Name="btn_OculusServiceManager" Content="Oculus Service Manager" HorizontalAlignment="Left" Margin="294,0,0,51" VerticalAlignment="Bottom" Click="btn_OculusServiceManager_Click" Height="30" Width="190" />
+        <Button x:Name="btn_OpenSettings" Content="Settings" HorizontalAlignment="Left" Margin="489,0,0,16" VerticalAlignment="Bottom" Click="btn_OpenSettings_Click" Height="22" Width="111" />
         <Label x:Name="lbl_TestAccess" Content="Cable Link &amp; Air Link Supported" HorizontalAlignment="Right" Margin="0,39,0,0" FontStyle="Italic" Width="170" HorizontalContentAlignment="Center" PreviewMouseRightButtonDown="lbl_TestAccess_PreviewMouseRightButtonDown" Height="28" VerticalAlignment="Top" FontSize="11" />
-        <Button x:Name="btn_StartSteamVR" Content="Start SteamVR" Margin="11,0,0,0" RenderTransformOrigin="0.496,1.156" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Click="btn_StartSteamVR_Click">
+        <Button x:Name="btn_StartSteamVR" Content="Start SteamVR" Margin="21,242,0,0" RenderTransformOrigin="0.496,1.156" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Click="btn_StartSteamVR_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -77,24 +77,26 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button x:Name="btn_Diagnostics" Content="Diagnostics" HorizontalAlignment="Left" Margin="125,0,0,48" VerticalAlignment="Bottom" Click="btn_Diagnostics_Click" Height="30" Width="154" />
-        <Button x:Name="btn_CheckForUpdates" Content="Update Checker" HorizontalAlignment="Left" Margin="125,0,0,10" VerticalAlignment="Bottom" Click="btn_CheckForUpdates_Click" Height="30" Width="154" />
-        <Button x:Name="btn_Help" Content="Help" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Click="btn_Help_Click" Height="30" Width="110" />
+        <Button x:Name="btn_Diagnostics" Content="Diagnostics" HorizontalAlignment="Left" Margin="135,0,0,51" VerticalAlignment="Bottom" Click="btn_Diagnostics_Click" Height="30" Width="154" />
+        <Button x:Name="btn_CheckForUpdates" Content="Update Checker" HorizontalAlignment="Left" Margin="135,0,0,16" VerticalAlignment="Bottom" Click="btn_CheckForUpdates_Click" Height="30" Width="154" />
+        <Button x:Name="btn_Help" Content="Help" HorizontalAlignment="Left" Margin="20,0,0,16" VerticalAlignment="Bottom" Click="btn_Help_Click" Height="30" Width="110" />
 
         <!-- Runtime ToggleButtons -->
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0,0,10,11">
+        <StackPanel x:Name="sp_RunTime" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0,0,10,11">
             <ToggleButton x:Name="btn_RunTime_SteamVR" Content="SteamVR" Style="{StaticResource RuntimeToggleButtonStyle}" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="66" VerticalAlignment="Bottom" Margin="0,0,5,0" Padding="10,0,10,2" IsChecked="False"/>
             <ToggleButton x:Name="btn_RunTime_Oculus" Content="Oculus" Style="{StaticResource RuntimeToggleButtonStyle}" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="66"/>
         </StackPanel>
 
-        <Label Content="OpenXR Runtime:" HorizontalAlignment="Left" Margin="700,0,0,37" VerticalAlignment="Bottom" Height="30" Width="120" HorizontalContentAlignment="Center" />
-        <Button x:Name="btn_OpenSteamVRSettings" Content="SteamVR Settings" HorizontalAlignment="Left" Margin="10,0,0,145" VerticalAlignment="Bottom" Click="btn_OpenSteamVRSettings_Click" Height="22" Width="150" IsEnabled="False" />
+        <Label x:Name="lbl_RunTimeStatus" Content="OpenXR Runtime:" HorizontalAlignment="Left" Margin="700,0,0,37" VerticalAlignment="Bottom" Height="30" Width="120" HorizontalContentAlignment="Center" />
+        <Button x:Name="btn_OpenSteamVRSettings" Content="SteamVR Settings" HorizontalAlignment="Left" Margin="20,0,0,157" VerticalAlignment="Bottom" Click="btn_OpenSteamVRSettings_Click" Height="22" Width="150" IsEnabled="False" />
         <Label x:Name="lbl_SteamVR_Status" Content="N/A" HorizontalAlignment="Left" Margin="704,0,0,193" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
-        <Button x:Name="btn_ExitSteamVR" Content="Exit SteamVR" HorizontalAlignment="Left" Margin="10,0,0,181" Width="150" VerticalAlignment="Bottom" Click="btn_ExitSteamVR_Click" IsEnabled="False"/>
-        <GroupBox x:Name="groupBox" Header="Desktop+ Status" Margin="678,283,12,0" Height="60" VerticalAlignment="Top"/>
-        <GroupBox x:Name="groupBox1" Header="SteamVR Status" Height="60" Margin="678,218,12,0" VerticalAlignment="Top"/>
-        <GroupBox x:Name="groupBox2" Header="Current Dash" Margin="185,218,208,161"/>
+        <Button x:Name="btn_ExitSteamVR" Content="Exit SteamVR" HorizontalAlignment="Left" Margin="20,0,0,122" Width="150" VerticalAlignment="Bottom" Click="btn_ExitSteamVR_Click" IsEnabled="False"/>
+        <GroupBox x:Name="gb_DesktopPlusStatus" Header="Desktop+ Status" Margin="678,283,12,0" Height="60" VerticalAlignment="Top"/>
+        <GroupBox x:Name="gb_SteamStatus" Header="SteamVR Status" Height="60" Margin="678,218,12,0" VerticalAlignment="Top"/>
+        <GroupBox x:Name="gb_DashStatus" Header="Current Dash" Margin="185,218,208,161"/>
         <Label x:Name="lbl_DesktopPlusStatus" Content="N/A" HorizontalAlignment="Left" Margin="704,0,0,130" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
-        <Button x:Name="btn_OtherTools" Content="Other Tools" HorizontalAlignment="Left" Margin="10,349,0,0" VerticalAlignment="Top" Width="110" Click="btn_OtherTools_Click"/>
+        <Button x:Name="btn_OtherTools" Content="Other Tools" HorizontalAlignment="Left" Margin="20,383,0,0" VerticalAlignment="Top" Width="110" Click="btn_OtherTools_Click"/>
+        <GroupBox x:Name="gb_Steam" Header="Steam:" Margin="10,218,658,113"/>
+        <GroupBox x:Name="gb_Menu" Header="Menu" Margin="10,357,220,8"/>
     </Grid>
 </Window>

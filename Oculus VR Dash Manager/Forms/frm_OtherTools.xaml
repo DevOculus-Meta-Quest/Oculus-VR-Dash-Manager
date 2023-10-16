@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Other Tools" Height="450" Width="800" Topmost="True" WindowStartupLocation="CenterOwner">
+        Title="Other Tools" Height="475" Width="800" Topmost="True" WindowStartupLocation="CenterOwner">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -15,7 +15,7 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid>
+    <Grid Height="465">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="Black" Offset="0.567"/>
@@ -26,8 +26,25 @@
             <ColumnDefinition Width="11*"/>
             <ColumnDefinition Width="69*"/>
         </Grid.ColumnDefinitions>
+        <Label x:Name="lbl_Title" Content="Other Tools Menu" Margin="10,5,10,0" VerticalAlignment="Top" Height="41" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontWeight="Bold" Cursor="Hand" FontFamily="Copperplate Gothic Bold" Grid.ColumnSpan="2" >
+            <Label.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Label.Foreground>
+            <Label.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="#FF31338E" Offset="1"/>
+                    <GradientStop Color="#FF0F102D" Offset="0.319"/>
+                    <GradientStop Color="#FF0F102D" Offset="0.581"/>
+                </LinearGradientBrush>
+            </Label.BorderBrush>
+        </Label>
         <!-- Your UI elements go here -->
-        <Button x:Name="btn_SteamAppsShow" Content="Steam Apps" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,374,0,0" Grid.ColumnSpan="2" Width="105" Click="btn_SteamAppsShow_Click"/>
-        <Button x:Name="btn_OculusAppsShow" Content="Oculus Apps" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,339,0,0" VerticalAlignment="Top" Width="105" Click="btn_OculusAppsShow_Click"/>
+        <Button x:Name="btn_SteamAppsShow" Content="Steam Apps" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="36,394,0,0" Width="104" Click="btn_SteamAppsShow_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="btn_OculusAppsShow" Content="Oculus Apps" HorizontalAlignment="Left" Margin="35,359,0,0" VerticalAlignment="Top" Width="105" Click="btn_OculusAppsShow_Click" Grid.ColumnSpan="2"/>
+        <GroupBox x:Name="gb_Apps" Header="Steam/Oculus Apps" Margin="10,329,0,0" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Height="99"/>
     </Grid>
 </Window>

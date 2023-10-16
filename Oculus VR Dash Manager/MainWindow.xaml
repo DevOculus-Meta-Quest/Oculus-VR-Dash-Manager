@@ -11,10 +11,31 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/MetroDark.MSControls.Core.Implicit.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- ToggleButton Style -->
+            <Style x:Key="RuntimeToggleButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource ToggleButtonStyle}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Border x:Name="border" Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="Green"/>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="False">
+                                    <Setter TargetName="border" Property="Background" Value="Red"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid Background="#FF212121" VerticalAlignment="Top" Height="465">
+    <Grid Background="#FF212121" Height="465">
         <Label x:Name="lbl_Title" Content="Oculus VR Dash Manager " Margin="10,5,10,0" VerticalAlignment="Top" Height="41" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontWeight="Bold" Cursor="Hand" PreviewMouseDown="lbl_Title_PreviewMouseDown" FontFamily="Copperplate Gothic Bold" >
             <Label.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -60,21 +81,20 @@
         <Button x:Name="btn_CheckForUpdates" Content="Update Checker" HorizontalAlignment="Left" Margin="125,0,0,10" VerticalAlignment="Bottom" Click="btn_CheckForUpdates_Click" Height="30" Width="154" />
         <Button x:Name="btn_Help" Content="Help" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Click="btn_Help_Click" Height="30" Width="110" />
 
-        <UniformGrid Rows="1" Margin="479,0,10,11" Height="29" VerticalAlignment="Bottom">
-            <UniformGrid.Resources>
-                <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type ToggleButton}}" />
-            </UniformGrid.Resources>
-            <RadioButton x:Name="btn_RunTime_SteamVR" Content="SteamVR" Checked="btn_RunTime_SteamVR_Checked" VerticalContentAlignment="Center" FontSize="13" />
-            <RadioButton x:Name="btn_RunTime_Oculus" Content="Oculus" Checked="btn_RunTime_Oculus_Checked" VerticalContentAlignment="Center" FontSize="13" />
-        </UniformGrid>
-        <Label Content="OpenXR Runtime:" HorizontalAlignment="Left" Margin="479,0,0,45" VerticalAlignment="Bottom" Height="30" Width="168" HorizontalContentAlignment="Center" />
+        <!-- Runtime ToggleButtons -->
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0,0,10,11">
+            <ToggleButton x:Name="btn_RunTime_SteamVR" Content="SteamVR" Style="{StaticResource RuntimeToggleButtonStyle}" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="66" VerticalAlignment="Bottom" Margin="0,0,5,0" Padding="10,0,10,2" IsChecked="False"/>
+            <ToggleButton x:Name="btn_RunTime_Oculus" Content="Oculus" Style="{StaticResource RuntimeToggleButtonStyle}" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="66"/>
+        </StackPanel>
+
+        <Label Content="OpenXR Runtime:" HorizontalAlignment="Left" Margin="700,0,0,37" VerticalAlignment="Bottom" Height="30" Width="120" HorizontalContentAlignment="Center" />
         <Button x:Name="btn_OpenSteamVRSettings" Content="SteamVR Settings" HorizontalAlignment="Left" Margin="10,0,0,145" VerticalAlignment="Bottom" Click="btn_OpenSteamVRSettings_Click" Height="22" Width="150" IsEnabled="False" />
-        <Label x:Name="lbl_SteamVR_Status" Content="N/A" HorizontalAlignment="Left" Margin="704,0,0,124" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
+        <Label x:Name="lbl_SteamVR_Status" Content="N/A" HorizontalAlignment="Left" Margin="704,0,0,193" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
         <Button x:Name="btn_ExitSteamVR" Content="Exit SteamVR" HorizontalAlignment="Left" Margin="10,0,0,181" Width="150" VerticalAlignment="Bottom" Click="btn_ExitSteamVR_Click" IsEnabled="False"/>
-        <GroupBox x:Name="groupBox" Header="Desktop+ Status" Margin="678,349,12,0" Height="60" VerticalAlignment="Top"/>
-        <GroupBox x:Name="groupBox1" Header="SteamVR Status" Height="60" Margin="678,289,12,0" VerticalAlignment="Top"/>
+        <GroupBox x:Name="groupBox" Header="Desktop+ Status" Margin="678,283,12,0" Height="60" VerticalAlignment="Top"/>
+        <GroupBox x:Name="groupBox1" Header="SteamVR Status" Height="60" Margin="678,218,12,0" VerticalAlignment="Top"/>
         <GroupBox x:Name="groupBox2" Header="Current Dash" Margin="185,218,208,161"/>
-        <Label x:Name="lbl_DesktopPlusStatus" Content="N/A" HorizontalAlignment="Left" Margin="704,0,0,60" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
+        <Label x:Name="lbl_DesktopPlusStatus" Content="N/A" HorizontalAlignment="Left" Margin="704,0,0,130" VerticalAlignment="Bottom" Height="30" Width="114" HorizontalContentAlignment="Center" />
         <Button x:Name="btn_OtherTools" Content="Other Tools" HorizontalAlignment="Left" Margin="10,349,0,0" VerticalAlignment="Top" Width="110" Click="btn_OtherTools_Click"/>
     </Grid>
 </Window>

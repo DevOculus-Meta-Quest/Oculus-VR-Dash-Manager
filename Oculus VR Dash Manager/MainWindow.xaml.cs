@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Threading;
 using WindowsInput;
@@ -527,20 +528,34 @@ namespace OVR_Dash_Manager
 
         #region OpenXR Runtime
 
-        private void btn_RunTime_SteamVR_Checked(object sender, RoutedEventArgs e)
+        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (!FireUIEvents)
-                return;
+            ToggleButton toggledButton = (ToggleButton)sender;
 
-            Software.Steam_VR_Settings.Set_SteamVR_Runtime();
+            if (toggledButton == btn_RunTime_SteamVR)
+            {
+                btn_RunTime_Oculus.IsChecked = false;
+                Software.Steam_VR_Settings.Set_SteamVR_Runtime();
+            }
+            else if (toggledButton == btn_RunTime_Oculus)
+            {
+                btn_RunTime_SteamVR.IsChecked = false;
+                Software.Oculus_Link.SetToOculusRunTime();
+            }
         }
 
-        private void btn_RunTime_Oculus_Checked(object sender, RoutedEventArgs e)
+        private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (!FireUIEvents)
-                return;
+            ToggleButton toggledButton = (ToggleButton)sender;
 
-            Software.Oculus_Link.SetToOculusRunTime();
+            if (toggledButton == btn_RunTime_SteamVR && btn_RunTime_Oculus.IsChecked == false)
+            {
+                btn_RunTime_SteamVR.IsChecked = true;
+            }
+            else if (toggledButton == btn_RunTime_Oculus && btn_RunTime_SteamVR.IsChecked == false)
+            {
+                btn_RunTime_Oculus.IsChecked = true;
+            }
         }
 
         public void CheckRunTime()

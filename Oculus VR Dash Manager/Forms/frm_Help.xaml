@@ -18,12 +18,12 @@
     <Grid Background="#FF212121">
         <Label Content="Visit Github Page" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
         <Button x:Name="btn_GitHub" Content="GitHub" HorizontalAlignment="Left" Margin="141,10,0,0" VerticalAlignment="Top" Height="28" Width="110" Click="btn_GitHub_Click" />
-        <Label x:Name="label" Content="Report Issue:" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" Width="111"/>
-        <Button x:Name="btn_GitIssue" Content="Report Issues" HorizontalAlignment="Left" Margin="141,63,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.491,-0.132" Click="btn_GitIssue_Click"/>
-        <Label x:Name="label1" Content="Discussions:" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Width="111"/>
-        <Button x:Name="btn_GitDiscussions" Content="Discussions" HorizontalAlignment="Left" Margin="141,111,0,0" VerticalAlignment="Top" Width="110" Click="btn_GitDiscussions_Click"/>
-        <Label x:Name="label2" Content="Get Desktop+" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top" Width="111"/>
-        <Button x:Name="btn_GetDesktopPlus" Content="Desktop+" HorizontalAlignment="Left" Margin="141,155,0,0" VerticalAlignment="Top" Width="110" Click="btn_GetDesktopPlus_Click"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="270,25,0,0" TextWrapping="Wrap" Text="Oculus VR Dash Manager" VerticalAlignment="Top" Height="160" Width="185" Foreground="White"/>
+        <Label x:Name="label" Content="Report Issue:" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" Width="111" />
+        <Button x:Name="btn_GitIssue" Content="Report Issues" HorizontalAlignment="Left" Margin="141,63,0,0" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.491,-0.132" Click="btn_GitIssue_Click" />
+        <Label x:Name="label1" Content="Discussions:" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Width="111" />
+        <Button x:Name="btn_GitDiscussions" Content="Discussions" HorizontalAlignment="Left" Margin="141,111,0,0" VerticalAlignment="Top" Width="110" Click="btn_GitDiscussions_Click" />
+        <Label x:Name="label2" Content="Get Desktop+" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top" Width="111" />
+        <Button x:Name="btn_GetDesktopPlus" Content="Desktop+" HorizontalAlignment="Left" Margin="141,155,0,0" VerticalAlignment="Top" Width="110" Click="btn_GetDesktopPlus_Click" />
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="270,25,0,0" TextWrapping="Wrap" Text="Oculus VR Dash Manager" VerticalAlignment="Top" Height="160" Width="185" Foreground="White" />
     </Grid>
 </Window>

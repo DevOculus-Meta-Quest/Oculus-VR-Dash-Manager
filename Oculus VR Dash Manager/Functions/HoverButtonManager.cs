@@ -67,6 +67,7 @@ namespace OVR_Dash_Manager
                 case Dashes.Dash_Type.Exit:
                     Exit_Link.Enabled = true;
                     break;
+
                 case Dashes.Dash_Type.Normal:
                     Oculus_Dash.Enabled = true;
                     break;
@@ -110,7 +111,6 @@ namespace OVR_Dash_Manager
                 // Handle exception or rethrow if necessary
             }
         }
-
 
         public void ExitLinkHoverActivate()
         {
@@ -181,6 +181,5 @@ namespace OVR_Dash_Manager
             // TODO: Implement dash activation logic
             System.Diagnostics.Debug.WriteLine("ActivateDash called!");
         }
-
     }
 }

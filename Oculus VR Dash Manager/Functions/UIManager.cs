@@ -28,7 +28,6 @@ namespace OVR_Dash_Manager.Functions
             });
         }
 
-
         public void NotifyNotElevated()
         {
             _window.Dispatcher.Invoke(() =>
@@ -81,6 +80,7 @@ namespace OVR_Dash_Manager.Functions
                     case "Diagnostics":
                         _window.btn_Diagnostics.IsEnabled = isEnabled;
                         break;
+
                     case "OpenSettings":
                         _window.btn_OpenSettings.IsEnabled = isEnabled;
                         break;

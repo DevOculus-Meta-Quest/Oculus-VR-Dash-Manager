@@ -44,7 +44,7 @@ namespace YOVR_Dash_Manager.Functions
             }
             catch
             {
-                // If logging fails (for example, due to file access issues), 
+                // If logging fails (for example, due to file access issues),
                 // your application needs to decide on the appropriate action to take.
             }
         }
@@ -68,7 +68,6 @@ namespace YOVR_Dash_Manager.Functions
         }
     }
 }
-
 
 /*
  * Usage Example:

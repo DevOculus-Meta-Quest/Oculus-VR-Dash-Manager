@@ -3,6 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Steam Apps" Height="450" Width="800" WindowStartupLocation="CenterOwner">
     <Grid>
-        <ListView Name="listViewSteamApps" HorizontalAlignment="Left" Height="400" Margin="10,10,0,0" VerticalAlignment="Top" Width="760" Background="{x:Null}"/>
+        <ListView Name="listViewSteamApps" HorizontalAlignment="Left" Height="400" Margin="10,10,0,0" VerticalAlignment="Top" Width="760" Background="{x:Null}" />
     </Grid>
 </Window>

@@ -60,8 +60,6 @@ namespace OVR_Dash_Manager
             });
         }
 
-
-
         // Stops the hover state and resets the progress bar
         public void StopHovering()
         {
@@ -105,6 +103,5 @@ namespace OVR_Dash_Manager
                 }
             }
         }
-
     }
 }

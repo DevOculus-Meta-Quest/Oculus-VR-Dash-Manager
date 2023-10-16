@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using YOVR_Dash_Manager.Functions;
 
 namespace OVR_Dash_Manager.Software
 {
@@ -81,6 +82,33 @@ namespace OVR_Dash_Manager.Software
                 {
                     Debug.WriteLine(ex.Message);
                 }
+            }
+        }
+
+        public static void InstallAPK(string apkPath)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = @".\ADB\adb.exe",
+                Arguments = $"install \"{apkPath}\"",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true, // Redirect standard error to capture error messages
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            Process process = new Process { StartInfo = startInfo };
+            process.Start();
+
+            string errorOutput = process.StandardError.ReadToEnd(); // Read the error output
+
+            process.WaitForExit();
+
+            if (process.ExitCode != 0 || !string.IsNullOrEmpty(errorOutput)) // Check for errors
+            {
+                // Create a new Exception with the error message and log it using your ErrorLogger class
+                Exception adbException = new Exception($"Error installing APK. Exit Code: {process.ExitCode}. Error Message: {errorOutput}");
+                ErrorLogger.LogError(adbException);
             }
         }
     }

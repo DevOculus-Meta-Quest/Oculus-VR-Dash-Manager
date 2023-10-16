@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using Microsoft.Win32;
+using OVR_Dash_Manager.Software;
+using System.Diagnostics;
+using System.Windows;
 
 namespace OVR_Dash_Manager.Forms
 {
@@ -10,6 +13,19 @@ namespace OVR_Dash_Manager.Forms
         public frm_OtherTools()
         {
             InitializeComponent();
+        }
+
+        private void btn_InstallAPK_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "APK files (*.apk)|*.apk",
+                Title = "Select an APK file"
+            };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                ADB.InstallAPK(openFileDialog.FileName);
+            }
         }
 
         private void btn_SteamAppsShow_Click(object sender, RoutedEventArgs e)

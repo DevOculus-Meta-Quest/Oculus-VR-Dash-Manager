@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
-using System.Windows;
 
 namespace OVR_Dash_Manager.Functions
 {

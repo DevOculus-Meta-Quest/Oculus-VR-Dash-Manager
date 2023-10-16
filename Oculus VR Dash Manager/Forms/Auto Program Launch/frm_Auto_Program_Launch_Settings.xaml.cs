@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 
 namespace OVR_Dash_Manager.Forms.Auto_Program_Launch

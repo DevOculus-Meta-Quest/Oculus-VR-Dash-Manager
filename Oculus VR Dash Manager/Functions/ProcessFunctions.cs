@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text.RegularExpressions;
+﻿using System.IO;
 
 namespace OVR_Dash_Manager.Functions
 {

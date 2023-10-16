@@ -1,7 +1,5 @@
 ﻿using OVR_Dash_Manager.Functions;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 
 namespace OVR_Dash_Manager.Forms

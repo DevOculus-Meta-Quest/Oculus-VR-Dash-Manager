@@ -47,5 +47,6 @@
         <Button x:Name="btn_OculusAppsShow" Content="Oculus Apps" HorizontalAlignment="Left" Margin="35,359,0,0" VerticalAlignment="Top" Width="105" Click="btn_OculusAppsShow_Click" Grid.ColumnSpan="2"/>
         <GroupBox x:Name="gb_Apps" Header="Steam/Oculus Apps" Margin="10,329,0,0" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Height="99"/>
         <Button x:Name="btn_InstallAPK" Content="Install APK" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="35,294,0,0" VerticalAlignment="Top" Width="104" Click="btn_InstallAPK_Click"/>
+        <Button x:Name="btn_ADBFileManager" Content="ADB FileManager" HorizontalAlignment="Left" Margin="36,259,0,0" VerticalAlignment="Top" Width="144" Grid.ColumnSpan="2" Click="btn_ADBFileManager_Click"/>
     </Grid>
 </Window>

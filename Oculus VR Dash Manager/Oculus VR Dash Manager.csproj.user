@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Forms\ADBFileManagerWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Forms\Auto Program Launch\frm_Auto_Program_Launch_Settings.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -48,6 +51,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Forms\ADBFileManagerWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Forms\Auto Program Launch\frm_Auto_Program_Launch_Settings.xaml">
       <SubType>Designer</SubType>
     </Page>

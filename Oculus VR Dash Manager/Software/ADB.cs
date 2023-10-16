@@ -54,8 +54,6 @@ namespace OVR_Dash_Manager.Software
                     }
                 }
             }
-
-            ///
         }
 
         private static void RemoveWatcher()
@@ -109,6 +107,63 @@ namespace OVR_Dash_Manager.Software
                 // Create a new Exception with the error message and log it using your ErrorLogger class
                 Exception adbException = new Exception($"Error installing APK. Exit Code: {process.ExitCode}. Error Message: {errorOutput}");
                 ErrorLogger.LogError(adbException);
+            }
+        }
+
+        public static class ADBFileManager
+        {
+            public static string ExecuteADBCommand(string command)
+            {
+                try
+                {
+                    ProcessStartInfo startInfo = new ProcessStartInfo
+                    {
+                        FileName = @".\ADB\adb.exe",
+                        Arguments = command,
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    };
+
+                    using (Process process = Process.Start(startInfo))
+                    {
+                        using (StreamReader reader = process.StandardOutput)
+                        {
+                            string result = reader.ReadToEnd();
+                            return result;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ErrorLogger.LogError(ex);
+                    return null;
+                }
+            }
+
+            public static string ListFiles(string directory)
+            {
+                return ExecuteADBCommand($"shell ls {directory}");
+            }
+
+            public static void DeleteFile(string filePath)
+            {
+                ExecuteADBCommand($"shell rm {filePath}");
+            }
+
+            public static void UploadFile(string localPath, string remotePath)
+            {
+                ExecuteADBCommand($"push {localPath} {remotePath}");
+            }
+
+            public static void DownloadFile(string remotePath, string localPath)
+            {
+                ExecuteADBCommand($"pull {remotePath} {localPath}");
+            }
+
+            public static void CreateDirectory(string directoryPath)
+            {
+                ExecuteADBCommand($"shell mkdir {directoryPath}");
             }
         }
     }

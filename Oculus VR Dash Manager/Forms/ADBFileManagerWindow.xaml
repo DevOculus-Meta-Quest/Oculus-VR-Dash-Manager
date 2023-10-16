@@ -1,0 +1,13 @@
+﻿<Window x:Class="OVR_Dash_Manager.Forms.ADBFileManagerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ADB File Manager" Height="450" Width="800" Background="#FF050500" Topmost="True" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <ListBox x:Name="lstFiles" MouseDoubleClick="lstFiles_MouseDoubleClick" HorizontalAlignment="Left" Height="400" Margin="10,10,0,0" VerticalAlignment="Top" Width="400" Background="#FF050500" Foreground="#FFECF6F6"/>
+        <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="420,10,0,0" Click="BtnRefresh_Click"/>
+        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="420,45,0,0" Click="BtnDelete_Click"/>
+        <Button x:Name="btnUpload" Content="Upload" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="420,80,0,0" Click="BtnUpload_Click"/>
+        <Button x:Name="btnDownload" Content="Download" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="420,115,0,0" Click="BtnDownload_Click"/>
+        <Button x:Name="btnCreateDir" Content="Create Directory" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="420,150,0,0" Click="BtnCreateDir_Click"/>
+    </Grid>
+</Window>

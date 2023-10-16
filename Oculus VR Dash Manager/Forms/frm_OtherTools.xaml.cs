@@ -51,5 +51,11 @@ namespace OVR_Dash_Manager.Forms
             // Show the window
             OculusAppsWindow.Show();
         }
+
+        private void btn_ADBFileManager_Click(object sender, RoutedEventArgs e)
+        {
+            ADBFileManagerWindow adbFileManagerWindow = new ADBFileManagerWindow();
+            adbFileManagerWindow.ShowDialog();
+        }
     }
 }

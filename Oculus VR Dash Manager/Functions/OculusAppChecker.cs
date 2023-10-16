@@ -72,9 +72,14 @@ namespace OVR_Dash_Manager.Functions
                             if (subKey != null)
                             {
                                 string path = (string)subKey.GetValue("OriginalPath");
-                                if (!string.IsNullOrEmpty(path) && Directory.Exists(path))
+                                if (!string.IsNullOrEmpty(path))
                                 {
-                                    oculusPaths.Add(path);
+                                    // Append "Software/Software" to the path
+                                    string adjustedPath = Path.Combine(path, "Software");
+                                    if (Directory.Exists(adjustedPath))
+                                    {
+                                        oculusPaths.Add(adjustedPath);
+                                    }
                                 }
                             }
                         }
@@ -84,6 +89,7 @@ namespace OVR_Dash_Manager.Functions
 
             return oculusPaths;
         }
+
 
         /// <summary>
         /// Retrieves the names of all installed Oculus apps.

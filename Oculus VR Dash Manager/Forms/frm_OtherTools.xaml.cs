@@ -35,5 +35,17 @@ namespace OVR_Dash_Manager.Forms
             // Show the window
             steamAppsWindow.Show();
         }
+
+        private void btn_OculusAppsShow_Click(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of frm_SteamApps window
+            var OculusAppsWindow = new frm_OculusApps();
+
+            // Set the frm_OtherTools window as the owner of steamAppsWindow
+            OculusAppsWindow.Owner = this;
+
+            // Show the window
+            OculusAppsWindow.Show();
+        }
     }
 }

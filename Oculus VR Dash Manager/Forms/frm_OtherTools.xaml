@@ -28,6 +28,6 @@
         </Grid.ColumnDefinitions>
         <!-- Your UI elements go here -->
         <Button x:Name="btn_SteamAppsShow" Content="Steam Apps" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,374,0,0" Grid.ColumnSpan="2" Width="105" Click="btn_SteamAppsShow_Click"/>
-        <Button x:Name="btn_OculusAppsShow" Content="Oculus Apps" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,339,0,0" VerticalAlignment="Top" Width="105"/>
+        <Button x:Name="btn_OculusAppsShow" Content="Oculus Apps" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,339,0,0" VerticalAlignment="Top" Width="105" Click="btn_OculusAppsShow_Click"/>
     </Grid>
 </Window>

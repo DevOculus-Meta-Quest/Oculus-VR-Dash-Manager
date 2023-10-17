@@ -49,5 +49,8 @@
         <Button x:Name="btn_InstallAPK" Content="Install APK" HorizontalAlignment="Left" Margin="85,354,0,0" VerticalAlignment="Top" Width="104" Click="btn_InstallAPK_Click" Grid.Column="1"/>
         <Button x:Name="btn_ADBFileManager" Content="ADB FileManager" HorizontalAlignment="Left" Margin="85,389,0,0" VerticalAlignment="Top" Width="144" Click="btn_ADBFileManager_Click" Grid.Column="1"/>
         <GroupBox x:Name="gb_ADBMenu" Grid.Column="1" Header="ADB Menu" Margin="75,329,400,37"/>
+        <GroupBox x:Name="gb_ProfileManager" Grid.Column="1" Header="Profile Manager" Margin="305,329,160,37"/>
+        <Button x:Name="btn_ProfileManager" Grid.Column="1" Content="Profile Manager" HorizontalAlignment="Left" Margin="322,389,0,0" VerticalAlignment="Top" Click="btn_ProfileManager_Click"/>
+        <Label x:Name="lbl_ProfileManagerTest" Grid.Column="1" Content="Warning: Still in Development" HorizontalAlignment="Left" Margin="305,356,0,0" VerticalAlignment="Top" Width="225" Foreground="#E5FF0000" FontSize="16"/>
     </Grid>
 </Window>

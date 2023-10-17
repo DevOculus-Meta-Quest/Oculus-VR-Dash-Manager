@@ -1,0 +1,25 @@
+﻿<Window x:Class="OVR_Dash_Manager.Forms.Profile_Manager.frm_ProfileManager"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OVR_Dash_Manager.Forms.Profile_Manager"
+        mc:Ignorable="d"
+        Title="Profile Manager" Height="450" Width="800" Topmost="True" WindowStartupLocation="CenterOwner" Foreground="#FFEAF8F8" Background="#FF0A0909">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Reference to the external style -->
+                <ResourceDictionary Source="../../Theme/MetroDark.MSControls.Core.Implicit.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Background="Black">
+        <Button x:Name="btnASWAuto" Content="ASW Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="25" Click="btnASWAuto_Click"/>
+        <CheckBox x:Name="chkAdaptive" Content="Adaptive" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0"/>
+        <Slider x:Name="sldXRay" Minimum="0" Maximum="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,60,0,0" Width="100"/>
+        <Label x:Name="lblXRayValue" Content="XRay Value: 0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,60,0,0"/>
+        <!-- Add more controls here -->
+    </Grid>
+</Window>

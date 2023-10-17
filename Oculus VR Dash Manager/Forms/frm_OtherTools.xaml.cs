@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using OVR_Dash_Manager.Forms.Profile_Manager;
 using OVR_Dash_Manager.Software;
 using System.Diagnostics;
 using System.Windows;
@@ -57,5 +58,13 @@ namespace OVR_Dash_Manager.Forms
             ADBFileManagerWindow adbFileManagerWindow = new ADBFileManagerWindow();
             adbFileManagerWindow.ShowDialog();
         }
+
+        private void btn_ProfileManager_Click(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of the frm_ProfileManager window and show it
+            frm_ProfileManager profileManager = new frm_ProfileManager();
+            profileManager.Show();
+        }
+
     }
 }

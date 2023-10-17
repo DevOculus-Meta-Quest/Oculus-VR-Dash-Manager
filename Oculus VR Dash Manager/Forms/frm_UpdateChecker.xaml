@@ -23,7 +23,8 @@
                 <Label x:Name="lbl_DashManager_CurrentVersion" Content="Label" Margin="10,107,10,0" VerticalAlignment="Top" />
                 <Label Content="Avaliable Version" Margin="10,160,10,0" VerticalAlignment="Top" />
                 <Label x:Name="lbl_DashManager_AvaliableVersion" Content="Label" Margin="10,188,10,0" VerticalAlignment="Top" />
-                <Button x:Name="btn_DashManager_OpenWebsite" Content="Open Website" Margin="10,229,10,0" VerticalAlignment="Top" Click="btn_DashManager_OpenWebsite_Click" />
+                <Button x:Name="btn_DashManager_OpenWebsite" Content="Open Website" Margin="10,267,10,0" VerticalAlignment="Top" Click="btn_DashManager_OpenWebsite_Click" />
+                <Button x:Name="btnDownloadLatest" Content="Download Latest" HorizontalAlignment="Center" VerticalAlignment="Top" Width="176" Height="30" Click="btnDownloadLatest_Click" IsEnabled="False" Margin="0,232,0,0"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="OculusKiller" Margin="233,0,0,10" HorizontalAlignment="Left" Width="218">

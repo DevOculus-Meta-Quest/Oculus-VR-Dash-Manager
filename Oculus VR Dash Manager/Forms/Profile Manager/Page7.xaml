@@ -19,7 +19,65 @@
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="20">
-            <!--  Your content goes here  -->
+
+            <Label
+                Content="Service Commands"
+                FontSize="18"
+                FontWeight="Bold" />
+
+            <!--  enable-adaptive-compositor-kickoff  -->
+            <CheckBox x:Name="chkEnableAdaptiveCompositorKickoff" Content="Enable Adaptive Compositor Kickoff" />
+
+            <!--  enable-adaptive-gpu-perf-scale  -->
+            <CheckBox x:Name="chkEnableAdaptiveGpuPerfScale" Content="Enable Adaptive GPU Perf Scale" />
+
+            <!--  get-pose-injection  -->
+            <Button
+                x:Name="btnGetPoseInjection"
+                Width="200"
+                Content="Get Pose Injection" />
+
+            <!--  get-use-rec-spec-resolution  -->
+            <Button
+                x:Name="btnGetUseRecSpecResolution"
+                Width="200"
+                Content="Get Use Rec Spec Resolution" />
+
+            <!--  set-client-fov-tan-angle-multiplier  -->
+            <GroupBox Header="Set Client FOV Tan Angle Multiplier">
+                <TextBox x:Name="txtClientFovTanAngleMultiplier" Width="200" />
+            </GroupBox>
+
+            <!--  set-debug-hmd  -->
+            <GroupBox Header="Set Debug HMD">
+                <TextBox x:Name="txtDebugHmd" Width="200" />
+            </GroupBox>
+
+            <!--  set-force-mip-gen-on-all-layers  -->
+            <CheckBox x:Name="chkSetForceMipGenOnAllLayers" Content="Set Force Mip Gen on All Layers" />
+
+            <!--  set-offset-mip-bias-on-all-layers  -->
+            <CheckBox x:Name="chkSetOffsetMipBiasOnAllLayers" Content="Set Offset Mip Bias on All Layers" />
+
+            <!--  set-pixels-per-display-pixel  -->
+            <GroupBox Header="Set Pixels Per Display Pixel">
+                <TextBox x:Name="txtPixelsPerDisplayPixel" Width="200" />
+            </GroupBox>
+
+            <!--  set-pixels-per-display-pixel-override  -->
+            <GroupBox Header="Set Pixels Per Display Pixel Override">
+                <TextBox x:Name="txtPixelsPerDisplayPixelOverride" Width="200" />
+            </GroupBox>
+
+            <!--  set-pose-injection  -->
+            <CheckBox x:Name="chkSetPoseInjection" Content="Set Pose Injection" />
+
+            <!--  set-use-fov-stencil  -->
+            <CheckBox x:Name="chkSetUseFovStencil" Content="Set Use FOV Stencil" />
+
+            <!--  set-use-rec-spec-resolution  -->
+            <CheckBox x:Name="chkSetUseRecSpecResolution" Content="Set Use Rec Spec Resolution" />
+
         </StackPanel>
     </ScrollViewer>
 </Page>

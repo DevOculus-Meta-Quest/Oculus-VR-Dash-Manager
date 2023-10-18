@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace OVR_Dash_Manager.Forms.Profile_Manager
 {
@@ -13,39 +14,78 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             NavigationFrame.Navigate(new Page1());
         }
 
-        private void btn_Page1_Click(object sender, RoutedEventArgs e)
+        private int currentPageNumber = 1;
+        private int totalPageNumber = 8; // Set this to your total number of pages
+
+        private void btnFirst_Click(object sender, RoutedEventArgs e)
         {
-            NavigationFrame.Navigate(new Page1());
+            NavigateToPage(1);
         }
 
-        private void btn_Page2_Click(object sender, RoutedEventArgs e)
+        private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
-            NavigationFrame.Navigate(new Page2());
+            if (currentPageNumber > 1)
+            {
+                NavigateToPage(currentPageNumber - 1);
+            }
         }
 
-        private void btn_Page3_Click(object sender, RoutedEventArgs e)
+        private void btnPage_Click(object sender, RoutedEventArgs e)
         {
-            NavigationFrame.Navigate(new Page3());
+            Button btn = sender as Button;
+            int pageNumber = int.Parse(btn.Content.ToString());
+            NavigateToPage(pageNumber);
         }
 
-        private void btn_Page4_Click(object sender, RoutedEventArgs e)
+        private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            NavigationFrame.Navigate(new Page4());
+            if (currentPageNumber < totalPageNumber)
+            {
+                NavigateToPage(currentPageNumber + 1);
+            }
         }
 
-        private void btn_Page5_Click(object sender, RoutedEventArgs e)
+        private void btnLast_Click(object sender, RoutedEventArgs e)
         {
-            NavigationFrame.Navigate(new Page5());
+            NavigateToPage(totalPageNumber);
         }
 
-        private void btn_Page6_Click(object sender, RoutedEventArgs e)
+        private void NavigateToPage(int pageNumber)
         {
-            NavigationFrame.Navigate(new Page6());
+            currentPageNumber = pageNumber;
+
+            switch (pageNumber)
+            {
+                case 1:
+                    NavigationFrame.Navigate(new Page1());
+                    break;
+                case 2:
+                    NavigationFrame.Navigate(new Page2());
+                    break;
+                case 3:
+                    NavigationFrame.Navigate(new Page3());
+                    break;
+                case 4:
+                    NavigationFrame.Navigate(new Page4());
+                    break;
+                case 5:
+                    NavigationFrame.Navigate(new Page5());
+                    break;
+                case 6:
+                    NavigationFrame.Navigate(new Page6());
+                    break;
+                case 7:
+                    NavigationFrame.Navigate(new Page7());
+                    break;
+                case 8:
+                    NavigationFrame.Navigate(new Page8());
+                    break;
+                // Add more cases as needed
+                default:
+                    MessageBox.Show("Page not found.");
+                    break;
+            }
         }
 
-        private void btn_Home_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationFrame.Navigate(new Page1()); // Assuming Page1 is the home page
-        }
     }
 }

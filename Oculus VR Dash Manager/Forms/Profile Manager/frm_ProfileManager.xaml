@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Profile Manager"
     Width="605"
-    Height="745"
+    Height="765"
     Background="#FF0A0909"
     Foreground="#FFEAF8F8"
     Topmost="True"
@@ -26,21 +26,58 @@
         <Frame x:Name="NavigationFrame" NavigationUIVisibility="Hidden" />
 
         <StackPanel
-            Height="30"
-            Margin="0,669,0,0"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Orientation="Horizontal" RenderTransformOrigin="0.495,-1.198">
-            <Button Click="btn_Page1_Click" Content="Page 1" />
-            <Button Click="btn_Page2_Click" Content="Page 2" />
-            <Button Click="btn_Page3_Click" Content="Page 3" />
-            <Button Click="btn_Page4_Click" Content="Page 4" />
-            <Button Click="btn_Page5_Click" Content="Page 5" />
-            <Button Click="btn_Page6_Click" Content="Page 6" />
-            <Button Click="btn_Page6_Click" Content="Page 7" />
-            <Button Click="btn_Home_Click" Content="Home" />
+            Orientation="Horizontal" VerticalAlignment="Top" Height="25" Margin="0,684,0,0">
+            <Button
+                x:Name="btnFirst"
+                Width="60"
+                Click="btnFirst_Click"
+                Content="First" />
+            <Button
+                x:Name="btnPrev"
+                Width="60"
+                Click="btnPrev_Click"
+                Content="Prev" />
 
+            <Button
+                x:Name="btnPage1"
+                Width="40"
+                Click="btnPage_Click"
+                Content="1" />
+            <Button
+                x:Name="btnPage2"
+                Width="40"
+                Click="btnPage_Click"
+                Content="2" />
+            <Button
+                x:Name="btnPage3"
+                Width="40"
+                Click="btnPage_Click"
+                Content="3" />
+            <Button
+                x:Name="btnPage4"
+                Width="40"
+                Click="btnPage_Click"
+                Content="4" />
+            <Button
+                x:Name="btnPage5"
+                Width="40"
+                Click="btnPage_Click"
+                Content="5" />
+            <!--  Add more buttons as needed  -->
+
+            <Button
+                x:Name="btnNext"
+                Width="60"
+                Click="btnNext_Click"
+                Content="Next" />
+            <Button
+                x:Name="btnLast"
+                Width="60"
+                Click="btnLast_Click"
+                Content="Last" />
         </StackPanel>
+
     </Grid>
 
 

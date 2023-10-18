@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace OVR_Dash_Manager.Forms.Profile_Manager
 {
@@ -23,25 +10,42 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
         public frm_ProfileManager()
         {
             InitializeComponent();
-            sldXRay.ValueChanged += SldXRay_ValueChanged;
+            NavigationFrame.Navigate(new Page1());
         }
 
-        private void SldXRay_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void btn_Page1_Click(object sender, RoutedEventArgs e)
         {
-            lblXRayValue.Content = $"XRay Value: {sldXRay.Value}";
+            NavigationFrame.Navigate(new Page1());
         }
 
-        private void btnASWAuto_Click(object sender, RoutedEventArgs e)
+        private void btn_Page2_Click(object sender, RoutedEventArgs e)
         {
-            ExecuteCommand("server:asw.Auto");
+            NavigationFrame.Navigate(new Page2());
         }
 
-        private void ExecuteCommand(string command)
+        private void btn_Page3_Click(object sender, RoutedEventArgs e)
         {
-            // Execute the command using OculusDebugToolCLI.exe
-            Process.Start("OculusDebugToolCLI.exe", command);
+            NavigationFrame.Navigate(new Page3());
         }
 
-        // Add more event handlers here for each control
+        private void btn_Page4_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationFrame.Navigate(new Page4());
+        }
+
+        private void btn_Page5_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationFrame.Navigate(new Page5());
+        }
+
+        private void btn_Page6_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationFrame.Navigate(new Page6());
+        }
+
+        private void btn_Home_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationFrame.Navigate(new Page1()); // Assuming Page1 is the home page
+        }
     }
 }

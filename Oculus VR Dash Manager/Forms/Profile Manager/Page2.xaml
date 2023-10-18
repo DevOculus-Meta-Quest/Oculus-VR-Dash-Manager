@@ -1,0 +1,77 @@
+﻿<Page
+    x:Class="OVR_Dash_Manager.Forms.Profile_Manager.Page2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OVR_Dash_Manager.Forms.Profile_Manager"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Page2"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--  Reference to the external style  -->
+                <ResourceDictionary Source="../../Theme/MetroDark.MSControls.Core.Implicit.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <StackPanel Margin="20">
+
+        <Label
+            Content="Allocator"
+            FontSize="18"
+            FontWeight="Bold" />
+
+        <CheckBox x:Name="chkDisableTracking" Content="Disable Tracking" />
+        <TextBlock
+            Margin="20,0,0,10"
+            FontStyle="Italic"
+            Text="Disables heap tracking." />
+
+        <CheckBox x:Name="chkEnableTracking" Content="Enable Tracking" />
+        <TextBlock
+            Margin="20,0,0,10"
+            FontStyle="Italic"
+            Text="Enables heap tracking." />
+
+        <Button x:Name="btnReportState" Content="Report State" />
+        <TextBlock
+            Margin="20,0,0,10"
+            FontStyle="Italic"
+            Text="Reports the general state and settings of the global Allocator." />
+
+        <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+            <Label VerticalAlignment="Center" Content="Trace Filepath:" />
+            <TextBox x:Name="txtTraceFilePath" Width="200">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Foreground" Value="Black" />
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <VisualBrush Stretch="None">
+                                            <VisualBrush.Visual>
+                                                <TextBlock Foreground="Gray" Text="Enter filepath" />
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+        </StackPanel>
+        <TextBlock
+            Margin="20,0,0,10"
+            FontStyle="Italic"
+            Text="Triggers the logging of the default allocator heap, with an optional filter." />
+
+    </StackPanel>
+</Page>

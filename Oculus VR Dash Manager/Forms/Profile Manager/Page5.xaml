@@ -1,0 +1,114 @@
+﻿<Page
+    x:Class="OVR_Dash_Manager.Forms.Profile_Manager.Page5"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OVR_Dash_Manager.Forms.Profile_Manager"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Page5"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--  Reference to the external style  -->
+                <ResourceDictionary Source="../../Theme/MetroDark.MSControls.Core.Implicit.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20">
+
+            <!--  rift.get_debug_hmd  -->
+            <GroupBox Header="rift.get_debug_hmd">
+                <Button Width="100" Content="Execute" />
+            </GroupBox>
+
+            <!--  rift.set_debug_hmd  -->
+            <GroupBox Header="rift.set_debug_hmd">
+                <Grid>
+                    <TextBox x:Name="txtSetDebugHmd" Width="200" />
+                    <Label
+                        Content="Enter hmd_type"
+                        Foreground="Gray"
+                        IsHitTestVisible="False">
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=txtSetDebugHmd, Path=Text}" Value="">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </Grid>
+            </GroupBox>
+
+            <!--  SetHmd serialNumber  -->
+            <GroupBox Header="SetHmd serialNumber">
+                <Grid>
+                    <TextBox x:Name="txtSetHmd" Width="200" />
+                    <Label
+                        Content="Enter serialNumber"
+                        Foreground="Gray"
+                        IsHitTestVisible="False">
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=txtSetHmd, Path=Text}" Value="">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </Grid>
+            </GroupBox>
+
+            <Button x:Name="btnGetDebugHmd" Content="Get Debug HMD" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Return configured rift debug 'hmd_type'." />
+
+            <ComboBox x:Name="cmbOutputColorSpace" Width="200">
+                <ComboBoxItem Content="None" />
+                <ComboBoxItem Content="DCI-P3" />
+                <ComboBoxItem Content="sRGB(Rec709)" />
+            </ComboBox>
+            <Button Margin="0,5" Content="Set Output Color Space" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Override output color space." />
+
+            <CheckBox x:Name="chkDisableSleep" Content="Disable Sleep on Touch" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Prevents the Touch controllers from ever going to sleep. The battery will be drained." />
+
+            <Button x:Name="btnValidateHmd" Content="Validate HMD" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Run hardware to test that hmd streams camera and imu properly." />
+
+            <Slider
+                x:Name="sldXray"
+                Width="200"
+                Maximum="100"
+                Minimum="0" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Sets the xray percentage, a value 0-100 which prioritizes Dash at the 0th end, and prioritizes Passthrough at the 100th end." />
+
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

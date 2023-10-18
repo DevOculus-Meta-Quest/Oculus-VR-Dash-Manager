@@ -63,7 +63,8 @@ namespace OVR_Dash_Manager.Forms
         {
             // Create an instance of the frm_ProfileManager window and show it
             frm_ProfileManager profileManager = new frm_ProfileManager();
-            profileManager.Show();
+            profileManager.Owner = this; // 'this' refers to the main window
+            profileManager.ShowDialog();
         }
 
     }

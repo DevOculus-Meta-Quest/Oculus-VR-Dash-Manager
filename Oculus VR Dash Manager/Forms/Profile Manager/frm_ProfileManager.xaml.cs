@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using OVR_Dash_Manager.Functions;
+using System;
+using System.Windows;
 using System.Windows.Controls;
+using YOVR_Dash_Manager.Functions;
 
 namespace OVR_Dash_Manager.Forms.Profile_Manager
 {
@@ -12,6 +15,28 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
         {
             InitializeComponent();
             NavigationFrame.Navigate(new Page1());
+        }
+
+        private void btnApplyProfile_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string profileName = "YourProfileName"; // You might get this from a TextBox or another control
+                string profileData = ProfileManagementFunctions.LoadProfile(profileName);
+
+                if (ProfileManagementFunctions.ApplyProfile(profileData))
+                {
+                    MessageBox.Show("Profile applied successfully!");
+                }
+                else
+                {
+                    MessageBox.Show("Failed to apply profile.");
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.LogError(ex, "Failed to apply profile.");
+            }
         }
 
         private int currentPageNumber = 1;

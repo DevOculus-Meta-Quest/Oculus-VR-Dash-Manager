@@ -23,11 +23,24 @@
     </Window.Resources>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!--  Content (Frame)  -->
+            <RowDefinition Height="Auto" />
+            <!--  Navigation Buttons  -->
+            <RowDefinition Height="Auto" />
+            <!--  Apply Profile Button  -->
+        </Grid.RowDefinitions>
+
         <Frame x:Name="NavigationFrame" NavigationUIVisibility="Hidden" />
 
         <StackPanel
+            Grid.Row="1"
+            Height="25"
+            Margin="0,0,0,10"
             HorizontalAlignment="Center"
-            Orientation="Horizontal" VerticalAlignment="Top" Height="25" Margin="0,684,0,0">
+            Orientation="Horizontal">
+            <!--  Adjusted margin here  -->
             <Button
                 x:Name="btnFirst"
                 Width="60"
@@ -76,6 +89,20 @@
                 Width="60"
                 Click="btnLast_Click"
                 Content="Last" />
+        </StackPanel>
+
+        <StackPanel
+            Grid.Row="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Orientation="Horizontal">
+            <Button
+                x:Name="btnApplyProfile"
+                Width="105"
+                Height="30"
+                Margin="5"
+                Click="btnApplyProfile_Click"
+                Content="Apply Profile" />
         </StackPanel>
 
     </Grid>

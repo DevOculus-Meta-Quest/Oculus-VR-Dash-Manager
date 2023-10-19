@@ -1,43 +1,52 @@
-﻿using System;
-using System.Diagnostics;
-using YOVR_Dash_Manager.Functions; // Ensure this using directive is added to access the ErrorLogger
+﻿using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
+using System;
 
-namespace OVR_Dash_Manager.Functions
+public class OculusDebugToolFunctions : IDisposable
 {
-    public static class OculusDebugToolFunctions
+    private Process process;
+    private StreamWriter streamWriter;
+
+    public OculusDebugToolFunctions()
     {
-        public static string ExecuteCommand(string command, string parameters)
+        process = new Process
         {
-            string output = string.Empty;
-            try
+            StartInfo = new ProcessStartInfo
             {
-                // Define the path to OculusDebugToolCLI.exe
-                string toolPath = @"C:\Program Files\Oculus\Support\oculus-diagnostics\OculusDebugToolCLI.exe";
-
-                // Create a new process to run the command
-                using (Process process = new Process())
-                {
-                    process.StartInfo.FileName = toolPath;
-                    process.StartInfo.Arguments = $"{command} {parameters}";
-                    process.StartInfo.RedirectStandardOutput = true;
-                    process.StartInfo.UseShellExecute = false;
-                    process.StartInfo.CreateNoWindow = true;
-
-                    process.Start();
-
-                    // Read the output of the command
-                    output = process.StandardOutput.ReadToEnd();
-
-                    process.WaitForExit();
-                }
+                FileName = @"C:\Program Files\Oculus\Support\oculus-diagnostics\OculusDebugToolCLI.exe",
+                UseShellExecute = false,
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
             }
-            catch (Exception ex)
-            {
-                // Log the error using the ErrorLogger
-                ErrorLogger.LogError(ex, $"An error occurred while executing the command: {command} {parameters}");
-            }
+        };
 
-            return output;
-        }
+        process.OutputDataReceived += (sender, args) => Debug.WriteLine(args.Data);
+        process.ErrorDataReceived += (sender, args) => Debug.WriteLine(args.Data);
+
+        process.Start();
+
+        process.BeginOutputReadLine();
+        process.BeginErrorReadLine();
+
+        streamWriter = process.StandardInput;
+    }
+
+    public async Task ExecuteCommandAsync(string command)
+    {
+        Debug.WriteLine($"Sending command: {command}");
+        await streamWriter.WriteLineAsync(command);
+        await streamWriter.WriteLineAsync("exit");
+        await streamWriter.FlushAsync();
+    }
+
+    public void Dispose()
+    {
+        process?.Close();
+        process?.Dispose();
+        streamWriter?.Close();
+        streamWriter?.Dispose();
     }
 }

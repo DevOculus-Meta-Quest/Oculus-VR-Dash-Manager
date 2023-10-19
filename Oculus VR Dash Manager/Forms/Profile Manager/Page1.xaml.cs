@@ -20,14 +20,28 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
         {
             CheckBox checkBox = (CheckBox)sender;
             bool isChecked = checkBox.IsChecked.GetValueOrDefault();
-            profileManager.UpdateProfileData(checkBox.Name, isChecked);
+
+            // Creating a dictionary to pass as the second argument
+            var controlData = new Dictionary<string, object>
+    {
+        { checkBox.Name, isChecked }
+    };
+
+            profileManager.UpdateProfileData("Page1", controlData);
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             ComboBoxItem selectedItem = (ComboBoxItem)comboBox.SelectedItem;
-            profileManager.UpdateProfileData(comboBox.Name, selectedItem.Content.ToString());
+
+            // Creating a dictionary to pass as the second argument
+            var controlData = new Dictionary<string, object>
+    {
+        { comboBox.Name, selectedItem.Content.ToString() }
+    };
+
+            profileManager.UpdateProfileData("Page1", controlData);
         }
 
         public void PopulateUI(Dictionary<string, object> profileData)
@@ -83,6 +97,28 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             {
                 MessageBox.Show("No profile data available to populate the UI.");
             }
+        }
+
+        public Dictionary<string, object> GetPageControlsState()
+        {
+            return new Dictionary<string, object>
+            {
+                { "pass_aswiad", pass_aswiad.IsChecked },
+                { "pass_cpufilter", pass_cpufilter.IsChecked },
+                { "pass_gpufilter", pass_gpufilter.IsChecked },
+                { "pass_low", pass_low.IsChecked },
+                { "pass_lowfilter", pass_lowfilter.IsChecked },
+                { "pass_medianfilter", pass_medianfilter.IsChecked },
+                { "pass_super", pass_super.IsChecked },
+                { "pass_vis", pass_vis.IsChecked },
+                { "rift_get_debug_hmd", rift_get_debug_hmd.IsChecked },
+                { "cmb_pass_guard", cmb_pass_guard.SelectedIndex },
+                { "cmb_pass_mixreality", cmb_pass_mixreality.SelectedIndex },
+                { "cmb_pass_depth", cmb_pass_depth.SelectedIndex },
+                { "cmb_pass_filter", cmb_pass_filter.SelectedIndex },
+                { "cmb_pass_hud", cmb_pass_hud.SelectedIndex },
+                { "cmb_pass_iad", cmb_pass_iad.SelectedIndex }
+            };
         }
 
     }

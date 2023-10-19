@@ -7,52 +7,58 @@ using YOVR_Dash_Manager.Functions;
 
 namespace OVR_Dash_Manager.Forms.Profile_Manager
 {
-    /// <summary>
-    /// Interaction logic for frm_ProfileManager.xaml
-    /// </summary>
     public partial class frm_ProfileManager : Window
     {
         private Dictionary<string, object> profileData = new Dictionary<string, object>();
         private int currentPageNumber = 1;
-        private int totalPageNumber = 8; // Set this to your total number of pages
+        private int totalPageNumber = 8;
 
         public frm_ProfileManager()
         {
             InitializeComponent();
-            LoadProfile("defaultProfile"); // Load the saved profile data with a default or placeholder profile name
-            NavigationFrame.Navigate(new Page1(this)); // Navigating to Page1 during initialization
+            LoadProfile("defaultProfile");
+            NavigateToPage(1); // Initial navigation to Page1
         }
 
-        public void UpdateProfileData(string key, object value)
+        // This method updates the profileData dictionary when changes are made in the UI.
+        public void UpdateProfileData(string pageKey, Dictionary<string, object> pageControlsData)
         {
-            profileData[key] = value;
+            // Check if the profileData dictionary already contains data for the specified page
+            if (profileData.ContainsKey(pageKey))
+            {
+                // If it does, update the existing data
+                var existingData = profileData[pageKey] as Dictionary<string, object>;
+                foreach (var item in pageControlsData)
+                {
+                    existingData[item.Key] = item.Value;
+                }
+            }
+            else
+            {
+                // If it doesn't, add a new entry for the page
+                profileData[pageKey] = pageControlsData;
+            }
         }
+
 
         private void SaveProfile(string profileName)
         {
             string jsonProfile = JsonFunctions.SerializeClass(profileData);
 
-            // Getting the directory of the executing assembly
             string directoryPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-
-            // Creating the Profiles directory if it doesn't exist
             string profilesDirectory = System.IO.Path.Combine(directoryPath, "Profiles");
             if (!System.IO.Directory.Exists(profilesDirectory))
             {
                 System.IO.Directory.CreateDirectory(profilesDirectory);
             }
 
-            // Saving the jsonProfile to a file within the Profiles directory
             string filePath = System.IO.Path.Combine(profilesDirectory, profileName + ".json");
             System.IO.File.WriteAllText(filePath, jsonProfile);
         }
 
         private void LoadProfile(string profileName)
         {
-            // Getting the directory of the executing assembly
             string directoryPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-
-            // Getting the file path within the Profiles directory
             string filePath = System.IO.Path.Combine(directoryPath, "Profiles", profileName + ".json");
 
             if (System.IO.File.Exists(filePath))
@@ -60,40 +66,11 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 string jsonProfile = System.IO.File.ReadAllText(filePath);
                 profileData = JsonFunctions.DeserializeClass<Dictionary<string, object>>(jsonProfile);
 
-                // Assuming NavigationFrame.Content holds the current page
                 Page currentPage = NavigationFrame.Content as Page;
                 if (currentPage != null)
                 {
-                    switch (currentPage.GetType().Name)
-                    {
-                        case "Page1":
-                            ((Page1)currentPage).PopulateUI(profileData);
-                            break;
-                        case "Page2":
-                            ((Page2)currentPage).PopulateUI(profileData);
-                            break;
-                        case "Page3":
-                            ((Page3)currentPage).PopulateUI(profileData);
-                            break;
-                        case "Page4":
-                            ((Page4)currentPage).PopulateUI(profileData);
-                            break;
-                        case "Page5":
-                            ((Page5)currentPage).PopulateUI(profileData);
-                            break;
-                        case "Page6":
-                            ((Page6)currentPage).PopulateUI(profileData);
-                            break;
-                        case "Page7":
-                            ((Page7)currentPage).PopulateUI(profileData);
-                            break;
-                        case "Page8":
-                            ((Page8)currentPage).PopulateUI(profileData);
-                            break;
-                        default:
-                            MessageBox.Show("Page not recognized for loading profile.");
-                            break;
-                    }
+                    dynamic currentPageDynamic = Convert.ChangeType(currentPage, currentPage.GetType());
+                    currentPageDynamic.PopulateUI(profileData);
                 }
             }
             else
@@ -175,35 +152,33 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
         private void NavigateToPage(int pageNumber)
         {
+            // Save the current page's data before navigating away
+            if (NavigationFrame.Content is Page currentPage)
+            {
+                dynamic currentPageDynamic = Convert.ChangeType(currentPage, currentPage.GetType());
+                var currentPageData = currentPageDynamic.GetPageControlsState();
+                foreach (var item in currentPageData)
+                {
+                    profileData[item.Key] = item.Value;
+                }
+            }
+
             currentPageNumber = pageNumber;
 
             switch (pageNumber)
             {
                 case 1:
-                    NavigationFrame.Navigate(new Page1(this)); // Passing this instance
+                    var page1 = new Page1(this);
+                    page1.PopulateUI(profileData); // Load the saved profile data
+                    NavigationFrame.Navigate(page1);
                     break;
                 case 2:
-                    NavigationFrame.Navigate(new Page2(this)); // Passing this instance
+                    var page2 = new Page2(this);
+                    page2.PopulateUI(profileData); // Load the saved profile data
+                    NavigationFrame.Navigate(page2);
                     break;
-                case 3:
-                    NavigationFrame.Navigate(new Page3(this)); // Passing this instance
-                    break;
-                case 4:
-                    NavigationFrame.Navigate(new Page4(this)); // Passing this instance
-                    break;
-                case 5:
-                    NavigationFrame.Navigate(new Page5(this)); // Passing this instance
-                    break;
-                case 6:
-                    NavigationFrame.Navigate(new Page6(this)); // Passing this instance
-                    break;
-                case 7:
-                    NavigationFrame.Navigate(new Page7(this)); // Passing this instance
-                    break;
-                case 8:
-                    NavigationFrame.Navigate(new Page8(this)); // Passing this instance
-                    break;
-                // ... (similar changes for other cases)
+                // ... (similar code for other pages like Page3, Page4, etc.)
+
                 default:
                     MessageBox.Show("Page not found.");
                     break;

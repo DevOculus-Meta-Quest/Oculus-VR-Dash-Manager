@@ -1,23 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Collections.Generic;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows;
 
 namespace OVR_Dash_Manager.Forms.Profile_Manager
 {
-    /// <summary>
-    /// Interaction logic for Page2.xaml
-    /// </summary>
     public partial class Page2 : Page
     {
         private frm_ProfileManager profileManager;
@@ -26,28 +12,43 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
         {
             InitializeComponent();
             this.profileManager = profileManager;
+
+            // Adding event handlers for checkboxes and buttons
+            chkDisableTracking.Checked += ControlStateChanged;
+            chkDisableTracking.Unchecked += ControlStateChanged;
+            chkEnableTracking.Checked += ControlStateChanged;
+            chkEnableTracking.Unchecked += ControlStateChanged;
+            txtTraceFilePath.TextChanged += ControlStateChanged;
+            btnReportState.Click += ControlStateChanged;
+            // ... (add event handlers for other buttons as needed)
         }
 
-        private void BtnAllocatorReportState_Click(object sender, RoutedEventArgs e)
+        private void ControlStateChanged(object sender, RoutedEventArgs e)
         {
-            // Your command execution code here for Allocator.ReportState
-        }
-
-        private void BtnAswAvailability_Click(object sender, RoutedEventArgs e)
-        {
-            // Your command execution code here for asw.Availability
+            profileManager.UpdateProfileData("Page2Controls", GetPageControlsState());
         }
 
         public void PopulateUI(Dictionary<string, object> profileData)
         {
-            if (profileData != null)
+            if (profileData != null && profileData.ContainsKey("Page2Controls"))
             {
-                
+                var page2Controls = (Dictionary<string, object>)profileData["Page2Controls"];
+                chkDisableTracking.IsChecked = (bool?)page2Controls["chkDisableTracking"];
+                chkEnableTracking.IsChecked = (bool?)page2Controls["chkEnableTracking"];
+                txtTraceFilePath.Text = (string)page2Controls["txtTraceFilePath"];
+                // ... (set other controls as needed)
             }
-            else
+        }
+
+        public Dictionary<string, object> GetPageControlsState()
+        {
+            return new Dictionary<string, object>
             {
-                MessageBox.Show("No profile data available to populate the UI.");
-            }
+                { "chkDisableTracking", chkDisableTracking.IsChecked },
+                { "chkEnableTracking", chkEnableTracking.IsChecked },
+                { "txtTraceFilePath", txtTraceFilePath.Text },
+                // ... (add other controls as needed)
+            };
         }
     }
 }

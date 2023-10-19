@@ -20,9 +20,12 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
     /// </summary>
     public partial class Page2 : Page
     {
-        public Page2()
+        private frm_ProfileManager profileManager;
+
+        public Page2(frm_ProfileManager profileManager)
         {
             InitializeComponent();
+            this.profileManager = profileManager;
         }
 
         private void BtnAllocatorReportState_Click(object sender, RoutedEventArgs e)
@@ -33,6 +36,18 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
         private void BtnAswAvailability_Click(object sender, RoutedEventArgs e)
         {
             // Your command execution code here for asw.Availability
+        }
+
+        public void PopulateUI(Dictionary<string, object> profileData)
+        {
+            if (profileData != null)
+            {
+                
+            }
+            else
+            {
+                MessageBox.Show("No profile data available to populate the UI.");
+            }
         }
     }
 }

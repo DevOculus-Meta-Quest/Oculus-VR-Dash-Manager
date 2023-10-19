@@ -102,7 +102,14 @@
                 Height="30"
                 Margin="5"
                 Click="btnApplyProfile_Click"
-                Content="Apply Profile" />
+                Content="Apply Profile"/>
+            <Button
+                x:Name="btnSaveProfile"
+                Width="105"
+                Height="30"
+                Margin="5"
+                Click="btnSaveProfile_Click"
+                Content="Save Profile"/>
         </StackPanel>
 
     </Grid>

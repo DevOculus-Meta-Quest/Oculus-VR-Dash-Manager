@@ -20,54 +20,54 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="20">
 
-            <!-- Layer Commands -->
+            <!--  Layer Commands  -->
             <GroupBox Header="Layer Commands">
                 <StackPanel>
-                    <Button Content="Reset" Width="100"/>
-                    <Button Content="Select" Width="100"/>
-                    <Button Content="Set Filtering Mode" Width="200"/>
-                    <Button Content="Set Head Locked" Width="200"/>
-                    <Button Content="Set Texture Origin" Width="200"/>
-                    <Button Content="Show" Width="100"/>
+                    <Button Width="100" Content="Reset" />
+                    <Button Width="100" Content="Select" />
+                    <Button Width="200" Content="Set Filtering Mode" />
+                    <Button Width="200" Content="Set Head Locked" />
+                    <Button Width="200" Content="Set Texture Origin" />
+                    <Button Width="100" Content="Show" />
                 </StackPanel>
             </GroupBox>
 
-            <!-- LayerHUD Commands -->
+            <!--  LayerHUD Commands  -->
             <GroupBox Header="LayerHUD Commands">
                 <StackPanel>
-                    <Button Content="Reset" Width="100"/>
-                    <Button Content="Select" Width="100"/>
-                    <Button Content="Set Mode" Width="150"/>
-                    <Button Content="Show All Layers" Width="200"/>
+                    <Button Width="100" Content="Reset" />
+                    <Button Width="100" Content="Select" />
+                    <Button Width="150" Content="Set Mode" />
+                    <Button Width="200" Content="Show All Layers" />
                 </StackPanel>
             </GroupBox>
 
-            <!-- PerfHUD Commands -->
+            <!--  PerfHUD Commands  -->
             <GroupBox Header="PerfHUD Commands">
                 <StackPanel>
-                    <Button Content="Reset" Width="100"/>
-                    <Button Content="Set Mode" Width="150"/>
+                    <Button Width="100" Content="Reset" />
+                    <Button Width="150" Content="Set Mode" />
                 </StackPanel>
             </GroupBox>
 
-            <!-- StereoHUD Commands -->
+            <!--  StereoHUD Commands  -->
             <GroupBox Header="StereoHUD Commands">
                 <StackPanel>
-                    <Button Content="Reset" Width="100"/>
-                    <Button Content="Set Color" Width="150"/>
-                    <Button Content="Set Mode" Width="150"/>
-                    <Button Content="Set Orientation" Width="200"/>
-                    <Button Content="Set Position" Width="200"/>
-                    <Button Content="Set Size" Width="150"/>
-                    <Button Content="Show Guide" Width="200"/>
+                    <Button Width="100" Content="Reset" />
+                    <Button Width="150" Content="Set Color" />
+                    <Button Width="150" Content="Set Mode" />
+                    <Button Width="200" Content="Set Orientation" />
+                    <Button Width="200" Content="Set Position" />
+                    <Button Width="150" Content="Set Size" />
+                    <Button Width="200" Content="Show Guide" />
                 </StackPanel>
             </GroupBox>
 
-            <!-- Telemetry Commands -->
+            <!--  Telemetry Commands  -->
             <GroupBox Header="Telemetry Commands">
                 <StackPanel>
-                    <Button Content="Begin Capturing" Width="200"/>
-                    <Button Content="End Capturing" Width="200"/>
+                    <Button Width="200" Content="Begin Capturing" />
+                    <Button Width="200" Content="End Capturing" />
                 </StackPanel>
             </GroupBox>
 

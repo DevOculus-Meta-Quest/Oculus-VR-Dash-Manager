@@ -1,63 +1,89 @@
-﻿using OVR_Dash_Manager.Functions;
-using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using OVR_Dash_Manager.Forms.Profile_Manager;
 
 namespace OVR_Dash_Manager.Forms.Profile_Manager
 {
     public partial class Page1 : Page
     {
-        private OculusDebugToolFunctions oculusDebugTool;
+        private frm_ProfileManager profileManager;
 
-        public Page1()
+        public Page1(frm_ProfileManager profileManager)
         {
             InitializeComponent();
-            oculusDebugTool = new OculusDebugToolFunctions();
+            this.profileManager = profileManager;
         }
 
-        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        private void CheckBox_Changed(object sender, RoutedEventArgs e)
         {
-            oculusDebugTool.Dispose();
+            CheckBox checkBox = (CheckBox)sender;
+            bool isChecked = checkBox.IsChecked.GetValueOrDefault();
+            profileManager.UpdateProfileData(checkBox.Name, isChecked);
         }
 
-        private async void CheckBox_Changed(object sender, RoutedEventArgs e)
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CheckBox checkBox = sender as CheckBox;
-            if (checkBox == null) return;
-
-            string checkBoxName = checkBox.Name.Replace("_", "."); // Replacing underscore with period
-            bool isChecked = checkBox.IsChecked == true;
-
-            Debug.WriteLine($"{checkBoxName} CheckBox Changed: {isChecked}");
-
-            await oculusDebugTool.ExecuteCommandAsync(isChecked ? $"server:{checkBoxName}" : $"server:no{checkBoxName}");
+            ComboBox comboBox = (ComboBox)sender;
+            ComboBoxItem selectedItem = (ComboBoxItem)comboBox.SelectedItem;
+            profileManager.UpdateProfileData(comboBox.Name, selectedItem.Content.ToString());
         }
 
-        private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void PopulateUI(Dictionary<string, object> profileData)
         {
-            ComboBox comboBox = sender as ComboBox;
-            if (comboBox == null) return;
-
-            string comboBoxName = comboBox.Name;
-            int selectedIndex = comboBox.SelectedIndex;
-
-            Debug.WriteLine($"{comboBoxName} ComboBox Selection Changed: {selectedIndex}");
-
-            string command = comboBoxName switch
+            if (profileData != null)
             {
-                "cmb_pass_guard" => $"server:pass.guard {selectedIndex}",
-                "cmb_pass_mixreality" => $"server:pass.mixreality {selectedIndex}",
-                _ => null
-            };
+                profileData.TryGetValue("pass_aswiad", out object value_aswiad);
+                pass_aswiad.IsChecked = value_aswiad as bool?;
 
-            if (command != null)
-            {
-                await oculusDebugTool.ExecuteCommandAsync(command);
+                profileData.TryGetValue("pass_cpufilter", out object value_cpufilter);
+                pass_cpufilter.IsChecked = value_cpufilter as bool?;
+
+                profileData.TryGetValue("pass_gpufilter", out object value_gpufilter);
+                pass_gpufilter.IsChecked = value_gpufilter as bool?;
+
+                profileData.TryGetValue("pass_low", out object value_low);
+                pass_low.IsChecked = value_low as bool?;
+
+                profileData.TryGetValue("pass_lowfilter", out object value_lowfilter);
+                pass_lowfilter.IsChecked = value_lowfilter as bool?;
+
+                profileData.TryGetValue("pass_medianfilter", out object value_medianfilter);
+                pass_medianfilter.IsChecked = value_medianfilter as bool?;
+
+                profileData.TryGetValue("pass_super", out object value_super);
+                pass_super.IsChecked = value_super as bool?;
+
+                profileData.TryGetValue("pass_vis", out object value_vis);
+                pass_vis.IsChecked = value_vis as bool?;
+
+                profileData.TryGetValue("rift_get_debug_hmd", out object value_rift_get_debug_hmd);
+                rift_get_debug_hmd.IsChecked = value_rift_get_debug_hmd as bool?;
+
+                profileData.TryGetValue("cmb_pass_guard", out object value_cmb_pass_guard);
+                cmb_pass_guard.SelectedIndex = Convert.ToInt32(value_cmb_pass_guard);
+
+                profileData.TryGetValue("cmb_pass_mixreality", out object value_cmb_pass_mixreality);
+                cmb_pass_mixreality.SelectedIndex = Convert.ToInt32(value_cmb_pass_mixreality);
+
+                profileData.TryGetValue("cmb_pass_depth", out object value_cmb_pass_depth);
+                cmb_pass_depth.SelectedIndex = Convert.ToInt32(value_cmb_pass_depth);
+
+                profileData.TryGetValue("cmb_pass_filter", out object value_cmb_pass_filter);
+                cmb_pass_filter.SelectedIndex = Convert.ToInt32(value_cmb_pass_filter);
+
+                profileData.TryGetValue("cmb_pass_hud", out object value_cmb_pass_hud);
+                cmb_pass_hud.SelectedIndex = Convert.ToInt32(value_cmb_pass_hud);
+
+                profileData.TryGetValue("cmb_pass_iad", out object value_cmb_pass_iad);
+                cmb_pass_iad.SelectedIndex = Convert.ToInt32(value_cmb_pass_iad);
             }
             else
             {
-                Debug.WriteLine($"No command mapping found for combobox: {comboBoxName}");
+                MessageBox.Show("No profile data available to populate the UI.");
             }
         }
+
     }
 }

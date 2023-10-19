@@ -15,14 +15,26 @@ using System.Windows.Shapes;
 
 namespace OVR_Dash_Manager.Forms.Profile_Manager
 {
-    /// <summary>
-    /// Interaction logic for Page4.xaml
-    /// </summary>
     public partial class Page4 : Page
     {
-        public Page4()
+        private frm_ProfileManager profileManager;
+
+        public Page4(frm_ProfileManager profileManager)
         {
             InitializeComponent();
+            this.profileManager = profileManager;
+        }
+
+        public void PopulateUI(Dictionary<string, object> profileData)
+        {
+            if (profileData != null)
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("No profile data available to populate the UI.");
+            }
         }
     }
 }

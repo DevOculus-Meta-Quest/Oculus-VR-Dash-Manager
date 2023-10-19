@@ -18,59 +18,6 @@
     </Page.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="20">
-
-            <!--  Layer Commands  -->
-            <GroupBox Header="Layer Commands">
-                <StackPanel>
-                    <Button Width="100" Content="Reset" />
-                    <Button Width="100" Content="Select" />
-                    <Button Width="200" Content="Set Filtering Mode" />
-                    <Button Width="200" Content="Set Head Locked" />
-                    <Button Width="200" Content="Set Texture Origin" />
-                    <Button Width="100" Content="Show" />
-                </StackPanel>
-            </GroupBox>
-
-            <!--  LayerHUD Commands  -->
-            <GroupBox Header="LayerHUD Commands">
-                <StackPanel>
-                    <Button Width="100" Content="Reset" />
-                    <Button Width="100" Content="Select" />
-                    <Button Width="150" Content="Set Mode" />
-                    <Button Width="200" Content="Show All Layers" />
-                </StackPanel>
-            </GroupBox>
-
-            <!--  PerfHUD Commands  -->
-            <GroupBox Header="PerfHUD Commands">
-                <StackPanel>
-                    <Button Width="100" Content="Reset" />
-                    <Button Width="150" Content="Set Mode" />
-                </StackPanel>
-            </GroupBox>
-
-            <!--  StereoHUD Commands  -->
-            <GroupBox Header="StereoHUD Commands">
-                <StackPanel>
-                    <Button Width="100" Content="Reset" />
-                    <Button Width="150" Content="Set Color" />
-                    <Button Width="150" Content="Set Mode" />
-                    <Button Width="200" Content="Set Orientation" />
-                    <Button Width="200" Content="Set Position" />
-                    <Button Width="150" Content="Set Size" />
-                    <Button Width="200" Content="Show Guide" />
-                </StackPanel>
-            </GroupBox>
-
-            <!--  Telemetry Commands  -->
-            <GroupBox Header="Telemetry Commands">
-                <StackPanel>
-                    <Button Width="200" Content="Begin Capturing" />
-                    <Button Width="200" Content="End Capturing" />
-                </StackPanel>
-            </GroupBox>
-
-        </StackPanel>
+        <StackPanel Margin="20" />
     </ScrollViewer>
 </Page>

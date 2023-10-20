@@ -1,6 +1,7 @@
 ﻿using OVR_Dash_Manager.Functions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using YOVR_Dash_Manager.Functions;
@@ -152,6 +153,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
         private void NavigateToPage(int pageNumber)
         {
+            Debug.WriteLine($"Navigating to Page {pageNumber}"); // Debug output
             // Save the current page's data before navigating away
             if (NavigationFrame.Content is Page currentPage)
             {
@@ -168,14 +170,22 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             switch (pageNumber)
             {
                 case 1:
+                    Debug.WriteLine("Initializing Page 1"); // Debug output
                     var page1 = new Page1(this);
                     page1.PopulateUI(profileData); // Load the saved profile data
                     NavigationFrame.Navigate(page1);
                     break;
                 case 2:
+                    Debug.WriteLine("Initializing Page 2"); // Debug output
                     var page2 = new Page2(this);
                     page2.PopulateUI(profileData); // Load the saved profile data
                     NavigationFrame.Navigate(page2);
+                    break;
+                case 3:
+                    Debug.WriteLine("Initializing Page 3"); // Debug output
+                    var page3 = new Page3(this);
+                    page3.PopulateUI(profileData); // Load the saved profile data
+                    NavigationFrame.Navigate(page3);
                     break;
                 // ... (similar code for other pages like Page3, Page4, etc.)
 

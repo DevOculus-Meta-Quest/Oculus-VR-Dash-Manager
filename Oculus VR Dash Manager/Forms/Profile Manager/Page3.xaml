@@ -45,24 +45,6 @@
                 FontStyle="Italic"
                 Text="Prints ASW availability." />
 
-            <Button x:Name="btnClock18" Content="Simulate 18 Hz Display" />
-            <TextBlock
-                Margin="20,0,0,10"
-                FontStyle="Italic"
-                Text="Simulates an extrapolated 18 Hz display (Clock18)." />
-
-            <Button x:Name="btnClock30" Content="Simulate 30 Hz Display" />
-            <TextBlock
-                Margin="20,0,0,10"
-                FontStyle="Italic"
-                Text="Simulates an extrapolated 30 Hz display (Clock30)." />
-
-            <Button x:Name="btnClock45" Content="Simulate 45 Hz Display" />
-            <TextBlock
-                Margin="20,0,0,10"
-                FontStyle="Italic"
-                Text="Simulates an extrapolated 45 Hz display (Clock45)." />
-
             <CheckBox x:Name="chkDepth" Content="Depth Motion Vectors" />
             <TextBlock
                 Margin="20,0,0,10"
@@ -86,6 +68,13 @@
                 Margin="20,0,0,10"
                 FontStyle="Italic"
                 Text="Disables any ASW operation." />
+
+            <ComboBox x:Name="cmbASWOptions" SelectionChanged="cmbASWOptions_SelectionChanged">
+                <ComboBoxItem Content="Auto ASW Operation" />
+                <ComboBoxItem Content="Simulate 18 Hz Display" />
+                <ComboBoxItem Content="Simulate 30 Hz Display" />
+                <ComboBoxItem Content="Simulate 45 Hz Display" />
+            </ComboBox>
 
             <ComboBox x:Name="cmbOverrideFocusedApp" Width="200">
                 <ComboBoxItem Content="default" />

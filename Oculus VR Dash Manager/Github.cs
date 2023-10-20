@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
+// Disable the warning.
+#pragma warning disable SYSLIB0014
+
 namespace OVR_Dash_Manager
 {
     public class Github

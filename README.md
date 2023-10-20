@@ -57,9 +57,8 @@ Grab the latest release [here](https://github.com/DevOculus-Meta-Quest/Oculus-VR
 ![GitHub all releases](https://img.shields.io/github/downloads/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/total?style=plastic)
 ![GitHub Downloads](https://img.shields.io/github/release-date/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager?style=plastic)
 
-
 <video width="640" height="480" controls>
-  <source src="https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/Main/assets/images/Oculus_VR_Dash_Manager_compressed.webm" type="video/webm">
+  <source src="https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/Main/assets/video1.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 

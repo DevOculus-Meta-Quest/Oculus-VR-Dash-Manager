@@ -52,5 +52,7 @@
         <GroupBox x:Name="gb_ProfileManager" Grid.Column="1" Header="Profile Manager" Margin="305,329,160,37"/>
         <Button x:Name="btn_ProfileManager" Grid.Column="1" Content="Profile Manager" HorizontalAlignment="Left" Margin="322,389,0,0" VerticalAlignment="Top" Click="btn_ProfileManager_Click"/>
         <Label x:Name="lbl_ProfileManagerTest" Grid.Column="1" Content="Warning: Still in Development" HorizontalAlignment="Left" Margin="305,356,0,0" VerticalAlignment="Top" Width="225" Foreground="#E5FF0000" FontSize="16"/>
+        <GroupBox x:Name="gb_DashCustomizer" Header="Dash Customizer" Margin="10,232,517,157" Grid.ColumnSpan="2"/>
+        <Button x:Name="btn_PNG2DDS" Content="Convert PNG to DDS" HorizontalAlignment="Left" Margin="20,270,0,0" VerticalAlignment="Top" Width="160" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

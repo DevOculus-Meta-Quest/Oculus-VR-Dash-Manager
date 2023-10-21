@@ -5,9 +5,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:OVR_Dash_Manager.Forms.Dash_Customizer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     Title="Oculus VR Dash Customizer"
     Width="800"
     Height="450"
+    Background="#FF151EA4"
     mc:Ignorable="d">
 
     <Window.Resources>
@@ -20,6 +22,12 @@
     </Window.Resources>
 
     <Grid Background="Black">
+        <xctk:ColorPicker
+            x:Name="colorPicker"
+            Margin="470,57,225,262"
+            Background="#FF040000"
+            SelectedColorChanged="colorPicker_SelectedColorChanged" />
+
         <Label
             Margin="27,251,0,0"
             HorizontalAlignment="Left"
@@ -85,6 +93,62 @@
             Margin="10,217,355,10"
             Foreground="#FFF9F4F4"
             Header="DDS/PNG Conversion" />
+        <TextBox
+            x:Name="txt_FloorGrid"
+            Width="300"
+            Margin="27,57,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="lbl_FloorGrid"
+            Width="178"
+            Margin="27,31,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Floor Grid (grid_plane_006):"
+            Foreground="White"
+            IsEnabled="False" />
+        <Button
+            x:Name="btn_FloorGrid"
+            Width="75"
+            Margin="332,57,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Browse" />
+
+        <TextBlock
+            x:Name="tb_PickColor"
+            Width="137"
+            Height="26"
+            Margin="116,96,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Foreground="Snow"
+            Text="00.0, 00.0, 00.0"
+            TextWrapping="Wrap" />
+
+        <GroupBox
+            x:Name="gb_GridChanger"
+            Margin="540,210,60,50"
+            Header="Floor &amp; Fog Changer:" />
+        <Label
+            x:Name="lbl_FogColor"
+            Width="106"
+            Margin="28,92,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Fog Color:" />
+        <Button
+            x:Name="btnSaveColor"
+            Margin="355,92,0,0"
+            Click="btnSaveColor_Click"
+            Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Button
+            x:Name="btnOpenColorPicker"
+            Margin="265,91,0,0"
+            Click="btnOpenColorPicker_Click"
+            Content="Pick Color" VerticalAlignment="Top" HorizontalAlignment="Left" Height="NaN" />
     </Grid>
 
 </Window>

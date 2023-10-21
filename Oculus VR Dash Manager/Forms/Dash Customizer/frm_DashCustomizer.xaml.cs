@@ -73,12 +73,22 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
 
         private void BrowseInputFile_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Add This Method
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.dds)|*.png;*.dds|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                txtInputFilePath.Text = openFileDialog.FileName;
+            }
         }
 
         private void BrowseOutputFile_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Add This Method
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "DDS files (*.dds)|*.dds|PNG files (*.png)|*.png|All files (*.*)|*.*";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                txtOutputFilePath.Text = saveFileDialog.FileName;
+            }
         }
     }
 }

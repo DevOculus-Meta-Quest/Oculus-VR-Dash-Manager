@@ -140,11 +140,11 @@
         <Button
             x:Name="btn_PNG2DDS"
             Grid.ColumnSpan="2"
-            Width="160"
+            Width="215"
             Margin="20,270,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="btn_PNG2DDS_Click"
-            Content="Convert PNG to DDS" />
+            Content="Oculus Dash Customizer" />
     </Grid>
 </Window>

@@ -193,5 +193,17 @@ namespace OVR_Dash_Manager.Software
                 }
             }
         }
+
+        public static string GetTheVoidUniformsPath()
+        {
+            string OculusPath = Environment.GetEnvironmentVariable("OculusBase");
+            return Path.Combine(OculusPath, @"Support\oculus-dash\dash\data\shaders\theVoid\theVoidUniforms.glsl");
+        }
+
+        public static string GetGridPlanePath()
+        {
+            string OculusPath = Environment.GetEnvironmentVariable("OculusBase");
+            return Path.Combine(OculusPath, @"Support\oculus-dash\dash\assets\raw\textures\environment\the_void\grid_plane_006.dds");
+        }
     }
 }

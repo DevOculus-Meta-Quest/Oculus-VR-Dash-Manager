@@ -42,7 +42,7 @@ https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager</PackageReleaseNo
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-  <OutputPath>bin\Debug\net6.0\</OutputPath>
+  <OutputPath>bin\Release\net6.0\</OutputPath>
   <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <NoWarn>1701;1702</NoWarn>
   </PropertyGroup>

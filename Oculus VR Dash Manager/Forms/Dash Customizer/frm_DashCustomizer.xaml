@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     Title="Oculus VR Dash Customizer"
-    Width="800"
+    Width="555"
     Height="450"
     Background="#FF151EA4"
     mc:Ignorable="d">
@@ -24,9 +24,9 @@
     <Grid Background="Black">
         <xctk:ColorPicker
             x:Name="colorPicker"
-            Margin="470,57,225,262"
+            Margin="400,49,295,343"
             Background="#FF040000"
-            SelectedColorChanged="colorPicker_SelectedColorChanged" />
+            SelectedColorChanged="colorPicker_SelectedColorChanged" Visibility="Hidden" />
 
         <Label
             Margin="27,251,0,0"
@@ -63,6 +63,7 @@
             Margin="25,331,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top" />
+
         <Button
             Width="75"
             Height="23"
@@ -90,20 +91,20 @@
             Content="Convert to PNG" />
         <GroupBox
             x:Name="gb_DDSPBGConvert"
-            Margin="10,217,355,10"
+            Margin="10,217,120,10"
             Foreground="#FFF9F4F4"
             Header="DDS/PNG Conversion" />
         <TextBox
             x:Name="txt_FloorGrid"
             Width="300"
-            Margin="27,57,0,0"
+            Margin="10,49,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             TextWrapping="Wrap" />
         <Label
             x:Name="lbl_FloorGrid"
             Width="178"
-            Margin="27,31,0,0"
+            Margin="27,21,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Floor Grid (grid_plane_006):"
@@ -112,43 +113,53 @@
         <Button
             x:Name="btn_FloorGrid"
             Width="75"
-            Margin="332,57,0,0"
+            Margin="315,49,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Browse" />
 
         <TextBlock
             x:Name="tb_PickColor"
-            Width="137"
+            Width="236"
             Height="26"
-            Margin="116,96,0,0"
+            Margin="91,114,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Foreground="Snow"
             Text="00.0, 00.0, 00.0"
             TextWrapping="Wrap" />
-
-        <GroupBox
-            x:Name="gb_GridChanger"
-            Margin="540,210,60,50"
-            Header="Floor &amp; Fog Changer:" />
-        <Label
-            x:Name="lbl_FogColor"
-            Width="106"
-            Margin="28,92,0,0"
+        <TextBlock
+            x:Name="tb_RawColor"
+            Width="236"
+            Height="26"
+            Margin="91,144,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Fog Color:" />
+            Foreground="#FFFBF8F8"
+            Text="255, 255, 255"
+            TextWrapping="Wrap" />
+
+        <GroupBox
+            x:Name="gb_FogColor"
+            Margin="10,84,120,230"
+            Header="Fog Color Changer:" />
         <Button
             x:Name="btnSaveColor"
-            Margin="355,92,0,0"
+            Margin="367,107,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
             Click="btnSaveColor_Click"
-            Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            Content="Save" />
         <Button
             x:Name="btnOpenColorPicker"
-            Margin="265,91,0,0"
+            Height="NaN"
+            Margin="332,144,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
             Click="btnOpenColorPicker_Click"
-            Content="Pick Color" VerticalAlignment="Top" HorizontalAlignment="Left" Height="NaN" />
+            Content="Pick Color" />
+        <Label x:Name="lbl_RGB" Content="RGB:" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top" Width="45"/>
+        <Label x:Name="lbl_RGBRaw" Content="RGB RAW:" HorizontalAlignment="Left" Margin="10,142,0,0" VerticalAlignment="Top" Width="70"/>
     </Grid>
 
 </Window>

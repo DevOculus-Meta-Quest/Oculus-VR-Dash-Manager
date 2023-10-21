@@ -205,11 +205,28 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
 
         private void btn_FloorGrid_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "DDS files (*.dds)|*.dds|All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            try
             {
-                txt_FloorGrid.Text = openFileDialog.FileName;
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Image files (*.dds, *.png)|*.dds;*.png|All files (*.*)|*.*";
+                openFileDialog.Title = "Select a DDS or PNG file";
+                if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    // Check if the file exists and is accessible
+                    if (File.Exists(openFileDialog.FileName))
+                    {
+                        txt_FloorGrid.Text = openFileDialog.FileName;
+                    }
+                    else
+                    {
+                        Xceed.Wpf.Toolkit.MessageBox.Show("The selected file does not exist or is not accessible.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.LogError(ex, "An error occurred while selecting the file.");
+                Xceed.Wpf.Toolkit.MessageBox.Show($"An error occurred while selecting the file: {ex.Message}");
             }
         }
 
@@ -218,7 +235,7 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             string selectedFilePath = txt_FloorGrid.Text;
             if (string.IsNullOrWhiteSpace(selectedFilePath) || !File.Exists(selectedFilePath))
             {
-                Xceed.Wpf.Toolkit.MessageBox.Show("Please select a valid .dds file.");
+                Xceed.Wpf.Toolkit.MessageBox.Show("Please select a valid file.");
                 return;
             }
 
@@ -234,13 +251,33 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
                 }
                 File.Copy(oculusFilePath, backupFilePath); // Create a new backup file
 
+                // Check if the selected file is a PNG
+                if (Path.GetExtension(selectedFilePath).ToLower() == ".png")
+                {
+                    // Convert PNG to DDS
+                    string tempDdsPath = Path.Combine(Path.GetTempPath(), "converted.dds");
+                    ImageConverter.ConvertPngToDds(selectedFilePath, tempDdsPath);
+                    selectedFilePath = tempDdsPath; // Update the selected file path to the converted DDS file
+                }
+
                 // Replacing the file
                 File.Copy(selectedFilePath, oculusFilePath, overwrite: true);
                 Xceed.Wpf.Toolkit.MessageBox.Show("File replaced successfully. A backup of the original file has been created.");
             }
+            catch (IOException ioEx)
+            {
+                ErrorLogger.LogError(ioEx, "An IO error occurred while replacing the file.");
+                Xceed.Wpf.Toolkit.MessageBox.Show($"An IO error occurred: {ioEx.Message}");
+            }
+            catch (UnauthorizedAccessException uaEx)
+            {
+                ErrorLogger.LogError(uaEx, "Access denied to one of the files.");
+                Xceed.Wpf.Toolkit.MessageBox.Show($"Access denied: {uaEx.Message}");
+            }
             catch (Exception ex)
             {
-                Xceed.Wpf.Toolkit.MessageBox.Show($"An error occurred: {ex.Message}");
+                ErrorLogger.LogError(ex, "An unexpected error occurred while replacing the file.");
+                Xceed.Wpf.Toolkit.MessageBox.Show($"An unexpected error occurred: {ex.Message}");
             }
         }
     }

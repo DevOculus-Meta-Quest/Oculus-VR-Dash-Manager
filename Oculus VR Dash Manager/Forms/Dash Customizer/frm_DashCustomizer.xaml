@@ -117,7 +117,7 @@
             Margin="315,49,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Browse" />
+            Content="Browse" Click="btn_FloorGrid_Click" />
 
         <Button
             x:Name="btn_ReplaceFloorGrid"

@@ -48,6 +48,8 @@ Welcome to **Oculus VR Dash Manager**, your one-stop solution to elevate and str
 [![HitCount](https://hits.dwyl.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager.svg)](https://hits.dwyl.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager)
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/Build_and_Release.yml)
 
+[![PayPal](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?business=X76ZW4RHA6T9C&no_recurring=0&item_name=Support+the+evolution+of+Oculus+VR+Dash+Manager%21+Your+donation+fuels+innovation+and+enhanced+virtual+experiences.+%F0%9F%9A%80%F0%9F%8C%90&currency_code=USD)
+
 ## ⬇️ Download ⬇️
 
 Grab the latest release [here](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/releases).
@@ -56,11 +58,6 @@ Grab the latest release [here](https://github.com/DevOculus-Meta-Quest/Oculus-VR
 
 ![GitHub all releases](https://img.shields.io/github/downloads/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/total?style=plastic)
 ![GitHub Downloads](https://img.shields.io/github/release-date/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager?style=plastic)
-
-<video width="640" height="480" controls>
-  <source src="https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/Main/assets/video1.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
 
 ## 🚀 How to Use 🚀
 

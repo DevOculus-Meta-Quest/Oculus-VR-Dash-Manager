@@ -12,6 +12,9 @@ using System.Windows;
 using System.Windows.Threading;
 using YOVR_Dash_Manager.Functions;
 
+    // Disable the warning.
+#pragma warning disable SYSLIB0014
+
 namespace OVR_Dash_Manager
 {
     public static class Functions_Old

@@ -1,0 +1,128 @@
+﻿<Page
+    x:Class="OVR_Dash_Manager.Forms.Profile_Manager.Page3"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OVR_Dash_Manager.Forms.Profile_Manager"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Page3"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--  Reference to the external style  -->
+                <ResourceDictionary Source="../../Theme/MetroDark.MSControls.Core.Implicit.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <ScrollViewer
+        HorizontalScrollBarVisibility="Auto"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20">
+
+            <Label
+                Content="ASW Options"
+                FontSize="18"
+                FontWeight="Bold" />
+
+            <CheckBox x:Name="chkAdaptive" Content="Adaptive Median Filter" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Toggles adaptive median filtering in extrapolation." />
+
+            <Button x:Name="btnAuto" Content="Auto ASW Operation" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Enables auto ASW operation." />
+
+            <Button x:Name="btnAvailability" Content="Print ASW Availability" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Prints ASW availability." />
+
+            <CheckBox x:Name="chkDepth" Content="Depth Motion Vectors" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Toggles depth testing in extrapolation." />
+
+            <CheckBox x:Name="chkMedian" Content="Median Filter" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Toggles median filtering in extrapolation." />
+
+            <Button x:Name="btnMode" Content="Print Current ASW Test Mode" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Prints the current ASW test mode." />
+
+            <Button x:Name="btnOff" Content="Disable ASW Operation" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Disables any ASW operation." />
+
+            <ComboBox x:Name="cmbASWOptions" SelectionChanged="cmbASWOptions_SelectionChanged">
+                <ComboBoxItem Content="Auto ASW Operation" />
+                <ComboBoxItem Content="Simulate 18 Hz Display" />
+                <ComboBoxItem Content="Simulate 30 Hz Display" />
+                <ComboBoxItem Content="Simulate 45 Hz Display" />
+            </ComboBox>
+
+            <ComboBox x:Name="cmbOverrideFocusedApp" Width="200">
+                <ComboBoxItem Content="default" />
+                <ComboBoxItem Content="off" />
+                <ComboBoxItem Content="auto" />
+                <ComboBoxItem Content="force" />
+            </ComboBox>
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Sets ASW mode override for the app in VR focus." />
+
+            <CheckBox x:Name="chkPhase45" Content="Phase 45" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Simulates an extrapolated broken 45 Hz display (Phase45)." />
+
+            <CheckBox x:Name="chkReverseMapWithCPU" Content="Reverse Map With CPU" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Toggles CPU path for reverse-mapped motion vectors." />
+
+            <CheckBox x:Name="chkSceneChange" Content="Scene Change Detector" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Toggles scene change detector." />
+
+            <Button x:Name="btnSim45" Content="Simulate 45 Hz Rendering" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Simulates app 45 Hz rendering (Force45fps)." />
+
+            <CheckBox x:Name="chkSimpleRasterizer" Content="Simple Motion Vector Rasterizer" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Toggles simple motion vector rasterizer." />
+
+            <CheckBox x:Name="chkThreadCPUReverseMap" Content="Threaded Reverse Mapping on CPU" />
+            <TextBlock
+                Margin="20,0,0,10"
+                FontStyle="Italic"
+                Text="Toggles CPU threading for reverse-mapped motion vectors." />
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

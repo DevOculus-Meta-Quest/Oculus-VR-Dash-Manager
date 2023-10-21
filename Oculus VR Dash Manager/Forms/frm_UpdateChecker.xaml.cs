@@ -8,6 +8,9 @@ using System.Windows;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
+// Disable the warning.
+#pragma warning disable SYSLIB0014
+
 namespace OVR_Dash_Manager.Forms
 {
     /// <summary>

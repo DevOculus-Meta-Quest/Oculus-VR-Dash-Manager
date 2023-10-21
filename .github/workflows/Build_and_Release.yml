@@ -30,7 +30,7 @@ jobs:
     - name: Package build artifacts
       run: |
         mkdir artifacts
-        cp -r "Oculus VR Dash Manager\bin\Release\net481\*" artifacts
+        cp -r "Oculus VR Dash Manager\bin\Release\net6.0\*" artifacts
         cd artifacts
         Compress-Archive -Path * -DestinationPath ../artifacts.zip
       shell: pwsh

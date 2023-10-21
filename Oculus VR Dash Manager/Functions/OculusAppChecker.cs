@@ -89,6 +89,31 @@ namespace OVR_Dash_Manager.Functions
             return oculusPaths;
         }
 
+        public static bool IsOculusInstalled()
+        {
+            try
+            {
+                // Check the registry for Oculus installation
+                using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Oculus VR, LLC\Oculus"))
+                {
+                    if (key != null)
+                    {
+                        string installDir = (string)key.GetValue("InstallDir");
+                        if (!string.IsNullOrEmpty(installDir) && Directory.Exists(installDir))
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.LogError(ex, "Error checking if Oculus is installed.");
+                return false;
+            }
+        }
 
         /// <summary>
         /// Retrieves the names of all installed Oculus apps.

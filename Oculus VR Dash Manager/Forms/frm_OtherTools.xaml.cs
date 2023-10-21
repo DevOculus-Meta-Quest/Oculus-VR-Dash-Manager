@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using OVR_Dash_Manager.Forms.Dash_Customizer;
 using OVR_Dash_Manager.Forms.Profile_Manager;
 using OVR_Dash_Manager.Software;
 using System.Diagnostics;
@@ -63,7 +64,16 @@ namespace OVR_Dash_Manager.Forms
         {
             // Create an instance of the frm_ProfileManager window and show it
             frm_ProfileManager profileManager = new frm_ProfileManager();
-            profileManager.Show();
+            profileManager.Owner = this; // 'this' refers to the main window
+            profileManager.ShowDialog();
+        }
+
+        private void btn_PNG2DDS_Click(object sender, RoutedEventArgs e)
+        {
+            frm_DashCustomizer dashCustomizer = new frm_DashCustomizer();
+            dashCustomizer.WindowStartupLocation = WindowStartupLocation.CenterScreen; // Center the window
+            dashCustomizer.Topmost = true; // Make the window appear on top of other windows
+            dashCustomizer.ShowDialog(); // Open the window as a modal dialog box
         }
 
     }

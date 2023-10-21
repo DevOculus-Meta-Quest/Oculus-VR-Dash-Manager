@@ -46,6 +46,30 @@
     <Compile Update="Forms\Profile Manager\frm_ProfileManager.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Forms\Profile Manager\Page1.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\Profile Manager\Page2.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\Profile Manager\Page3.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\Profile Manager\Page4.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\Profile Manager\Page5.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\Profile Manager\Page6.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\Profile Manager\Page7.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\Profile Manager\Page8.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Forms\Settings\frm_Settings_v2.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -91,6 +115,30 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\Profile Manager\frm_ProfileManager.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\Profile Manager\Page1.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\Profile Manager\Page2.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\Profile Manager\Page3.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\Profile Manager\Page4.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\Profile Manager\Page5.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\Profile Manager\Page6.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\Profile Manager\Page7.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\Profile Manager\Page8.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\Settings\frm_Settings_v2.xaml">

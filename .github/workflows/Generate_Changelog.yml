@@ -1,0 +1,24 @@
+name: Generate Changelog
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Generate changelog
+        uses: charmixer/auto-changelog-action@v1
+        with:
+          token: ${{ secrets.GIT_ACTIONS }}
+
+      - name: Commit and push changelog
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Generate changelog"
+          git push

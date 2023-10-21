@@ -26,7 +26,8 @@
             x:Name="colorPicker"
             Margin="400,49,295,343"
             Background="#FF040000"
-            SelectedColorChanged="colorPicker_SelectedColorChanged" Visibility="Hidden" />
+            SelectedColorChanged="colorPicker_SelectedColorChanged"
+            Visibility="Hidden" />
 
         <Label
             Margin="27,251,0,0"
@@ -118,6 +119,15 @@
             VerticalAlignment="Top"
             Content="Browse" />
 
+        <Button
+            x:Name="btn_ReplaceFloorGrid"
+            Width="75"
+            Margin="395,49,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="btn_ReplaceFloorGrid_Click"
+            Content="Replace" />
+
         <TextBlock
             x:Name="tb_PickColor"
             Width="236"
@@ -158,8 +168,20 @@
             VerticalAlignment="Top"
             Click="btnOpenColorPicker_Click"
             Content="Pick Color" />
-        <Label x:Name="lbl_RGB" Content="RGB:" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top" Width="45"/>
-        <Label x:Name="lbl_RGBRaw" Content="RGB RAW:" HorizontalAlignment="Left" Margin="10,142,0,0" VerticalAlignment="Top" Width="70"/>
+        <Label
+            x:Name="lbl_RGB"
+            Width="45"
+            Margin="10,114,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="RGB:" />
+        <Label
+            x:Name="lbl_RGBRaw"
+            Width="70"
+            Margin="10,142,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="RGB RAW:" />
     </Grid>
 
 </Window>

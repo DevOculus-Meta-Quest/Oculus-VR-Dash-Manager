@@ -95,9 +95,10 @@ namespace OVR_Dash_Manager.Forms
             await CheckUpdates(); // This is the method for the other program
         }
 
-        private async Task CheckDashManagerUpdates()
+        public async Task<bool> CheckDashManagerUpdates()
         {
             await Check_DashManager_Update(btnDownloadLatest);
+            return btnDownloadLatest.IsEnabled; // Assuming the button is enabled only when an update is available
         }
 
         private async Task Check_DashManager_Update(Button downloadButton)

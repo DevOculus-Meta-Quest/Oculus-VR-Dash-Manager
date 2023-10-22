@@ -91,6 +91,17 @@ namespace OVR_Dash_Manager
 
             // Perform startup actions
             await StartupAsync();
+
+            frm_UpdateChecker updateChecker = new frm_UpdateChecker();
+
+            // Check if updates are available
+            bool isNewVersionAvailable = await updateChecker.CheckDashManagerUpdates();
+
+            // If a new version is available, show a MessageBox
+            if (isNewVersionAvailable)
+            {
+                MessageBox.Show("A new update is available. Please open the update checker for more details.", "Update Available", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void HandleWindowLoadingException(Exception ex)

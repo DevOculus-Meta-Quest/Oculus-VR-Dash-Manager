@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -92,12 +93,9 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
                         // Read and display the contents of the temporary file
                         string fileContents = File.ReadAllText(tempFilePath);
-                        Debug.WriteLine(fileContents); // Output to console
-                        MessageBox.Show(fileContents); // Or display in a message box
 
                         // Execute the downloaded script file
-                        await oculusDebugToolFunctions.ExecuteCommandWithFileAsync(tempFilePath);
-                        MessageBox.Show($"Executed the script: {selectedItem}");
+                        oculusDebugToolFunctions.ExecuteCommandWithFile(tempFilePath);
 
                         // Optionally, delete the temporary file after execution
                         File.Delete(tempFilePath);
@@ -115,38 +113,26 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        private async Task<string> DownloadAndSaveTempFileAsync(string downloadUrl)
+        public async Task<string> DownloadAndSaveTempFileAsync(string downloadUrl)
         {
             using HttpClient httpClient = new HttpClient();
 
-            // Fetch the content from the URL
             HttpResponseMessage response = await httpClient.GetAsync(downloadUrl);
 
             if (response.IsSuccessStatusCode)
             {
-                // Read the content as a string
                 string fileContent = await response.Content.ReadAsStringAsync();
 
-                if (!string.IsNullOrEmpty(fileContent))
-                {
-                    // Creating a temporary file with a specific extension if needed
-                    string tempFilePath = Path.GetTempFileName();
+                string tempFilePath = System.IO.Path.GetTempFileName();
 
-                    // Writing the content fetched from the URL into the temporary file with UTF-8 encoding
-                    await File.WriteAllTextAsync(tempFilePath, fileContent, Encoding.UTF8);
+                await File.WriteAllTextAsync(tempFilePath, fileContent);
 
-                    return tempFilePath;
-                }
-                else
-                {
-                    ErrorLogger.LogError(null, "The file content fetched from GitHub is empty.");
-                    throw new Exception("The file content fetched from GitHub is empty.");
-                }
+                return tempFilePath;
             }
             else
             {
-                ErrorLogger.LogError(null, $"Failed to fetch the file from GitHub. Status Code: {response.StatusCode}");
-                throw new Exception($"Failed to fetch the file from GitHub. Status Code: {response.StatusCode}");
+                // Handle error (e.g., throw an exception or log the error)
+                return null;
             }
         }
 

@@ -1,8 +1,8 @@
 ﻿<Window
     x:Class="OVR_Dash_Manager.Forms.frm_OtherTools"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Other Tools"
     Width="800"
@@ -112,21 +112,13 @@
         <GroupBox
             x:Name="gb_ProfileManager"
             Grid.Column="1"
-            Margin="305,329,160,37"
+            Margin="295,233,122,133"
             Header="Profile Manager" />
-        <Button
-            x:Name="btn_ProfileManager"
-            Grid.Column="1"
-            Margin="322,389,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Click="btn_ProfileManager_Click"
-            Content="Profile Manager" />
         <Label
             x:Name="lbl_ProfileManagerTest"
             Grid.Column="1"
             Width="225"
-            Margin="305,356,0,0"
+            Margin="310,251,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Warning: Still in Development"
@@ -134,17 +126,16 @@
             Foreground="#E5FF0000" />
         <GroupBox
             x:Name="gb_DashCustomizer"
-            Grid.ColumnSpan="2"
-            Margin="10,232,517,157"
-            Header="Dash Customizer" />
+            Margin="295,344,122,37"
+            Header="Dash Customizer" Grid.Column="1" />
         <Button
             x:Name="btn_PNG2DDS"
-            Grid.ColumnSpan="2"
             Width="215"
-            Margin="20,270,0,0"
+            Margin="310,389,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="btn_PNG2DDS_Click"
-            Content="Oculus Dash Customizer" />
+            Content="Oculus Dash Customizer" Grid.Column="1" />
+        <Button x:Name="btn_ProfileManager1" Grid.Column="1" Content="Profile Manager" HorizontalAlignment="Left" Margin="310,282,0,0" VerticalAlignment="Top" Width="134" Click="btn_ProfileManager1_Click"/>
     </Grid>
 </Window>

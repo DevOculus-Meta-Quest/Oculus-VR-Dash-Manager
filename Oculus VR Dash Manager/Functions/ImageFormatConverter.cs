@@ -1,9 +1,8 @@
-﻿using System;
+﻿using ImageMagick;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Runtime.InteropServices;
-using ImageMagick;
 using YOVR_Dash_Manager.Functions; // Ensure you have the correct namespace for ErrorLogger
 
 namespace OVR_Dash_Manager.Functions
@@ -23,6 +22,7 @@ namespace OVR_Dash_Manager.Functions
                         case Pfim.ImageFormat.Rgba32:
                             format = PixelFormat.Format32bppArgb;
                             break;
+
                         default:
                             throw new NotImplementedException($"The format {image.Format} is not supported");
                     }

@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 // Disable the warning.
@@ -34,7 +34,6 @@ namespace OVR_Dash_Manager.Forms
             if (gitHubReply != null && gitHubReply.AssetUrls != null)
             {
                 string zipUrl = gitHubReply.AssetUrls.Values.FirstOrDefault(url => url.EndsWith(".zip"));
-
 
                 if (!string.IsNullOrEmpty(zipUrl))
                 {
@@ -95,9 +94,10 @@ namespace OVR_Dash_Manager.Forms
             await CheckUpdates(); // This is the method for the other program
         }
 
-        private async Task CheckDashManagerUpdates()
+        public async Task<bool> CheckDashManagerUpdates()
         {
             await Check_DashManager_Update(btnDownloadLatest);
+            return btnDownloadLatest.IsEnabled; // Assuming the button is enabled only when an update is available
         }
 
         private async Task Check_DashManager_Update(Button downloadButton)

@@ -1,22 +1,11 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.IO;
-using System.Windows.Shapes;
-using Microsoft.VisualBasic;
-using static OVR_Dash_Manager.Software.ADB;
+﻿using Microsoft.VisualBasic;
+using Microsoft.Win32;
 using OVR_Dash_Manager.Software;
+using System;
+using System.Windows;
+using System.Windows.Input;
 using YOVR_Dash_Manager.Functions;
+using static OVR_Dash_Manager.Software.ADB;
 
 namespace OVR_Dash_Manager.Forms
 {
@@ -155,6 +144,7 @@ namespace OVR_Dash_Manager.Forms
             }
             return null;
         }
+
         public static bool IsDirectory(string path)
         {
             string result = ADB.ADBFileManager.ExecuteADBCommand($"shell ls -ld {path}");

@@ -114,14 +114,6 @@
             Grid.Column="1"
             Margin="305,329,160,37"
             Header="Profile Manager" />
-        <Button
-            x:Name="btn_ProfileManager"
-            Grid.Column="1"
-            Margin="322,389,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Click="btn_ProfileManager_Click"
-            Content="Profile Manager" />
         <Label
             x:Name="lbl_ProfileManagerTest"
             Grid.Column="1"
@@ -146,5 +138,6 @@
             VerticalAlignment="Top"
             Click="btn_PNG2DDS_Click"
             Content="Oculus Dash Customizer" />
+        <Button x:Name="btn_ProfileManager1" Grid.Column="1" Content="Profile Manager" HorizontalAlignment="Left" Margin="316,384,0,0" VerticalAlignment="Top" Width="134" Click="btn_ProfileManager1_Click"/>
     </Grid>
 </Window>

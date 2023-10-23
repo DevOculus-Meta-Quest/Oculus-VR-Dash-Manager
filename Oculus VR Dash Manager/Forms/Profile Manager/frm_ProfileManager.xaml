@@ -1,12 +1,12 @@
 ﻿<Window
     x:Class="OVR_Dash_Manager.Forms.Profile_Manager.frm_ProfileManager"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Profile Manager"
     Width="605"
-    Height="765"
+    Height="285"
     Background="#FF0A0909"
     Foreground="#FFEAF8F8"
     Topmost="True"
@@ -22,93 +22,34 @@
     </Window.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <!--  Content (Frame)  -->
-            <RowDefinition Height="Auto" />
-            <!--  Navigation Buttons  -->
-            <RowDefinition Height="Auto" />
-            <!--  Apply Profile Button  -->
-        </Grid.RowDefinitions>
-
-        <Frame x:Name="NavigationFrame" NavigationUIVisibility="Hidden" />
-
-        <StackPanel
-            Grid.Row="1"
+        <ListView
+            Name="scriptsListView"
+            Width="400"
+            Height="200"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            MouseDoubleClick="scriptsListView_MouseDoubleClick">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="370" Header="Scripts" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button
+            Name="refreshButton"
+            Width="75"
             Height="25"
-            Margin="0,0,0,10"
-            HorizontalAlignment="Center"
-            Orientation="Horizontal">
-            <!--  Adjusted margin here  -->
-            <Button
-                x:Name="btnFirst"
-                Width="60"
-                Click="btnFirst_Click"
-                Content="First" />
-            <Button
-                x:Name="btnPrev"
-                Width="60"
-                Click="btnPrev_Click"
-                Content="Prev" />
-
-            <Button
-                x:Name="btnPage1"
-                Width="40"
-                Click="btnPage_Click"
-                Content="1" />
-            <Button
-                x:Name="btnPage2"
-                Width="40"
-                Click="btnPage_Click"
-                Content="2" />
-            <Button
-                x:Name="btnPage3"
-                Width="40"
-                Click="btnPage_Click"
-                Content="3" />
-            <Button
-                x:Name="btnPage4"
-                Width="40"
-                Click="btnPage_Click"
-                Content="4" />
-            <Button
-                x:Name="btnPage5"
-                Width="40"
-                Click="btnPage_Click"
-                Content="5" />
-            <!--  Add more buttons as needed  -->
-
-            <Button
-                x:Name="btnNext"
-                Width="60"
-                Click="btnNext_Click"
-                Content="Next" />
-            <Button
-                x:Name="btnLast"
-                Width="60"
-                Click="btnLast_Click"
-                Content="Last" />
-        </StackPanel>
-
-        <StackPanel
-            Grid.Row="2"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
-            Orientation="Horizontal">
-            <Button
-                x:Name="btnApplyProfile"
-                Width="105"
-                Height="30"
-                Margin="5"
-                Click="btnApplyProfile_Click"
-                Content="Apply Profile" />
-            <Button
-                x:Name="btnSaveProfile"
-                Width="105"
-                Height="30"
-                Margin="5"
-                Click="btnSaveProfile_Click"
-                Content="Save Profile" />
-        </StackPanel>
+            Margin="0,210,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="RefreshButton_Click"
+            Content="Refresh" />
+        <Button
+            x:Name="btnExecuteCommand"
+            Margin="80,210,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="btnExecuteCommand_Click"
+            Content="Execute Command" />
     </Grid>
 </Window>

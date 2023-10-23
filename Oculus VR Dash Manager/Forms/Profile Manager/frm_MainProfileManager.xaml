@@ -1,0 +1,40 @@
+﻿<Window
+    x:Class="OVR_Dash_Manager.Forms.Profile_Manager.frm_MainProfileManager"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OVR_Dash_Manager.Forms.Profile_Manager"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Main Profile Manager"
+    Width="435"
+    Height="245"
+    ResizeMode="NoResize"
+    Topmost="True"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--  Reference to the external style  -->
+                <ResourceDictionary Source="../../Theme/MetroDark.MSControls.Core.Implicit.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+
+    <Grid Background="Black">
+        <Button
+            x:Name="btn_ProfileManagerGH"
+            Width="120"
+            Height="30"
+            Margin="60,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Content="Profile Scripts" Click="btn_ProfileManagerGH_Click" />
+        <Button x:Name="btn_ProfileManager" Content="Profile Manager" HorizontalAlignment="Left" Margin="185,0,0,0" VerticalAlignment="Center" Width="135" Click="btn_ProfileManager_Click"/>
+        <GroupBox x:Name="gb_ManProfileManager" Header="Choose Method" Margin="50,49,105,55"/>
+
+    </Grid>
+</Window>

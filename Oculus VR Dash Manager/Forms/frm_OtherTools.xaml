@@ -112,13 +112,13 @@
         <GroupBox
             x:Name="gb_ProfileManager"
             Grid.Column="1"
-            Margin="305,329,160,37"
+            Margin="305,329,130,37"
             Header="Profile Manager" />
         <Label
             x:Name="lbl_ProfileManagerTest"
             Grid.Column="1"
             Width="225"
-            Margin="305,356,0,0"
+            Margin="316,354,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Warning: Still in Development"

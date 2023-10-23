@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using YOVR_Dash_Manager.Functions;
 
@@ -52,6 +53,9 @@ public class OculusDebugToolFunctions : IDisposable
     {
         try
         {
+            StringBuilder outputBuilder = new StringBuilder();
+            StringBuilder errorBuilder = new StringBuilder();
+
             Process process = new Process
             {
                 StartInfo = new ProcessStartInfo
@@ -69,7 +73,7 @@ public class OculusDebugToolFunctions : IDisposable
             {
                 if (!String.IsNullOrEmpty(e.Data))
                 {
-                    Debug.WriteLine(e.Data);
+                    outputBuilder.AppendLine(e.Data);
                 }
             };
 
@@ -77,7 +81,7 @@ public class OculusDebugToolFunctions : IDisposable
             {
                 if (!String.IsNullOrEmpty(e.Data))
                 {
-                    Debug.WriteLine(e.Data);
+                    errorBuilder.AppendLine(e.Data);
                 }
             };
 
@@ -85,6 +89,14 @@ public class OculusDebugToolFunctions : IDisposable
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
             process.WaitForExit();
+
+            string output = outputBuilder.ToString();
+            string error = errorBuilder.ToString();
+
+            if (!string.IsNullOrEmpty(output) || !string.IsNullOrEmpty(error))
+            {
+                Xceed.Wpf.Toolkit.MessageBox.Show($"Output: {output}\nError: {error}", "Command Execution Result");
+            }
         }
         catch (Exception ex)
         {

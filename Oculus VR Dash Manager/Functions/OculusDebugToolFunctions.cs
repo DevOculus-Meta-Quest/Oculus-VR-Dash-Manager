@@ -42,6 +42,17 @@ public class OculusDebugToolFunctions : IDisposable
         await streamWriter.FlushAsync();
     }
 
+    public async Task ExecuteCommandWithFileAsync(string command)
+    {
+        string tempFilePath = Path.GetTempFileName();
+        await File.WriteAllTextAsync(tempFilePath, command);
+
+        string cliCommand = $"-f \"{tempFilePath}\"";
+        Debug.WriteLine($"Sending command: {cliCommand}");
+
+        await ExecuteCommandAsync(cliCommand);
+    }
+
     public void Dispose()
     {
         process?.Close();

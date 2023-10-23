@@ -2,19 +2,26 @@
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using YOVR_Dash_Manager.Functions;
 
 public class OculusDebugToolFunctions : IDisposable
 {
+    private const string OculusDebugToolPath = @"C:\Program Files\Oculus\Support\oculus-diagnostics\OculusDebugToolCLI.exe";
     private Process process;
     private StreamWriter streamWriter;
 
     public OculusDebugToolFunctions()
     {
+        InitializeProcess();
+    }
+
+    private void InitializeProcess()
+    {
         process = new Process
         {
             StartInfo = new ProcessStartInfo
             {
-                FileName = @"C:\Program Files\Oculus\Support\oculus-diagnostics\OculusDebugToolCLI.exe",
+                FileName = OculusDebugToolPath,
                 UseShellExecute = false,
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
@@ -27,7 +34,6 @@ public class OculusDebugToolFunctions : IDisposable
         process.ErrorDataReceived += (sender, args) => Debug.WriteLine(args.Data);
 
         process.Start();
-
         process.BeginOutputReadLine();
         process.BeginErrorReadLine();
 
@@ -42,15 +48,30 @@ public class OculusDebugToolFunctions : IDisposable
         await streamWriter.FlushAsync();
     }
 
-    public async Task ExecuteCommandWithFileAsync(string command)
+    public void ExecuteCommandWithFile(string tempFilePath)
     {
-        string tempFilePath = Path.GetTempFileName();
-        await File.WriteAllTextAsync(tempFilePath, command);
+        try
+        {
+            Process process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = OculusDebugToolPath,
+                    Arguments = $"-f \"{tempFilePath}\"",
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
 
-        string cliCommand = $"-f \"{tempFilePath}\"";
-        Debug.WriteLine($"Sending command: {cliCommand}");
-
-        await ExecuteCommandAsync(cliCommand);
+            process.Start();
+            process.WaitForExit();
+        }
+        catch (Exception ex)
+        {
+            ErrorLogger.LogError(ex, "An error occurred while executing the command with the file.");
+        }
     }
 
     public void Dispose()

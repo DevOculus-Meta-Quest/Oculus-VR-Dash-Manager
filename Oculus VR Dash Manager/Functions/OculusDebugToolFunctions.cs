@@ -65,7 +65,25 @@ public class OculusDebugToolFunctions : IDisposable
                 }
             };
 
+            process.OutputDataReceived += (sender, e) =>
+            {
+                if (!String.IsNullOrEmpty(e.Data))
+                {
+                    Debug.WriteLine(e.Data);
+                }
+            };
+
+            process.ErrorDataReceived += (sender, e) =>
+            {
+                if (!String.IsNullOrEmpty(e.Data))
+                {
+                    Debug.WriteLine(e.Data);
+                }
+            };
+
             process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
             process.WaitForExit();
         }
         catch (Exception ex)

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
+﻿using System.Collections.Generic;
 using System.Windows.Controls;
 
 namespace OVR_Dash_Manager.Forms.Profile_Manager
@@ -48,15 +46,19 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                             case "chkAdaptive":
                                 chkAdaptive.IsChecked = (bool?)controlValue;
                                 break;
+
                             case "cmbOverrideFocusedApp":
                                 cmbOverrideFocusedApp.SelectedItem = FindComboBoxItemByContent(cmbOverrideFocusedApp, (string)controlValue);
                                 break;
+
                             case "chkDepth":
                                 chkDepth.IsChecked = (bool?)controlValue;
                                 break;
+
                             case "chkMedian":
                                 chkMedian.IsChecked = (bool?)controlValue;
                                 break;
+
                             case "chkPhase45":
                                 chkPhase45.IsChecked = (bool?)controlValue;
                                 break;
@@ -108,6 +110,5 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                     break;
             }
         }
-
     }
 }

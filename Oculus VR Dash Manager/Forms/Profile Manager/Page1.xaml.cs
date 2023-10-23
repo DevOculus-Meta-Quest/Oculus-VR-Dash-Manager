@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using OVR_Dash_Manager.Forms.Profile_Manager;
 
 namespace OVR_Dash_Manager.Forms.Profile_Manager
 {
@@ -120,6 +119,5 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 { "cmb_pass_iad", cmb_pass_iad.SelectedIndex }
             };
         }
-
     }
 }

@@ -1,18 +1,14 @@
 ﻿using Newtonsoft.Json;
-using System.IO;
-using OVR_Dash_Manager;
-using OVR_Dash_Manager.Forms.Profile_Manager;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using Newtonsoft.Json.Linq;
-using YOVR_Dash_Manager.Functions; // Ensure you have the correct using directive
 using System.Text;
 using System.Threading.Tasks;
-using System.Diagnostics;
+using System.Windows;
+using System.Windows.Input;
+using YOVR_Dash_Manager.Functions; // Ensure you have the correct using directive
 
 namespace OVR_Dash_Manager.Forms.Profile_Manager
 {
@@ -127,10 +123,8 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             return tempFilePath;
         }
 
-
         private async void btnExecuteCommand_Click(object sender, EventArgs e)
         {
-
         }
     }
 }

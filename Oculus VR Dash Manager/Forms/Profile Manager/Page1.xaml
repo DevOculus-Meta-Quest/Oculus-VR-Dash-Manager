@@ -1,9 +1,8 @@
 ﻿<Page
     x:Class="OVR_Dash_Manager.Forms.Profile_Manager.Page1"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:OVR_Dash_Manager.Forms.Profile_Manager"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Page1"
     mc:Ignorable="d">
@@ -141,7 +140,6 @@
                 <ComboBoxItem Content="Enable" />
                 <ComboBoxItem Content="Disable" />
             </ComboBox>
-
         </StackPanel>
     </ScrollViewer>
 </Page>

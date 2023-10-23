@@ -23,8 +23,10 @@ namespace OVR_Dash_Manager
     {
         private ServiceManager _serviceManager = new ServiceManager();
         private UIManager _uiManager;
+
         // Declare _hoverButtonManager at the class level
         private HoverButtonManager _hoverButtonManager;
+
         private bool Elevated = false;
         private bool FireUIEvents = false;
         private InputSimulator Keyboard_Simulator;
@@ -119,7 +121,7 @@ namespace OVR_Dash_Manager
 
         private void Steam_Steam_VR_Running_State_Changed_Event()
         {
-            // Assuming Software.Steam.Steam_VR_Server_Running is a boolean, 
+            // Assuming Software.Steam.Steam_VR_Server_Running is a boolean,
             // you might want to convert it to a string message to display in the UI.
             string statusText = Software.Steam.Steam_VR_Server_Running ? "Running" : "Not Running";
             _uiManager.UpdateSteamVRStatusLabel(statusText);

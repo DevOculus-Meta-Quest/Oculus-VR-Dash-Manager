@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 // Disable the warning.
@@ -34,7 +34,6 @@ namespace OVR_Dash_Manager.Forms
             if (gitHubReply != null && gitHubReply.AssetUrls != null)
             {
                 string zipUrl = gitHubReply.AssetUrls.Values.FirstOrDefault(url => url.EndsWith(".zip"));
-
 
                 if (!string.IsNullOrEmpty(zipUrl))
                 {

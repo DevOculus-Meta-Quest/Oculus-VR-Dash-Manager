@@ -41,7 +41,6 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-
         private void SaveProfile(string profileName)
         {
             string jsonProfile = JsonFunctions.SerializeClass(profileData);
@@ -175,12 +174,14 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                     page1.PopulateUI(profileData); // Load the saved profile data
                     NavigationFrame.Navigate(page1);
                     break;
+
                 case 2:
                     Debug.WriteLine("Initializing Page 2"); // Debug output
                     var page2 = new Page2(this);
                     page2.PopulateUI(profileData); // Load the saved profile data
                     NavigationFrame.Navigate(page2);
                     break;
+
                 case 3:
                     Debug.WriteLine("Initializing Page 3"); // Debug output
                     var page3 = new Page3(this);

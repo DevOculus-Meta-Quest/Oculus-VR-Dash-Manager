@@ -61,6 +61,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 case "Reset":
                     // Your code for Reset button
                     break;
+
                 case "Select":
                     // Your code for Select button
                     break;

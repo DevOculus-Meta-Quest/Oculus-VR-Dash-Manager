@@ -57,6 +57,10 @@ Unlock the full potential of your Oculus VR experience with **Oculus VR Dash Man
   </tr>
 </table>
 
+[![HitCount](https://hits.dwyl.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager.svg)](https://hits.dwyl.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/Build_and_Release.yml)
+
+[![PayPal](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?business=X76ZW4RHA6T9C&no_recurring=0&item_name=Support+the+evolution+of+Oculus+VR+Dash+Manager%21+Your+donation+fuels+innovation+and+enhanced+virtual+experiences.+%F0%9F%9A%80%F0%9F%8C%90&currency_code=USD)
 
 ## ⬇️ Download ⬇️
 

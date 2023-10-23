@@ -112,13 +112,13 @@
         <GroupBox
             x:Name="gb_ProfileManager"
             Grid.Column="1"
-            Margin="305,329,130,37"
+            Margin="295,233,122,133"
             Header="Profile Manager" />
         <Label
             x:Name="lbl_ProfileManagerTest"
             Grid.Column="1"
             Width="225"
-            Margin="316,354,0,0"
+            Margin="310,251,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Warning: Still in Development"
@@ -126,18 +126,16 @@
             Foreground="#E5FF0000" />
         <GroupBox
             x:Name="gb_DashCustomizer"
-            Grid.ColumnSpan="2"
-            Margin="10,232,517,157"
-            Header="Dash Customizer" />
+            Margin="295,344,122,37"
+            Header="Dash Customizer" Grid.Column="1" />
         <Button
             x:Name="btn_PNG2DDS"
-            Grid.ColumnSpan="2"
             Width="215"
-            Margin="20,270,0,0"
+            Margin="310,389,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="btn_PNG2DDS_Click"
-            Content="Oculus Dash Customizer" />
-        <Button x:Name="btn_ProfileManager1" Grid.Column="1" Content="Profile Manager" HorizontalAlignment="Left" Margin="316,384,0,0" VerticalAlignment="Top" Width="134" Click="btn_ProfileManager1_Click"/>
+            Content="Oculus Dash Customizer" Grid.Column="1" />
+        <Button x:Name="btn_ProfileManager1" Grid.Column="1" Content="Profile Manager" HorizontalAlignment="Left" Margin="310,282,0,0" VerticalAlignment="Top" Width="134" Click="btn_ProfileManager1_Click"/>
     </Grid>
 </Window>

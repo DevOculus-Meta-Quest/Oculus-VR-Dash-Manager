@@ -1,4 +1,5 @@
-﻿using OVR_Dash_Manager.Functions;
+﻿using Oculus_VR_Dash_Manager;
+using OVR_Dash_Manager.Functions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

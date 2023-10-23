@@ -43,7 +43,13 @@
     <Compile Update="Forms\frm_UpdateChecker.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Forms\Profile Manager\frm_MainProfileManager.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Forms\Profile Manager\frm_ProfileManager.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\Profile Manager\frm_ProfileManagerGH.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Forms\Profile Manager\Page1.xaml.cs">
@@ -114,7 +120,13 @@
     <Page Update="Forms\frm_UpdateChecker.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Forms\Profile Manager\frm_MainProfileManager.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Forms\Profile Manager\frm_ProfileManager.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\Profile Manager\frm_ProfileManagerGH.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\Profile Manager\Page1.xaml">

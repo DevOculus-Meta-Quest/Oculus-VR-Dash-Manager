@@ -1,8 +1,11 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 // Disable the warning.
 #pragma warning disable SYSLIB0014
@@ -11,12 +14,60 @@ namespace OVR_Dash_Manager
 {
     public class Github
     {
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient httpClient = new HttpClient();
+        private const string GithubApiBaseUrl = "https://api.github.com/repos/";
 
         public Github()
         {
-            _httpClient = new HttpClient();
-            _httpClient.DefaultRequestHeaders.Add("User-Agent", "OVR-Dash-Manager");
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "OVR-Dash-Manager");
+        }
+
+        public async Task<string> GetFileDownloadUrlAsync(string owner, string repo, string filePath)
+        {
+            // Constructing the URL to point to the raw content of the file
+            string apiUrl = $"https://raw.githubusercontent.com/{owner}/{repo}/main/{filePath}";
+
+            Debug.WriteLine($"Constructed URL: {apiUrl}"); // Log the constructed URL
+
+            HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                return apiUrl; // Return the URL if the file exists
+            }
+            else
+            {
+                Debug.WriteLine($"Error: {response.ReasonPhrase}");
+                return null; // Return null if the file does not exist
+            }
+        }
+
+        public async Task<string> DownloadFileAsync(string downloadUrl)
+        {
+            HttpResponseMessage response = await httpClient.GetAsync(downloadUrl);
+            response.EnsureSuccessStatusCode();
+
+            string tempFilePath = Path.GetTempFileName();
+            byte[] fileBytes = await response.Content.ReadAsByteArrayAsync();
+            await File.WriteAllBytesAsync(tempFilePath, fileBytes);
+
+            return tempFilePath;
+        }
+
+        public async Task<string> GetFilesFromDirectoryAsync(string owner, string repo, string directoryPath, string branch = "main")
+        {
+            string url = $"{GithubApiBaseUrl}{owner}/{repo}/contents/{directoryPath}?ref={branch}";
+
+            var response = await httpClient.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResult = await response.Content.ReadAsStringAsync();
+                return jsonResult;
+            }
+            else
+            {
+                return $"Error: {response.ReasonPhrase}";
+            }
         }
 
         public async Task<long> GetLatestSizeAsync(string repo, string project, string assetName)
@@ -70,7 +121,7 @@ namespace OVR_Dash_Manager
 
         private async Task<string> GetJsonAsync(string url)
         {
-            var response = await _httpClient.GetAsync(url);
+            var response = await httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsStringAsync();
         }

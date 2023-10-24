@@ -21,17 +21,15 @@ namespace OVR_Dash_Manager
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ServiceManager _serviceManager = new ServiceManager();
-        private UIManager _uiManager;
-
+        public bool Debug_EmulateReleaseMode = false;
         // Declare _hoverButtonManager at the class level
         private HoverButtonManager _hoverButtonManager;
 
+        private ServiceManager _serviceManager = new ServiceManager();
+        private UIManager _uiManager;
         private bool Elevated = false;
         private bool FireUIEvents = false;
         private InputSimulator Keyboard_Simulator;
-        public bool Debug_EmulateReleaseMode = false;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -57,52 +55,64 @@ namespace OVR_Dash_Manager
             Topmost = Properties.Settings.Default.AlwaysOnTop;
         }
 
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        public void Cancel_TaskView_And_Focus()
+        {
+            if (Keyboard_Simulator == null)
+                Keyboard_Simulator = new InputSimulator();
+
+            Keyboard_Simulator.Keyboard.KeyPress(VirtualKeyCode.ESCAPE);
+
+            this.Topmost = true;
+            this.BringIntoView();
+            this.Topmost = Properties.Settings.Default.AlwaysOnTop;
+        }
+
+        private void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            // Log the exception using ErrorLogger
+            ErrorLogger.LogError(e.Exception, "An unhandled exception occurred in the dispatcher.");
+
+            // Handle the exception to prevent the application from terminating
+            e.Handled = true;
+        }
+
+        private void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            // Log the exception using ErrorLogger
+            ErrorLogger.LogError((Exception)e.ExceptionObject, "An unhandled exception occurred in the application domain.");
+        }
+
+        private void btn_ExitSteamVR_Click(object sender, RoutedEventArgs e)
+        {
+            Steam.Close_SteamVR_Server();
+        }
+
+        private void btn_OtherTools_Click(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of frm_OtherTools window
+            var otherToolsWindow = new frm_OtherTools();
+
+            // Set the main window as the owner of otherToolsWindow
+            otherToolsWindow.Owner = this;
+
+            // Show the window as a modal dialog box
+            otherToolsWindow.ShowDialog();
+        }
+
+        private void btn_StartSteamVR_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                await WindowLoadedAsync();
+                // Assuming Steam is installed in the default location
+                Process.Start(@"C:\Program Files (x86)\Steam\steam.exe", "-applaunch 250820");
             }
             catch (Exception ex)
             {
-                HandleWindowLoadingException(ex);
-            }
-        }
+                // Log the exception using ErrorLogger
+                ErrorLogger.LogError(ex, "Failed to start SteamVR.");
 
-        private async Task WindowLoadedAsync()
-        {
-            // Disable buttons and update status label
-            btn_Diagnostics.IsEnabled = false;
-            btn_OpenSettings.IsEnabled = false;
-            _uiManager.UpdateStatusLabel("Starting Up");
-
-            // Check if the current process is elevated
-            Elevated = Functions.Process_Functions.IsCurrentProcess_Elevated();
-
-            // Configure dash buttons and hover buttons
-            Disable_Dash_Buttons();
-            LinkDashesToButtons();
-            _hoverButtonManager.GenerateHoverButtons();
-
-            // Pass the main form and subscribe to events
-            Dashes.Dash_Manager.PassMainForm(this);
-            Software.Steam.Steam_VR_Running_State_Changed_Event += Steam_Steam_VR_Running_State_Changed_Event;
-
-            // Generate the list of auto-launch programs
-            Software.Auto_Launch_Programs.Generate_List();
-
-            // Perform startup actions
-            await StartupAsync();
-
-            frm_UpdateChecker updateChecker = new frm_UpdateChecker();
-
-            // Check if updates are available
-            bool isNewVersionAvailable = await updateChecker.CheckDashManagerUpdates();
-
-            // If a new version is available, show a MessageBox
-            if (isNewVersionAvailable)
-            {
-                MessageBox.Show("A new update is available. Please open the update checker for more details.", "Update Available", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Display a message box to inform the user
+                MessageBox.Show("Failed to start SteamVR: " + ex.Message);
             }
         }
 
@@ -119,49 +129,9 @@ namespace OVR_Dash_Manager
             Debug.WriteLine(ex.StackTrace);
         }
 
-        private void Steam_Steam_VR_Running_State_Changed_Event()
+        private void NotElevated()
         {
-            // Assuming Software.Steam.Steam_VR_Server_Running is a boolean,
-            // you might want to convert it to a string message to display in the UI.
-            string statusText = Software.Steam.Steam_VR_Server_Running ? "Running" : "Not Running";
-            _uiManager.UpdateSteamVRStatusLabel(statusText);
-            // Note: If you have multiple buttons to enable/disable based on SteamVR status, consider adding a method in UIManager to handle this.
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            try
-            {
-                // Set Windows audio to normal speaker automatically
-                Software.Windows_Audio_v2.Set_To_Normal_Speaker_Auto();
-
-                // Stop ADB
-                Software.ADB.Stop();
-
-                // Stop the ProcessWatcher
-                Functions.ProcessWatcher.Stop();
-
-                // Stop and dispose the "Hover Checker" timer
-                Timer_Functions.StopTimer("Hover Checker");
-                Timer_Functions.DisposeTimer("Hover Checker");
-
-                // Hide the window
-                Hide();
-
-                // Stop Oculus services
-                Software.Oculus.StopOculusServices();
-
-                // Run programs that are set to execute upon closing
-                Software.Auto_Launch_Programs.Run_Closing_Programs();
-            }
-            catch (Exception ex)
-            {
-                // Log the exception using ErrorLogger
-                ErrorLogger.LogError(ex, "An error occurred while closing the window.");
-
-                // Optionally: Inform the user about the error
-                MessageBox.Show("An error occurred while closing the application. Please check the error log for details.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            _uiManager.NotifyNotElevated();
         }
 
         private void RefreshUI()
@@ -290,45 +260,105 @@ namespace OVR_Dash_Manager
             {
                 _uiManager.ShowDesktopPlusNotInstalledWarning();
             }
+
+            // Check and update the UI for SteamVR beta status
+            _uiManager.UpdateSteamVRBetaStatus();
         }
 
-        private void NotElevated()
+        private void Steam_Steam_VR_Running_State_Changed_Event()
         {
-            _uiManager.NotifyNotElevated();
+            // Assuming Software.Steam.Steam_VR_Server_Running is a boolean,
+            // you might want to convert it to a string message to display in the UI.
+            string statusText = Software.Steam.Steam_VR_Server_Running ? "Running" : "Not Running";
+            _uiManager.UpdateSteamVRStatusLabel(statusText);
+            // Note: If you have multiple buttons to enable/disable based on SteamVR status, consider adding a method in UIManager to handle this.
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                // Set Windows audio to normal speaker automatically
+                Software.Windows_Audio_v2.Set_To_Normal_Speaker_Auto();
+
+                // Stop ADB
+                Software.ADB.Stop();
+
+                // Stop the ProcessWatcher
+                Functions.ProcessWatcher.Stop();
+
+                // Stop and dispose the "Hover Checker" timer
+                Timer_Functions.StopTimer("Hover Checker");
+                Timer_Functions.DisposeTimer("Hover Checker");
+
+                // Hide the window
+                Hide();
+
+                // Stop Oculus services
+                Software.Oculus.StopOculusServices();
+
+                // Run programs that are set to execute upon closing
+                Software.Auto_Launch_Programs.Run_Closing_Programs();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception using ErrorLogger
+                ErrorLogger.LogError(ex, "An error occurred while closing the window.");
+
+                // Optionally: Inform the user about the error
+                MessageBox.Show("An error occurred while closing the application. Please check the error log for details.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await WindowLoadedAsync();
+            }
+            catch (Exception ex)
+            {
+                HandleWindowLoadingException(ex);
+            }
+        }
+
+        private async Task WindowLoadedAsync()
+        {
+            // Disable buttons and update status label
+            btn_Diagnostics.IsEnabled = false;
+            btn_OpenSettings.IsEnabled = false;
+            _uiManager.UpdateStatusLabel("Starting Up");
+
+            // Check if the current process is elevated
+            Elevated = Functions.Process_Functions.IsCurrentProcess_Elevated();
+
+            // Configure dash buttons and hover buttons
+            Disable_Dash_Buttons();
+            LinkDashesToButtons();
+            _hoverButtonManager.GenerateHoverButtons();
+
+            // Pass the main form and subscribe to events
+            Dashes.Dash_Manager.PassMainForm(this);
+            Software.Steam.Steam_VR_Running_State_Changed_Event += Steam_Steam_VR_Running_State_Changed_Event;
+
+            // Generate the list of auto-launch programs
+            Software.Auto_Launch_Programs.Generate_List();
+
+            // Perform startup actions
+            await StartupAsync();
+
+            frm_UpdateChecker updateChecker = new frm_UpdateChecker();
+
+            // Check if updates are available
+            bool isNewVersionAvailable = await updateChecker.CheckDashManagerUpdates();
+
+            // If a new version is available, show a MessageBox
+            if (isNewVersionAvailable)
+            {
+                MessageBox.Show("A new update is available. Please open the update checker for more details.", "Update Available", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
         #region Dash Buttons
-
-        private void LinkDashesToButtons()
-        {
-            btn_ExitOculusLink.Tag = Dashes.Dash_Type.Exit;
-            btn_Normal.Tag = Dashes.Dash_Type.Normal;
-            btn_SteamVR.Tag = Dashes.Dash_Type.OculusKiller;
-        }
-
-        #region Hover Buttons Enter/Leave
-
-        private void btn_Normal_MouseEnter(object sender, MouseEventArgs e)
-        {
-            _hoverButtonManager.Oculus_Dash.SetHovering();
-        }
-
-        private void btn_Normal_MouseLeave(object sender, MouseEventArgs e)
-        {
-            _hoverButtonManager.Oculus_Dash.StopHovering();
-        }
-
-        private void btn_ExitOculusLink_MouseEnter(object sender, MouseEventArgs e)
-        {
-            _hoverButtonManager.Exit_Link.SetHovering();
-        }
-
-        private void btn_ExitOculusLink_MouseLeave(object sender, MouseEventArgs e)
-        {
-            _hoverButtonManager.Exit_Link.StopHovering();
-        }
-
-        #endregion Hover Buttons Enter/Leave
 
         private void btn_ActivateDash_Click(object sender, RoutedEventArgs e)
         {
@@ -344,17 +374,45 @@ namespace OVR_Dash_Manager
             CheckRunTime();
         }
 
-        private void Thread_ReactivateButtons()
-        {
-            Thread.Sleep(5000);
-            Functions_Old.DoAction(this, new Action(delegate () { _hoverButtonManager.UpdateDashButtons(); }));
-        }
-
         private void btn_OpenDashLocation_Click(object sender, RoutedEventArgs e)
         {
             _uiManager.OpenDashLocation();
         }
 
+        private void LinkDashesToButtons()
+        {
+            btn_ExitOculusLink.Tag = Dashes.Dash_Type.Exit;
+            btn_Normal.Tag = Dashes.Dash_Type.Normal;
+            btn_SteamVR.Tag = Dashes.Dash_Type.OculusKiller;
+        }
+
+        #region Hover Buttons Enter/Leave
+
+        private void btn_ExitOculusLink_MouseEnter(object sender, MouseEventArgs e)
+        {
+            _hoverButtonManager.Exit_Link.SetHovering();
+        }
+
+        private void btn_ExitOculusLink_MouseLeave(object sender, MouseEventArgs e)
+        {
+            _hoverButtonManager.Exit_Link.StopHovering();
+        }
+
+        private void btn_Normal_MouseEnter(object sender, MouseEventArgs e)
+        {
+            _hoverButtonManager.Oculus_Dash.SetHovering();
+        }
+
+        private void btn_Normal_MouseLeave(object sender, MouseEventArgs e)
+        {
+            _hoverButtonManager.Oculus_Dash.StopHovering();
+        }
+        #endregion Hover Buttons Enter/Leave
+        private void Thread_ReactivateButtons()
+        {
+            Thread.Sleep(5000);
+            Functions_Old.DoAction(this, new Action(delegate () { _hoverButtonManager.UpdateDashButtons(); }));
+        }
         #endregion Dash Buttons
 
         #region URL Links
@@ -418,69 +476,6 @@ namespace OVR_Dash_Manager
 
         #region Forms
 
-        private void OpenForm(Window Form, bool DialogMode = true)
-        {
-            Topmost = false;
-
-            if (DialogMode)
-            {
-                Form.ShowDialog();
-                Topmost = Properties.Settings.Default.AlwaysOnTop;
-                RefreshUI();
-            }
-            else
-                Form.Show();
-        }
-
-        private void btn_OculusServiceManager_Click(object sender, RoutedEventArgs e)
-        {
-            if (!FireUIEvents)
-                return;
-
-            Forms.frm_Oculus_Service_Control ServiceControl = new Forms.frm_Oculus_Service_Control();
-            OpenForm(ServiceControl);
-        }
-
-        private void btn_OpenSettings_Click(object sender, RoutedEventArgs e)
-        {
-            Forms.Settings.frm_Settings_v2 Settings = new Forms.Settings.frm_Settings_v2();
-            //Forms.frm_Settings Settings = new Forms.frm_Settings();
-            OpenForm(Settings);
-        }
-
-        private bool Get_Properties_Setting(string SettingName)
-        {
-            bool Setting = false;
-
-            try
-            {
-                Setting = (bool)Properties.Settings.Default[SettingName];
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return Setting;
-        }
-
-        private void btn_Diagnostics_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Forms.frm_Diagnostics Settings = new Forms.frm_Diagnostics();
-                OpenForm(Settings);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception using ErrorLogger
-                ErrorLogger.LogError(ex, "An error occurred while opening the Diagnostics window.");
-
-                // Optionally: Inform the user about the error
-                MessageBox.Show("An error occurred while trying to open the Diagnostics window. Please try again later.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
         private void btn_CheckForUpdates_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -501,10 +496,65 @@ namespace OVR_Dash_Manager
             }
         }
 
+        private void btn_Diagnostics_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Forms.frm_Diagnostics Settings = new Forms.frm_Diagnostics();
+                OpenForm(Settings);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception using ErrorLogger
+                ErrorLogger.LogError(ex, "An error occurred while opening the Diagnostics window.");
+
+                // Optionally: Inform the user about the error
+                MessageBox.Show("An error occurred while trying to open the Diagnostics window. Please try again later.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void btn_Help_Click(object sender, RoutedEventArgs e)
         {
             Forms.frm_Help Settings = new Forms.frm_Help();
             OpenForm(Settings);
+        }
+
+        private void btn_OculusServiceManager_Click(object sender, RoutedEventArgs e)
+        {
+            if (!FireUIEvents)
+                return;
+
+            Forms.frm_Oculus_Service_Control ServiceControl = new Forms.frm_Oculus_Service_Control();
+            OpenForm(ServiceControl);
+        }
+
+        private void btn_OpenSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Forms.Settings.frm_Settings_v2 Settings = new Forms.Settings.frm_Settings_v2();
+            //Forms.frm_Settings Settings = new Forms.frm_Settings();
+            OpenForm(Settings);
+        }
+
+        private void btn_OpenSteamVRSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Forms.frm_SteamVR_Settings Settings = new Forms.frm_SteamVR_Settings();
+            OpenForm(Settings);
+        }
+
+        private bool Get_Properties_Setting(string SettingName)
+        {
+            bool Setting = false;
+
+            try
+            {
+                Setting = (bool)Properties.Settings.Default[SettingName];
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return Setting;
         }
 
         private void lbl_TestAccess_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -519,27 +569,32 @@ namespace OVR_Dash_Manager
             }
         }
 
-        private void btn_OpenSteamVRSettings_Click(object sender, RoutedEventArgs e)
+        private void OpenForm(Window Form, bool DialogMode = true)
         {
-            Forms.frm_SteamVR_Settings Settings = new Forms.frm_SteamVR_Settings();
-            OpenForm(Settings);
-        }
+            Topmost = false;
 
+            if (DialogMode)
+            {
+                Form.ShowDialog();
+                Topmost = Properties.Settings.Default.AlwaysOnTop;
+                RefreshUI();
+            }
+            else
+                Form.Show();
+        }
         #endregion Forms
-
-        public void Cancel_TaskView_And_Focus()
-        {
-            if (Keyboard_Simulator == null)
-                Keyboard_Simulator = new InputSimulator();
-
-            Keyboard_Simulator.Keyboard.KeyPress(VirtualKeyCode.ESCAPE);
-
-            this.Topmost = true;
-            this.BringIntoView();
-            this.Topmost = Properties.Settings.Default.AlwaysOnTop;
-        }
-
         #region OpenXR Runtime
+
+        public void CheckRunTime()
+        {
+            Software.Steam_VR_Settings.OpenXR_Runtime CurrentRuntime = Software.Steam_VR_Settings.Read_Runtime();
+
+            if (CurrentRuntime == Software.Steam_VR_Settings.OpenXR_Runtime.Oculus)
+                Functions_Old.DoAction(this, new Action(delegate () { btn_RunTime_Oculus.IsChecked = true; }));
+
+            if (CurrentRuntime == Software.Steam_VR_Settings.OpenXR_Runtime.SteamVR)
+                Functions_Old.DoAction(this, new Action(delegate () { btn_RunTime_SteamVR.IsChecked = true; }));
+        }
 
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
@@ -570,67 +625,6 @@ namespace OVR_Dash_Manager
                 btn_RunTime_Oculus.IsChecked = true;
             }
         }
-
-        public void CheckRunTime()
-        {
-            Software.Steam_VR_Settings.OpenXR_Runtime CurrentRuntime = Software.Steam_VR_Settings.Read_Runtime();
-
-            if (CurrentRuntime == Software.Steam_VR_Settings.OpenXR_Runtime.Oculus)
-                Functions_Old.DoAction(this, new Action(delegate () { btn_RunTime_Oculus.IsChecked = true; }));
-
-            if (CurrentRuntime == Software.Steam_VR_Settings.OpenXR_Runtime.SteamVR)
-                Functions_Old.DoAction(this, new Action(delegate () { btn_RunTime_SteamVR.IsChecked = true; }));
-        }
-
         #endregion OpenXR Runtime
-
-        private void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-        {
-            // Log the exception using ErrorLogger
-            ErrorLogger.LogError(e.Exception, "An unhandled exception occurred in the dispatcher.");
-
-            // Handle the exception to prevent the application from terminating
-            e.Handled = true;
-        }
-
-        private void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            // Log the exception using ErrorLogger
-            ErrorLogger.LogError((Exception)e.ExceptionObject, "An unhandled exception occurred in the application domain.");
-        }
-
-        private void btn_StartSteamVR_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                // Assuming Steam is installed in the default location
-                Process.Start(@"C:\Program Files (x86)\Steam\steam.exe", "-applaunch 250820");
-            }
-            catch (Exception ex)
-            {
-                // Log the exception using ErrorLogger
-                ErrorLogger.LogError(ex, "Failed to start SteamVR.");
-
-                // Display a message box to inform the user
-                MessageBox.Show("Failed to start SteamVR: " + ex.Message);
-            }
-        }
-
-        private void btn_ExitSteamVR_Click(object sender, RoutedEventArgs e)
-        {
-            Steam.Close_SteamVR_Server();
-        }
-
-        private void btn_OtherTools_Click(object sender, RoutedEventArgs e)
-        {
-            // Create an instance of frm_OtherTools window
-            var otherToolsWindow = new frm_OtherTools();
-
-            // Set the main window as the owner of otherToolsWindow
-            otherToolsWindow.Owner = this;
-
-            // Show the window as a modal dialog box
-            otherToolsWindow.ShowDialog();
-        }
     }
 }

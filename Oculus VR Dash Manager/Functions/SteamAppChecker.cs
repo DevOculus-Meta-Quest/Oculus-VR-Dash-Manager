@@ -119,5 +119,37 @@ namespace OVR_Dash_Manager.Functions
 
             return installedApps;
         }
+
+        /// <summary>
+        /// Checks if SteamVR is running a beta version.
+        /// </summary>
+        /// <returns>True if it's a beta version; otherwise, false.</returns>
+        /// // Usage bool isBeta = SteamAppChecker.IsSteamVRBeta();
+        public static bool IsSteamVRBeta()
+        {
+            try
+            {
+                string steamPath = GetSteamPath();
+                string manifestPath = Path.Combine(steamPath, @"steamapps\appmanifest_250820.acf");
+
+                if (File.Exists(manifestPath))
+                {
+                    string content = File.ReadAllText(manifestPath);
+                    Match match = Regex.Match(content, "\"betakey\"[^\"]*\"([^\"]+)\"", RegexOptions.IgnoreCase);
+
+                    if (match.Success)
+                    {
+                        return !string.IsNullOrEmpty(match.Groups[1].Value);
+                    }
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.LogError(ex, "Error checking if SteamVR is a beta version.");
+                return false;
+            }
+        }
     }
 }

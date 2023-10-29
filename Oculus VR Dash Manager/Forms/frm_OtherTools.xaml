@@ -155,17 +155,40 @@
             IsEnabled="False" />
         <Button
             Name="btn_DeleteLog"
+            Grid.ColumnSpan="2"
             Width="100"
             Height="30"
             Margin="93,267,607,168"
             Click="btn_DeleteLog_Click"
-            Content="Delete" Grid.ColumnSpan="2" />
+            Content="Delete" />
         <GroupBox
             x:Name="gb_OculusKiller"
             Grid.ColumnSpan="2"
             Margin="10,233,595,153"
             Header="Oculus Killer" />
-        <Button x:Name="btn_OculusView" Content="Oculus Viewer" HorizontalAlignment="Left" Margin="35,184,0,0" VerticalAlignment="Top" Width="129" Click="btn_OculusView_Click" Grid.ColumnSpan="2"/>
-        <GroupBox x:Name="gb_Oculus" Header="Oculus" Margin="10,154,607,237" Grid.ColumnSpan="2"/>
+        <Button
+            x:Name="btn_OculusView"
+            Grid.ColumnSpan="2"
+            Width="129"
+            Margin="35,184,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="btn_OculusView_Click"
+            Content="Oculus Viewer" />
+        <GroupBox
+            x:Name="gb_Oculus"
+            Grid.ColumnSpan="2"
+            Margin="10,119,520,237"
+            Header="Oculus" />
+        <Label
+            x:Name="lbl_ProfileManagerTest_Copy"
+            Grid.ColumnSpan="2"
+            Width="225"
+            Margin="22,148,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Warning: Still in Development"
+            FontSize="16"
+            Foreground="#E5FF0000" />
     </Grid>
 </Window>

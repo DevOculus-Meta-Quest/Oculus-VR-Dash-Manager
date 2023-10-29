@@ -57,18 +57,6 @@ namespace OVR_Dash_Manager.Functions
 
                                 string betaStatusText = isSteamVRBeta ? "Beta Edition" : "Normal Edition";
                                 _window.lbl_SteamVR_BetaStatus.Content = betaStatusText;
-
-                                if (isSteamVRBeta)
-                                {
-                                    // Notify the user about the SteamVR beta status
-                                    MessageBox.Show(_window,
-                                                    "Warning: SteamVR Beta Mode Detected\n\n" +
-                                                    "SteamVR is currently operating in beta mode. We have received reports indicating that the \"OculusKiller\" feature may not function as expected while SteamVR is in beta. Users have experienced issues with controller functionality when launching games.\n\n" +
-                                                    "Please be advised that we are actively investigating and working towards a resolution for this issue. However, choosing to run \"OculusKiller\" while SteamVR is in beta is at the user's discretion. Proceed with caution.",
-                                                    "Warning",
-                                                    MessageBoxButton.OK,
-                                                    MessageBoxImage.Warning);
-                                }
                             }
                             catch (Exception ex)
                             {

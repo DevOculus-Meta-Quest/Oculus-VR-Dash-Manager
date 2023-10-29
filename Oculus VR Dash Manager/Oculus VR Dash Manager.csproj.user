@@ -43,6 +43,9 @@
     <Compile Update="Forms\frm_UpdateChecker.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Forms\OculusView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Forms\Profile Manager\frm_ProfileManager.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -88,6 +91,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\frm_UpdateChecker.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\OculusView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\Profile Manager\frm_ProfileManager.xaml">

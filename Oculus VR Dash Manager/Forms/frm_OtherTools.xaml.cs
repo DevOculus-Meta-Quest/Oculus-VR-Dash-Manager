@@ -133,5 +133,20 @@ namespace OVR_Dash_Manager.Forms
             string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OculusKiller", "logs.txt");
             btn_DeleteLog.IsEnabled = File.Exists(logPath);
         }
+
+        private void btn_OculusView_Click(object sender, RoutedEventArgs e)
+        {
+            // Create a new instance of the OculusView window
+            OculusView oculusView = new OculusView();
+
+            // Optional: Start monitoring the Oculus controller when the window is loaded
+            oculusView.Loaded += (s, e) => oculusView.StartMonitoringController();
+
+            // Optional: Stop monitoring the Oculus controller when the window is closed
+            oculusView.Closed += (s, e) => oculusView.StopMonitoringController();
+
+            // Show the OculusView window
+            oculusView.Show();
+        }
     }
 }

@@ -299,12 +299,12 @@
         <GroupBox
             x:Name="gb_DesktopPlusStatus"
             Height="60"
-            Margin="678,283,12,0"
+            Margin="685,335,5,0"
             VerticalAlignment="Top"
             Header="Desktop+ Status" />
         <GroupBox
             x:Name="gb_SteamStatus"
-            Height="60"
+            Height="90"
             Margin="678,218,12,0"
             VerticalAlignment="Top"
             Header="SteamVR Status" />
@@ -316,7 +316,7 @@
             x:Name="lbl_DesktopPlusStatus"
             Width="114"
             Height="30"
-            Margin="704,0,0,130"
+            Margin="704,0,0,78"
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
             HorizontalContentAlignment="Center"
@@ -337,5 +337,18 @@
             x:Name="gb_Menu"
             Margin="10,357,220,8"
             Header="Menu" />
+        <Label
+            Margin="615,328,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" />
+        <Label
+            x:Name="lbl_SteamVR_BetaStatus"
+            Width="150"
+            Height="30"
+            Margin="685,0,0,165"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            HorizontalContentAlignment="Center"
+            Content="N/A" />
     </Grid>
 </Window>

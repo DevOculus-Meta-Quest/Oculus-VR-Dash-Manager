@@ -16,29 +16,12 @@ public class OculusDebugToolFunctions : IDisposable
         InitializeProcess();
     }
 
-    private void InitializeProcess()
+    public void Dispose()
     {
-        process = new Process
-        {
-            StartInfo = new ProcessStartInfo
-            {
-                FileName = OculusDebugToolPath,
-                UseShellExecute = false,
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                CreateNoWindow = true
-            }
-        };
-
-        process.OutputDataReceived += (sender, args) => Debug.WriteLine(args.Data);
-        process.ErrorDataReceived += (sender, args) => Debug.WriteLine(args.Data);
-
-        process.Start();
-        process.BeginOutputReadLine();
-        process.BeginErrorReadLine();
-
-        streamWriter = process.StandardInput;
+        process?.Close();
+        process?.Dispose();
+        streamWriter?.Close();
+        streamWriter?.Dispose();
     }
 
     public async Task ExecuteCommandAsync(string command)
@@ -104,11 +87,28 @@ public class OculusDebugToolFunctions : IDisposable
         }
     }
 
-    public void Dispose()
+    private void InitializeProcess()
     {
-        process?.Close();
-        process?.Dispose();
-        streamWriter?.Close();
-        streamWriter?.Dispose();
+        process = new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                FileName = OculusDebugToolPath,
+                UseShellExecute = false,
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            }
+        };
+
+        process.OutputDataReceived += (sender, args) => Debug.WriteLine(args.Data);
+        process.ErrorDataReceived += (sender, args) => Debug.WriteLine(args.Data);
+
+        process.Start();
+        process.BeginOutputReadLine();
+        process.BeginErrorReadLine();
+
+        streamWriter = process.StandardInput;
     }
 }

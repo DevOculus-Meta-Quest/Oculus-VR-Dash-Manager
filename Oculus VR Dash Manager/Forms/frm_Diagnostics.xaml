@@ -1,11 +1,11 @@
 ﻿<Window
     x:Class="OVR_Dash_Manager.Forms.frm_Diagnostics"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Diagnostics"
-    Width="430"
+    Width="900"
     Height="688.426"
     Closing="Window_Closing"
     Loaded="Window_Loaded"
@@ -22,26 +22,30 @@
     </Window.Resources>
 
     <Grid Background="#FF212121">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="137*" />
+            <RowDefinition Height="199*" />
+        </Grid.RowDefinitions>
         <Label
             Margin="10,40,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Oculus Software" />
+            Content="Oculus Software" Height="28" Width="105" />
         <Label
             Margin="10,73,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Oculus Client" />
+            Content="Oculus Client" Height="28" Width="88" />
         <Label
             Margin="10,106,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Oculus Libary Service" />
+            Content="Oculus Libary Service" Height="28" Width="134" />
         <Label
             Margin="10,139,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Oculus Runtime Service" />
+            Content="Oculus Runtime Service" Height="28" Width="148" />
         <Label
             Width="46"
             Height="28"
@@ -53,82 +57,87 @@
             Margin="10,205,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Steam VR" />
+            Content="Steam VR" Height="28" Width="66" />
         <Label
             Margin="10,238,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Current Dash" />
+            Content="Current Dash" Height="28" Width="87" />
         <Label
-            Margin="10,271,0,0"
+            Grid.Row="1"
+            Margin="10,2,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Official Dash" />
+            Content="Official Dash" Height="28" Width="84" />
         <Label
-            Margin="10,304,0,0"
+            Grid.Row="1"
+            Margin="10,35,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="ItsKaitlyn03 / OculusKiller" />
+            Content="OculusKiller" Height="28" Width="79" />
         <Label
             x:Name="lbl_OculusSoftware"
-            Margin="174,40,10,0"
+            Margin="174,40,535,0"
             VerticalAlignment="Top"
-            Content="Label" />
+            Content="Label" Height="28" />
         <Label
             x:Name="lbl_OculussClient"
-            Margin="174,73,10,0"
+            Margin="174,73,535,0"
             VerticalAlignment="Top"
-            Content="Label" />
+            Content="Label" Height="28" />
         <Label
             x:Name="lbl_OculusLibaryService"
-            Margin="174,106,10,0"
+            Margin="174,106,535,0"
             VerticalAlignment="Top"
-            Content="Label" />
+            Content="Label" Height="28" />
         <Label
             x:Name="lbl_OculusRuntimeService"
-            Margin="174,139,10,0"
+            Margin="174,139,535,0"
             VerticalAlignment="Top"
-            Content="Label" />
+            Content="Label" Height="28" />
         <Label
             x:Name="lbl_Steam"
-            Margin="174,172,10,0"
+            Margin="174,172,535,0"
             VerticalAlignment="Top"
-            Content="Label" />
+            Content="Label" Height="28" />
         <Label
             x:Name="lbl_SteamVR"
-            Margin="174,205,10,0"
+            Margin="174,205,535,0"
             VerticalAlignment="Top"
-            Content="Label" />
+            Content="Label" Height="28" />
         <Label
             x:Name="lbl_CurrentDash"
-            Margin="174,238,10,0"
+            Margin="174,238,535,0"
             VerticalAlignment="Top"
-            Content="Label" />
+            Content="Label" Height="28" />
         <Label
             x:Name="lbl_OfficialDash"
-            Margin="174,271,10,0"
+            Grid.Row="1"
+            Margin="174,2,535,0"
             VerticalAlignment="Top"
-            Content="Label" />
+            Content="Label" Height="28" />
         <Label
             x:Name="lbl_OculusKiller"
-            Margin="174,304,10,0"
+            Grid.Row="1"
+            Margin="174,35,535,0"
             VerticalAlignment="Top"
-            Content="Label" />
+            Content="Label" Height="28" />
         <Label
             Margin="10,7,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Last Check" />
+            Content="Last Check" Height="28" Width="72" />
         <Label
             x:Name="lbl_DiagnosticsCheckTime"
-            Margin="174,7,10,0"
+            Margin="174,7,535,0"
             VerticalAlignment="Top"
-            Content="Label" />
+            Content="Label" Height="28" />
         <ListView
             x:Name="lv_OculusDevices"
+            Grid.Row="1"
             Height="135"
-            Margin="10,0,10,10"
-            VerticalAlignment="Bottom">
+            Margin="10,258,500,0"
+            VerticalAlignment="Top">
             <ListView.View>
                 <GridView>
                     <GridViewColumn
@@ -143,47 +152,55 @@
             </ListView.View>
         </ListView>
         <Label
+            Grid.Row="1"
             Margin="10,0,0,157"
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
-            Content="Devices Detected" />
+            Content="Devices Detected" Height="27" Width="112" />
         <Button
             x:Name="btn_OculusDebugTool"
+            Grid.Row="1"
             Width="170"
-            Margin="0,0,10,156"
+            Margin="0,0,525,154"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Click="btn_OculusDebugTool_Click"
-            Content="Oculus Debug Tool" />
+            Content="Oculus Debug Tool" Height="30" />
         <Label
-            Margin="10,337,0,0"
+            Grid.Row="1"
+            Margin="10,68,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="OpenXR Runtime:" />
+            Content="OpenXR Runtime:" Height="28" Width="114" />
         <Label
             x:Name="lbl_OpenXR_RunTime"
-            Margin="174,337,10,0"
+            Grid.Row="1"
+            Margin="174,68,535,0"
             VerticalAlignment="Top"
-            Content="Label" />
+            Content="Label" Height="28" />
         <Label
-            Margin="10,370,0,0"
+            Grid.Row="1"
+            Margin="10,101,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Fast Switch Enabled:" />
+            Content="Fast Switch Enabled:" Height="28" Width="128" />
         <Label
             x:Name="lbl_FastSwitch_Enabled"
-            Margin="174,370,10,0"
+            Grid.Row="1"
+            Margin="174,101,535,0"
             VerticalAlignment="Top"
-            Content="Label" />
+            Content="Label" Height="28" />
         <Label
-            Margin="10,403,0,0"
+            Grid.Row="1"
+            Margin="10,134,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Oculus Location:" />
+            Content="Oculus Location:" Height="28" Width="107" />
         <TextBlock
             x:Name="lbl_OculusLocation"
+            Grid.Row="1"
             Height="65"
-            Margin="174,403,10,0"
+            Margin="174,134,450,0"
             VerticalAlignment="Top"
             Foreground="White"
             Text="Label"

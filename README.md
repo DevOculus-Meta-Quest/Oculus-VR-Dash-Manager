@@ -13,6 +13,7 @@ Unlock the full potential of your Oculus VR experience with <b>Oculus VR Dash Ma
 2. [Screenshots](#-screenshots-)
 3. [Download](#️-download-️)
 4. [Credits](#-credits-)
+5. [Changelog](#-changelog-)
 
 ## 🌟 Features 🌟
 
@@ -85,6 +86,9 @@ Grab the latest release [here](https://github.com/DevOculus-Meta-Quest/Oculus-VR
   <img src="https://img.shields.io/github/release-date/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager?style=plastic" alt="GitHub Downloads">
   <a href="https://www.paypal.com/donate/?business=X76ZW4RHA6T9C&no_recurring=0&item_name=Support+the+evolution+of+Oculus+VR+Dash+Manager%21+Your+donation+fuels+innovation+and+enhanced+virtual+experiences.+%F0%9F%9A%80%F0%9F%8C%90&currency_code=USD"><img src="https://img.shields.io/badge/Donate-PayPal-green.svg" alt="PayPal"></a>
 </p>
+
+## 📜 Changelog 📜
+[View the changelog here](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/Main/CHANGELOG.md)
 
 ## 🙏 Credits 🙏
 

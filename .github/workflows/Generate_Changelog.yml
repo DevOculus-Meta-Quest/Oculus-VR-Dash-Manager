@@ -13,11 +13,13 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GIT_ACTIONS }} # Using your PAT named GIT_ACTIONS
 
       - name: Generate changelog
         uses: charmixer/auto-changelog-action@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }} # Using the default GITHUB_TOKEN which is automatically created by GitHub Actions
+          token: ${{ secrets.GIT_ACTIONS }} # Using your PAT named GIT_ACTIONS
 
       - name: Commit and push changelog
         run: |

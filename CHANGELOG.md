@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.5.1.1](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/tree/v1.5.1.1) (2023-10-31)
+
+[Full Changelog](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/compare/v1.5.1.0...v1.5.1.1)
+
+## [v1.5.1.0](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/tree/v1.5.1.0) (2023-10-31)
+
+[Full Changelog](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/compare/v1.5.0.1...v1.5.1.0)
+
 ## [v1.5.0.1](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/tree/v1.5.0.1) (2023-10-29)
 
 [Full Changelog](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/compare/v1.5.0.0...v1.5.0.1)
@@ -30,15 +38,15 @@
 
 ## [v1.1.0.0](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/tree/v1.1.0.0) (2023-09-28)
 
-[Full Changelog](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/compare/v1.0.3.4...v1.1.0.0)
-
-## [v1.0.3.4](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/tree/v1.0.3.4) (2023-04-01)
-
-[Full Changelog](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/compare/v1.0.3.5...v1.0.3.4)
+[Full Changelog](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/compare/v1.0.3.5...v1.1.0.0)
 
 ## [v1.0.3.5](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/tree/v1.0.3.5) (2023-04-01)
 
-[Full Changelog](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/compare/1.0.3.2...v1.0.3.5)
+[Full Changelog](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/compare/v1.0.3.4...v1.0.3.5)
+
+## [v1.0.3.4](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/tree/v1.0.3.4) (2023-04-01)
+
+[Full Changelog](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/compare/1.0.3.2...v1.0.3.4)
 
 ## [1.0.3.2](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/tree/1.0.3.2) (2023-03-24)
 

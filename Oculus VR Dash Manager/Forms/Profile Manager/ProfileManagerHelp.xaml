@@ -1,0 +1,50 @@
+﻿<Window
+    x:Class="OVR_Dash_Manager.Forms.Profile_Manager.ProfileManagerHelp"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OVR_Dash_Manager.Forms.Profile_Manager"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Profile Manager Help"
+    Width="800"
+    Height="450"
+    Background="#FF040404"
+    Foreground="White"
+    mc:Ignorable="d">
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <TextBlock Padding="10" TextWrapping="Wrap">
+                <Bold>Profile Manager: Streamlined Script Execution for Enhanced VR Experience</Bold>
+                <LineBreak />
+                <LineBreak />
+                Welcome to the Profile Manager, a powerful feature designed to elevate your virtual reality (VR) experience. With a focus on efficiency and user convenience, the Profile Manager seamlessly integrates scripts hosted on GitHub, ensuring that you always have access to the latest enhancements and configurations.<LineBreak />
+                <LineBreak />
+                <Bold>🔹 Quick Access to Scripts:</Bold>
+                <LineBreak />
+                The Profile Manager effortlessly fetches scripts from a dedicated GitHub repository, ensuring that you are always up-to-date with the latest developments and optimizations.<LineBreak />
+                <LineBreak />
+                <Bold>🔹 Temporary File Handling:</Bold>
+                <LineBreak />
+                Scripts are securely downloaded to a temporary file. This approach ensures that your system remains clutter-free, and you always execute the most recent version of the script.<LineBreak />
+                <LineBreak />
+                <Bold>🔹 One-Click Execution:</Bold>
+                <LineBreak />
+                Experience the simplicity of executing scripts with just a double-click. The scripts are meticulously processed through the OculusDebugToolCLI.exe, ensuring accurate and reliable application of configurations and enhancements.<LineBreak />
+                <LineBreak />
+                <Bold>🔹 Enhanced VR Experience:</Bold>
+                <LineBreak />
+                By leveraging the Profile Manager, you empower yourself with optimized configurations and enhancements that aim to improve the performance and quality of your VR sessions.<LineBreak />
+                <LineBreak />
+                <Bold>🔹 Contribute Your Scripts:</Bold>
+                <LineBreak />
+                If you wish to contribute your own scripts or explore the existing ones, feel free to visit our GitHub repository:<Hyperlink
+                           Foreground="DodgerBlue"
+                           NavigateUri="https://github.com/DevOculus-Meta-Quest/OVRDM-Profile-Scripts"
+                           RequestNavigate="Hyperlink_RequestNavigate">
+                    OVRDM-Profile-Scripts
+                </Hyperlink>
+                . You can create pull requests to add your own scripts if you wish to contribute.
+            Utilize the Profile Manager to effortlessly apply sophisticated scripts, optimize your settings, and immerse yourself in a refined and enriched virtual reality experience.</TextBlock>
+        </ScrollViewer>
+    </Grid>
+</Window>

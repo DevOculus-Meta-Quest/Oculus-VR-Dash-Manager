@@ -139,5 +139,17 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
         private async void btnExecuteCommand_Click(object sender, EventArgs e)
         {
         }
+
+        private void ProfileManagerHelp_Click(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of the ProfileManagerHelp window
+            Profile_Manager.ProfileManagerHelp helpWindow = new Profile_Manager.ProfileManagerHelp();
+
+            // Set the Topmost property to make sure it appears above all other windows
+            helpWindow.Topmost = true;
+
+            // Show the help window as a dialog
+            helpWindow.ShowDialog();
+        }
     }
 }

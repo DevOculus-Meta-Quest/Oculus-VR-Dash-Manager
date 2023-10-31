@@ -5,8 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Profile Manager"
-    Width="605"
-    Height="285"
+    Width="400"
+    Height="280"
     Background="#FF0A0909"
     Foreground="#FFEAF8F8"
     Topmost="True"
@@ -37,19 +37,15 @@
         </ListView>
         <Button
             Name="refreshButton"
-            Width="75"
             Height="25"
-            Margin="0,210,0,0"
+            Margin="65,205,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="RefreshButton_Click"
             Content="Refresh" />
         <Button
-            x:Name="btnExecuteCommand"
-            Margin="80,210,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Click="btnExecuteCommand_Click"
-            Content="Execute Command" />
+            Name="ProfileManagerHelp"
+            Click="ProfileManagerHelp_Click"
+            Content="Help" Margin="0,204,0,0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="60" />
     </Grid>
 </Window>

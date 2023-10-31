@@ -49,6 +49,9 @@
     <Compile Update="Forms\Profile Manager\frm_ProfileManager.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Forms\Profile Manager\ProfileManagerHelp.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Forms\Settings\frm_Settings_v2.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -97,6 +100,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\Profile Manager\frm_ProfileManager.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\Profile Manager\ProfileManagerHelp.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\Settings\frm_Settings_v2.xaml">

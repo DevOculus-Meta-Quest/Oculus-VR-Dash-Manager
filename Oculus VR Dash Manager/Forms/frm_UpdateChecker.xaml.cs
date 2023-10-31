@@ -185,9 +185,61 @@ namespace OVR_Dash_Manager.Forms
 
         private async void btn_DownloadLatestOculusKiller_Click(object sender, RoutedEventArgs e)
         {
-            Dashes.OVR_Dash OculusKillerMod = Dashes.Dash_Manager.GetDash(Dashes.Dash_Type.OculusKiller);
-            await OculusKillerMod.DownloadAsync();  // If Download is async, use await here
-            await Check_Update();
+            Github Check = new Github();
+            GitHubReply gitHubReply = await Check.GetLatestReleaseInfoAsync("DevOculus-Meta-Quest", "OculusKiller");
+
+            if (gitHubReply != null && gitHubReply.AssetUrls != null)
+            {
+                string exeUrl = gitHubReply.AssetUrls.Values.FirstOrDefault(url => url.EndsWith(".exe"));
+
+                if (!string.IsNullOrEmpty(exeUrl))
+                {
+                    MessageBoxResult result = MessageBox.Show("A new version of OculusKiller is available. It will replace the old version. Do you want to proceed?", "Update Available", MessageBoxButton.YesNo);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        string oldFilePath = @"C:\Program Files\Oculus\Support\oculus-dash\dash\bin\Oculus_Killer.exe";
+
+                        try
+                        {
+                            // Delete the old file
+                            if (File.Exists(oldFilePath))
+                            {
+                                File.Delete(oldFilePath);
+                            }
+                        }
+                        catch (IOException)
+                        {
+                            MessageBox.Show("The old version of OculusKiller is currently in use. Please close any application that might be using it and try updating again.");
+                            return;
+                        }
+
+                        using (WebClient webClient = new WebClient())
+                        {
+                            webClient.DownloadFileCompleted += async (s, eventArgs) =>
+                            {
+                                // Move and rename the downloaded file to the specific directory
+                                File.Move("OculusKiller_latest.exe", oldFilePath);
+                                MessageBox.Show("Update completed! The new version has been installed.");
+
+                                // Refresh the displayed current version
+                                await CheckUpdates();
+                            };
+
+                            // Download the new version to the current directory
+                            webClient.DownloadFileAsync(new Uri(exeUrl), "OculusKiller_latest.exe");
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No executable file found in the latest release.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Could not retrieve the latest release information.");
+            }
         }
     }
 }

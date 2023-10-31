@@ -149,15 +149,15 @@ namespace OVR_Dash_Manager.Forms
 
         private async Task Check_Update()
         {
-            Dashes.OVR_Dash ItsKaitlyn03 = Dashes.Dash_Manager.GetDash(Dashes.Dash_Type.OculusKiller);
+            Dashes.OVR_Dash OculusKillerMod = Dashes.Dash_Manager.GetDash(Dashes.Dash_Type.OculusKiller);
 
-            if (ItsKaitlyn03 == null)
+            if (OculusKillerMod == null)
                 Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = "Not Loaded"; }));
-            else if (!ItsKaitlyn03.Installed)
+            else if (!OculusKillerMod.Installed)
                 Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = "Not Downloaded"; }));
             else
             {
-                FileVersionInfo Info = FileVersionInfo.GetVersionInfo(Path.Combine(Software.Oculus.Oculus_Dash_Directory, ItsKaitlyn03.DashFileName));
+                FileVersionInfo Info = FileVersionInfo.GetVersionInfo(Path.Combine(Software.Oculus.Oculus_Dash_Directory, OculusKillerMod.DashFileName));
                 Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = Info.FileVersion; }));
             }
 
@@ -171,8 +171,8 @@ namespace OVR_Dash_Manager.Forms
 
         private async void btn_Download_Click(object sender, RoutedEventArgs e)
         {
-            Dashes.OVR_Dash ItsKaitlyn03 = Dashes.Dash_Manager.GetDash(Dashes.Dash_Type.OculusKiller);
-            await ItsKaitlyn03.DownloadAsync();  // If Download is async, use await here
+            Dashes.OVR_Dash OculusKillerMod = Dashes.Dash_Manager.GetDash(Dashes.Dash_Type.OculusKiller);
+            await OculusKillerMod.DownloadAsync();  // If Download is async, use await here
             await Check_Update();
         }
     }

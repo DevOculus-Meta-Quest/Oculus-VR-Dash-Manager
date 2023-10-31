@@ -15,7 +15,7 @@ namespace OVR_Dash_Manager.Forms
     public partial class frm_OtherTools : Window
     {
         // Path to the log file
-        private static string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OculusKiller", "logs.txt");
+        private static string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OculusKiller", "OculusKiller.log");
 
         public frm_OtherTools()
         {

@@ -25,7 +25,7 @@ namespace OVR_Dash_Manager.Forms
             InitializeComponent();
         }
 
-        private async void btnDownloadLatest_Click(object sender, RoutedEventArgs e)
+        private async void btnDownloadLatestDashManager_Click(object sender, RoutedEventArgs e)
         {
             Github Check = new Github();
 
@@ -73,7 +73,7 @@ namespace OVR_Dash_Manager.Forms
 
         private async Task CheckUpdates()
         {
-            await Check_DashManager_Update(btnDownloadLatest);
+            await Check_DashManager_Update(btnDownloadLatestDashManager);
             await Check_Update();
         }
 
@@ -88,7 +88,7 @@ namespace OVR_Dash_Manager.Forms
             lbl_CurrentVersion.Content = "";
             lbl_AvaliableVersion.Content = "";
 
-            btnDownloadLatest.IsEnabled = false; // Disable the download button by default
+            btnDownloadLatestDashManager.IsEnabled = false; // Disable the download button by default
 
             await CheckDashManagerUpdates();
             await CheckUpdates(); // This is the method for the other program
@@ -96,8 +96,8 @@ namespace OVR_Dash_Manager.Forms
 
         public async Task<bool> CheckDashManagerUpdates()
         {
-            await Check_DashManager_Update(btnDownloadLatest);
-            return btnDownloadLatest.IsEnabled; // Assuming the button is enabled only when an update is available
+            await Check_DashManager_Update(btnDownloadLatestDashManager);
+            return btnDownloadLatestDashManager.IsEnabled; // Assuming the button is enabled only when an update is available
         }
 
         private async Task Check_DashManager_Update(Button downloadButton)
@@ -166,10 +166,10 @@ namespace OVR_Dash_Manager.Forms
             Functions_Old.DoAction(this, new Action(delegate () { lbl_LastCheck.Content = DateTime.Now.ToString(); lbl_AvaliableVersion.Content = GitHub.ReleaseVersion; }));
 
             if (GitHub.AssetUrls.ContainsKey("OculusDash.exe"))
-                Functions_Old.DoAction(this, new Action(delegate () { btn_Download.IsEnabled = true; }));
+                Functions_Old.DoAction(this, new Action(delegate () { btn_DownloadLatestOculusKiller.IsEnabled = true; }));
         }
 
-        private async void btn_Download_Click(object sender, RoutedEventArgs e)
+        private async void btn_DownloadLatestOculusKiller_Click(object sender, RoutedEventArgs e)
         {
             Dashes.OVR_Dash OculusKillerMod = Dashes.Dash_Manager.GetDash(Dashes.Dash_Type.OculusKiller);
             await OculusKillerMod.DownloadAsync();  // If Download is async, use await here

@@ -61,13 +61,13 @@
                     Click="btn_DashManager_OpenWebsite_Click"
                     Content="Open Website" />
                 <Button
-                    x:Name="btnDownloadLatest"
+                    x:Name="btnDownloadLatestDashManager"
                     Width="176"
                     Height="30"
                     Margin="0,232,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
-                    Click="btnDownloadLatest_Click"
+                    Click="btnDownloadLatestDashManager_Click"
                     Content="Download Latest"
                     IsEnabled="False" />
             </Grid>
@@ -112,10 +112,10 @@
                     Click="btn_OpenWebsite_Click"
                     Content="Open Website" />
                 <Button
-                    x:Name="btn_Download"
+                    x:Name="btn_DownloadLatestOculusKiller"
                     Margin="10,229,10,0"
                     VerticalAlignment="Top"
-                    Click="btn_Download_Click"
+                    Click="btn_DownloadLatestOculusKiller_Click"
                     Content="Download Latest"
                     IsEnabled="False" />
             </Grid>

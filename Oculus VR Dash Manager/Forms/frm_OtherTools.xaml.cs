@@ -105,7 +105,7 @@ namespace OVR_Dash_Manager.Forms
 
         private void btn_DeleteLog_Click(object sender, RoutedEventArgs e)
         {
-            string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OculusKiller", "logs.txt");
+            string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OculusKiller", "OculusKiller.log");
 
             if (File.Exists(logPath))
             {
@@ -130,7 +130,7 @@ namespace OVR_Dash_Manager.Forms
 
         private void UpdateDeleteLogButtonStatus()
         {
-            string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OculusKiller", "logs.txt");
+            string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OculusKiller", "OculusKiller.log");
             btn_DeleteLog.IsEnabled = File.Exists(logPath);
         }
 

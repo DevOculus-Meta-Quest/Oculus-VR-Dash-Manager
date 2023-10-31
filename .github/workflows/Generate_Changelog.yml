@@ -9,12 +9,12 @@ on:
 jobs:
   changelog:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Check out code
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.GIT_ACTIONS }} # Using your PAT named GIT_ACTIONS
+          ref: Main # specify the branch name here, e.g., main or master
 
       - name: Generate changelog
         uses: charmixer/auto-changelog-action@v1

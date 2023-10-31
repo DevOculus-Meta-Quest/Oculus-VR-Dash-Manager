@@ -25,6 +25,18 @@ namespace OVR_Dash_Manager.Forms
             InitializeComponent();
         }
 
+        public async Task<bool> CheckDashManagerUpdates()
+        {
+            await Check_DashManager_Update(btnDownloadLatestDashManager);
+            return btnDownloadLatestDashManager.IsEnabled; // Assuming the button is enabled only when an update is available
+        }
+
+        public async Task<bool> CheckOculusKillerUpdates()
+        {
+            await Check_Update(); // This is the method that checks updates for OculusKiller
+            return btn_DownloadLatestOculusKiller.IsEnabled; // Assuming the button is enabled only when an update is available
+        }
+
         private async void btnDownloadLatestDashManager_Click(object sender, RoutedEventArgs e)
         {
             Github Check = new Github();
@@ -92,12 +104,6 @@ namespace OVR_Dash_Manager.Forms
 
             await CheckDashManagerUpdates();
             await CheckUpdates(); // This is the method for the other program
-        }
-
-        public async Task<bool> CheckDashManagerUpdates()
-        {
-            await Check_DashManager_Update(btnDownloadLatestDashManager);
-            return btnDownloadLatestDashManager.IsEnabled; // Assuming the button is enabled only when an update is available
         }
 
         private async Task Check_DashManager_Update(Button downloadButton)

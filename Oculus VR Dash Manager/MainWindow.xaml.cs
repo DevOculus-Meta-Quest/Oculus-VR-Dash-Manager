@@ -349,14 +349,29 @@ namespace OVR_Dash_Manager
 
             frm_UpdateChecker updateChecker = new frm_UpdateChecker();
 
-            // Check if updates are available
-            bool isNewVersionAvailable = await updateChecker.CheckDashManagerUpdates();
+            // Check if updates are available for Dash Manager
+            bool isDashManagerNewVersionAvailable = await updateChecker.CheckDashManagerUpdates();
 
-            // If a new version is available, show a MessageBox
-            if (isNewVersionAvailable)
+            // Check if updates are available for OculusKiller
+            bool isOculusKillerNewVersionAvailable = await updateChecker.CheckOculusKillerUpdates();
+
+            // Temporarily disable Always on Top property of the main window
+            this.Topmost = false;
+
+            // If a new version of Dash Manager is available, show a MessageBox
+            if (isDashManagerNewVersionAvailable)
             {
-                MessageBox.Show("A new update is available. Please open the update checker for more details.", "Update Available", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(this, "A new update for Oculus VR Dash Manager is available. Please open the update checker for more details.", "Update Available", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+
+            // If a new version of OculusKiller is available, show a MessageBox
+            if (isOculusKillerNewVersionAvailable)
+            {
+                MessageBox.Show(this, "A new update for OculusKiller is available. Please open the update checker for more details.", "Update Available", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+            // Re-enable Always on Top property of the main window
+            this.Topmost = true;
         }
         #region Dash Buttons
 

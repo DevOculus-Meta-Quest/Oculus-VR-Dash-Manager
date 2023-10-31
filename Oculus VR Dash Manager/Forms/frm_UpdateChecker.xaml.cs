@@ -149,24 +149,38 @@ namespace OVR_Dash_Manager.Forms
 
         private async Task Check_Update()
         {
+            Github Check = new Github();
+            String Version = await Check.GetLatestReleaseNameAsync("DevOculus-Meta-Quest", "OculusKiller");
+
+            // Remove non-numeric characters except the dot from the version string
+            Version = Regex.Replace(Version, @"[^\d.]", "");
+
             Dashes.OVR_Dash OculusKillerMod = Dashes.Dash_Manager.GetDash(Dashes.Dash_Type.OculusKiller);
 
-            if (OculusKillerMod == null)
-                Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = "Not Loaded"; }));
-            else if (!OculusKillerMod.Installed)
-                Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = "Not Downloaded"; }));
-            else
+            if (OculusKillerMod != null && OculusKillerMod.Installed)
             {
+                // Ensure this path correctly points to the OculusKiller executable
                 FileVersionInfo Info = FileVersionInfo.GetVersionInfo(Path.Combine(Software.Oculus.Oculus_Dash_Directory, OculusKillerMod.DashFileName));
+
+                // Using FileVersion to get the version information
                 Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = Info.FileVersion; }));
             }
+            else
+            {
+                Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = "Not Available"; }));
+            }
 
-            Github Check = new Github();
-            GitHub = await Check.GetLatestReleaseInfoAsync("DevOculus-Meta-Quest", "OculusKiller");
-            Functions_Old.DoAction(this, new Action(delegate () { lbl_LastCheck.Content = DateTime.Now.ToString(); lbl_AvaliableVersion.Content = GitHub.ReleaseVersion; }));
+            Functions_Old.DoAction(this, new Action(delegate ()
+            {
+                lbl_LastCheck.Content = DateTime.Now.ToString();
+                lbl_AvaliableVersion.Content = Version;
 
-            if (GitHub.AssetUrls.ContainsKey("OculusDash.exe"))
-                Functions_Old.DoAction(this, new Action(delegate () { btn_DownloadLatestOculusKiller.IsEnabled = true; }));
+                // Enable the download button if a new version is available
+                if (IsNewVersion(Version, lbl_CurrentVersion.Content.ToString()))
+                {
+                    btn_DownloadLatestOculusKiller.IsEnabled = true;
+                }
+            }));
         }
 
         private async void btn_DownloadLatestOculusKiller_Click(object sender, RoutedEventArgs e)

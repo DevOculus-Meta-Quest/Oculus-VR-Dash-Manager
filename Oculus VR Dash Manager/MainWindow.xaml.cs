@@ -22,6 +22,7 @@ namespace OVR_Dash_Manager
     public partial class MainWindow : Window
     {
         public bool Debug_EmulateReleaseMode = false;
+
         // Declare _hoverButtonManager at the class level
         private HoverButtonManager _hoverButtonManager;
 
@@ -30,6 +31,7 @@ namespace OVR_Dash_Manager
         private bool Elevated = false;
         private bool FireUIEvents = false;
         private InputSimulator Keyboard_Simulator;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -373,6 +375,7 @@ namespace OVR_Dash_Manager
             // Re-enable Always on Top property of the main window
             this.Topmost = true;
         }
+
         #region Dash Buttons
 
         private void btn_ActivateDash_Click(object sender, RoutedEventArgs e)
@@ -422,12 +425,15 @@ namespace OVR_Dash_Manager
         {
             _hoverButtonManager.Oculus_Dash.StopHovering();
         }
+
         #endregion Hover Buttons Enter/Leave
+
         private void Thread_ReactivateButtons()
         {
             Thread.Sleep(5000);
             Functions_Old.DoAction(this, new Action(delegate () { _hoverButtonManager.UpdateDashButtons(); }));
         }
+
         #endregion Dash Buttons
 
         #region URL Links
@@ -597,7 +603,9 @@ namespace OVR_Dash_Manager
             else
                 Form.Show();
         }
+
         #endregion Forms
+
         #region OpenXR Runtime
 
         public void CheckRunTime()
@@ -640,6 +648,7 @@ namespace OVR_Dash_Manager
                 btn_RunTime_Oculus.IsChecked = true;
             }
         }
+
         #endregion OpenXR Runtime
     }
 }

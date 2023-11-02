@@ -15,16 +15,12 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--  Reference to the external style  -->
                 <ResourceDictionary Source="../../Theme/MetroDark.MSControls.Core.Implicit.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <!--  Style for the GridViewColumnHeader  -->
             <Style x:Key="CenteredGridViewHeaderStyle" TargetType="GridViewColumnHeader">
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                 <Setter Property="Foreground" Value="White" />
-                <!--  Add other setters as needed for your design  -->
             </Style>
-            <!--  DataTemplate for the header  -->
             <DataTemplate x:Key="HeaderTemplate">
                 <TextBlock
                     HorizontalAlignment="Center"
@@ -35,7 +31,6 @@
     </Window.Resources>
 
     <Grid>
-        <!--  GroupBox to create a fancy section  -->
         <GroupBox
             Height="304"
             Margin="20,20,0,0"
@@ -115,7 +110,7 @@
         <ComboBox
             x:Name="cb_DistortionCurvature"
             Width="90"
-            Height="3"
+            Height="25"
             Margin="430,61,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"

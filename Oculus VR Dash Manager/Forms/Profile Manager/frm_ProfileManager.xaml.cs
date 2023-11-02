@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -150,6 +151,57 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
             // Show the help window as a dialog
             helpWindow.ShowDialog();
+        }
+
+        private void cb_DistortionCurvature_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            // Assuming you want to do something with the selected value
+            string selectedValue = (comboBox.SelectedItem as ComboBoxItem).Content.ToString();
+            // Your logic here
+        }
+
+        private void cb_VideoCodec_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            string selectedValue = (comboBox.SelectedItem as ComboBoxItem).Content.ToString();
+            // Your logic here
+        }
+
+        private void cb_slicedEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            string selectedValue = (comboBox.SelectedItem as ComboBoxItem).Content.ToString();
+            // Your logic here
+        }
+
+        private void txt_EncodeResolutionWidth_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Use regular expressions to check if the input is numeric
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void txt_EncodeResolutionWidth_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(String)))
+            {
+                String text = (String)e.DataObject.GetData(typeof(String));
+                if (!IsTextAllowed(text))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
+            }
+        }
+
+        private bool IsTextAllowed(string text)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            return !regex.IsMatch(text);
         }
     }
 }

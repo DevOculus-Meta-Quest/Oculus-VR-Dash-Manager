@@ -93,11 +93,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                     txt_DynamicBitrateOffset.Text = dynamicBitrateOffsetValue;
 
                     // Link Sharpening
-                    Debug.WriteLine($"About to read LinkSharpeningEnabled from registry at {keyLocation}");
-                    var rawLinkSharpeningValue = key.GetValue("LinkSharpeningEnabled");
-                    Debug.WriteLine($"Raw registry value for LinkSharpening: {rawLinkSharpeningValue}");
-                    var linkSharpeningValue = rawLinkSharpeningValue.ToString();
-                    Debug.WriteLine($"Registry value for LinkSharpening before setting ComboBox: {linkSharpeningValue}");
+                    var linkSharpeningValue = key.GetValue("LinkSharpeningEnabled", "Disabled").ToString();
                     SetComboBoxSelection(cb_LinkSharpening, linkSharpeningValue);
 
                     // Local Dimming

@@ -252,16 +252,16 @@
                 </ComboBox>
                 <Label
                     Grid.Row="9"
-                    Content="Link Dimming:"
+                    Content="Local Dimming:"
                     FontSize="12" />
                 <ComboBox
-                    Name="cb_LinkDimming"
+                    Name="cb_LocalDimming"
                     Grid.Row="9"
                     Width="90"
                     Height="25"
                     Margin="0,0,0,10"
                     FontSize="11"
-                    SelectionChanged="cb_LinkDimming_SelectionChanged"
+                    SelectionChanged="cb_LocalDimming_SelectionChanged"
                     ToolTip="Enable/disable link to use local dimming on HMD.">
                     <ComboBoxItem Content="Disabled" IsSelected="True" />
                     <ComboBoxItem Content="Enabled" />

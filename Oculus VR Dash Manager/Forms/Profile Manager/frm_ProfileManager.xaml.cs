@@ -44,6 +44,155 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             LoadScriptsAsync();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                LoadRegistrySettings();
+            }), System.Windows.Threading.DispatcherPriority.ContextIdle);
+        }
+
+        private void LoadRegistrySettings()
+        {
+            string keyLocation = @"Software\Oculus\RemoteHeadset";
+
+            using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+            {
+                if (key != null)
+                {
+                    // Distortion Curvature
+                    var distortionCurvatureValue = key.GetValue("DistortionCurve", "Default").ToString();
+                    SetComboBoxSelection(cb_DistortionCurvature, distortionCurvatureValue);
+
+                    // Video Codec
+                    var videoCodecValue = key.GetValue("HEVC", "Default").ToString();
+                    SetComboBoxSelection(cb_VideoCodec, videoCodecValue);
+
+                    // Sliced Encoding
+                    var slicedEncodingValue = key.GetValue("NumSlices", "Default").ToString();
+                    SetComboBoxSelection(cb_slicedEncoding, slicedEncodingValue);
+
+                    // Encode Resolution Width
+                    var encodeResolutionWidthValue = key.GetValue("EncodeWidth", "0").ToString();
+                    txt_EncodeResolutionWidth.Text = encodeResolutionWidthValue;
+
+                    // Encode Dynamic Bitrate
+                    var encodeDynamicBitrateValue = key.GetValue("DBR", "Default").ToString();
+                    SetComboBoxSelection(cb_EncodeDynamicBitrate, encodeDynamicBitrateValue);
+
+                    // Dynamic Bitrate Max
+                    var dynamicBitrateMaxValue = key.GetValue("DBRMax", "0").ToString();
+                    txt_DynamicBitrateMax.Text = dynamicBitrateMaxValue;
+
+                    // Encode Bitrate (Mbps)
+                    var encodeBitrateValue = key.GetValue("BitrateMbps", "0").ToString();
+                    txt_EncodeBitrate.Text = encodeBitrateValue;
+
+                    // Dynamic Bitrate Offset (Mbps)
+                    var dynamicBitrateOffsetValue = key.GetValue("DBROffsetMbps", "0").ToString();
+                    txt_DynamicBitrateOffset.Text = dynamicBitrateOffsetValue;
+
+                    // Link Sharpening
+                    Debug.WriteLine($"About to read LinkSharpeningEnabled from registry at {keyLocation}");
+                    var rawLinkSharpeningValue = key.GetValue("LinkSharpeningEnabled");
+                    Debug.WriteLine($"Raw registry value for LinkSharpening: {rawLinkSharpeningValue}");
+                    var linkSharpeningValue = rawLinkSharpeningValue.ToString();
+                    Debug.WriteLine($"Registry value for LinkSharpening before setting ComboBox: {linkSharpeningValue}");
+                    SetComboBoxSelection(cb_LinkSharpening, linkSharpeningValue);
+
+                    // Local Dimming
+                    var localDimmingValue = key.GetValue("LocalDimming", "Disabled").ToString();
+                    SetComboBoxSelection(cb_LocalDimming, localDimmingValue);
+
+                    // ... Add additional controls and registry keys as needed
+                }
+                else
+                {
+                    // Log the error or inform the user that the registry key could not be opened
+                    ErrorLogger.LogError(new Exception("Unable to open the registry key at " + keyLocation));
+                }
+            }
+        }
+
+        private void SetComboBoxSelection(ComboBox comboBox, string registryValue)
+        {
+            string valueToSelect = registryValue;
+
+            // Translate registry value to ComboBox item content if necessary
+            switch (comboBox.Name)
+            {
+                case "cb_DistortionCurvature":
+                    // Map the registry values to the ComboBox items
+                    valueToSelect = registryValue switch
+                    {
+                        "0" => "Low",
+                        "1" => "High",
+                        _ => "Default" // Default or unknown value
+                    };
+                    break;
+                case "cb_VideoCodec":
+                    // Map the registry values to the ComboBox items
+                    valueToSelect = registryValue switch
+                    {
+                        "0" => "H.264",
+                        "1" => "H.265",
+                        _ => "Default" // Default or unknown value
+                    };
+                    break;
+                case "cb_slicedEncoding":
+                    // Map the registry values to the ComboBox items
+                    valueToSelect = registryValue switch
+                    {
+                        "5" => "On",
+                        "1" => "Off",
+                        _ => "Default" // Default or unknown value
+                    };
+                    break;
+                case "cb_LinkSharpening":
+                    // Update the switch case to match the correct registry values
+                    valueToSelect = registryValue switch
+                    {
+                        "1" => "Disabled",
+                        "2" => "Normal",
+                        "3" => "Quality",
+                        _ => "Disabled" // Default or unknown value
+                    };
+                    break;
+                case "cb_LocalDimming":
+                    // Map the registry values to the ComboBox items
+                    valueToSelect = registryValue switch
+                    {
+                        "0" => "Disabled",
+                        "1" => "Enabled",
+                        _ => "Disabled" // Default or unknown value
+                    };
+                    break;
+                    // Add cases for other ComboBoxes if needed
+            }
+
+            // Now find and select the ComboBoxItem with the matching content
+            bool itemFound = false;
+            foreach (ComboBoxItem item in comboBox.Items)
+            {
+                if (item.Content.ToString() == valueToSelect)
+                {
+                    // Output the information to the Output window in Visual Studio
+                    Debug.WriteLine($"Setting {comboBox.Name} to {valueToSelect}");
+
+                    comboBox.SelectedItem = item;
+                    itemFound = true;
+                    break; // Exit the loop once the match is found and selected
+                }
+            }
+
+            // If no match was found, select the default item and log an error
+            if (!itemFound)
+            {
+                comboBox.SelectedIndex = 0; // Default to the first item if no match is found
+                ErrorLogger.LogError(new Exception($"No matching ComboBoxItem found for value '{valueToSelect}' in ComboBox '{comboBox.Name}'."));
+            }
+        }
+
         private async void LoadScriptsAsync()
         {
             try
@@ -162,186 +311,215 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
         private void cb_DistortionCurvature_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
-            string selectedValue = ((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
-
-            string keyLocation = @"Software\Oculus\RemoteHeadset";
-            string keyName = "DistortionCurve";
-
-            // Use the RegistryFunctions to interact with the registry
-            using (var key = RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+            // Check if SelectedItem is not null before accessing its Content
+            if (comboBox.SelectedItem != null)
             {
-                if (key != null)
-                {
-                    switch (selectedValue)
-                    {
-                        case "Low":
-                            // Set the value to 0 for Low
-                            OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
-                            break;
-                        case "High":
-                            // Set the value to 1 for High
-                            OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
-                            break;
-                        case "Default":
-                            // Remove the value for Default
-                            key.DeleteValue(keyName, throwOnMissingValue: false);
-                            break;
-                        default:
-                            // Handle any other unexpected case
-                            break;
-                    }
-                }
-                else
-                {
-                    // Log the error using ErrorLogger
-                    string errorMessage = "Unable to open the registry key at " + keyLocation;
-                    ErrorLogger.LogError(new Exception(errorMessage));
+                string selectedValue = ((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
 
-                    // Optionally, attempt to create the key if it should exist
-                    // This depends on the application's requirements and permissions
-                    try
+                string keyLocation = @"Software\Oculus\RemoteHeadset";
+                string keyName = "DistortionCurve";
+
+                // Use the RegistryFunctions to interact with the registry
+                using (var key = RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                {
+                    if (key != null)
                     {
-                        RegistryKey newKey = RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
-                        if (newKey != null)
+                        switch (selectedValue)
                         {
-                            ErrorLogger.LogError(new Exception("Registry key created at " + keyLocation));
-                            newKey.Close(); // Don't forget to close the key after you're done
-                        }
-                        else
-                        {
-                            ErrorLogger.LogError(new Exception("Failed to create registry key at " + keyLocation));
+                            case "Low":
+                                // Set the value to 0 for Low
+                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
+                                break;
+                            case "High":
+                                // Set the value to 1 for High
+                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
+                                break;
+                            case "Default":
+                                // Remove the value for Default
+                                key.DeleteValue(keyName, throwOnMissingValue: false);
+                                break;
+                            default:
+                                // Handle any other unexpected case
+                                break;
                         }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        // Log the exception if the key creation fails
-                        ErrorLogger.LogError(ex, "Failed to create registry key.");
+                        // Log the error using ErrorLogger
+                        string errorMessage = "Unable to open the registry key at " + keyLocation;
+                        ErrorLogger.LogError(new Exception(errorMessage));
+                        // Optionally, attempt to create the key if it should exist
+                        // This depends on the application's requirements and permissions
+                        try
+                        {
+                            RegistryKey newKey = RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
+                            if (newKey != null)
+                            {
+                                ErrorLogger.LogError(new Exception("Registry key created at " + keyLocation));
+                                newKey.Close(); // Don't forget to close the key after you're done
+                            }
+                            else
+                            {
+                                ErrorLogger.LogError(new Exception("Failed to create registry key at " + keyLocation));
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Log the exception if the key creation fails
+                            ErrorLogger.LogError(ex, "Failed to create registry key.");
+                        }
                     }
                 }
+            }
+            else
+            {
+                // Handle the case when no item is selected, or set a default value
+                // This could be logging an error, setting a default value, etc.
+                ErrorLogger.LogError(new Exception("No item is selected in cb_DistortionCurvature."));
             }
         }
 
         private void cb_VideoCodec_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
-            string selectedValue = ((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
-
-            string keyLocation = @"Software\Oculus\RemoteHeadset";
-            string keyName = "HVEC";
-
-            // Use the RegistryFunctions to interact with the registry
-            using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+            // Check if SelectedItem is not null before accessing its Content
+            if (comboBox.SelectedItem != null)
             {
-                if (key != null)
-                {
-                    switch (selectedValue)
-                    {
-                        case "Default":
-                            // Remove the key for Default
-                            key.DeleteValue(keyName, throwOnMissingValue: false);
-                            break;
-                        case "H.264":
-                            // Set the value to 0 for H.264
-                            OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
-                            break;
-                        case "H.265":
-                            // Set the value to 1 for H.265
-                            OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
-                            break;
-                        default:
-                            // Handle any other unexpected case
-                            break;
-                    }
-                }
-                else
-                {
-                    // Log the error using ErrorLogger
-                    string errorMessage = "Unable to open the registry key at " + keyLocation;
-                    ErrorLogger.LogError(new Exception(errorMessage));
+                string selectedValue = ((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
 
-                    // Optionally, attempt to create the key if it should exist
-                    // This depends on the application's requirements and permissions
-                    try
+                string keyLocation = @"Software\Oculus\RemoteHeadset";
+                string keyName = "HEVC";
+
+                // Use the RegistryFunctions to interact with the registry
+                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                {
+                    if (key != null)
                     {
-                        RegistryKey newKey = OVR_Dash_Manager.Functions.RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
-                        if (newKey != null)
+                        switch (selectedValue)
                         {
-                            ErrorLogger.LogError(new Exception("Registry key created at " + keyLocation));
-                            newKey.Close(); // Don't forget to close the key after you're done
-                        }
-                        else
-                        {
-                            ErrorLogger.LogError(new Exception("Failed to create registry key at " + keyLocation));
+                            case "Default":
+                                // Remove the key for Default
+                                key.DeleteValue(keyName, throwOnMissingValue: false);
+                                break;
+                            case "H.264":
+                                // Set the value to 0 for H.264
+                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
+                                break;
+                            case "H.265":
+                                // Set the value to 1 for H.265
+                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
+                                break;
+                            default:
+                                // Handle any other unexpected case
+                                break;
                         }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        // Log the exception if the key creation fails
-                        ErrorLogger.LogError(ex, "Failed to create registry key.");
+                        // Log the error using ErrorLogger
+                        string errorMessage = "Unable to open the registry key at " + keyLocation;
+                        ErrorLogger.LogError(new Exception(errorMessage));
+
+                        // Optionally, attempt to create the key if it should exist
+                        // This depends on the application's requirements and permissions
+                        try
+                        {
+                            RegistryKey newKey = OVR_Dash_Manager.Functions.RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
+                            if (newKey != null)
+                            {
+                                ErrorLogger.LogError(new Exception("Registry key created at " + keyLocation));
+                                newKey.Close(); // Don't forget to close the key after you're done
+                            }
+                            else
+                            {
+                                ErrorLogger.LogError(new Exception("Failed to create registry key at " + keyLocation));
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Log the exception if the key creation fails
+                            ErrorLogger.LogError(ex, "Failed to create registry key.");
+                        }
                     }
                 }
+            }
+            else
+            {
+                // Handle the case when no item is selected, or set a default value
+                // This could be logging an error, setting a default value, etc.
+                ErrorLogger.LogError(new Exception("No item is selected in cb_VideoCodec."));
             }
         }
 
         private void cb_slicedEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
-            string selectedValue = ((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
-
-            string keyLocation = @"Software\Oculus\RemoteHeadset";
-            string keyName = "NumSlices";
-
-            // Use the RegistryFunctions to interact with the registry
-            using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+            // Check if SelectedItem is not null before accessing its Content
+            if (comboBox.SelectedItem != null)
             {
-                if (key != null)
-                {
-                    switch (selectedValue)
-                    {
-                        case "Default":
-                            // Remove the key for Default
-                            key.DeleteValue(keyName, throwOnMissingValue: false);
-                            break;
-                        case "On":
-                            // Set the value to 5 for On
-                            OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 5, RegistryValueKind.DWord);
-                            break;
-                        case "Off":
-                            // Set the value to 1 for Off
-                            OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
-                            break;
-                        default:
-                            // Handle any other unexpected case
-                            break;
-                    }
-                }
-                else
-                {
-                    // Log the error using ErrorLogger
-                    string errorMessage = "Unable to open the registry key at " + keyLocation;
-                    ErrorLogger.LogError(new Exception(errorMessage));
+                string selectedValue = ((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
 
-                    // Optionally, attempt to create the key if it should exist
-                    // This depends on the application's requirements and permissions
-                    try
+                string keyLocation = @"Software\Oculus\RemoteHeadset";
+                string keyName = "NumSlices";
+
+                // Use the RegistryFunctions to interact with the registry
+                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                {
+                    if (key != null)
                     {
-                        RegistryKey newKey = OVR_Dash_Manager.Functions.RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
-                        if (newKey != null)
+                        switch (selectedValue)
                         {
-                            ErrorLogger.LogError(new Exception("Registry key created at " + keyLocation));
-                            newKey.Close(); // Don't forget to close the key after you're done
-                        }
-                        else
-                        {
-                           ErrorLogger.LogError(new Exception("Failed to create registry key at " + keyLocation));
+                            case "Default":
+                                // Remove the key for Default
+                                key.DeleteValue(keyName, throwOnMissingValue: false);
+                                break;
+                            case "On":
+                                // Set the value to 5 for On
+                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 5, RegistryValueKind.DWord);
+                                break;
+                            case "Off":
+                                // Set the value to 1 for Off
+                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
+                                break;
+                            default:
+                                // Handle any other unexpected case
+                                break;
                         }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        // Log the exception if the key creation fails
-                        ErrorLogger.LogError(ex, "Failed to create registry key.");
+                        // Log the error using ErrorLogger
+                        string errorMessage = "Unable to open the registry key at " + keyLocation;
+                        ErrorLogger.LogError(new Exception(errorMessage));
+
+                        // Optionally, attempt to create the key if it should exist
+                        // This depends on the application's requirements and permissions
+                        try
+                        {
+                            RegistryKey newKey = OVR_Dash_Manager.Functions.RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
+                            if (newKey != null)
+                            {
+                                ErrorLogger.LogError(new Exception("Registry key created at " + keyLocation));
+                                newKey.Close(); // Don't forget to close the key after you're done
+                            }
+                            else
+                            {
+                                ErrorLogger.LogError(new Exception("Failed to create registry key at " + keyLocation));
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Log the exception if the key creation fails
+                            ErrorLogger.LogError(ex, "Failed to create registry key.");
+                        }
                     }
                 }
+            }
+            else
+            {
+                // Handle the case when no item is selected, or set a default value
+                // This could be logging an error, setting a default value, etc.
+                ErrorLogger.LogError(new Exception("No item is selected in cb_slicedEncoding."));
             }
         }
 
@@ -634,9 +812,9 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 string selectedValue = selectedItem.Content.ToString();
                 int valueToSet = selectedValue switch
                 {
-                    "Disabled" => 0, // Assuming 0 is the correct value for Disabled
-                    "Normal" => 1,   // Assuming 1 is the correct value for Normal
-                    "Quality" => 2,  // Assuming 2 is the correct value for Quality
+                    "Disabled" => 1, // Assuming 0 is the correct value for Disabled
+                    "Normal" => 2,   // Assuming 1 is the correct value for Normal
+                    "Quality" => 3,  // Assuming 2 is the correct value for Quality
                     _ => throw new InvalidOperationException($"Invalid selection for Link Sharpening: {selectedValue}")
                 };
 

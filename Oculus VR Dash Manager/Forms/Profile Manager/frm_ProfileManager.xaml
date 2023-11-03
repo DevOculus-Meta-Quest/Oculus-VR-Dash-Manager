@@ -10,6 +10,7 @@
     Height="525"
     Background="#FF0A0909"
     Foreground="#FFEAF8F8"
+    Loaded="Window_Loaded"
     Topmost="True"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
@@ -126,7 +127,7 @@
                     FontSize="11"
                     SelectionChanged="cb_DistortionCurvature_SelectionChanged"
                     ToolTip="Override Distortion Curvature: Higher curvature gives more pixel density at the center.">
-                    <ComboBoxItem Content="Default" IsSelected="True" />
+                    <ComboBoxItem Content="Default" />
                     <ComboBoxItem Content="Low" />
                     <ComboBoxItem Content="High" />
                 </ComboBox>
@@ -143,7 +144,7 @@
                     FontSize="12"
                     SelectionChanged="cb_VideoCodec_SelectionChanged"
                     ToolTip="Specify the video codec. ">
-                    <ComboBoxItem Content="Default" IsSelected="True" />
+                    <ComboBoxItem Content="Default" />
                     <ComboBoxItem Content="H.264" />
                     <ComboBoxItem Content="H.265" />
                 </ComboBox>
@@ -160,7 +161,7 @@
                     FontSize="12"
                     SelectionChanged="cb_slicedEncoding_SelectionChanged"
                     ToolTip="Enable or disable sliced encoding. ">
-                    <ComboBoxItem Content="Default" IsSelected="True" />
+                    <ComboBoxItem Content="Default" />
                     <ComboBoxItem Content="On" />
                     <ComboBoxItem Content="Off" />
                 </ComboBox>
@@ -190,7 +191,7 @@
                     FontSize="11"
                     SelectionChanged="cb_EncodeDynamicBitrate_SelectionChanged"
                     ToolTip="Let the encoder automatically adapt bitrate up to target.">
-                    <ComboBoxItem Content="Default" IsSelected="True" />
+                    <ComboBoxItem Content="Default" />
                     <ComboBoxItem Content="Disabled" />
                     <ComboBoxItem Content="Enabled" />
                 </ComboBox>
@@ -246,7 +247,7 @@
                     FontSize="11"
                     SelectionChanged="cb_LinkSharpening_SelectionChanged"
                     ToolTip="Enable/disable Link Sharpening.">
-                    <ComboBoxItem Content="Disabled" IsSelected="True" />
+                    <ComboBoxItem Content="Disabled" />
                     <ComboBoxItem Content="Normal" />
                     <ComboBoxItem Content="Quality" />
                 </ComboBox>
@@ -263,7 +264,7 @@
                     FontSize="11"
                     SelectionChanged="cb_LocalDimming_SelectionChanged"
                     ToolTip="Enable/disable link to use local dimming on HMD.">
-                    <ComboBoxItem Content="Disabled" IsSelected="True" />
+                    <ComboBoxItem Content="Disabled" />
                     <ComboBoxItem Content="Enabled" />
                 </ComboBox>
             </Grid>

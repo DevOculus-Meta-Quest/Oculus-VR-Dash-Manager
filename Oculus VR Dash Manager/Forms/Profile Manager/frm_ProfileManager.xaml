@@ -3,15 +3,17 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OVR_Dash_Manager.Forms.Profile_Manager"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Profile Manager"
-    Width="555"
+    Width="980"
     Height="525"
     Background="#FF0A0909"
     Foreground="#FFEAF8F8"
     Topmost="True"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -31,10 +33,22 @@
     </Window.Resources>
 
     <Grid>
+        <!--  Define the rows and columns if needed  -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <!--  Add more RowDefinitions as needed  -->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <!--  Add more ColumnDefinitions as needed  -->
+        </Grid.ColumnDefinitions>
+        <!--  Scripts Section  -->
         <GroupBox
-            Height="304"
-            Margin="20,20,0,0"
-            HorizontalAlignment="Left"
+            Grid.Row="0"
+            Grid.Column="0"
+            Height="319"
+            Margin="10,10,10,0"
             VerticalAlignment="Top"
             Background="#FF2A2A2A"
             BorderBrush="White"
@@ -44,260 +58,218 @@
             <Grid>
                 <ListView
                     Name="scriptsListView"
-                    Width="225"
-                    Margin="0,-8,0,57"
+                    Margin="10,0,10,10"
                     MouseDoubleClick="scriptsListView_MouseDoubleClick">
                     <ListView.View>
-                        <GridView>
-                            <GridViewColumn Width="370">
-                                <GridViewColumn.Header>
-                                    <GridViewColumnHeader
-                                        Margin="0,0,150,0"
-                                        HorizontalContentAlignment="Center"
-                                        Content="Scripts" />
-                                </GridViewColumn.Header>
-                            </GridViewColumn>
+                        <GridView ColumnHeaderContainerStyle="{StaticResource CenteredGridViewHeaderStyle}">
+                            <GridViewColumn Width="370" Header="Scripts" />
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Button
-                    Name="refreshButton"
-                    Height="25"
-                    Margin="65,207,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Click="RefreshButton_Click"
-                    Content="Refresh" />
-                <Button
-                    Name="ProfileManagerHelp"
-                    Width="60"
-                    Height="25"
-                    Margin="0,207,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Click="ProfileManagerHelp_Click"
-                    Content="Help" />
+                <StackPanel
+                    Margin="0,10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+                    <Button
+                        Name="refreshButton"
+                        Width="75"
+                        Height="25"
+                        Margin="5,0"
+                        Click="RefreshButton_Click"
+                        Content="Refresh" />
+                    <Button
+                        Name="ProfileManagerHelp"
+                        Width="75"
+                        Height="25"
+                        Margin="5,0"
+                        Click="ProfileManagerHelp_Click"
+                        Content="Help" />
+                </StackPanel>
             </Grid>
         </GroupBox>
+
+        <!--  Oculus/Air Link Section  -->
         <GroupBox
-            x:Name="gb_OculusLink"
-            Margin="278,20,10,70"
-            Header="Oculus/Air Link" />
-        <Label
-            x:Name="lbl_SlicedEncoding"
-            Width="130"
-            Margin="282,135,0,0"
-            HorizontalAlignment="Left"
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="0,10,10,0"
             VerticalAlignment="Top"
-            Content="Sliced Encoding"
-            FontSize="12" />
-        <Label
-            x:Name="lbl_VideoCodec"
-            Width="130"
-            Margin="282,100,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Video Codec"
-            FontSize="12" />
-        <Label
-            x:Name="lbl_DistortionCurvature"
-            Width="130"
-            Margin="282,66,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Distortion Curvature:"
-            FontSize="12" />
-        <ComboBox
-            x:Name="cb_DistortionCurvature"
-            Width="90"
-            Height="25"
-            Margin="430,61,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            FontSize="11"
-            SelectionChanged="cb_DistortionCurvature_SelectionChanged">
-            <ComboBoxItem Content="Default" IsSelected="True" />
-            <ComboBoxItem Content="Low" />
-            <ComboBoxItem Content="High" />
-        </ComboBox>
-        <ComboBox
-            x:Name="cb_VideoCodec"
-            Width="90"
-            Height="3"
-            Margin="430,96,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            FontSize="12"
-            SelectionChanged="cb_VideoCodec_SelectionChanged">
-            <ComboBoxItem Content="Default" IsSelected="True" />
-            <ComboBoxItem Content="H.264" />
-            <ComboBoxItem Content="H.265" />
-        </ComboBox>
-        <ComboBox
-            x:Name="cb_slicedEncoding"
-            Width="90"
-            Height="3"
-            Margin="430,131,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            FontSize="12"
-            SelectionChanged="cb_slicedEncoding_SelectionChanged">
-            <ComboBoxItem Content="Default" IsSelected="True" />
-            <ComboBoxItem Content="On" />
-            <ComboBoxItem Content="Off" />
-        </ComboBox>
-        <Label
-            x:Name="lbl_EncodeResolutionWidth"
-            Width="145"
-            Margin="282,166,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Encode Resolution Width:"
-            FontSize="12" />
+            Background="#FF2A2A2A"
+            BorderBrush="White"
+            BorderThickness="2"
+            Foreground="White"
+            Header="Oculus/Air Link">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label
+                    Grid.Row="0"
+                    Content="Distortion Curvature:"
+                    FontSize="12" />
+                <ComboBox
+                    Name="cb_DistortionCurvature"
+                    Grid.Row="0"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    SelectionChanged="cb_DistortionCurvature_SelectionChanged"
+                    ToolTip="Override Distortion Curvature: Higher curvature gives more pixel density at the center.">
+                    <ComboBoxItem Content="Default" IsSelected="True" />
+                    <ComboBoxItem Content="Low" />
+                    <ComboBoxItem Content="High" />
+                </ComboBox>
+                <Label
+                    Grid.Row="1"
+                    Content="Video Codec"
+                    FontSize="12" />
+                <ComboBox
+                    Name="cb_VideoCodec"
+                    Grid.Row="1"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="12"
+                    SelectionChanged="cb_VideoCodec_SelectionChanged"
+                    ToolTip="Specify the video codec. ">
+                    <ComboBoxItem Content="Default" IsSelected="True" />
+                    <ComboBoxItem Content="H.264" />
+                    <ComboBoxItem Content="H.265" />
+                </ComboBox>
+                <Label
+                    Grid.Row="2"
+                    Content="Sliced Encoding"
+                    FontSize="12" />
+                <ComboBox
+                    Name="cb_slicedEncoding"
+                    Grid.Row="2"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="12"
+                    SelectionChanged="cb_slicedEncoding_SelectionChanged"
+                    ToolTip="Enable or disable sliced encoding. ">
+                    <ComboBoxItem Content="Default" IsSelected="True" />
+                    <ComboBoxItem Content="On" />
+                    <ComboBoxItem Content="Off" />
+                </ComboBox>
+                <Label
+                    Grid.Row="3"
+                    Content="Encode Resolution Width:"
+                    FontSize="12" />
+                <TextBox
+                    Name="txt_EncodeResolutionWidth"
+                    Grid.Row="3"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="12"
+                    PreviewTextInput="txt_EncodeResolutionWidth_PreviewTextInput"
+                    Text="0" />
+                <Label
+                    Grid.Row="4"
+                    Content="Encode Dynamic Bitrate:"
+                    FontSize="12" />
+                <ComboBox
+                    Name="cb_EncodeDynamicBitrate"
+                    Grid.Row="4"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    SelectionChanged="cb_EncodeDynamicBitrate_SelectionChanged"
+                    ToolTip="Let the encoder automatically adapt bitrate up to target.">
+                    <ComboBoxItem Content="Default" IsSelected="True" />
+                    <ComboBoxItem Content="Disabled" />
+                    <ComboBoxItem Content="Enabled" />
+                </ComboBox>
+                <Label
+                    Grid.Row="5"
+                    Content="Dynamic Bitrate Max:"
+                    FontSize="12" />
+                <TextBox
+                    Name="txt_DynamicBitrateMax"
+                    Grid.Row="5"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    PreviewTextInput="txt_DynamicBitrateMax_PreviewTextInput"
+                    Text="0" />
+                <Label
+                    Grid.Row="6"
+                    Content="Encode Bitrate (Mbps):"
+                    FontSize="12" />
+                <TextBox
+                    Name="txt_EncodeBitrate"
+                    Grid.Row="6"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    PreviewTextInput="txt_EncodeBitrate_PreviewTextInput"
+                    Text="0" />
+                <Label
+                    Grid.Row="7"
+                    Content="Dynamic Bitrate Offset (Mbps):"
+                    FontSize="12" />
+                <TextBox
+                    Name="txt_DynamicBitrateOffset"
+                    Grid.Row="7"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    PreviewTextInput="txt_DynamicBitrateOffset_PreviewTextInput"
+                    Text="0" />
+                <Label
+                    Grid.Row="8"
+                    Content="Link Sharpening:"
+                    FontSize="12" />
+                <ComboBox
+                    Name="cb_LinkSharpening"
+                    Grid.Row="8"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    SelectionChanged="cb_LinkSharpening_SelectionChanged"
+                    ToolTip="Enable/disable Link Sharpening.">
+                    <ComboBoxItem Content="Disabled" IsSelected="True" />
+                    <ComboBoxItem Content="Normal" />
+                    <ComboBoxItem Content="Quality" />
+                </ComboBox>
+                <Label
+                    Grid.Row="9"
+                    Content="Link Dimming:"
+                    FontSize="12" />
+                <ComboBox
+                    Name="cb_LinkDimming"
+                    Grid.Row="9"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    SelectionChanged="cb_LinkDimming_SelectionChanged"
+                    ToolTip="Enable/disable link to use local dimming on HMD.">
+                    <ComboBoxItem Content="Disabled" IsSelected="True" />
+                    <ComboBoxItem Content="Enabled" />
+                </ComboBox>
+            </Grid>
+        </GroupBox>
 
-        <TextBox
-            x:Name="txt_EncodeResolutionWidth"
-            Width="88"
-            Height="25"
-            Margin="432,164,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            DataObject.Pasting="txt_EncodeResolutionWidth_Pasting"
-            FontSize="12"
-            InputScope="Number"
-            PreviewTextInput="txt_EncodeResolutionWidth_PreviewTextInput"
-            Text="0" />
-
-        <Label
-            x:Name="lbl_EncodeDynamicBitrate"
-            Width="137"
-            Margin="282,203,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Encode Dynamic Bitrate:"
-            FontSize="12" />
-
-        <ComboBox
-            x:Name="cb_EncodeDynamicBitrate"
-            Width="90"
-            Height="3"
-            Margin="432,199,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            FontSize="11"
-            SelectionChanged="cb_EncodeDynamicBitrate_SelectionChanged">
-            <ComboBoxItem Content="Default" IsSelected="True" />
-            <ComboBoxItem Content="Disabled" />
-            <ComboBoxItem Content="Enabled" />
-        </ComboBox>
-
-        <Label
-            x:Name="lbl_DynamicBitrateMax"
-            Width="137"
-            Margin="282,0,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Content="Dynamic Bitrate Max:"
-            FontSize="12" />
-
-        <TextBox
-            x:Name="txt_DynamicBitrateMax"
-            Width="90"
-            Height="Auto"
-            Margin="432,234,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            DataObject.Pasting="txt_DynamicBitrateMax_Pasting"
-            FontSize="11"
-            PreviewTextInput="txt_DynamicBitrateMax_PreviewTextInput"
-            Text="0" />
-
-        <Label
-            x:Name="lbl_EncodeBitrate"
-            Width="137"
-            Margin="282,269,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Encode Bitrate (Mbps):"
-            FontSize="12" />
-
-        <TextBox
-            x:Name="txt_EncodeBitrate"
-            Width="90"
-            Height="30"
-            Margin="432,267,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            DataObject.Pasting="txt_EncodeBitrate_Pasting"
-            FontSize="11"
-            PreviewTextInput="txt_EncodeBitrate_PreviewTextInput"
-            Text="0" />
-
-        <Label
-            x:Name="lbl_DynamicBitrateOffset"
-            Width="173"
-            Margin="282,306,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Dynamic Bitrate Offset (Mbps):"
-            FontSize="12" />
-
-        <TextBox
-            x:Name="txt_DynamicBitrateOffset"
-            Width="67"
-            Height="Auto"
-            Margin="455,302,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            DataObject.Pasting="txt_DynamicBitrateOffset_Pasting"
-            FontSize="11"
-            PreviewTextInput="txt_DynamicBitrateOffset_PreviewTextInput"
-            Text="0" />
-
-        <Label
-            x:Name="lbl_LinkSharpening"
-            Width="130"
-            Margin="282,341,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Link Sharpening:"
-            FontSize="12" />
-
-        <ComboBox
-            x:Name="cb_LinkSharpening"
-            Width="92"
-            Height="Auto"
-            Margin="430,337,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            FontSize="11"
-            SelectionChanged="cb_LinkSharpening_SelectionChanged">
-            <ComboBoxItem Content="Disabled" IsSelected="True" />
-            <ComboBoxItem Content="Normal" />
-            <ComboBoxItem Content="Quality" />
-        </ComboBox>
-
-        <Label
-            x:Name="lbl_LinkDimming"
-            Width="130"
-            Margin="286,376,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Link Dimming:"
-            FontSize="12" />
-
-        <ComboBox
-            x:Name="cb_LinkDimming"
-            Width="92"
-            Height="Auto"
-            Margin="430,372,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            FontSize="12"
-            SelectionChanged="cb_LinkDimming_SelectionChanged">
-            <ComboBoxItem Content="Disabled" IsSelected="True" />
-            <ComboBoxItem Content="Enabled" />
-        </ComboBox>
-
+        <!--  Additional settings outside of the Oculus/Air Link GroupBox  -->
+        <!--  Make sure to follow the same pattern of Grid.Row and Margin for alignment  -->
     </Grid>
 </Window>

@@ -155,31 +155,52 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
         private void cb_DistortionCurvature_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
-            // Assuming you want to do something with the selected value
-            string selectedValue = (comboBox.SelectedItem as ComboBoxItem).Content.ToString();
-            // Your logic here
+            // Handle the selection change event for Distortion Curvature
         }
 
         private void cb_VideoCodec_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
-            string selectedValue = (comboBox.SelectedItem as ComboBoxItem).Content.ToString();
-            // Your logic here
+            // Handle the selection change event for Video Codec
         }
 
         private void cb_slicedEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
-            string selectedValue = (comboBox.SelectedItem as ComboBoxItem).Content.ToString();
-            // Your logic here
+            // Handle the selection change event for Sliced Encoding
         }
 
         private void txt_EncodeResolutionWidth_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            // Use regular expressions to check if the input is numeric
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
+            // Handle the preview text input event for Encode Resolution Width
+        }
+
+        private void cb_EncodeDynamicBitrate_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Handle the selection change event for Encode Dynamic Bitrate
+        }
+
+        private void txt_DynamicBitrateMax_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Handle the preview text input event for Dynamic Bitrate Max
+        }
+
+        private void txt_EncodeBitrate_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Handle the preview text input event for Encode Bitrate
+        }
+
+        private void txt_DynamicBitrateOffset_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Handle the preview text input event for Dynamic Bitrate Offset
+        }
+
+        private void cb_LinkSharpening_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Handle the selection change event for Link Sharpening
+        }
+
+        private void cb_LinkDimming_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Handle the selection change event for Link Dimming
         }
 
         private void txt_EncodeResolutionWidth_Pasting(object sender, DataObjectPastingEventArgs e)

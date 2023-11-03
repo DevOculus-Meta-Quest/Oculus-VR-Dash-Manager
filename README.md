@@ -17,14 +17,22 @@ Unlock the full potential of your Oculus VR experience with <b>Oculus VR Dash Ma
 
 ## 🌟 Features 🌟
 
-### 📂 **Profile Manager**
-   - Execute scripts directly from [GitHub](https://github.com/DevOculus-Meta-Quest/OVRDM-Profile-Scripts) with a single click.
-   - Contribute to and create your own scripts. All scripts are sourced from this [GitHub URL](https://github.com/DevOculus-Meta-Quest/OVRDM-Profile-Scripts).
+### 🎮 **Profile Manager: Now with Oculus/Air Link Settings**
+
+Unlock the full potential of your VR experience with the Profile Manager, now featuring the ability to configure Oculus/Air Link Settings for a seamless and immersive journey through virtual realms.
+
+- **Script Execution Made Simple**: Directly execute scripts from [GitHub](https://github.com/DevOculus-Meta-Quest/OVRDM-Profile-Scripts) with a single click, streamlining your setup process.
+- **Community-Driven Script Development**: Dive into a world of possibilities by contributing to or creating your own scripts. All scripts are sourced from this [GitHub repository](https://github.com/DevOculus-Meta-Quest/OVRDM-Profile-Scripts).
+- **New Oculus/Air Link Settings**: Introducing the latest enhancement to the Profile Manager — customize your Oculus/Air Link settings directly from the dashboard. Tailor your wireless connection to fit your performance needs and elevate your gaming sessions.
 
 <p align="center">
   <img src="https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/Main/assets/images/ProfileManager.png" alt="Profile Manager" width="200">
   <img src="https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/Main/assets/images/ProfileManagerMsgBox.png" alt="Profile Manager Message Box" width="200">
+  <!-- Placeholder for Oculus/Air Link Settings Graphic -->
+  <img src="https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/Main/assets/images/OculusAirLinkSettingsPlaceholder.png" alt="Oculus/Air Link Settings" width="200">
 </p>
+
+_Step into the future of virtual reality with the enhanced Profile Manager — your central hub for a personalized VR odyssey._
 
 ### 🎨 **Dash Customizer**
    - Inspired by [@CodyMarkix](https://github.com/CodyMarkix/OculusDashCustomizer), rewritten in C#.

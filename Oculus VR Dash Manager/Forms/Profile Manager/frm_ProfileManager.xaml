@@ -3,49 +3,274 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OVR_Dash_Manager.Forms.Profile_Manager"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Profile Manager"
-    Width="400"
-    Height="280"
+    Width="980"
+    Height="525"
     Background="#FF0A0909"
     Foreground="#FFEAF8F8"
+    Loaded="Window_Loaded"
     Topmost="True"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--  Reference to the external style  -->
                 <ResourceDictionary Source="../../Theme/MetroDark.MSControls.Core.Implicit.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="CenteredGridViewHeaderStyle" TargetType="GridViewColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="White" />
+            </Style>
+            <DataTemplate x:Key="HeaderTemplate">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    Foreground="White"
+                    Text="{Binding}" />
+            </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
 
     <Grid>
-        <ListView
-            Name="scriptsListView"
-            Width="400"
-            Height="200"
-            HorizontalAlignment="Left"
+        <!--  Define the rows and columns if needed  -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <!--  Add more RowDefinitions as needed  -->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <!--  Add more ColumnDefinitions as needed  -->
+        </Grid.ColumnDefinitions>
+        <!--  Scripts Section  -->
+        <GroupBox
+            Grid.Row="0"
+            Grid.Column="0"
+            Height="319"
+            Margin="10,10,10,0"
             VerticalAlignment="Top"
-            MouseDoubleClick="scriptsListView_MouseDoubleClick">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Width="370" Header="Scripts" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button
-            Name="refreshButton"
-            Height="25"
-            Margin="65,205,0,0"
-            HorizontalAlignment="Left"
+            Background="#FF2A2A2A"
+            BorderBrush="White"
+            BorderThickness="2"
+            Foreground="White"
+            Header="Scripts Section">
+            <Grid>
+                <ListView
+                    Name="scriptsListView"
+                    Margin="10,0,10,10"
+                    MouseDoubleClick="scriptsListView_MouseDoubleClick">
+                    <ListView.View>
+                        <GridView ColumnHeaderContainerStyle="{StaticResource CenteredGridViewHeaderStyle}">
+                            <GridViewColumn Width="370" Header="Scripts" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <StackPanel
+                    Margin="0,10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+                    <Button
+                        Name="refreshButton"
+                        Width="75"
+                        Height="25"
+                        Margin="5,0"
+                        Click="RefreshButton_Click"
+                        Content="Refresh" />
+                    <Button
+                        Name="ProfileManagerHelp"
+                        Width="75"
+                        Height="25"
+                        Margin="5,0"
+                        Click="ProfileManagerHelp_Click"
+                        Content="Help" />
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <!--  Oculus/Air Link Section  -->
+        <GroupBox
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="0,10,10,0"
             VerticalAlignment="Top"
-            Click="RefreshButton_Click"
-            Content="Refresh" />
-        <Button
-            Name="ProfileManagerHelp"
-            Click="ProfileManagerHelp_Click"
-            Content="Help" Margin="0,204,0,0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="60" />
+            Background="#FF2A2A2A"
+            BorderBrush="White"
+            BorderThickness="2"
+            Foreground="White"
+            Header="Oculus/Air Link">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label
+                    Grid.Row="0"
+                    Content="Distortion Curvature:"
+                    FontSize="12" />
+                <ComboBox
+                    Name="cb_DistortionCurvature"
+                    Grid.Row="0"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    SelectionChanged="cb_DistortionCurvature_SelectionChanged"
+                    ToolTip="Override Distortion Curvature: Higher curvature gives more pixel density at the center.">
+                    <ComboBoxItem Content="Default" />
+                    <ComboBoxItem Content="Low" />
+                    <ComboBoxItem Content="High" />
+                </ComboBox>
+                <Label
+                    Grid.Row="1"
+                    Content="Video Codec"
+                    FontSize="12" />
+                <ComboBox
+                    Name="cb_VideoCodec"
+                    Grid.Row="1"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="12"
+                    SelectionChanged="cb_VideoCodec_SelectionChanged"
+                    ToolTip="Specify the video codec. ">
+                    <ComboBoxItem Content="Default" />
+                    <ComboBoxItem Content="H.264" />
+                    <ComboBoxItem Content="H.265" />
+                </ComboBox>
+                <Label
+                    Grid.Row="2"
+                    Content="Sliced Encoding"
+                    FontSize="12" />
+                <ComboBox
+                    Name="cb_slicedEncoding"
+                    Grid.Row="2"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="12"
+                    SelectionChanged="cb_slicedEncoding_SelectionChanged"
+                    ToolTip="Enable or disable sliced encoding. ">
+                    <ComboBoxItem Content="Default" />
+                    <ComboBoxItem Content="On" />
+                    <ComboBoxItem Content="Off" />
+                </ComboBox>
+                <Label
+                    Grid.Row="3"
+                    Content="Encode Resolution Width:"
+                    FontSize="12" />
+                <TextBox
+                    Name="txt_EncodeResolutionWidth"
+                    Grid.Row="3"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="12"
+                    PreviewTextInput="txt_EncodeResolutionWidth_PreviewTextInput"
+                    Text="0" />
+                <Label
+                    Grid.Row="4"
+                    Content="Encode Dynamic Bitrate:"
+                    FontSize="12" />
+                <ComboBox
+                    Name="cb_EncodeDynamicBitrate"
+                    Grid.Row="4"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    SelectionChanged="cb_EncodeDynamicBitrate_SelectionChanged"
+                    ToolTip="Let the encoder automatically adapt bitrate up to target.">
+                    <ComboBoxItem Content="Default" />
+                    <ComboBoxItem Content="Disabled" />
+                    <ComboBoxItem Content="Enabled" />
+                </ComboBox>
+                <Label
+                    Grid.Row="5"
+                    Content="Dynamic Bitrate Max:"
+                    FontSize="12" />
+                <TextBox
+                    Name="txt_DynamicBitrateMax"
+                    Grid.Row="5"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    PreviewTextInput="txt_DynamicBitrateMax_PreviewTextInput"
+                    Text="0" />
+                <Label
+                    Grid.Row="6"
+                    Content="Encode Bitrate (Mbps):"
+                    FontSize="12" />
+                <TextBox
+                    Name="txt_EncodeBitrate"
+                    Grid.Row="6"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    PreviewTextInput="txt_EncodeBitrate_PreviewTextInput"
+                    Text="0" />
+                <Label
+                    Grid.Row="7"
+                    Content="Dynamic Bitrate Offset (Mbps):"
+                    FontSize="12" />
+                <TextBox
+                    Name="txt_DynamicBitrateOffset"
+                    Grid.Row="7"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    PreviewTextInput="txt_DynamicBitrateOffset_PreviewTextInput"
+                    Text="0" />
+                <Label
+                    Grid.Row="8"
+                    Content="Link Sharpening:"
+                    FontSize="12" />
+                <ComboBox
+                    Name="cb_LinkSharpening"
+                    Grid.Row="8"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    SelectionChanged="cb_LinkSharpening_SelectionChanged"
+                    ToolTip="Enable/disable Link Sharpening.">
+                    <ComboBoxItem Content="Disabled" />
+                    <ComboBoxItem Content="Normal" />
+                    <ComboBoxItem Content="Quality" />
+                </ComboBox>
+                <Label
+                    Grid.Row="9"
+                    Content="Local Dimming:"
+                    FontSize="12" />
+                <ComboBox
+                    Name="cb_LocalDimming"
+                    Grid.Row="9"
+                    Width="90"
+                    Height="25"
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    SelectionChanged="cb_LocalDimming_SelectionChanged"
+                    ToolTip="Enable/disable link to use local dimming on HMD.">
+                    <ComboBoxItem Content="Disabled" />
+                    <ComboBoxItem Content="Enabled" />
+                </ComboBox>
+            </Grid>
+        </GroupBox>
+
+        <!--  Additional settings outside of the Oculus/Air Link GroupBox  -->
+        <!--  Make sure to follow the same pattern of Grid.Row and Margin for alignment  -->
     </Grid>
 </Window>

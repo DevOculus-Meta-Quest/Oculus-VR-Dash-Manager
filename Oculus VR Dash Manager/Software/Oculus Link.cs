@@ -1,4 +1,5 @@
 ﻿using AdvancedSharpAdbClient;
+using Microsoft.Win32;
 using System.IO;
 using System.Linq;
 
@@ -81,7 +82,8 @@ namespace OVR_Dash_Manager.Software
 
                     if (File.Exists(oculusRunTimePath))
                     {
-                        Functions.RegistryFunctions.SetKeyValue(runTimeKey, "ActiveRuntime", oculusRunTimePath);
+                        // Specify the value kind as ExpandString when setting a REG_EXPAND_SZ value
+                        Functions.RegistryFunctions.SetKeyValue(runTimeKey, "ActiveRuntime", oculusRunTimePath, RegistryValueKind.ExpandString);
                     }
 
                     Functions.RegistryFunctions.CloseKey(runTimeKey);

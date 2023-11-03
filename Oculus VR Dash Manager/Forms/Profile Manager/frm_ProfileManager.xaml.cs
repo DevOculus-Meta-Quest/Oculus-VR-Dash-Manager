@@ -451,132 +451,174 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
         private void txt_DynamicBitrateMax_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            // This regex will match any non-digit characters.
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+
             TextBox textBox = sender as TextBox;
-            string keyLocation = @"Software\Oculus\RemoteHeadset";
-            string keyName = "DBRMax";
-
-            // Check if the input is numeric and within the allowed range
-            if (!long.TryParse(e.Text, out long value) || value < 0 || value > 9999999999)
+            if (!e.Handled && textBox != null)
             {
-                // If not, handle the event as handled so the TextBox does not process the input
-                e.Handled = true;
-                return;
+                // Ensure that the LostFocus event is only attached once.
+                textBox.LostFocus -= Txt_DynamicBitrateMax_LostFocus; // Detach the event in case it was already attached.
+                textBox.LostFocus += Txt_DynamicBitrateMax_LostFocus; // Attach the event.
             }
+        }
 
-            // If the input is "0", remove the key, otherwise set the new value
-            if (value == 0)
+
+        private void Txt_DynamicBitrateMax_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
             {
-                // Remove the key if the input is "0"
-                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                string keyLocation = @"Software\Oculus\RemoteHeadset";
+                string keyName = "DBRMax";
+
+                if (long.TryParse(textBox.Text, out long value))
                 {
-                    key?.DeleteValue(keyName, throwOnMissingValue: false);
-                }
-            }
-            else
-            {
-                // Set the key value to the input value if it's within the valid range
-                int newValue = (int)value; // Cast long to int, assuming the value is within int range.
-                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
-                {
-                    if (key != null)
+                    using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                     {
-                        // Pass the integer value and specify the value kind as DWORD.
-                        OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, newValue, RegistryValueKind.DWord);
-                    }
-                    else
-                    {
-                        // Log the error using ErrorLogger
-                        string errorMessage = "Unable to open the registry key at " + keyLocation;
-                        ErrorLogger.LogError(new Exception(errorMessage));
+                        if (key != null)
+                        {
+                            if (value == 0)
+                            {
+                                // Remove the key if the value is 0
+                                key.DeleteValue(keyName, throwOnMissingValue: false);
+                            }
+                            else if (value > 0 && value <= 9999999999)
+                            {
+                                // Set the key value to the input value if it's within the valid range
+                                // Ensure the value is within the DWORD range before casting
+                                if (value <= int.MaxValue)
+                                {
+                                    int newValue = (int)value;
+                                    OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, newValue, RegistryValueKind.DWord);
+                                }
+                                else
+                                {
+                                    // Handle the case where the value is larger than int.MaxValue
+                                    // You might want to log this or show a message to the user
+                                }
+                            }
+                            // If the value is not in range, do not update the registry.
+                        }
+                        else
+                        {
+                            // Log the error using ErrorLogger
+                            string errorMessage = "Unable to open the registry key at " + keyLocation;
+                            ErrorLogger.LogError(new Exception(errorMessage));
+                        }
                     }
                 }
+                // Unsubscribe from the LostFocus event
+                textBox.LostFocus -= Txt_DynamicBitrateMax_LostFocus;
             }
         }
 
         private void txt_EncodeBitrate_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            // This regex will match any non-digit characters.
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+
             TextBox textBox = sender as TextBox;
-            string keyLocation = @"Software\Oculus\RemoteHeadset";
-            string keyName = "BitrateMbps";
-
-            // Check if the input is numeric and within the allowed range
-            if (!int.TryParse(e.Text, out int value) || value < 0 || value > 500)
+            if (!e.Handled && textBox != null)
             {
-                // If not, handle the event as handled so the TextBox does not process the input
-                e.Handled = true;
-                return;
+                // Ensure that the LostFocus event is only attached once.
+                textBox.LostFocus -= Txt_EncodeBitrate_LostFocus; // Detach the event in case it was already attached.
+                textBox.LostFocus += Txt_EncodeBitrate_LostFocus; // Attach the event.
             }
+        }
 
-            // If the input is "0", remove the key, otherwise set the new value
-            if (value == 0)
+        private void Txt_EncodeBitrate_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
             {
-                // Remove the key if the input is "0"
-                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                string keyLocation = @"Software\Oculus\RemoteHeadset";
+                string keyName = "BitrateMbps";
+
+                if (int.TryParse(textBox.Text, out int value))
                 {
-                    key?.DeleteValue(keyName, throwOnMissingValue: false);
-                }
-            }
-            else
-            {
-                // Set the key value to the input value if it's within the valid range
-                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
-                {
-                    if (key != null)
+                    using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                     {
-                        // Pass the integer value and specify the value kind as DWORD since bitrate is typically an integer value.
-                        OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, value, RegistryValueKind.DWord);
-                    }
-                    else
-                    {
-                        // Log the error using ErrorLogger
-                        string errorMessage = "Unable to open the registry key at " + keyLocation;
-                        ErrorLogger.LogError(new Exception(errorMessage));
+                        if (key != null)
+                        {
+                            if (value == 0)
+                            {
+                                // Remove the key if the value is 0
+                                key.DeleteValue(keyName, throwOnMissingValue: false);
+                            }
+                            else if (value > 0 && value <= 500)
+                            {
+                                // Set the key value to the input value if it's within the valid range
+                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, value, RegistryValueKind.DWord);
+                            }
+                            // If the value is not in range, do not update the registry.
+                        }
+                        else
+                        {
+                            // Log the error using ErrorLogger
+                            string errorMessage = "Unable to open the registry key at " + keyLocation;
+                            ErrorLogger.LogError(new Exception(errorMessage));
+                        }
                     }
                 }
+                // Unsubscribe from the LostFocus event
+                textBox.LostFocus -= Txt_EncodeBitrate_LostFocus;
             }
         }
 
         private void txt_DynamicBitrateOffset_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            // This regex will match any non-digit characters.
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+
             TextBox textBox = sender as TextBox;
-            string keyLocation = @"Software\Oculus\RemoteHeadset";
-            string keyName = "DBROffsetMbps";
-
-            // Check if the input is numeric and within the allowed range
-            if (!int.TryParse(e.Text, out int value) || value < 0 || value > 999999999)
+            if (!e.Handled && textBox != null)
             {
-                // If not, handle the event as handled so the TextBox does not process the input
-                e.Handled = true;
-                return;
+                // Ensure that the LostFocus event is only attached once.
+                textBox.LostFocus -= Txt_DynamicBitrateOffset_LostFocus; // Detach the event in case it was already attached.
+                textBox.LostFocus += Txt_DynamicBitrateOffset_LostFocus; // Attach the event.
             }
+        }
 
-            // If the input is "0", remove the key, otherwise set the new value
-            if (value == 0)
+        private void Txt_DynamicBitrateOffset_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
             {
-                // Remove the key if the input is "0"
-                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
-                {
-                    key?.DeleteValue(keyName, throwOnMissingValue: false);
-                }
-            }
-            else
-            {
-                // Set the key value to the input value if it's within the valid range
-                string newValue = value.ToString();
-                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
-                {
-                    if (key != null)
-                    {
-                        OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, newValue, RegistryValueKind.String);
+                string keyLocation = @"Software\Oculus\RemoteHeadset";
+                string keyName = "DBROffsetMbps";
 
-                    }
-                    else
+                if (int.TryParse(textBox.Text, out int value))
+                {
+                    using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                     {
-                        // Log the error using ErrorLogger
-                        string errorMessage = "Unable to open the registry key at " + keyLocation;
-                        ErrorLogger.LogError(new Exception(errorMessage));
+                        if (key != null)
+                        {
+                            if (value == 0)
+                            {
+                                // Remove the key if the value is 0
+                                key.DeleteValue(keyName, throwOnMissingValue: false);
+                            }
+                            else if (value > 0 && value <= 999999999)
+                            {
+                                // Set the key value to the input value if it's within the valid range
+                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, value, RegistryValueKind.DWord);
+                            }
+                            // If the value is not in range, do not update the registry.
+                        }
+                        else
+                        {
+                            // Log the error using ErrorLogger
+                            string errorMessage = "Unable to open the registry key at " + keyLocation;
+                            ErrorLogger.LogError(new Exception(errorMessage));
+                        }
                     }
                 }
+                // Unsubscribe from the LostFocus event
+                textBox.LostFocus -= Txt_DynamicBitrateOffset_LostFocus;
             }
         }
 

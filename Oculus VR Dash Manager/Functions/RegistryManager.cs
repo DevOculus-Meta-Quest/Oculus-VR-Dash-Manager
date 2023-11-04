@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
+using System;
 using YOVR_Dash_Manager.Functions;
 
 public static class RegistryManager

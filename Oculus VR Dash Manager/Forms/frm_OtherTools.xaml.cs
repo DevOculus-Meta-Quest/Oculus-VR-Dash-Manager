@@ -3,8 +3,8 @@ using OVR_Dash_Manager.Forms.Dash_Customizer;
 using OVR_Dash_Manager.Forms.Profile_Manager;
 using OVR_Dash_Manager.Software;
 using System;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 
 namespace OVR_Dash_Manager.Forms

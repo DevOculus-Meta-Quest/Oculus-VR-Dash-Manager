@@ -1,11 +1,18 @@
-﻿<Window x:Class="OVR_Dash_Manager.Forms.frm_TestWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:OVR_Dash_Manager.Forms"
-        mc:Ignorable="d"
-        Title="Test Window" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Loaded="Window_Loaded" Closing="Window_Closed">
+﻿<Window
+    x:Class="OVR_Dash_Manager.Forms.frm_TestWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OVR_Dash_Manager.Forms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Test Window"
+    Width="800"
+    Height="450"
+    Closing="Window_Closed"
+    Loaded="Window_Loaded"
+    ResizeMode="CanMinimize"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -16,8 +23,26 @@
     </Window.Resources>
 
     <Grid Background="#FF212121">
-        <TextBox x:Name="txtbx_ReadOut" Text="Start Test UI" TextWrapping="Wrap" Margin="10,10,10,50" />
-        <Button x:Name="btn_ChangeSteamRunTime" Content="Swtich SteamVR Runtime" Margin="10,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="195" Click="btn_ChangeSteamRunTime_Click" />
-        <Button x:Name="btn_ChangeOculusRunTime" Content="Swtich Oculus Runtime" Margin="224,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="195" Click="btn_ChangeOculusRunTime_Click" />
+        <TextBox
+            x:Name="txtbx_ReadOut"
+            Margin="10,10,10,50"
+            Text="Start Test UI"
+            TextWrapping="Wrap" />
+        <Button
+            x:Name="btn_ChangeSteamRunTime"
+            Width="195"
+            Margin="10,0,0,10"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Click="btn_ChangeSteamRunTime_Click"
+            Content="Swtich SteamVR Runtime" />
+        <Button
+            x:Name="btn_ChangeOculusRunTime"
+            Width="195"
+            Margin="224,0,0,10"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Click="btn_ChangeOculusRunTime_Click"
+            Content="Swtich Oculus Runtime" />
     </Grid>
 </Window>

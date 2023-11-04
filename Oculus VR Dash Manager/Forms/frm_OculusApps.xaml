@@ -1,8 +1,23 @@
-﻿<Window x:Class="OVR_Dash_Manager.Forms.frm_OculusApps"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Oculus Apps" Height="450" Width="800" WindowStartupLocation="CenterOwner" Background="#FF0B0B0B" Foreground="#FFF4EAEA">
+﻿<Window
+    x:Class="OVR_Dash_Manager.Forms.frm_OculusApps"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Oculus Apps"
+    Width="800"
+    Height="450"
+    Background="#FF0B0B0B"
+    Foreground="#FFF4EAEA"
+    WindowStartupLocation="CenterOwner">
     <Grid Background="Black">
-        <ListView Name="listViewOculusApps" HorizontalAlignment="Left" Height="400" Margin="10,10,0,0" VerticalAlignment="Top" Width="760" Background="Black" Foreground="#FFF0F6F5" BorderBrush="#FF0E49F9" />
+        <ListView
+            Name="listViewOculusApps"
+            Width="760"
+            Height="400"
+            Margin="10,10,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="Black"
+            BorderBrush="#FF0E49F9"
+            Foreground="#FFF0F6F5" />
     </Grid>
 </Window>

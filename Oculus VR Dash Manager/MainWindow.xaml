@@ -59,6 +59,7 @@
                     Padding="0"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
+                    Background="Gray"
                     Click="MinimizeButton_Click">
                     <TextBlock
                         HorizontalAlignment="Center"
@@ -74,6 +75,7 @@
                     Padding="0"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
+                    Background="Gray"
                     Click="CloseButton_Click">
                     X
                 </Button>

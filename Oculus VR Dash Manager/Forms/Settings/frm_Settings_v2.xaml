@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Settings"
     Width="863"
-    Height="924.74"
+    Height="1090"
     Closing="Window_Closing"
     Loaded="Window_Loaded"
     ResizeMode="CanMinimize"
@@ -24,8 +24,8 @@
 
     <Grid x:Name="gd_Settings" Background="#FF212121">
         <GroupBox
-            Height="177"
-            Margin="10,0"
+            Height="205"
+            Margin="10,84,10,0"
             VerticalAlignment="Top"
             Header="Dash Manager Settings">
             <Grid Margin="0">
@@ -67,11 +67,23 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Ignore SteamVR Status for Hover Button Actions" />
+                <local:uc_Setting
+                    Width="150"
+                    Height="30"
+                    Margin="10,117,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Setting="MinToTray" />
+                <Label
+                    Height="30"
+                    Margin="166,117,10,0"
+                    VerticalAlignment="Top"
+                    Content="Minimize to System Tray" />
             </Grid>
         </GroupBox>
         <GroupBox
-            Height="280"
-            Margin="10,177,10,0"
+            Height="275"
+            Margin="10,309,10,0"
             VerticalAlignment="Top"
             Header="Oculus Settings">
             <Grid Margin="0">
@@ -145,8 +157,8 @@
             </Grid>
         </GroupBox>
         <GroupBox
-            Height="135"
-            Margin="10,457,10,0"
+            Height="130"
+            Margin="10,614,10,0"
             VerticalAlignment="Top"
             Header="Steam / SteamVR Settings">
             <Grid Margin="0">
@@ -177,8 +189,8 @@
             </Grid>
         </GroupBox>
         <GroupBox
-            Height="191"
-            Margin="10,592,10,0"
+            Height="195"
+            Margin="10,764,10,0"
             VerticalAlignment="Top"
             Header="Automatic Audio Switcher">
             <Grid Margin="0">
@@ -247,7 +259,7 @@
                     Content="Set As Current" />
             </Grid>
         </GroupBox>
-        <GroupBox Margin="10,788,10,10" Header="Auto Launch Programs">
+        <GroupBox Margin="10,979,10,10" Header="Auto Launch Programs">
             <Grid Margin="0">
                 <Button
                     x:Name="btn_Open_Auto_Launch_Settings"

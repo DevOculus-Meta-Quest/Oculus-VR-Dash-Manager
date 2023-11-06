@@ -65,12 +65,33 @@ namespace OVR_Dash_Manager
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
+            // Check if the Minimize to System Tray setting is enabled
+            if (Properties.Settings.Default.MinToTray)
+            {
+                // Use the WindowManager to minimize to the system tray
+                windowManager.MinimizeToTray();
+            }
+            else
+            {
+                // If the setting is not enabled, just minimize normally
+                this.WindowState = WindowState.Minimized;
+            }
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            // Check if the Minimize to System Tray setting is enabled
+            if (Properties.Settings.Default.MinToTray)
+            {
+                // Use the WindowManager to minimize to the system tray
+                windowManager.MinimizeToTray();
+                // Optionally, you can cancel the close event here if needed
+            }
+            else
+            {
+                // If the setting is not enabled, close the application normally
+                this.Close();
+            }
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

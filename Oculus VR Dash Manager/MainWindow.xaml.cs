@@ -13,6 +13,7 @@ using System.Windows.Threading;
 using WindowsInput;
 using WindowsInput.Native;
 using YOVR_Dash_Manager.Functions;
+using OculusVRDashManager.Functions;
 
 namespace OVR_Dash_Manager
 {
@@ -21,6 +22,8 @@ namespace OVR_Dash_Manager
     /// </summary>
     public partial class MainWindow : Window
     {
+        private WindowManager windowManager;
+
         public bool Debug_EmulateReleaseMode = false;
 
         // Declare _hoverButtonManager at the class level
@@ -42,6 +45,9 @@ namespace OVR_Dash_Manager
             // Initialize UI Manager
             _uiManager = new UIManager(this);
 
+            // Instantiate the WindowManager with a reference to this window
+            windowManager = new WindowManager(this);
+
             // Initialize HoverButtonManager without ActivateDash action
             _hoverButtonManager = new HoverButtonManager(this, pb_Normal, pb_Exit, null);
 
@@ -55,6 +61,21 @@ namespace OVR_Dash_Manager
             // Set window properties
             Title += " v" + typeof(MainWindow).Assembly.GetName().Version;
             Topmost = Properties.Settings.Default.AlwaysOnTop;
+        }
+
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
         }
 
         public void Cancel_TaskView_And_Focus()

@@ -60,6 +60,10 @@ https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager</PackageReleaseNo
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove=".env" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AdvancedSharpAdbClient" Version="2.5.7" />
     <PackageReference Include="AudioSwitcher.AudioApi.CoreAudio" Version="3.0.3" />
     <PackageReference Include="BrettHewitt.PlaybackDeviceSwitcher" Version="1.0.5" />

@@ -39,16 +39,9 @@ namespace OVR_Dash_Manager
         {
             // Assuming your .env file is in the same directory as your executable
             var envFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ".env");
-            Debug.WriteLine($"Looking for .env file at: {envFilePath}");
             Functions.EnvLoader.LoadEnvVariables(envFilePath);
 
             InitializeComponent();
-
-            // Retrieve an environment variable to test
-            string testVariable = Environment.GetEnvironmentVariable("STEAM_API_KEY");
-
-            // Display the value in a MessageBox to verify it's been set
-            MessageBox.Show($"STEAM_API_KEY is: {testVariable}");
 
             // Start the watchdog
             WatchdogManager.StartWatchdog();

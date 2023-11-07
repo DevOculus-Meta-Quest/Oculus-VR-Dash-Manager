@@ -6,7 +6,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Hardcodet.Wpf.TaskbarNotification;
-using System.Diagnostics;
+using YOVR_Dash_Manager.Functions;
+using OculusVRDashManager.Functions;
 
 namespace OculusVRDashManager.Functions
 {
@@ -27,16 +28,19 @@ namespace OculusVRDashManager.Functions
                     if (iconStream != null)
                     {
                         notifyIcon.Icon = new Icon(iconStream);
+                        notifyIcon.Visibility = Visibility.Hidden; // Set the icon to be hidden initially.
                     }
                     else
                     {
-                        Debug.WriteLine("Icon stream is null. Resource not found.");
+                        // Log the error using the ErrorLogger class
+                        ErrorLogger.LogError(new FileNotFoundException("Icon stream is null. Resource not found."));
                     }
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Exception occurred: " + ex.Message);
+                // Log the exception using the ErrorLogger class
+                ErrorLogger.LogError(ex, "Failed to load the application icon.");
             }
 
             // Now that notifyIcon is instantiated, you can set its properties.

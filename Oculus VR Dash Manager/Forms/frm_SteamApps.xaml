@@ -10,13 +10,42 @@
     WindowStartupLocation="CenterOwner">
     <Grid Background="Black">
         <ListView
-            Name="listViewSteamApps"
+            x:Name="listViewSteamApps"
             Width="760"
             Height="400"
             Margin="10,10,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Background="Black"
-            Foreground="#FFF4F4E9" />
+            Foreground="#FFF4F4E9"
+            ItemsSource="{Binding}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn
+                        Width="Auto"
+                        DisplayMemberBinding="{Binding Name}"
+                        Header="Game Name" />
+                    <GridViewColumn
+                        Width="Auto"
+                        DisplayMemberBinding="{Binding ID}"
+                        Header="Game ID" />
+                    <GridViewColumn
+                        Width="Auto"
+                        DisplayMemberBinding="{Binding Path}"
+                        Header="Install Path" />
+                    <!--  For the image, use a DataTemplate to display it  -->
+                    <GridViewColumn Header="App Image">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image
+                                    Width="50"
+                                    Height="50"
+                                    Source="{Binding ImagePath}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

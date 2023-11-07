@@ -12,8 +12,7 @@ namespace OVR_Dash_Manager.Software
             public string Name { get; set; }
             public string ID { get; set; }
             public string Path { get; set; }
-            // Company and Version are not typically available in the manifest files
-            // If needed, they would have to be fetched from another source
+            public string ImagePath { get; set; } // Property for the image path
         }
 
         public List<SteamGameDetails> GetInstalledGames()
@@ -51,11 +50,36 @@ namespace OVR_Dash_Manager.Software
                         // Construct the full path to the installed game directory
                         gameDetails.Path = Path.Combine(steamAppsFolder, "common", gameDetails.Path);
 
+                        // Add the game details to the list
                         gamesList.Add(gameDetails);
                     }
                 }
             }
+
+            // Get the image path for each game
+            foreach (var game in gamesList)
+            {
+                game.ImagePath = GetImagePathForGame(game.ID);
+            }
+
             return gamesList;
+        }
+
+        private string GetImagePathForGame(string gameId)
+        {
+            string imageCacheDirectory = @"C:\Program Files (x86)\Steam\appcache\librarycache"; // Set to your image cache directory
+            string searchPattern = gameId + "_library_600x900.*"; // Updated to match the format
+            var imageFiles = Directory.GetFiles(imageCacheDirectory, searchPattern);
+            if (imageFiles.Length > 0)
+            {
+                // Return the first found image path
+                return imageFiles[0];
+            }
+            else
+            {
+                // If no image is found, you can return a default image path or null
+                return null;
+            }
         }
     }
 }

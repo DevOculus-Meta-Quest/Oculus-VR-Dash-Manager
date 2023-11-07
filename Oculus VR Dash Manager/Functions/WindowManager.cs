@@ -1,9 +1,12 @@
 ﻿using System;
+using System.IO; // For Stream
+using System.Reflection; // For Assembly
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Hardcodet.Wpf.TaskbarNotification;
+using System.Diagnostics;
 
 namespace OculusVRDashManager.Functions
 {
@@ -14,13 +17,31 @@ namespace OculusVRDashManager.Functions
 
         public WindowManager(Window window)
         {
-            managedWindow = window;
-            notifyIcon = new TaskbarIcon
+            managedWindow = window ?? throw new ArgumentNullException(nameof(window));
+            notifyIcon = new TaskbarIcon(); // Instantiate the notifyIcon before using it.
+
+            try
             {
-                Icon = new System.Drawing.Icon(SystemIcons.Application, 40, 40),
-                Visibility = Visibility.Visible,
-                ToolTipText = "Application Name"
-            };
+                using (Stream iconStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("OVR_Dash_Manager.Icon.ico"))
+                {
+                    if (iconStream != null)
+                    {
+                        notifyIcon.Icon = new Icon(iconStream);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Icon stream is null. Resource not found.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception occurred: " + ex.Message);
+            }
+
+            // Now that notifyIcon is instantiated, you can set its properties.
+            notifyIcon.Visibility = Visibility.Visible;
+            notifyIcon.ToolTipText = "Application Name";
 
             // Create the context menu and items
             ContextMenu contextMenu = new ContextMenu();
@@ -90,12 +111,23 @@ namespace OculusVRDashManager.Functions
 
         public void MinimizeToTray()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            if (OVR_Dash_Manager.Properties.Settings.Default.MinToTray)
             {
-                managedWindow.WindowState = WindowState.Minimized;
-                managedWindow.Hide();
-                notifyIcon.Visibility = Visibility.Visible;
-            });
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    managedWindow.Hide();
+                    notifyIcon.Visibility = Visibility.Visible;
+                });
+            }
+            else
+            {
+                // Handle the case where MinToTray is false
+                // Perhaps just minimize the window normally
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    managedWindow.WindowState = WindowState.Minimized;
+                });
+            }
         }
 
         public void ShowNotification(string title, string text)

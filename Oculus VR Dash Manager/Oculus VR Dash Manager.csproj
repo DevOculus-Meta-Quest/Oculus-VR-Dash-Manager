@@ -82,10 +82,10 @@ https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager</PackageReleaseNo
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="Icon.ico">
+    <EmbeddedResource Include="Icon.ico">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
-    </None>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

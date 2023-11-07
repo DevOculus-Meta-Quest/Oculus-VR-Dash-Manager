@@ -40,8 +40,8 @@ namespace OculusVRDashManager.Functions
             }
 
             // Now that notifyIcon is instantiated, you can set its properties.
-            notifyIcon.Visibility = Visibility.Visible;
-            notifyIcon.ToolTipText = "Application Name";
+            notifyIcon.Visibility = Visibility.Hidden; // Set this to Hidden initially.
+            notifyIcon.ToolTipText = "Oculus VR Dash Manager";
 
             // Create the context menu and items
             ContextMenu contextMenu = new ContextMenu();

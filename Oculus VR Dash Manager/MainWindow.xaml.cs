@@ -3,6 +3,7 @@ using OVR_Dash_Manager.Forms;
 using OVR_Dash_Manager.Functions;
 using OVR_Dash_Manager.Software;
 using System;
+using System.IO;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,6 +37,10 @@ namespace OVR_Dash_Manager
 
         public MainWindow()
         {
+            // Assuming your .env file is in the same directory as your executable
+            var envFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ".env");
+            Functions.EnvLoader.LoadEnvVariables(envFilePath);
+
             InitializeComponent();
 
             // Start the watchdog

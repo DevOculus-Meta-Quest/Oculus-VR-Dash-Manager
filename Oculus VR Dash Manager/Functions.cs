@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OVR_Dash_Manager.Functions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -10,7 +11,6 @@ using System.Text.RegularExpressions;
 using System.Timers;
 using System.Windows;
 using System.Windows.Threading;
-using YOVR_Dash_Manager.Functions;
 
 // Disable the warning.
 #pragma warning disable SYSLIB0014

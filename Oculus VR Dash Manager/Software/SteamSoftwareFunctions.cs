@@ -1,7 +1,6 @@
 ﻿using OVR_Dash_Manager.Functions;
 using System;
 using System.Collections.Generic;
-using YOVR_Dash_Manager.Functions; // Ensure this using directive is added to access the SteamAppChecker
 
 namespace OVR_Dash_Manager.Software
 {

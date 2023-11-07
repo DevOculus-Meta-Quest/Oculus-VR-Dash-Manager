@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace YOVR_Dash_Manager.Functions
+namespace OVR_Dash_Manager.Functions
 {
     public static class ErrorLogger
     {

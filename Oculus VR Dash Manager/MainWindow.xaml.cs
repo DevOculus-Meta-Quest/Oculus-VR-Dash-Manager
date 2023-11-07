@@ -1,4 +1,5 @@
-﻿using OVR_Dash_Manager.Forms;
+﻿using OculusVRDashManager.Functions;
+using OVR_Dash_Manager.Forms;
 using OVR_Dash_Manager.Functions;
 using OVR_Dash_Manager.Software;
 using System;
@@ -12,8 +13,6 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using WindowsInput;
 using WindowsInput.Native;
-using YOVR_Dash_Manager.Functions;
-using OculusVRDashManager.Functions;
 
 namespace OVR_Dash_Manager
 {

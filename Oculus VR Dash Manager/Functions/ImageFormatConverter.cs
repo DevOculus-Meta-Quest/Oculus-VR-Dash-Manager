@@ -3,7 +3,6 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using YOVR_Dash_Manager.Functions; // Ensure you have the correct namespace for ErrorLogger
 
 namespace OVR_Dash_Manager.Functions
 {

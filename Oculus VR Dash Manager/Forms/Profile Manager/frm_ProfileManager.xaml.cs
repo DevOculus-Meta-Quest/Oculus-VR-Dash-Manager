@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using YOVR_Dash_Manager.Functions;
 
 namespace OVR_Dash_Manager.Forms.Profile_Manager
 {

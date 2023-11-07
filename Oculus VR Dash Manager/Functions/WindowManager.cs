@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Hardcodet.Wpf.TaskbarNotification;
+using OVR_Dash_Manager.Functions;
+using System;
+using System.Drawing;
 using System.IO; // For Stream
 using System.Reflection; // For Assembly
-using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Hardcodet.Wpf.TaskbarNotification;
-using YOVR_Dash_Manager.Functions;
-using OculusVRDashManager.Functions;
 
 namespace OculusVRDashManager.Functions
 {

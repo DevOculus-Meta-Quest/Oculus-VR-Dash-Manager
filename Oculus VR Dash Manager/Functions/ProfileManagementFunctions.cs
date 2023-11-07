@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using YOVR_Dash_Manager.Functions;
 
 namespace OVR_Dash_Manager.Functions
 {

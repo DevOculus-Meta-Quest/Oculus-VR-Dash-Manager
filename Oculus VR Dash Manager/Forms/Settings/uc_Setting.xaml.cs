@@ -18,7 +18,7 @@ namespace OVR_Dash_Manager.Forms.Settings
         public string Setting { get; set; }
         public bool Alert { get; set; }
         public string AlertMessage { get; set; }
-        public bool MinToTray{ get; set; }
+        public bool MinToTray { get; set; }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {

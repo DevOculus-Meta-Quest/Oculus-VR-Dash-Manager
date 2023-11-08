@@ -18,6 +18,26 @@
             VerticalAlignment="Top"
             Background="Black"
             BorderBrush="#FF0E49F9"
-            Foreground="#FFF0F6F5" />
+            Foreground="#FFF0F6F5">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <Image
+                            Width="100"
+                            Height="100"
+                            Margin="5"
+                            Source="{Binding ImagePath}" />
+                        <StackPanel Margin="5" Orientation="Vertical">
+                            <TextBlock
+                                FontWeight="Bold"
+                                Foreground="White"
+                                Text="{Binding Name}" />
+                            <TextBlock Foreground="Gray" Text="{Binding ID}" />
+                            <TextBlock Foreground="Gray" Text="{Binding InstallPath}" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>

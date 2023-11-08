@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq; // You might need to use Newtonsoft.Json or another JSON library
 
 namespace OVR_Dash_Manager.Functions
@@ -136,8 +137,13 @@ namespace OVR_Dash_Manager.Functions
             {
                 if (Directory.Exists(oculusPath))
                 {
-                    var appDirectories = Directory.GetDirectories(oculusPath);
-                    installedApps.AddRange(appDirectories.Select(Path.GetFileName));
+                    var appDirectories = Directory.GetDirectories(oculusPath)
+                        .Select(Path.GetFileName)
+                        // Exclude directories that start with a drive letter pattern
+                        .Where(name => !name.StartsWith("C_") && !name.StartsWith("D_") && !name.StartsWith("E_") && !name.StartsWith("F_") && !name.StartsWith("G_") && !name.StartsWith("H_"))
+                        .ToList();
+
+                    installedApps.AddRange(appDirectories);
                 }
             }
 
@@ -165,22 +171,38 @@ namespace OVR_Dash_Manager.Functions
                         var jsonData = File.ReadAllText(manifestFile);
                         var jsonObject = JObject.Parse(jsonData);
 
-                        // Assuming the app's ID is used as a directory name under StoreAssets
+                        var appName = jsonObject["canonicalName"]?.ToString().Replace("_assets", "").Replace("-", " ");
                         var appID = jsonObject["appId"]?.ToString();
-                        var appAssetsPath = Path.Combine(storeAssetsPath, appID);
+                        var installPath = jsonObject["install_path"]?.ToString(); // If install_path is provided
+
+                        // Convert the app name to the asset folder name
+                        var assetFolderName = ConvertAppNameToAssetFolderName(appName.Replace(" ", "-"));
+                        var appAssetsPath = Path.Combine(storeAssetsPath, assetFolderName);
 
                         // Assuming 'cover_square_image.jpg' is the image you want to use
-                        var imagePath = Path.Combine(appAssetsPath, "cover_square_image.jpg");
+                        var imageFileName = "cover_square_image.jpg";
+                        var imagePath = Path.Combine(appAssetsPath, imageFileName);
+
+                        if (!File.Exists(imagePath))
+                        {
+                            // If the specific image file does not exist, log an error or handle accordingly
+                            ErrorLogger.LogError(new FileNotFoundException(), $"Image file not found: {imagePath}");
+                            imagePath = null; // Or set a default image path
+                        }
 
                         var appDetails = new OculusAppDetails
                         {
-                            Name = jsonObject["canonicalName"]?.ToString(),
+                            Name = appName,
                             ID = appID,
-                            InstallPath = jsonObject["install_path"]?.ToString(), // If install_path is provided
-                            ImagePath = File.Exists(imagePath) ? imagePath : null
+                            InstallPath = installPath,
+                            ImagePath = imagePath
                         };
 
-                        appDetailsList.Add(appDetails);
+                        // Exclude apps with names starting with a drive letter pattern
+                        if (!Regex.IsMatch(appName, @"^[A-Z]_"))
+                        {
+                            appDetailsList.Add(appDetails);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -190,6 +212,12 @@ namespace OVR_Dash_Manager.Functions
             }
 
             return appDetailsList;
+        }
+
+        private static string ConvertAppNameToAssetFolderName(string appName)
+        {
+            // Replace spaces with "-" and append "_assets" to the app name
+            return appName.Replace(" ", "-").ToLower() + "_assets";
         }
     }
 }

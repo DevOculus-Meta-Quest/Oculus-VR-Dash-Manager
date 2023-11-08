@@ -3,9 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json.Linq; // You might need to use Newtonsoft.Json or another JSON library
 
 namespace OVR_Dash_Manager.Functions
 {
+    public class OculusAppDetails
+    {
+        public string Name { get; set; }
+        public string ID { get; set; }
+        public string InstallPath { get; set; }
+        public string ImagePath { get; set; }
+    }
+
     public static class OculusAppChecker
     {
         // Cache for installed apps
@@ -133,6 +142,54 @@ namespace OVR_Dash_Manager.Functions
             }
 
             return installedApps;
+        }
+
+        /// <summary>
+        /// Retrieves details for all installed Oculus apps.
+        /// </summary>
+        /// <returns>A list of OculusAppDetails with information about each installed app.</returns>
+        public static List<OculusAppDetails> GetOculusAppDetails()
+        {
+            var appDetailsList = new List<OculusAppDetails>();
+            var manifestsPath = @"C:\Program Files\Oculus\CoreData\Manifests";
+            var storeAssetsPath = @"C:\Program Files\Oculus\CoreData\Software\StoreAssets";
+
+            if (Directory.Exists(manifestsPath))
+            {
+                var manifestFiles = Directory.GetFiles(manifestsPath, "*.json");
+
+                foreach (var manifestFile in manifestFiles)
+                {
+                    try
+                    {
+                        var jsonData = File.ReadAllText(manifestFile);
+                        var jsonObject = JObject.Parse(jsonData);
+
+                        // Assuming the app's ID is used as a directory name under StoreAssets
+                        var appID = jsonObject["appId"]?.ToString();
+                        var appAssetsPath = Path.Combine(storeAssetsPath, appID);
+
+                        // Assuming 'cover_square_image.jpg' is the image you want to use
+                        var imagePath = Path.Combine(appAssetsPath, "cover_square_image.jpg");
+
+                        var appDetails = new OculusAppDetails
+                        {
+                            Name = jsonObject["canonicalName"]?.ToString(),
+                            ID = appID,
+                            InstallPath = jsonObject["install_path"]?.ToString(), // If install_path is provided
+                            ImagePath = File.Exists(imagePath) ? imagePath : null
+                        };
+
+                        appDetailsList.Add(appDetails);
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorLogger.LogError(ex, $"Error parsing manifest file: {manifestFile}");
+                    }
+                }
+            }
+
+            return appDetailsList;
         }
     }
 }

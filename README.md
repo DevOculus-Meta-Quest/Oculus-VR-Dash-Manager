@@ -9,13 +9,14 @@ Unlock the full potential of your Oculus VR experience with <b>Oculus VR Dash Ma
 </p>
 
 ## **Index**
-1. [Features](#-features-)
-2. [Screenshots](#-screenshots-)
-3. [Download](#️-download-️)
-4. [Credits](#-credits-)
-5. [Changelog](#-changelog-)
+1. [Features](#features)
+2. [Screenshots](#screenshots)
+3. [Download](#download)
+4. [Support Our Journey](#support-our-journey)
+5. [Credits](#credits)
+6. [Changelog](#changelog)
 
-## 🌟 Features 🌟
+## <a name="features"></a>🌟 Features 🌟
 
 ### 🎮 **Profile Manager: Now with Oculus/Air Link Settings**
 
@@ -59,7 +60,7 @@ _Step into the future of virtual reality with the enhanced Profile Manager — y
 ### 🕹 **Oculus SDK Wrapper**
    - Utilized to access Controller Logs and more, contributing to the Oculus Viewer in the Other Tools Menu Option. Special thanks to the original author of the wrapper, [@nkast](https://github.com/nkast/LibOVR).
 
-## 📸 Screenshots 📸
+## <a name="screenshots"></a>📸 Screenshots 📸
 
 <p align="center">
  <table>
@@ -82,7 +83,7 @@ _Step into the future of virtual reality with the enhanced Profile Manager — y
 </table>
 </p>
 
-## ⬇️ Download ⬇️
+## <a name="download"></a>⬇️ Download ⬇️
 
 Grab the latest release [here](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/releases).
 
@@ -95,10 +96,29 @@ Grab the latest release [here](https://github.com/DevOculus-Meta-Quest/Oculus-VR
   <a href="https://www.paypal.com/donate/?business=X76ZW4RHA6T9C&no_recurring=0&item_name=Support+the+evolution+of+Oculus+VR+Dash+Manager%21+Your+donation+fuels+innovation+and+enhanced+virtual+experiences.+%F0%9F%9A%80%F0%9F%8C%90&currency_code=USD"><img src="https://img.shields.io/badge/Donate-PayPal-green.svg" alt="PayPal"></a>
 </p>
 
-## 📜 Changelog 📜
+## <a name="support-our-journey"></a>💖 Support Our Journey 💖
+
+We're thrilled to see you're interested in Oculus VR Dash Manager! Behind every line of code, every user interface, and each seamless experience, there's a story of dedication and countless hours of hard work. This project is not just a tool; it's a labor of love, passion, and a continuous commitment to the VR community.
+
+**Why Consider Donating?**
+- **Sustain Development**: Your support enables us to dedicate time and resources to improve Oculus VR Dash Manager continuously.
+- **Fuel Innovation**: Donations help us explore new features, refine existing ones, and keep pushing the boundaries of what's possible in VR.
+- **Community Empowerment**: We believe in empowering users like you, and your contribution helps us to keep this project alive and accessible for everyone.
+
+**Every Contribution Matters**
+Whether it's the price of a cup of coffee or a more substantial amount, your donation makes a significant impact. It's not just a transaction; it's a statement that you value the effort and expertise poured into this project.
+
+**Join Us on This Journey**
+If you've enjoyed using Oculus VR Dash Manager, or you believe in what we're trying to achieve, please consider supporting us. Let's make the VR experience better together!
+
+[🚀 Donate Now and Be a Part of the Innovation! 🚀](https://www.paypal.com/donate/?business=X76ZW4RHA6T9C&no_recurring=0&item_name=Support+the+evolution+of+Oculus+VR+Dash+Manager%21+Your+donation+fuels+innovation+and+enhanced+virtual+experiences.+%F0%9F%9A%80%F0%9F%8C%90&currency_code=USD)
+
+Thank you for considering a donation to Oculus VR Dash Manager. Your support is the wind beneath our wings! 🌟
+
+## <a name="changelog"></a>📜 Changelog 📜
 [View the changelog here](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/blob/Main/CHANGELOG.md)
 
-## 🙏 Credits 🙏
+## <a name="credits"></a>🙏 Credits 🙏
 
 - **Original Author**: [@KrisIsBackAU](https://github.com/KrisIsBackAU/Oculus-VR-Dash-Manager)
 - **Profile Manager Scripts**: [@ASchneiderBR](https://github.com/ASchneiderBR/VR-Scripts)

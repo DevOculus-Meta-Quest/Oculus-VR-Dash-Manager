@@ -1,8 +1,8 @@
 ﻿<Window
     x:Class="OVR_Dash_Manager.Forms.Profile_Manager.frm_ProfileManager"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Profile Manager"
     Width="980"
@@ -268,8 +268,28 @@
                 </ComboBox>
             </Grid>
         </GroupBox>
-
         <!--  Additional settings outside of the Oculus/Air Link GroupBox  -->
+        <GroupBox
+            x:Name="gb_OculusSteamApps"
+            Margin="10,344,320,31"
+            Header="Oculus/Steam Apps" />
+        <Button
+            x:Name="btn_SteamApps"
+            Width="101"
+            Margin="39,374,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="btn_SteamApps_Click"
+            Content="Steam Apps" />
+        <Button
+            x:Name="btn_OculusApps"
+            Margin="39,409,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="btn_OculusApps_Click"
+            Content="Oculus Apps" />
+
+
         <!--  Make sure to follow the same pattern of Grid.Row and Margin for alignment  -->
     </Grid>
 </Window>

@@ -35,9 +35,9 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() =>
-            {
-                LoadRegistrySettings();
-            }), System.Windows.Threading.DispatcherPriority.ContextIdle);
+                {
+                    LoadRegistrySettings();
+                }), System.Windows.Threading.DispatcherPriority.ContextIdle);
         }
 
         private void LoadRegistrySettings()
@@ -913,6 +913,30 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 ErrorLogger.LogError(new Exception(errorMessage));
                 Debug.WriteLine(errorMessage);
             }
+        }
+
+        private void btn_SteamApps_Click(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of frm_SteamApps window
+            var steamAppsWindow = new frm_SteamApps();
+
+            // Set the frm_OtherTools window as the owner of steamAppsWindow
+            steamAppsWindow.Owner = this;
+
+            // Show the window
+            steamAppsWindow.Show();
+        }
+
+        private void btn_OculusApps_Click(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of frm_SteamApps window
+            var OculusAppsWindow = new frm_OculusApps();
+
+            // Set the frm_OtherTools window as the owner of steamAppsWindow
+            OculusAppsWindow.Owner = this;
+
+            // Show the window
+            OculusAppsWindow.Show();
         }
     }
 }

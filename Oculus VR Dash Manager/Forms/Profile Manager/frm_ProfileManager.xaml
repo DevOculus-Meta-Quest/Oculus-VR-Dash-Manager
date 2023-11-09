@@ -10,6 +10,7 @@
     Background="#FF0A0909"
     Foreground="#FFEAF8F8"
     Loaded="Window_Loaded"
+    ResizeMode="NoResize"
     Topmost="True"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
@@ -268,27 +269,43 @@
                 </ComboBox>
             </Grid>
         </GroupBox>
-        <!--  Additional settings outside of the Oculus/Air Link GroupBox  -->
-        <GroupBox
-            x:Name="gb_OculusSteamApps"
-            Margin="10,344,320,31"
-            Header="Oculus/Steam Apps" />
-        <Button
-            x:Name="btn_SteamApps"
-            Width="101"
-            Margin="39,374,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Click="btn_SteamApps_Click"
-            Content="Steam Apps" />
-        <Button
-            x:Name="btn_OculusApps"
-            Margin="39,409,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Click="btn_OculusApps_Click"
-            Content="Oculus Apps" />
 
+        <!--  Overlay StackPanel for Oculus and Steam apps buttons at the bottom left  -->
+        <StackPanel
+            Height="108"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom">
+            <StackPanel.Background>
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="Black" />
+                    <GradientStop Offset="1" Color="White" />
+                </LinearGradientBrush>
+            </StackPanel.Background>
+
+            <!--  Label for the buttons section  -->
+            <Label
+                Margin="0,0,0,5"
+                Content="Oculus/Steam Apps:"
+                Foreground="White" />
+
+            <!--  Button for Steam Apps  -->
+            <Button
+                x:Name="btn_SteamApps"
+                Width="120"
+                Height="30"
+                Margin="0,0,0,5"
+                Click="btn_SteamApps_Click"
+                Content="Steam Apps" />
+
+            <!--  Button for Oculus Apps  -->
+            <Button
+                x:Name="btn_OculusApps"
+                Width="120"
+                Height="30"
+                Click="btn_OculusApps_Click"
+                Content="Oculus Apps" />
+        </StackPanel>
 
         <!--  Make sure to follow the same pattern of Grid.Row and Margin for alignment  -->
     </Grid>

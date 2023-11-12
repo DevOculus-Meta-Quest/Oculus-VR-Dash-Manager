@@ -1,11 +1,20 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq; // You might need to use Newtonsoft.Json or another JSON library
 
 namespace OVR_Dash_Manager.Functions
 {
+    public class SteamAppDetails
+    {
+        public string Name { get; set; }
+        public string ID { get; set; }
+        public string InstallPath { get; set; }
+        public string ImagePath { get; set; }
+    }
     public static class SteamAppChecker
     {
         // Cache for installed apps
@@ -63,7 +72,7 @@ namespace OVR_Dash_Manager.Functions
         /// <returns>The installation path of Steam.</returns>
         private static string GetSteamPath()
         {
-            string steamPath = (string)Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", null);
+            string steamPath = (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", null);
             return steamPath;
         }
 
@@ -123,7 +132,6 @@ namespace OVR_Dash_Manager.Functions
         /// Checks if SteamVR is running a beta version.
         /// </summary>
         /// <returns>True if it's a beta version; otherwise, false.</returns>
-        /// // Usage bool isBeta = SteamAppChecker.IsSteamVRBeta();
         public static bool IsSteamVRBeta()
         {
             try
@@ -149,6 +157,71 @@ namespace OVR_Dash_Manager.Functions
                 ErrorLogger.LogError(ex, "Error checking if SteamVR is a beta version.");
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Retrieves details for all installed Steam apps.
+        /// </summary>
+        /// <returns>A list of SteamAppDetails with information about each installed app.</returns>
+        public static List<SteamAppDetails> GetSteamAppDetails()
+        {
+            var appDetailsList = new List<SteamAppDetails>();
+            var manifestsPath = @"C:\Program Files\Oculus\CoreData\Manifests";
+            var storeAssetsPath = @"C:\Program Files\Oculus\CoreData\Software\StoreAssets";
+
+            if (Directory.Exists(manifestsPath))
+            {
+                var manifestFiles = Directory.GetFiles(manifestsPath, "*.json");
+
+                foreach (var manifestFile in manifestFiles)
+                {
+                    try
+                    {
+                        var jsonData = File.ReadAllText(manifestFile);
+                        var jsonObject = JObject.Parse(jsonData);
+
+                        var appName = jsonObject["canonicalName"]?.ToString();
+                        if (appName != null && appName.Contains("_steamapps_") && !appName.EndsWith("_assets"))
+                        {
+                            var appID = jsonObject["appId"]?.ToString();
+                            var installPath = jsonObject["install_path"]?.ToString(); // If install_path is provided
+
+                            var assetFolderName = ConvertAppNameToAssetFolderName(appName);
+                            var appAssetsPath = Path.Combine(storeAssetsPath, assetFolderName);
+
+                            var imageFileName = "cover_square_image.jpg";
+                            var imagePath = Path.Combine(appAssetsPath, imageFileName);
+
+                            if (!File.Exists(imagePath))
+                            {
+                                ErrorLogger.LogError(new FileNotFoundException(), $"Image file not found: {imagePath}");
+                                imagePath = null; // Or set a default image path
+                            }
+
+                            var appDetails = new SteamAppDetails
+                            {
+                                Name = appName,
+                                ID = appID,
+                                InstallPath = installPath,
+                                ImagePath = imagePath
+                            };
+
+                            appDetailsList.Add(appDetails);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ErrorLogger.LogError(ex, $"Error parsing manifest file: {manifestFile}");
+                    }
+                }
+            }
+
+            return appDetailsList;
+        }
+
+        private static string ConvertAppNameToAssetFolderName(string appName)
+        {
+            return appName.Replace(" ", "-").ToLower() + "_assets";
         }
     }
 }

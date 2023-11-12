@@ -5,47 +5,39 @@
     Title="Steam Apps"
     Width="800"
     Height="450"
-    Background="#FF030303"
-    Foreground="#FFF0F6F5"
+    Background="#FF0B0B0B"
+    Foreground="#FFF4EAEA"
     WindowStartupLocation="CenterOwner">
     <Grid Background="Black">
         <ListView
-            x:Name="listViewSteamApps"
+            Name="listViewSteamApps"
             Width="760"
             Height="400"
             Margin="10,10,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Background="Black"
-            Foreground="#FFF4F4E9"
-            ItemsSource="{Binding}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn
-                        Width="Auto"
-                        DisplayMemberBinding="{Binding Name}"
-                        Header="Game Name" />
-                    <GridViewColumn
-                        Width="Auto"
-                        DisplayMemberBinding="{Binding ID}"
-                        Header="Game ID" />
-                    <GridViewColumn
-                        Width="Auto"
-                        DisplayMemberBinding="{Binding Path}"
-                        Header="Install Path" />
-                    <!--  For the image, use a DataTemplate to display it  -->
-                    <GridViewColumn Header="App Image">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Image
-                                    Width="50"
-                                    Height="50"
-                                    Source="{Binding ImagePath}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
+            BorderBrush="#FF0E49F9"
+            Foreground="#FFF0F6F5">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <Image
+                            Width="100"
+                            Height="100"
+                            Margin="5"
+                            Source="{Binding ImagePath}" />
+                        <StackPanel Margin="5" Orientation="Vertical">
+                            <TextBlock
+                                FontWeight="Bold"
+                                Foreground="White"
+                                Text="{Binding Name}" />
+                            <TextBlock Foreground="Gray" Text="{Binding ID}" />
+                            <TextBlock Foreground="Gray" Text="{Binding InstallPath}" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
     </Grid>
 </Window>

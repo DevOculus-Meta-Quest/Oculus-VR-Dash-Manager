@@ -87,12 +87,12 @@
         <GroupBox
             x:Name="gb_ProfileManager"
             Grid.ColumnSpan="2"
-            Margin="10,328,625,57"
+            Margin="10,328,615,57"
             Header="Profile Manager" />
         <GroupBox
             x:Name="gb_DashCustomizer"
             Grid.Column="1"
-            Margin="90,324,360,57"
+            Margin="90,324,345,57"
             Header="Dash Customizer" />
         <Button
             x:Name="btn_PNG2DDS"
@@ -115,7 +115,7 @@
         <GroupBox
             x:Name="gb_OculusKiller"
             Grid.Column="1"
-            Margin="397,324,83,57"
+            Margin="397,324,60,57"
             Header="Oculus Killer" />
         <Button
             x:Name="btn_OculusView"
@@ -146,13 +146,13 @@
             Grid.Column="1"
             Width="100"
             Height="30"
-            Margin="486,368,104,67"
+            Margin="514,368,76,67"
             Click="btn_DeleteLog_Click"
             Content="Delete" />
         <Button
             x:Name="btn_OpenLog"
             Grid.Column="1"
-            Margin="415,368,209,67"
+            Margin="415,368,181,67"
             Click="btn_OpenLog_Click"
             Content="Logfile"
             IsEnabled="False" />

@@ -132,27 +132,19 @@ namespace OVR_Dash_Manager.Forms
         {
             try
             {
-                // Replace with the actual path to your VDF file
                 string filePath = @"C:\Program Files (x86)\Steam\userdata\201667287\config\shortcuts.vdf";
-
                 VdfParser parser = new VdfParser();
                 var vdfData = parser.ParseVdf(filePath);
 
                 // Process or display the parsed data
-                // For example, you can display it in a MessageBox or a text control
-                DisplayVdfData(vdfData);
+                foreach (var entry in vdfData)
+                {
+                    Debug.WriteLine($"{entry.Key}: {FormatValue(entry.Value)}");
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message);
-            }
-        }
-
-        private void DisplayVdfData(Dictionary<string, object> vdfData)
-        {
-            foreach (var entry in vdfData)
-            {
-                Debug.WriteLine($"{entry.Key}: {FormatValue(entry.Value)}");
+                Debug.WriteLine("Error: " + ex.Message);
             }
         }
 
@@ -170,7 +162,7 @@ namespace OVR_Dash_Manager.Forms
 
         private string FormatDictionary(Dictionary<string, object> dict)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             foreach (var entry in dict)
             {
                 sb.AppendLine($"{entry.Key}: {FormatValue(entry.Value)}");

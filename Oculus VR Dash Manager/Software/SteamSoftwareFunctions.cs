@@ -19,23 +19,19 @@ namespace OVR_Dash_Manager.Software
                 if (File.Exists(vdfFilePath))
                 {
                     VdfParser parser = new VdfParser();
-                    // Assuming ParseVdf returns Dictionary<string, object>
-                    Dictionary<string, object> vdfData = parser.ParseVdf(vdfFilePath);
+                    var vdfData = parser.ParseVdf(vdfFilePath);
 
                     foreach (var entry in vdfData)
                     {
-                        var appDetails = entry.Value as Dictionary<string, object>; // Cast to the correct type
-
-                        var appName = appDetails["AppName"] as string;
-                        var exePath = appDetails["Exe"] as string;
-                        // Extract other properties as needed
-
-                        nonSteamApps.Add(new SteamAppDetails
+                        if (entry.Value is Dictionary<string, object> appDetails)
                         {
-                            Name = appName,
-                            InstallPath = exePath,
-                            // Other properties as needed
-                        });
+                            SteamAppDetails details = new SteamAppDetails();
+                            details.Name = appDetails.ContainsKey("AppName") ? appDetails["AppName"].ToString() : "Unknown";
+                            details.ExePath = appDetails.ContainsKey("Exe") ? appDetails["Exe"].ToString() : "Unknown";
+                            // Add other properties as needed
+
+                            nonSteamApps.Add(details);
+                        }
                     }
                 }
             }
@@ -43,5 +39,11 @@ namespace OVR_Dash_Manager.Software
             return nonSteamApps;
         }
 
+        public class SteamAppDetails
+        {
+            public string Name { get; set; }
+            public string ExePath { get; set; }
+            // Add other properties as needed
+        }
     }
 }

@@ -1,27 +1,47 @@
 ﻿using OVR_Dash_Manager.Functions;
-using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace OVR_Dash_Manager.Software
 {
     public static class SteamSoftwareFunctions
     {
-        public static string[] GetInstalledSteamGames()
+        public static List<SteamAppDetails> GetNonSteamAppDetails()
         {
-            try
-            {
-                // Get all installed Steam apps using the SteamAppChecker function
-                List<string> installedApps = SteamAppChecker.GetInstalledApps();
+            List<SteamAppDetails> nonSteamApps = new List<SteamAppDetails>();
+            string steamUserDataPath = @"C:\Program Files (x86)\Steam\userdata";
+            var userDirectories = Directory.GetDirectories(steamUserDataPath);
 
-                // Return the app names as a string array
-                return installedApps.ToArray();
-            }
-            catch (Exception ex)
+            foreach (var userDir in userDirectories)
             {
-                // Log the error using the ErrorLogger
-                ErrorLogger.LogError(ex, "An error occurred while retrieving the list of installed Steam games.");
-                return new string[0]; // Return an empty array in case of an error
+                string vdfFilePath = Path.Combine(userDir, @"config\shortcuts.vdf");
+                if (File.Exists(vdfFilePath))
+                {
+                    VdfParser parser = new VdfParser();
+                    // Assuming ParseVdf returns Dictionary<string, object>
+                    Dictionary<string, object> vdfData = parser.ParseVdf(vdfFilePath);
+
+                    foreach (var entry in vdfData)
+                    {
+                        var appDetails = entry.Value as Dictionary<string, object>; // Cast to the correct type
+
+                        var appName = appDetails["AppName"] as string;
+                        var exePath = appDetails["Exe"] as string;
+                        // Extract other properties as needed
+
+                        nonSteamApps.Add(new SteamAppDetails
+                        {
+                            Name = appName,
+                            InstallPath = exePath,
+                            // Other properties as needed
+                        });
+                    }
+                }
             }
+
+            return nonSteamApps;
         }
+
     }
 }

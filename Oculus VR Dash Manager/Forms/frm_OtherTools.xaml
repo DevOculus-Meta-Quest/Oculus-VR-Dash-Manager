@@ -156,5 +156,11 @@
             Click="btn_OpenLog_Click"
             Content="Logfile"
             IsEnabled="False" />
+        <Button
+            x:Name="btn_TestSteam"
+            Margin="8,69,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Test Steam" Click="btn_TestSteam_Click" />
     </Grid>
 </Window>

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System;
 using System.IO;
+using System.Text;
 
 namespace OVR_Dash_Manager.Functions
 {
@@ -21,7 +18,7 @@ namespace OVR_Dash_Manager.Functions
 
         private Dictionary<string, object> ReadNextObject(BinaryReader br)
         {
-            Dictionary<string, object> result = new Dictionary<string, object>();
+            var result = new Dictionary<string, object>();
             while (true)
             {
                 var type = br.ReadByte();
@@ -57,14 +54,14 @@ namespace OVR_Dash_Manager.Functions
 
         private string ReadString(BinaryReader br)
         {
-            List<byte> bytes = new List<byte>();
+            var bytes = new List<byte>();
             while (true)
             {
                 byte b = br.ReadByte();
                 if (b == 0) break;
                 bytes.Add(b);
             }
-            return System.Text.Encoding.UTF8.GetString(bytes.ToArray());
+            return Encoding.UTF8.GetString(bytes.ToArray());
         }
     }
 }

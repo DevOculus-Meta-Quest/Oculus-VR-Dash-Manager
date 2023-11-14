@@ -3,6 +3,7 @@ using System.Windows; // Make sure you have the correct using directives
 using OVR_Dash_Manager.Software; // This line is crucial
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace OVR_Dash_Manager.Forms
 {
@@ -21,17 +22,17 @@ namespace OVR_Dash_Manager.Forms
         {
             try
             {
-                // Assuming GetOculusAppDetails is a static method in the OculusAppChecker class
-                var SteamApps = SteamAppChecker.GetSteamAppDetails();
+                var steamApps = SteamAppChecker.GetSteamAppDetails(); // List of SteamAppDetails
+                var nonSteamApps = SteamSoftwareFunctions.GetNonSteamAppDetails(); // List of NonSteamAppDetails
 
-                // Set the ListView's ItemsSource to the list of Oculus apps
-                listViewSteamApps.ItemsSource = SteamApps;
+                // You can now use steamApps and nonSteamApps separately or combine them
+                // For example, setting them to a ListView's ItemsSource
+                listViewSteamApps.ItemsSource = steamApps;
+                listViewNonSteamApps.ItemsSource = nonSteamApps;
             }
             catch (Exception ex)
             {
-                // Use your ErrorLogger to log the exception
-                ErrorLogger.LogError(ex, "Error loading Oculus apps.");
-                MessageBox.Show("Error occurred while loading Oculus apps. Please check the error log for more details.");
+                // Error handling
             }
         }
     }

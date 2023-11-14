@@ -9,11 +9,18 @@
     Foreground="#FFF4EAEA"
     WindowStartupLocation="CenterOwner">
     <Grid Background="Black">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  ListView for Steam Apps  -->
         <ListView
             Name="listViewSteamApps"
-            Width="760"
+            Grid.Column="0"
+            Width="390"
             Height="400"
-            Margin="10,10,0,0"
+            Margin="10"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Background="Black"
@@ -35,6 +42,32 @@
                             <TextBlock Foreground="Gray" Text="{Binding ID}" />
                             <TextBlock Foreground="Gray" Text="{Binding InstallPath}" />
                         </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!--  ListView for Non-Steam Apps  -->
+        <ListView
+            Name="listViewNonSteamApps"
+            Grid.Column="1"
+            Width="390"
+            Height="400"
+            Margin="10"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="Black"
+            BorderBrush="#FF0E49F9"
+            Foreground="#FFF0F6F5">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <!--  Customize this template as needed for Non-Steam Apps  -->
+                        <TextBlock
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="{Binding Name}" />
+                        <TextBlock Foreground="Gray" Text="{Binding ExePath}" />
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -63,5 +63,35 @@ namespace OVR_Dash_Manager.Functions
             }
             return Encoding.UTF8.GetString(bytes.ToArray());
         }
+
+        public List<ShortcutInfo> ExtractSpecificData(Dictionary<string, object> vdfData)
+        {
+            var shortcuts = new List<ShortcutInfo>();
+            foreach (var entry in vdfData)
+            {
+                if (entry.Value is Dictionary<string, object> shortcutData)
+                {
+                    var info = new ShortcutInfo
+                    {
+                        AppName = shortcutData["AppName"].ToString(),
+                        Exe = shortcutData["Exe"].ToString()
+                    };
+                    shortcuts.Add(info);
+                }
+            }
+            return shortcuts;
+        }
+
     }
+
+    class ShortcutInfo
+    {
+        public string AppName { get; set; }
+        public string Exe { get; set; }
+    }
+
+    // Usage in your existing code
+    // var vdfData = parser.ParseVdf(filePath);
+    // var shortcutInfos = parser.ExtractSpecificData(vdfData);
+    // Process shortcutInfos as needed
 }

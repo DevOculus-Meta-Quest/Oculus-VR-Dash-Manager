@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using OVR_Dash_Manager.Functions; // Assuming ErrorLogger is in this namespace
 
 namespace OVR_Dash_Manager.Functions
 {
@@ -9,10 +10,18 @@ namespace OVR_Dash_Manager.Functions
     {
         public Dictionary<string, object> ParseVdf(string filePath)
         {
-            using (FileStream fs = new FileStream(filePath, FileMode.Open))
-            using (BinaryReader br = new BinaryReader(fs))
+            try
             {
-                return ReadNextObject(br);
+                using (FileStream fs = new FileStream(filePath, FileMode.Open))
+                using (BinaryReader br = new BinaryReader(fs))
+                {
+                    return ReadNextObject(br);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.LogError(ex, "Error parsing VDF file: " + filePath);
+                return null; // or handle the error as appropriate
             }
         }
 
@@ -46,7 +55,7 @@ namespace OVR_Dash_Manager.Functions
                 }
                 else
                 {
-                    throw new Exception("Unknown type");
+                    throw new Exception("Unknown type encountered in VDF file.");
                 }
             }
             return result;
@@ -73,15 +82,14 @@ namespace OVR_Dash_Manager.Functions
                 {
                     var info = new ShortcutInfo
                     {
-                        AppName = shortcutData["AppName"].ToString(),
-                        Exe = shortcutData["Exe"].ToString()
+                        AppName = shortcutData.ContainsKey("AppName") ? shortcutData["AppName"].ToString() : "Unknown",
+                        Exe = shortcutData.ContainsKey("Exe") ? shortcutData["Exe"].ToString() : "Unknown"
                     };
                     shortcuts.Add(info);
                 }
             }
             return shortcuts;
         }
-
     }
 
     class ShortcutInfo
@@ -89,9 +97,4 @@ namespace OVR_Dash_Manager.Functions
         public string AppName { get; set; }
         public string Exe { get; set; }
     }
-
-    // Usage in your existing code
-    // var vdfData = parser.ParseVdf(filePath);
-    // var shortcutInfos = parser.ExtractSpecificData(vdfData);
-    // Process shortcutInfos as needed
 }

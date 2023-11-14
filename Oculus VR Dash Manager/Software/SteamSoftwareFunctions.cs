@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace OVR_Dash_Manager.Software
 {
@@ -60,20 +61,21 @@ namespace OVR_Dash_Manager.Software
 
                 var parsedData = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonData);
 
-                VdfParser parser = new VdfParser(); // Create an instance of VdfParser
-                var shortcutInfos = parser.ExtractSpecificData(parsedData); // Use the instance to call the method
-
-                Debug.WriteLine("Extracted Shortcut Infos: " + shortcutInfos.Count); // Debug print
-
-                foreach (var info in shortcutInfos)
+                if (parsedData.ContainsKey("shortcuts"))
                 {
-                    NonSteamAppDetails details = new NonSteamAppDetails
+                    var shortcuts = parsedData["shortcuts"] as JObject; // Cast to JObject
+                    foreach (var shortcutEntry in shortcuts)
                     {
-                        Name = info.AppName,
-                        ExePath = info.Exe
-                    };
-                    nonSteamApps.Add(details);
-                    Debug.WriteLine($"Added NonSteamApp: {details.Name}, Path: {details.ExePath}"); // Debug print
+                        var shortcutDetails = shortcutEntry.Value.ToObject<Dictionary<string, object>>(); // Convert each shortcut to a dictionary
+
+                        NonSteamAppDetails details = new NonSteamAppDetails
+                        {
+                            Name = shortcutDetails["AppName"].ToString(),
+                            ExePath = shortcutDetails["Exe"].ToString()
+                        };
+                        nonSteamApps.Add(details);
+                        Debug.WriteLine($"Added NonSteamApp: {details.Name}, Path: {details.ExePath}"); // Debug print
+                    }
                 }
             }
             catch (Exception ex)

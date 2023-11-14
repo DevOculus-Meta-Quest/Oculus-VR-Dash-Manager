@@ -1,9 +1,8 @@
 ﻿using OVR_Dash_Manager.Functions;
-using System.Windows; // Make sure you have the correct using directives
-using OVR_Dash_Manager.Software; // This line is crucial
-using System.Collections.Generic;
+using System.Windows; // Ensure correct using directives
+using OVR_Dash_Manager.Software;
 using System;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace OVR_Dash_Manager.Forms
 {
@@ -18,21 +17,25 @@ namespace OVR_Dash_Manager.Forms
             LoadSteamApps();
         }
 
-        private void LoadSteamApps()
+        private async void LoadSteamApps()
         {
             try
             {
-                var steamApps = SteamAppChecker.GetSteamAppDetails(); // List of SteamAppDetails
-                var nonSteamApps = SteamSoftwareFunctions.GetNonSteamAppDetails(); // List of NonSteamAppDetails
+                await Task.Run(() =>
+                {
+                    var steamApps = SteamAppChecker.GetSteamAppDetails(); // Assuming this method exists
+                    var nonSteamApps = SteamSoftwareFunctions.GetNonSteamAppDetails();
 
-                // You can now use steamApps and nonSteamApps separately or combine them
-                // For example, setting them to a ListView's ItemsSource
-                listViewSteamApps.ItemsSource = steamApps;
-                listViewNonSteamApps.ItemsSource = nonSteamApps;
+                    Dispatcher.Invoke(() =>
+                    {
+                        listViewSteamApps.ItemsSource = steamApps;
+                        listViewNonSteamApps.ItemsSource = nonSteamApps;
+                    });
+                });
             }
             catch (Exception ex)
             {
-                // Error handling
+                ErrorLogger.LogError(ex, "Error loading Steam apps");
             }
         }
     }

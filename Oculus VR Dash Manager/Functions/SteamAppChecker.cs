@@ -195,7 +195,7 @@ namespace OVR_Dash_Manager.Functions
                             if (!File.Exists(imagePath))
                             {
                                 ErrorLogger.LogError(new FileNotFoundException(), $"Image file not found: {imagePath}");
-                                imagePath = null; // Or set a default image path
+                                imagePath = null; // Set imagePath to null if the image file is not found
                             }
 
                             var appDetails = new SteamAppDetails

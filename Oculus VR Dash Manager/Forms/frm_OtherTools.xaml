@@ -117,15 +117,6 @@
             Grid.Column="1"
             Margin="397,324,60,57"
             Header="Oculus Killer" />
-        <Button
-            x:Name="btn_OculusView"
-            Grid.ColumnSpan="2"
-            Width="129"
-            Margin="35,184,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Click="btn_OculusView_Click"
-            Content="Oculus Viewer" />
         <GroupBox
             x:Name="gb_Oculus"
             Grid.ColumnSpan="2"
@@ -158,9 +149,18 @@
             IsEnabled="False" />
         <Button
             x:Name="btn_TestSteam"
-            Margin="8,69,0,0"
+            Margin="49,181,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Test Steam" Click="btn_TestSteam_Click" />
+            Content="Test Steam" Click="btn_TestSteam_Click" Grid.Column="1" />
+        <Button
+            x:Name="btn_OculusView"
+            Grid.ColumnSpan="2"
+            Width="130"
+            Margin="24,181,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="btn_OculusView_Click"
+            Content="Oculus Viewer" />
     </Grid>
 </Window>

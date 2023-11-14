@@ -1,5 +1,8 @@
 ﻿using OVR_Dash_Manager.Functions;
+using System.Windows; // Make sure you have the correct using directives
+using System;
 using System.Collections.Generic;
+using System.Windows.Controls;
 using System.Windows;
 
 namespace OVR_Dash_Manager.Forms
@@ -17,13 +20,19 @@ namespace OVR_Dash_Manager.Forms
 
         private void LoadOculusApps()
         {
-            // Retrieve the cached app names using the public method
-            List<string> installedApps = OculusAppChecker.GetInstalledApps();
-
-            // Add the app names to the ListView
-            foreach (var app in installedApps)
+            try
             {
-                listViewOculusApps.Items.Add(app);
+                // Assuming GetOculusAppDetails is a static method in the OculusAppChecker class
+                var oculusApps = OculusAppChecker.GetOculusAppDetails();
+
+                // Set the ListView's ItemsSource to the list of Oculus apps
+                listViewOculusApps.ItemsSource = oculusApps;
+            }
+            catch (Exception ex)
+            {
+                // Use your ErrorLogger to log the exception
+                ErrorLogger.LogError(ex, "Error loading Oculus apps.");
+                MessageBox.Show("Error occurred while loading Oculus apps. Please check the error log for more details.");
             }
         }
     }

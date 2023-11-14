@@ -1,9 +1,9 @@
 ﻿using AdvancedSharpAdbClient;
+using OVR_Dash_Manager.Functions;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
-using YOVR_Dash_Manager.Functions;
 
 namespace OVR_Dash_Manager.Software
 {

@@ -1,11 +1,18 @@
-﻿<Window x:Class="OVR_Dash_Manager.Forms.Settings.frm_Settings_v2"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:OVR_Dash_Manager.Forms.Settings"
-        mc:Ignorable="d"
-        Title="Settings" Width="863" Height="924.74" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing">
+﻿<Window
+    x:Class="OVR_Dash_Manager.Forms.Settings.frm_Settings_v2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:OVR_Dash_Manager.Forms.Settings"
+    Title="Settings"
+    Width="863"
+    Height="995"
+    Closing="Window_Closing"
+    Loaded="Window_Loaded"
+    ResizeMode="CanMinimize"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -15,58 +22,260 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid x:Name="gd_Settings" Background="#FF212121">
-        <GroupBox Header="Dash Manager Settings" Margin="10,0" Height="177" VerticalAlignment="Top">
+    <Grid
+        x:Name="gd_Settings"
+        Margin="0,0,0,-6"
+        Background="#FF212121">
+        <GroupBox
+            Height="204"
+            Margin="10,10,10,0"
+            VerticalAlignment="Top"
+            Header="Dash Manager Settings">
             <Grid Margin="0">
-                <local:uc_Setting Setting="AlwaysOnTop" Margin="10,3,0,0" HorizontalAlignment="Left" Width="150" Height="30" VerticalAlignment="Top" />
-                <Label Content="Keep Dash Manager On Top" Margin="166,3,10,0" VerticalAlignment="Top" Height="30" />
-                <local:uc_Setting Setting="FastSwitch" Margin="10,41,0,0" HorizontalAlignment="Left" Width="150" Height="30" VerticalAlignment="Top" />
-                <Label Content="Switch Dashes with out Stopping Link (Cable &amp; Air Link Supported)" HorizontalAlignment="Left" Margin="166,41,0,0" VerticalAlignment="Top" Height="30" />
-                <local:uc_Setting Setting="Ignore_SteamVR_Status_HoverButtonAction" Margin="10,79,0,0" HorizontalAlignment="Left" Width="150" Height="30" VerticalAlignment="Top" />
-                <Label Content="Ignore SteamVR Status for Hover Button Actions" HorizontalAlignment="Left" Margin="166,79,0,0" VerticalAlignment="Top" Height="30" />
+                <local:uc_Setting
+                    Width="150"
+                    Height="30"
+                    Margin="10,3,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Setting="AlwaysOnTop" />
+                <Label
+                    Height="30"
+                    Margin="166,3,10,0"
+                    VerticalAlignment="Top"
+                    Content="Keep Dash Manager On Top" />
+                <local:uc_Setting
+                    Width="150"
+                    Height="30"
+                    Margin="10,41,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Setting="FastSwitch" />
+                <Label
+                    Height="30"
+                    Margin="166,41,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Switch Dashes with out Stopping Link (Cable &amp; Air Link Supported)" />
+                <local:uc_Setting
+                    Width="150"
+                    Height="30"
+                    Margin="10,79,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Setting="Ignore_SteamVR_Status_HoverButtonAction" />
+                <Label
+                    Height="30"
+                    Margin="166,79,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Ignore SteamVR Status for Hover Button Actions" />
+                <local:uc_Setting
+                    Width="150"
+                    Height="30"
+                    Margin="10,117,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Setting="MinToTray" />
+                <Label
+                    Height="30"
+                    Margin="166,117,10,0"
+                    VerticalAlignment="Top"
+                    Content="Minimize to System Tray" />
             </Grid>
         </GroupBox>
-        <GroupBox Header="Oculus Settings" Margin="10,177,10,0" Height="280" VerticalAlignment="Top">
+        <GroupBox
+            Height="280"
+            Margin="10,219,10,0"
+            VerticalAlignment="Top"
+            Header="Oculus Settings">
             <Grid Margin="0">
-                <local:uc_Setting Setting="RunOculusClientOnStartup" Margin="10,8,0,0" HorizontalAlignment="Left" Width="150" Height="30" VerticalAlignment="Top" />
-                <Label Content="Start Oculus Client Software - When Dash Manager Launches" Margin="165,8,10,0" VerticalAlignment="Top" Height="30" />
-                <local:uc_Setting Setting="Minimize_Oculus_Client_OnClientStart" Margin="10,46,0,0" HorizontalAlignment="Left" Width="150" Height="30" VerticalAlignment="Top" />
-                <Label Content="Minimize Oculus Client - When Oculus Client Starts &amp; Launched by Dash Manager" Margin="165,46,10,0" VerticalAlignment="Top" Height="30" />
-                <local:uc_Setting Setting="CloseOculusClientOnExit" Margin="10,84,0,0" HorizontalAlignment="Left" Width="150" Height="30" VerticalAlignment="Top" />
-                <Label Content="Close Oculus Client - When Dash Manager Exits" Margin="165,84,10,0" VerticalAlignment="Top" Height="30" />
-                <local:uc_Setting Setting="CloseOculusServicesOnExit" Margin="10,122,0,0" HorizontalAlignment="Left" Width="150" Height="30" VerticalAlignment="Top" />
-                <Label Content="Stop Oculus Services - When Manager Exits (When Oculus Services set to Manual Startup)" Margin="165,122,10,0" VerticalAlignment="Top" Height="30" />
-                <local:uc_Setting Setting="QuestPolling" Margin="10,160,0,0" HorizontalAlignment="Left" Width="150" Height="30" VerticalAlignment="Top" Alert="True" AlertMessage="EXPERIMENTAL&#10;&#10;REQUIRES Developer Mode&#10;&#10;REQUIRES OCULUS DEVELOPER ACCOUNT&#10;" />
-                <Label Content="Attempt to launch Quest Link automatically when connected to this computer" Margin="165,160,10,0" VerticalAlignment="Top" Height="30" />
-                <Label Content="^ (EXPERIMENTAL, REQUIRES Developer Mode) - REQUIRES OCULUS DEVELOPER ACCOUNT" Margin="165,195,10,0" VerticalAlignment="Top" Height="30" />
+                <local:uc_Setting
+                    Width="150"
+                    Height="30"
+                    Margin="10,8,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Setting="RunOculusClientOnStartup" />
+                <Label
+                    Height="30"
+                    Margin="165,8,10,0"
+                    VerticalAlignment="Top"
+                    Content="Start Oculus Client Software - When Dash Manager Launches" />
+                <local:uc_Setting
+                    Width="150"
+                    Height="30"
+                    Margin="10,46,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Setting="Minimize_Oculus_Client_OnClientStart" />
+                <Label
+                    Height="30"
+                    Margin="165,46,10,0"
+                    VerticalAlignment="Top"
+                    Content="Minimize Oculus Client - When Oculus Client Starts &amp; Launched by Dash Manager" />
+                <local:uc_Setting
+                    Width="150"
+                    Height="30"
+                    Margin="10,84,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Setting="CloseOculusClientOnExit" />
+                <Label
+                    Height="30"
+                    Margin="165,84,10,0"
+                    VerticalAlignment="Top"
+                    Content="Close Oculus Client - When Dash Manager Exits" />
+                <local:uc_Setting
+                    Width="150"
+                    Height="30"
+                    Margin="10,122,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Setting="CloseOculusServicesOnExit" />
+                <Label
+                    Height="30"
+                    Margin="165,122,10,0"
+                    VerticalAlignment="Top"
+                    Content="Stop Oculus Services - When Manager Exits (When Oculus Services set to Manual Startup)" />
+                <local:uc_Setting
+                    Width="150"
+                    Height="30"
+                    Margin="10,160,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Alert="True"
+                    AlertMessage="EXPERIMENTAL&#10;&#10;REQUIRES Developer Mode&#10;&#10;REQUIRES OCULUS DEVELOPER ACCOUNT&#10;"
+                    Setting="QuestPolling" />
+                <Label
+                    Height="30"
+                    Margin="165,160,10,0"
+                    VerticalAlignment="Top"
+                    Content="Attempt to launch Quest Link automatically when connected to this computer" />
+                <Label
+                    Height="30"
+                    Margin="165,195,10,0"
+                    VerticalAlignment="Top"
+                    Content="^ (EXPERIMENTAL, REQUIRES Developer Mode) - REQUIRES OCULUS DEVELOPER ACCOUNT" />
             </Grid>
         </GroupBox>
-        <GroupBox Header="Steam / SteamVR Settings" Margin="10,457,10,0" Height="135" VerticalAlignment="Top">
+        <GroupBox
+            Height="130"
+            Margin="10,504,10,0"
+            VerticalAlignment="Top"
+            Header="Steam / SteamVR Settings">
             <Grid Margin="0">
-                <local:uc_Setting Setting="SteamVRFocusFix" Margin="10,3,0,0" HorizontalAlignment="Left" Width="150" Height="30" VerticalAlignment="Top" />
-                <Label Content="Fix SteamVR Admin Program Focus Issue When it Occurs (Task View Glitch)" Margin="166,3,10,0" VerticalAlignment="Top" Height="30" />
-                <local:uc_Setting Setting="ExitLinkOn_UserExit_SteamVR" Margin="10,41,0,0" HorizontalAlignment="Left" Width="150" Height="30" VerticalAlignment="Top" />
-                <Label Content="Exit Oculus Link when User Closes Steam VR (Stable Link Connection Recommended)" Margin="166,41,10,0" VerticalAlignment="Top" Height="30" />
+                <local:uc_Setting
+                    Width="150"
+                    Height="30"
+                    Margin="10,3,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Setting="SteamVRFocusFix" />
+                <Label
+                    Height="30"
+                    Margin="166,3,10,0"
+                    VerticalAlignment="Top"
+                    Content="Fix SteamVR Admin Program Focus Issue When it Occurs (Task View Glitch)" />
+                <local:uc_Setting
+                    Width="150"
+                    Height="30"
+                    Margin="10,41,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Setting="ExitLinkOn_UserExit_SteamVR" />
+                <Label
+                    Height="30"
+                    Margin="166,41,10,0"
+                    VerticalAlignment="Top"
+                    Content="Exit Oculus Link when User Closes Steam VR (Stable Link Connection Recommended)" />
             </Grid>
         </GroupBox>
-        <GroupBox Header="Automatic Audio Switcher" Margin="10,592,10,0" Height="191" VerticalAlignment="Top">
+        <GroupBox
+            Height="200"
+            Margin="10,639,10,0"
+            VerticalAlignment="Top"
+            Header="Automatic Audio Switcher">
             <Grid Margin="0">
-                <local:uc_Setting Setting="Automatic_Audio_Switching" HorizontalAlignment="Left" Width="150" Height="30" VerticalAlignment="Top" />
-                <Label Content="Automatically Switch Audio on Program Launch (to Quest Speaker) &amp; Program Close (to Normal Speaker)" VerticalAlignment="Top" Height="30" Margin="155,0,10,0" />
-                <local:uc_Setting Setting="Auto_Audio_Change_DefaultCommunication" HorizontalAlignment="Left" Width="150" Height="30" VerticalAlignment="Top" Margin="0,32,0,0" />
-                <Label Content="Change Default Communications Device As Well" VerticalAlignment="Top" Height="30" Margin="155,33,10,0" />
-                <ComboBox x:Name="cbo_NormalSpeaker" Margin="155,68,170,0" VerticalAlignment="Top" DisplayMemberPath="Name" SelectionChanged="cbo_NormalSpeaker_SelectionChanged" />
-                <Label Content="Normal Speaker" VerticalAlignment="Top" Height="30" Margin="0,68,0,0" HorizontalAlignment="Left" Width="150" />
-                <ComboBox x:Name="cbo_QuestSpeaker" Margin="155,103,170,0" VerticalAlignment="Top" DisplayMemberPath="Name" SelectionChanged="cbo_QuestSpeaker_SelectionChanged" />
-                <Label Content="Quest Speaker" VerticalAlignment="Top" Height="30" Margin="0,103,0,0" HorizontalAlignment="Left" Width="150" />
-                <Button x:Name="btn_Set_Default_Normal" Margin="650,68,10,0" Content="Set As Current" Click="btn_Set_Default_Normal_Click" Height="30" VerticalAlignment="Top" />
-                <Button x:Name="btn_Set_Default_Quest" Margin="650,103,10,0" Content="Set As Current" Click="btn_Set_Default_Quest_Click" Height="30" VerticalAlignment="Top" />
+                <local:uc_Setting
+                    Width="150"
+                    Height="30"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Setting="Automatic_Audio_Switching" />
+                <Label
+                    Height="30"
+                    Margin="155,0,10,0"
+                    VerticalAlignment="Top"
+                    Content="Automatically Switch Audio on Program Launch (to Quest Speaker) &amp; Program Close (to Normal Speaker)" />
+                <local:uc_Setting
+                    Width="150"
+                    Height="30"
+                    Margin="0,32,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Setting="Auto_Audio_Change_DefaultCommunication" />
+                <Label
+                    Height="30"
+                    Margin="155,33,10,0"
+                    VerticalAlignment="Top"
+                    Content="Change Default Communications Device As Well" />
+                <ComboBox
+                    x:Name="cbo_NormalSpeaker"
+                    Margin="155,68,170,0"
+                    VerticalAlignment="Top"
+                    DisplayMemberPath="Name"
+                    SelectionChanged="cbo_NormalSpeaker_SelectionChanged" />
+                <Label
+                    Width="150"
+                    Height="30"
+                    Margin="0,68,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Normal Speaker" />
+                <ComboBox
+                    x:Name="cbo_QuestSpeaker"
+                    Margin="155,103,170,0"
+                    VerticalAlignment="Top"
+                    DisplayMemberPath="Name"
+                    SelectionChanged="cbo_QuestSpeaker_SelectionChanged" />
+                <Label
+                    Width="150"
+                    Height="30"
+                    Margin="0,103,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Quest Speaker" />
+                <Button
+                    x:Name="btn_Set_Default_Normal"
+                    Height="30"
+                    Margin="650,68,10,0"
+                    VerticalAlignment="Top"
+                    Click="btn_Set_Default_Normal_Click"
+                    Content="Set As Current" />
+                <Button
+                    x:Name="btn_Set_Default_Quest"
+                    Height="30"
+                    Margin="650,103,10,0"
+                    VerticalAlignment="Top"
+                    Click="btn_Set_Default_Quest_Click"
+                    Content="Set As Current" />
             </Grid>
         </GroupBox>
-        <GroupBox Header="Auto Launch Programs" Margin="10,788,10,10">
+        <GroupBox Margin="10,854,10,10" Header="Auto Launch Programs">
             <Grid Margin="0">
-                <Button x:Name="btn_Open_Auto_Launch_Settings" Margin="0,0,665,0" Content="Open Settings" Click="btn_Open_Auto_Launch_Settings_Click"    Height="30" VerticalAlignment="Top" />
-                <Label Content="Allows Programs to be started upon Dash Manage Startup &amp; Closing" VerticalAlignment="Top" Height="30" Margin="155,0,10,0" />
+                <Button
+                    x:Name="btn_Open_Auto_Launch_Settings"
+                    Height="30"
+                    Margin="0,0,665,0"
+                    VerticalAlignment="Top"
+                    Click="btn_Open_Auto_Launch_Settings_Click"
+                    Content="Open Settings" />
+                <Label
+                    Height="30"
+                    Margin="155,0,10,0"
+                    VerticalAlignment="Top"
+                    Content="Allows Programs to be started upon Dash Manage Startup &amp; Closing" />
             </Grid>
         </GroupBox>
     </Grid>

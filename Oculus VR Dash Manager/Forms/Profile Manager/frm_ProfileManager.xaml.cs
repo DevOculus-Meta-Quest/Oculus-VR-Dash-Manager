@@ -1,28 +1,16 @@
-﻿using ImageMagick;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Newtonsoft.Json;
 using OVR_Dash_Manager.Functions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using YOVR_Dash_Manager.Functions;
-using RegistryKeyType = OVR_Dash_Manager.Functions.RegistryKeyType;
-
-
 
 namespace OVR_Dash_Manager.Forms.Profile_Manager
 {
@@ -47,9 +35,9 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() =>
-            {
-                LoadRegistrySettings();
-            }), System.Windows.Threading.DispatcherPriority.ContextIdle);
+                {
+                    LoadRegistrySettings();
+                }), System.Windows.Threading.DispatcherPriority.ContextIdle);
         }
 
         private void LoadRegistrySettings()
@@ -126,6 +114,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         _ => "Default" // Default or unknown value
                     };
                     break;
+
                 case "cb_VideoCodec":
                     // Map the registry values to the ComboBox items
                     valueToSelect = registryValue switch
@@ -135,6 +124,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         _ => "Default" // Default or unknown value
                     };
                     break;
+
                 case "cb_slicedEncoding":
                     // Map the registry values to the ComboBox items
                     valueToSelect = registryValue switch
@@ -144,6 +134,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         _ => "Default" // Default or unknown value
                     };
                     break;
+
                 case "cb_LinkSharpening":
                     // Update the switch case to match the correct registry values
                     valueToSelect = registryValue switch
@@ -154,6 +145,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         _ => "Disabled" // Default or unknown value
                     };
                     break;
+
                 case "cb_LocalDimming":
                     // Map the registry values to the ComboBox items
                     valueToSelect = registryValue switch
@@ -326,14 +318,17 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                                 // Set the value to 0 for Low
                                 OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
                                 break;
+
                             case "High":
                                 // Set the value to 1 for High
                                 OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
                                 break;
+
                             case "Default":
                                 // Remove the value for Default
                                 key.DeleteValue(keyName, throwOnMissingValue: false);
                                 break;
+
                             default:
                                 // Handle any other unexpected case
                                 break;
@@ -397,14 +392,17 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                                 // Remove the key for Default
                                 key.DeleteValue(keyName, throwOnMissingValue: false);
                                 break;
+
                             case "H.264":
                                 // Set the value to 0 for H.264
                                 OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
                                 break;
+
                             case "H.265":
                                 // Set the value to 1 for H.265
                                 OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
                                 break;
+
                             default:
                                 // Handle any other unexpected case
                                 break;
@@ -469,14 +467,17 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                                 // Remove the key for Default
                                 key.DeleteValue(keyName, throwOnMissingValue: false);
                                 break;
+
                             case "On":
                                 // Set the value to 5 for On
                                 OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 5, RegistryValueKind.DWord);
                                 break;
+
                             case "Off":
                                 // Set the value to 1 for Off
                                 OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
                                 break;
+
                             default:
                                 // Handle any other unexpected case
                                 break;
@@ -598,14 +599,17 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                                 // Remove the key if the selection is "Default"
                                 key.DeleteValue(keyName, throwOnMissingValue: false);
                                 break;
+
                             case "Enabled":
                                 // Set the key value to 1 if "Enabled" is selected
                                 OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
                                 break;
+
                             case "Disabled":
                                 // Set the key value to 0 if "Disabled" is selected
                                 OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
                                 break;
+
                             default:
                                 // Log the error or handle the unexpected value
                                 string errorMessage = $"Unexpected selection: {selectedValue}";
@@ -637,7 +641,6 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 textBox.LostFocus += Txt_DynamicBitrateMax_LostFocus; // Attach the event.
             }
         }
-
 
         private void Txt_DynamicBitrateMax_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -910,6 +913,30 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 ErrorLogger.LogError(new Exception(errorMessage));
                 Debug.WriteLine(errorMessage);
             }
+        }
+
+        private void btn_SteamApps_Click(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of frm_SteamApps window
+            var steamAppsWindow = new frm_SteamApps();
+
+            // Set the frm_OtherTools window as the owner of steamAppsWindow
+            steamAppsWindow.Owner = this;
+
+            // Show the window
+            steamAppsWindow.Show();
+        }
+
+        private void btn_OculusApps_Click(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of frm_SteamApps window
+            var OculusAppsWindow = new frm_OculusApps();
+
+            // Set the frm_OtherTools window as the owner of steamAppsWindow
+            OculusAppsWindow.Owner = this;
+
+            // Show the window
+            OculusAppsWindow.Show();
         }
     }
 }

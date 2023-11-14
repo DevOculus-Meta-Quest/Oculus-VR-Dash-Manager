@@ -1,6 +1,8 @@
 ﻿using OVR_Dash_Manager.Functions;
-using System.Collections.Generic;
-using System.Windows;
+using System.Windows; // Ensure correct using directives
+using OVR_Dash_Manager.Software;
+using System;
+using System.Threading.Tasks;
 
 namespace OVR_Dash_Manager.Forms
 {
@@ -15,15 +17,25 @@ namespace OVR_Dash_Manager.Forms
             LoadSteamApps();
         }
 
-        private void LoadSteamApps()
+        private async void LoadSteamApps()
         {
-            // Retrieve the cached app names using the public method
-            List<string> installedApps = SteamAppChecker.GetInstalledApps();
-
-            // Add the app names to the ListView
-            foreach (var app in installedApps)
+            try
             {
-                listViewSteamApps.Items.Add(app);
+                await Task.Run(() =>
+                {
+                    var steamApps = SteamAppChecker.GetSteamAppDetails(); // Assuming this method exists
+                    var nonSteamApps = SteamSoftwareFunctions.GetNonSteamAppDetails();
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        listViewSteamApps.ItemsSource = steamApps;
+                        listViewNonSteamApps.ItemsSource = nonSteamApps;
+                    });
+                });
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.LogError(ex, "Error loading Steam apps");
             }
         }
     }

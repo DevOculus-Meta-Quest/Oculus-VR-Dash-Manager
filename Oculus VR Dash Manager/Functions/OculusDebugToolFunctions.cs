@@ -1,9 +1,9 @@
-﻿using System;
+﻿using OVR_Dash_Manager.Functions;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using YOVR_Dash_Manager.Functions;
 
 public class OculusDebugToolFunctions : IDisposable
 {

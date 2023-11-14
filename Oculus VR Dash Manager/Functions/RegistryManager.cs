@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.Win32;
-using YOVR_Dash_Manager.Functions;
+﻿using Microsoft.Win32;
+using OVR_Dash_Manager.Functions;
+using System;
 
 public static class RegistryManager
 {

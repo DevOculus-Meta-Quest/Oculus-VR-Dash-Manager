@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:OVR_Dash_Manager.Forms.Profile_Manager"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Profile Manager"
     Width="980"
@@ -11,6 +10,7 @@
     Background="#FF0A0909"
     Foreground="#FFEAF8F8"
     Loaded="Window_Loaded"
+    ResizeMode="NoResize"
     Topmost="True"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
@@ -270,7 +270,43 @@
             </Grid>
         </GroupBox>
 
-        <!--  Additional settings outside of the Oculus/Air Link GroupBox  -->
+        <!--  Overlay StackPanel for Oculus and Steam apps buttons at the bottom left  -->
+        <StackPanel
+            Height="108"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom">
+            <StackPanel.Background>
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="Black" />
+                    <GradientStop Offset="1" Color="White" />
+                </LinearGradientBrush>
+            </StackPanel.Background>
+
+            <!--  Label for the buttons section  -->
+            <Label
+                Margin="0,0,0,5"
+                Content="Oculus/Steam Apps:"
+                Foreground="White" />
+
+            <!--  Button for Steam Apps  -->
+            <Button
+                x:Name="btn_SteamApps"
+                Width="120"
+                Height="30"
+                Margin="0,0,0,5"
+                Click="btn_SteamApps_Click"
+                Content="Steam Apps" />
+
+            <!--  Button for Oculus Apps  -->
+            <Button
+                x:Name="btn_OculusApps"
+                Width="120"
+                Height="30"
+                Click="btn_OculusApps_Click"
+                Content="Oculus Apps" />
+        </StackPanel>
+
         <!--  Make sure to follow the same pattern of Grid.Row and Margin for alignment  -->
     </Grid>
 </Window>

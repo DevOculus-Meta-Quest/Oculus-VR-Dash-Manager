@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using System;
-using YOVR_Dash_Manager.Functions;
 
 namespace OVR_Dash_Manager.Functions
 {
@@ -43,10 +42,12 @@ namespace OVR_Dash_Manager.Functions
                         int intValue = Convert.ToInt32(value);
                         key.SetValue(keyName, intValue, RegistryValueKind.DWord);
                         break;
+
                     case RegistryValueKind.String:
                         string stringValue = Convert.ToString(value);
                         key.SetValue(keyName, stringValue, RegistryValueKind.String);
                         break;
+
                     case RegistryValueKind.ExpandString:
                         string expandStringValue = Convert.ToString(value);
                         key.SetValue(keyName, expandStringValue, RegistryValueKind.ExpandString);

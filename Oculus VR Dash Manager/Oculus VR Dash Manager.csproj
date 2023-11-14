@@ -13,7 +13,7 @@
     <Copyright>2023</Copyright>
     <PackageIcon>Icon.ico</PackageIcon>
     <PackageIconUrl />
-    <Version>1.6.0.0</Version>
+    <Version>1.7.0.0</Version>
     <Authors>Eliminater74</Authors>
     <PackageReleaseNotes>Official &amp; Oculus Killer - Supported with Updates
 https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager</PackageReleaseNotes>
@@ -64,6 +64,7 @@ https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager</PackageReleaseNo
     <PackageReference Include="AudioSwitcher.AudioApi.CoreAudio" Version="3.0.3" />
     <PackageReference Include="BrettHewitt.PlaybackDeviceSwitcher" Version="1.0.5" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.1" />
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
     <PackageReference Include="InputSimulator" Version="1.0.4" />
     <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="13.3.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
@@ -81,10 +82,10 @@ https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager</PackageReleaseNo
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="Icon.ico">
+    <EmbeddedResource Include="Icon.ico">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
-    </None>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

@@ -34,6 +34,7 @@ namespace OVR_Dash_Manager.Software
         public static bool Steam_VR_Installed { get; private set; }
         public static bool Steam_VR_Monitor_Running { get; private set; }
         public static bool Steam_VR_Server_Running { get; private set; }
+
         // Method to check if Steam and SteamVR are installed
         public static void CheckInstalled()
         {
@@ -203,6 +204,7 @@ namespace OVR_Dash_Manager.Software
             }
             ManagerCalledExit = false;
         }
+
         #region SteamVR Focus Fix
 
         // Method to focus Steam VR Monitor Window
@@ -243,7 +245,9 @@ namespace OVR_Dash_Manager.Software
                 }
             }
         }
+
         #endregion SteamVR Focus Fix
+
         // Class to represent stripped version of OpenVR
         internal class OpenVR_Stripped
         {
@@ -291,6 +295,7 @@ namespace OVR_Dash_Manager.Software
 
         // Method to set SteamVR runtime
         public static void Set_SteamVR_Runtime() => Run_RemoveUsbHelper_Action("setopenxrruntime");
+
         // Method to run remove USB helper action
         private static void Run_RemoveUsbHelper_Action(string action)
         {

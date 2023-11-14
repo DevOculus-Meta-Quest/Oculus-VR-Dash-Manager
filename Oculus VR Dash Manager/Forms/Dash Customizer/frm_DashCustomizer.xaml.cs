@@ -1,10 +1,10 @@
-﻿using OVR_Dash_Manager.Software;
+﻿using OVR_Dash_Manager.Functions;
+using OVR_Dash_Manager.Software;
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
-using YOVR_Dash_Manager.Functions;
 using Color = System.Windows.Media.Color;
 using ImageConverter = OVR_Dash_Manager.Functions.ImageConverter;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;

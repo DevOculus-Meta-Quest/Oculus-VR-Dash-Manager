@@ -1,16 +1,17 @@
 ﻿<Window
     x:Class="OVR_Dash_Manager.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Oculus VR Dash Manager"
     Width="855"
     Height="505"
     Closing="Window_Closing"
     Loaded="Window_Loaded"
+    ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
-    WindowStyle="ToolWindow"
+    WindowStyle="None"
     mc:Ignorable="d">
 
     <Window.Resources>
@@ -18,8 +19,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/MetroDark.MSControls.Core.Implicit.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <!--  ToggleButton Style  -->
             <Style
                 x:Key="RuntimeToggleButtonStyle"
                 BasedOn="{StaticResource ToggleButtonStyle}"
@@ -45,310 +44,351 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid Height="465" Background="#FF212121">
-        <Label
-            x:Name="lbl_Title"
-            Height="41"
-            Margin="10,5,10,0"
+    <Grid>
+        <!--  Custom Title Bar  -->
+        <Border
+            Height="30"
             VerticalAlignment="Top"
-            HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"
-            Content="Oculus VR Dash Manager "
-            Cursor="Hand"
-            FontFamily="Copperplate Gothic Bold"
-            FontSize="36"
-            FontWeight="Bold"
-            PreviewMouseDown="lbl_Title_PreviewMouseDown">
-            <Label.Foreground>
-                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                    <GradientStop Color="Black" />
-                    <GradientStop Offset="1" Color="White" />
-                </LinearGradientBrush>
-            </Label.Foreground>
-            <Label.BorderBrush>
-                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                    <GradientStop Color="Black" />
-                    <GradientStop Offset="1" Color="#FF31338E" />
-                    <GradientStop Offset="0.319" Color="#FF0F102D" />
-                    <GradientStop Offset="0.581" Color="#FF0F102D" />
-                </LinearGradientBrush>
-            </Label.BorderBrush>
-        </Label>
-        <Label
-            x:Name="lbl_CurrentSetting"
-            Height="44"
-            Margin="202,254,220,0"
-            VerticalAlignment="Top"
-            HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"
-            Content="Unknown"
-            FontSize="20" />
-        <GroupBox
-            x:Name="gb_DashCommands"
-            Height="171"
-            Margin="10,42,10,0"
-            VerticalAlignment="Top"
-            Header="VR-Dashes">
-            <Grid x:Name="gd_DashButtons">
+            Background="Gray"
+            MouseLeftButtonDown="Border_MouseLeftButtonDown">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <!--  Custom Minimize Button  -->
                 <Button
-                    x:Name="btn_Normal"
-                    Width="230"
-                    Margin="0,0,0,23"
-                    HorizontalAlignment="Left"
-                    BorderBrush="#FF515151"
-                    Click="btn_ActivateDash_Click"
-                    Content="Official Dash&#10;&#10;(SteamVR)&#10;Hover to activate"
-                    MouseEnter="btn_Normal_MouseEnter"
-                    MouseLeave="btn_Normal_MouseLeave" />
-                <ProgressBar
-                    x:Name="pb_Normal"
-                    Width="230"
-                    Height="23"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Bottom"
-                    Maximum="5000"
-                    SmallChange="10" />
-                <Label
-                    x:Name="lbl_ItsKaitlyn03"
-                    Width="210"
-                    Height="32"
-                    Margin="276,0,0,-4"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Bottom"
-                    HorizontalContentAlignment="Right"
-                    VerticalContentAlignment="Bottom"
-                    Content="Visit Oculus Killer (Github)"
-                    Cursor="Hand"
-                    FontSize="12"
-                    PreviewMouseDown="lbl_PreviewMouseDown" />
+                    Width="30"
+                    Height="30"
+                    Padding="0"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Background="Gray"
+                    Click="MinimizeButton_Click">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontFamily="Arial"
+                        FontSize="22"
+                        Text="-" />
+                </Button>
+                <!--  Custom Close Button  -->
                 <Button
-                    x:Name="btn_SteamVR"
-                    Width="196"
-                    Margin="0,0,0,23"
-                    HorizontalAlignment="Center"
-                    Click="btn_ActivateDash_Click"
-                    Content="          OculusKiller&#xA;&#xA;     (SteamVR Mode Only)" />
-                <Button
-                    x:Name="btn_ExitOculusLink"
-                    Width="230"
-                    Margin="0,0,0,23"
-                    HorizontalAlignment="Right"
-                    Click="btn_ActivateDash_Click"
-                    Content="Exit Link&#10;&#10;(SteamVR)&#10;Hover to activate"
-                    MouseEnter="btn_ExitOculusLink_MouseEnter"
-                    MouseLeave="btn_ExitOculusLink_MouseLeave" />
-                <ProgressBar
-                    x:Name="pb_Exit"
-                    Width="230"
-                    Height="23"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Maximum="5000"
-                    SmallChange="10" />
-            </Grid>
-        </GroupBox>
-        <Button
-            x:Name="btn_OpenDashLocation"
-            Width="190"
-            Height="30"
-            Margin="294,0,0,16"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Click="btn_OpenDashLocation_Click"
-            Content="Open Dash Location" />
-        <Button
-            x:Name="btn_OculusServiceManager"
-            Width="190"
-            Height="30"
-            Margin="294,0,0,51"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Click="btn_OculusServiceManager_Click"
-            Content="Oculus Service Manager" />
-        <Button
-            x:Name="btn_OpenSettings"
-            Width="111"
-            Height="22"
-            Margin="489,0,0,16"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Click="btn_OpenSettings_Click"
-            Content="Settings" />
-        <Label
-            x:Name="lbl_TestAccess"
-            Width="170"
-            Height="28"
-            Margin="0,39,0,0"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Top"
-            HorizontalContentAlignment="Center"
-            Content="Cable Link &amp; Air Link Supported"
-            FontSize="11"
-            FontStyle="Italic"
-            PreviewMouseRightButtonDown="lbl_TestAccess_PreviewMouseRightButtonDown" />
-        <Button
-            x:Name="btn_StartSteamVR"
-            Width="150"
-            Margin="21,242,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Click="btn_StartSteamVR_Click"
-            Content="Start SteamVR"
-            RenderTransformOrigin="0.496,1.156">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform />
-                    <SkewTransform AngleY="0.458" />
-                    <RotateTransform />
-                    <TranslateTransform Y="0.488" />
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button
-            x:Name="btn_Diagnostics"
-            Width="154"
-            Height="30"
-            Margin="135,0,0,51"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Click="btn_Diagnostics_Click"
-            Content="Diagnostics" />
-        <Button
-            x:Name="btn_CheckForUpdates"
-            Width="154"
-            Height="30"
-            Margin="135,0,0,16"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Click="btn_CheckForUpdates_Click"
-            Content="Update Checker" />
-        <Button
-            x:Name="btn_Help"
-            Width="110"
-            Height="30"
-            Margin="20,0,0,16"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Click="btn_Help_Click"
-            Content="Help" />
+                    Width="30"
+                    Height="30"
+                    Padding="0"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Background="Gray"
+                    Click="CloseButton_Click">
+                    X
+                </Button>
+            </StackPanel>
+        </Border>
 
-        <!--  Runtime ToggleButtons  -->
-        <StackPanel
-            x:Name="sp_RunTime"
-            Margin="0,0,10,11"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Orientation="Horizontal">
-            <ToggleButton
-                x:Name="btn_RunTime_SteamVR"
-                Width="66"
-                Margin="0,0,5,0"
-                Padding="10,0,10,2"
+        <!--  Main content grid  -->
+        <Grid Height="465" Background="#FF212121">
+            <!--  Content goes here  -->
+            <Label
+                x:Name="lbl_Title"
+                Height="41"
+                Margin="10,5,10,0"
+                VerticalAlignment="Top"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Content="Oculus VR Dash Manager "
+                Cursor="Hand"
+                FontFamily="Copperplate Gothic Bold"
+                FontSize="36"
+                FontWeight="Bold"
+                PreviewMouseDown="lbl_Title_PreviewMouseDown">
+                <Label.Foreground>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="Black" />
+                        <GradientStop Offset="1" Color="White" />
+                    </LinearGradientBrush>
+                </Label.Foreground>
+                <Label.BorderBrush>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="Black" />
+                        <GradientStop Offset="1" Color="#FF31338E" />
+                        <GradientStop Offset="0.319" Color="#FF0F102D" />
+                        <GradientStop Offset="0.581" Color="#FF0F102D" />
+                    </LinearGradientBrush>
+                </Label.BorderBrush>
+            </Label>
+            <Label
+                x:Name="lbl_CurrentSetting"
+                Height="44"
+                Margin="202,254,220,0"
+                VerticalAlignment="Top"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Content="Unknown"
+                FontSize="20" />
+            <GroupBox
+                x:Name="gb_DashCommands"
+                Height="171"
+                Margin="10,42,10,0"
+                VerticalAlignment="Top"
+                Header="VR-Dashes">
+                <Grid x:Name="gd_DashButtons">
+                    <Button
+                        x:Name="btn_Normal"
+                        Width="230"
+                        Margin="0,0,0,23"
+                        HorizontalAlignment="Left"
+                        BorderBrush="#FF515151"
+                        Click="btn_ActivateDash_Click"
+                        Content="Official Dash&#10;&#10;(SteamVR)&#10;Hover to activate"
+                        MouseEnter="btn_Normal_MouseEnter"
+                        MouseLeave="btn_Normal_MouseLeave" />
+                    <ProgressBar
+                        x:Name="pb_Normal"
+                        Width="230"
+                        Height="23"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Maximum="5000"
+                        SmallChange="10" />
+                    <Label
+                        x:Name="lbl_ItsKaitlyn03"
+                        Width="210"
+                        Height="32"
+                        Margin="276,0,0,-4"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        HorizontalContentAlignment="Right"
+                        VerticalContentAlignment="Bottom"
+                        Content="Visit Oculus Killer (Github)"
+                        Cursor="Hand"
+                        FontSize="12"
+                        PreviewMouseDown="lbl_PreviewMouseDown" />
+                    <Button
+                        x:Name="btn_SteamVR"
+                        Width="196"
+                        Margin="0,0,0,23"
+                        HorizontalAlignment="Center"
+                        Click="btn_ActivateDash_Click"
+                        Content="          OculusKiller&#xA;&#xA;     (SteamVR Mode Only)" />
+                    <Button
+                        x:Name="btn_ExitOculusLink"
+                        Width="230"
+                        Margin="0,0,0,23"
+                        HorizontalAlignment="Right"
+                        Click="btn_ActivateDash_Click"
+                        Content="Exit Link&#10;&#10;(SteamVR)&#10;Hover to activate"
+                        MouseEnter="btn_ExitOculusLink_MouseEnter"
+                        MouseLeave="btn_ExitOculusLink_MouseLeave" />
+                    <ProgressBar
+                        x:Name="pb_Exit"
+                        Width="230"
+                        Height="23"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Maximum="5000"
+                        SmallChange="10" />
+                </Grid>
+            </GroupBox>
+            <Button
+                x:Name="btn_OpenDashLocation"
+                Width="190"
+                Height="30"
+                Margin="294,0,0,16"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
-                Checked="ToggleButton_Checked"
-                Content="SteamVR"
-                IsChecked="False"
-                Style="{StaticResource RuntimeToggleButtonStyle}"
-                Unchecked="ToggleButton_Unchecked" />
-            <ToggleButton
-                x:Name="btn_RunTime_Oculus"
-                Width="66"
-                Checked="ToggleButton_Checked"
-                Content="Oculus"
-                Style="{StaticResource RuntimeToggleButtonStyle}"
-                Unchecked="ToggleButton_Unchecked" />
-        </StackPanel>
+                Click="btn_OpenDashLocation_Click"
+                Content="Open Dash Location" />
+            <Button
+                x:Name="btn_OculusServiceManager"
+                Width="190"
+                Height="30"
+                Margin="294,0,0,51"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Click="btn_OculusServiceManager_Click"
+                Content="Oculus Service Manager" />
+            <Button
+                x:Name="btn_OpenSettings"
+                Width="111"
+                Height="22"
+                Margin="489,0,0,16"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Click="btn_OpenSettings_Click"
+                Content="Settings" />
+            <Label
+                x:Name="lbl_TestAccess"
+                Width="170"
+                Height="28"
+                Margin="0,39,0,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                HorizontalContentAlignment="Center"
+                Content="Cable Link &amp; Air Link Supported"
+                FontSize="11"
+                FontStyle="Italic"
+                PreviewMouseRightButtonDown="lbl_TestAccess_PreviewMouseRightButtonDown" />
+            <Button
+                x:Name="btn_StartSteamVR"
+                Width="150"
+                Margin="21,242,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="btn_StartSteamVR_Click"
+                Content="Start SteamVR"
+                RenderTransformOrigin="0.496,1.156">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform AngleY="0.458" />
+                        <RotateTransform />
+                        <TranslateTransform Y="0.488" />
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
+            <Button
+                x:Name="btn_Diagnostics"
+                Width="154"
+                Height="30"
+                Margin="135,0,0,51"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Click="btn_Diagnostics_Click"
+                Content="Diagnostics" />
+            <Button
+                x:Name="btn_CheckForUpdates"
+                Width="154"
+                Height="30"
+                Margin="135,0,0,16"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Click="btn_CheckForUpdates_Click"
+                Content="Update Checker" />
+            <Button
+                x:Name="btn_Help"
+                Width="110"
+                Height="30"
+                Margin="20,0,0,16"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Click="btn_Help_Click"
+                Content="Help" />
 
-        <Label
-            x:Name="lbl_RunTimeStatus"
-            Width="120"
-            Height="30"
-            Margin="700,0,0,37"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            HorizontalContentAlignment="Center"
-            Content="OpenXR Runtime:" />
-        <Button
-            x:Name="btn_OpenSteamVRSettings"
-            Width="150"
-            Height="22"
-            Margin="20,0,0,157"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Click="btn_OpenSteamVRSettings_Click"
-            Content="SteamVR Settings"
-            IsEnabled="False" />
-        <Label
-            x:Name="lbl_SteamVR_Status"
-            Width="114"
-            Height="30"
-            Margin="704,0,0,193"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            HorizontalContentAlignment="Center"
-            Content="N/A" />
-        <Button
-            x:Name="btn_ExitSteamVR"
-            Width="150"
-            Margin="20,0,0,122"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Click="btn_ExitSteamVR_Click"
-            Content="Exit SteamVR"
-            IsEnabled="False" />
-        <GroupBox
-            x:Name="gb_DesktopPlusStatus"
-            Height="60"
-            Margin="685,335,5,0"
-            VerticalAlignment="Top"
-            Header="Desktop+ Status" />
-        <GroupBox
-            x:Name="gb_SteamStatus"
-            Height="90"
-            Margin="678,218,12,0"
-            VerticalAlignment="Top"
-            Header="SteamVR Status" />
-        <GroupBox
-            x:Name="gb_DashStatus"
-            Margin="185,218,208,161"
-            Header="Current Dash" />
-        <Label
-            x:Name="lbl_DesktopPlusStatus"
-            Width="114"
-            Height="30"
-            Margin="704,0,0,78"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            HorizontalContentAlignment="Center"
-            Content="N/A" />
-        <Button
-            x:Name="btn_OtherTools"
-            Width="110"
-            Margin="20,383,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Click="btn_OtherTools_Click"
-            Content="Other Tools" />
-        <GroupBox
-            x:Name="gb_Steam"
-            Margin="10,218,658,113"
-            Header="Steam:" />
-        <GroupBox
-            x:Name="gb_Menu"
-            Margin="10,357,220,8"
-            Header="Menu" />
-        <Label
-            Margin="615,328,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top" />
-        <Label
-            x:Name="lbl_SteamVR_BetaStatus"
-            Width="150"
-            Height="30"
-            Margin="685,0,0,165"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            HorizontalContentAlignment="Center"
-            Content="N/A" />
+            <!--  Runtime ToggleButtons  -->
+            <StackPanel
+                x:Name="sp_RunTime"
+                Margin="0,0,10,11"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Orientation="Horizontal">
+                <ToggleButton
+                    x:Name="btn_RunTime_SteamVR"
+                    Width="66"
+                    Margin="0,0,5,0"
+                    Padding="10,0,10,2"
+                    VerticalAlignment="Bottom"
+                    Checked="ToggleButton_Checked"
+                    Content="SteamVR"
+                    IsChecked="False"
+                    Style="{StaticResource RuntimeToggleButtonStyle}"
+                    Unchecked="ToggleButton_Unchecked" />
+                <ToggleButton
+                    x:Name="btn_RunTime_Oculus"
+                    Width="66"
+                    Checked="ToggleButton_Checked"
+                    Content="Oculus"
+                    Style="{StaticResource RuntimeToggleButtonStyle}"
+                    Unchecked="ToggleButton_Unchecked" />
+            </StackPanel>
+
+            <Label
+                x:Name="lbl_RunTimeStatus"
+                Width="120"
+                Height="30"
+                Margin="700,0,0,37"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                HorizontalContentAlignment="Center"
+                Content="OpenXR Runtime:" />
+            <Button
+                x:Name="btn_OpenSteamVRSettings"
+                Width="150"
+                Height="22"
+                Margin="20,0,0,157"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Click="btn_OpenSteamVRSettings_Click"
+                Content="SteamVR Settings"
+                IsEnabled="False" />
+            <Label
+                x:Name="lbl_SteamVR_Status"
+                Width="114"
+                Height="30"
+                Margin="704,0,0,193"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                HorizontalContentAlignment="Center"
+                Content="N/A" />
+            <Button
+                x:Name="btn_ExitSteamVR"
+                Width="150"
+                Margin="20,0,0,122"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Click="btn_ExitSteamVR_Click"
+                Content="Exit SteamVR"
+                IsEnabled="False" />
+            <GroupBox
+                x:Name="gb_DesktopPlusStatus"
+                Height="60"
+                Margin="685,335,5,0"
+                VerticalAlignment="Top"
+                Header="Desktop+ Status" />
+            <GroupBox
+                x:Name="gb_SteamStatus"
+                Height="90"
+                Margin="678,218,12,0"
+                VerticalAlignment="Top"
+                Header="SteamVR Status" />
+            <GroupBox
+                x:Name="gb_DashStatus"
+                Margin="185,218,208,161"
+                Header="Current Dash" />
+            <Label
+                x:Name="lbl_DesktopPlusStatus"
+                Width="114"
+                Height="30"
+                Margin="704,0,0,78"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                HorizontalContentAlignment="Center"
+                Content="N/A" />
+            <Button
+                x:Name="btn_OtherTools"
+                Width="110"
+                Margin="20,383,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="btn_OtherTools_Click"
+                Content="Other Tools" />
+            <GroupBox
+                x:Name="gb_Steam"
+                Margin="10,218,658,113"
+                Header="Steam:" />
+            <GroupBox
+                x:Name="gb_Menu"
+                Margin="10,357,220,8"
+                Header="Menu" />
+            <Label
+                Margin="615,328,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" />
+            <Label
+                x:Name="lbl_SteamVR_BetaStatus"
+                Width="150"
+                Height="30"
+                Margin="685,0,0,165"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                HorizontalContentAlignment="Center"
+                Content="N/A" />
+        </Grid>
     </Grid>
 </Window>

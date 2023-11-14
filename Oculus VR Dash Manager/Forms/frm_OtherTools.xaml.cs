@@ -1,10 +1,13 @@
 ﻿using Microsoft.Win32;
 using OVR_Dash_Manager.Forms.Dash_Customizer;
 using OVR_Dash_Manager.Forms.Profile_Manager;
+using OVR_Dash_Manager.Functions;
 using OVR_Dash_Manager.Software;
 using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Text;
 using System.Windows;
 
 namespace OVR_Dash_Manager.Forms
@@ -35,30 +38,6 @@ namespace OVR_Dash_Manager.Forms
             {
                 ADB.InstallAPK(openFileDialog.FileName);
             }
-        }
-
-        private void btn_SteamAppsShow_Click(object sender, RoutedEventArgs e)
-        {
-            // Create an instance of frm_SteamApps window
-            var steamAppsWindow = new frm_SteamApps();
-
-            // Set the frm_OtherTools window as the owner of steamAppsWindow
-            steamAppsWindow.Owner = this;
-
-            // Show the window
-            steamAppsWindow.Show();
-        }
-
-        private void btn_OculusAppsShow_Click(object sender, RoutedEventArgs e)
-        {
-            // Create an instance of frm_SteamApps window
-            var OculusAppsWindow = new frm_OculusApps();
-
-            // Set the frm_OtherTools window as the owner of steamAppsWindow
-            OculusAppsWindow.Owner = this;
-
-            // Show the window
-            OculusAppsWindow.Show();
         }
 
         private void btn_ADBFileManager_Click(object sender, RoutedEventArgs e)
@@ -147,6 +126,48 @@ namespace OVR_Dash_Manager.Forms
 
             // Show the OculusView window
             oculusView.Show();
+        }
+
+        private void btn_TestSteam_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string filePath = @"C:\Program Files (x86)\Steam\userdata\201667287\config\shortcuts.vdf";
+                VdfParser parser = new VdfParser();
+                var vdfData = parser.ParseVdf(filePath);
+
+                // Process or display the parsed data
+                foreach (var entry in vdfData)
+                {
+                    Debug.WriteLine($"{entry.Key}: {FormatValue(entry.Value)}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error: " + ex.Message);
+            }
+        }
+
+        private string FormatValue(object value)
+        {
+            if (value is Dictionary<string, object> nestedDict)
+            {
+                return FormatDictionary(nestedDict);
+            }
+            else
+            {
+                return value.ToString();
+            }
+        }
+
+        private string FormatDictionary(Dictionary<string, object> dict)
+        {
+            var sb = new StringBuilder();
+            foreach (var entry in dict)
+            {
+                sb.AppendLine($"{entry.Key}: {FormatValue(entry.Value)}");
+            }
+            return sb.ToString();
         }
     }
 }

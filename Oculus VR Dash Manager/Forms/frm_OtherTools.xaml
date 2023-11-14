@@ -7,6 +7,7 @@
     Title="Other Tools"
     Width="800"
     Height="475"
+    ResizeMode="NoResize"
     Topmost="True"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
@@ -61,36 +62,10 @@
         </Label>
         <!--  Your UI elements go here  -->
         <Button
-            x:Name="btn_SteamAppsShow"
-            Grid.ColumnSpan="2"
-            Width="104"
-            Margin="36,394,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Click="btn_SteamAppsShow_Click"
-            Content="Steam Apps" />
-        <Button
-            x:Name="btn_OculusAppsShow"
-            Grid.ColumnSpan="2"
-            Width="105"
-            Margin="35,359,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Click="btn_OculusAppsShow_Click"
-            Content="Oculus Apps" />
-        <GroupBox
-            x:Name="gb_Apps"
-            Grid.ColumnSpan="2"
-            Height="99"
-            Margin="10,329,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Header="Steam/Oculus Apps" />
-        <Button
             x:Name="btn_InstallAPK"
             Grid.Column="1"
             Width="104"
-            Margin="85,354,0,0"
+            Margin="463,162,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="btn_InstallAPK_Click"
@@ -99,7 +74,7 @@
             x:Name="btn_ADBFileManager"
             Grid.Column="1"
             Width="144"
-            Margin="85,389,0,0"
+            Margin="463,194,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="btn_ADBFileManager_Click"
@@ -107,74 +82,41 @@
         <GroupBox
             x:Name="gb_ADBMenu"
             Grid.Column="1"
-            Margin="75,329,400,37"
+            Margin="438,129,60,232"
             Header="ADB Menu" />
         <GroupBox
             x:Name="gb_ProfileManager"
-            Grid.Column="1"
-            Margin="295,233,122,133"
+            Grid.ColumnSpan="2"
+            Margin="10,328,615,57"
             Header="Profile Manager" />
-        <Label
-            x:Name="lbl_ProfileManagerTest"
-            Grid.Column="1"
-            Width="225"
-            Margin="310,251,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Warning: Still in Development"
-            FontSize="16"
-            Foreground="#E5FF0000" />
         <GroupBox
             x:Name="gb_DashCustomizer"
             Grid.Column="1"
-            Margin="295,344,122,37"
+            Margin="90,324,345,57"
             Header="Dash Customizer" />
         <Button
             x:Name="btn_PNG2DDS"
             Grid.Column="1"
-            Width="215"
-            Margin="310,389,0,0"
+            Width="214"
+            Margin="100,363,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="btn_PNG2DDS_Click"
             Content="Oculus Dash Customizer" />
         <Button
             x:Name="btn_ProfileManager1"
-            Grid.Column="1"
+            Grid.ColumnSpan="2"
             Width="134"
-            Margin="310,282,0,0"
+            Margin="22,363,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="btn_ProfileManager1_Click"
             Content="Profile Manager" />
-        <Button
-            x:Name="btn_OpenLog"
-            Margin="22,268,22,167"
-            Click="btn_OpenLog_Click"
-            Content="Logfile"
-            IsEnabled="False" />
-        <Button
-            Name="btn_DeleteLog"
-            Grid.ColumnSpan="2"
-            Width="100"
-            Height="30"
-            Margin="93,267,607,168"
-            Click="btn_DeleteLog_Click"
-            Content="Delete" />
         <GroupBox
             x:Name="gb_OculusKiller"
-            Grid.ColumnSpan="2"
-            Margin="10,233,595,153"
+            Grid.Column="1"
+            Margin="397,324,60,57"
             Header="Oculus Killer" />
-        <Button
-            x:Name="btn_OculusView"
-            Grid.ColumnSpan="2"
-            Width="129"
-            Margin="35,184,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Click="btn_OculusView_Click"
-            Content="Oculus Viewer" />
         <GroupBox
             x:Name="gb_Oculus"
             Grid.ColumnSpan="2"
@@ -190,5 +132,35 @@
             Content="Warning: Still in Development"
             FontSize="16"
             Foreground="#E5FF0000" />
+        <Button
+            x:Name="btn_DeleteLog"
+            Grid.Column="1"
+            Width="100"
+            Height="30"
+            Margin="514,368,76,67"
+            Click="btn_DeleteLog_Click"
+            Content="Delete" />
+        <Button
+            x:Name="btn_OpenLog"
+            Grid.Column="1"
+            Margin="415,368,181,67"
+            Click="btn_OpenLog_Click"
+            Content="Logfile"
+            IsEnabled="False" />
+        <Button
+            x:Name="btn_TestSteam"
+            Margin="49,181,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Test Steam" Click="btn_TestSteam_Click" Grid.Column="1" />
+        <Button
+            x:Name="btn_OculusView"
+            Grid.ColumnSpan="2"
+            Width="130"
+            Margin="24,181,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="btn_OculusView_Click"
+            Content="Oculus Viewer" />
     </Grid>
 </Window>

@@ -13,19 +13,33 @@ namespace OVR_Dash_Manager.Software
         public static List<NonSteamAppDetails> GetNonSteamAppDetails()
         {
             var nonSteamApps = new List<NonSteamAppDetails>();
-            var vdfFilePath = @"C:\Program Files (x86)\Steam\userdata\201667287\config\shortcuts.vdf";
-            var tempFilePath = Path.GetTempFileName(); // Generates a temporary file path
+            var steamUserDataPath = @"C:\Program Files (x86)\Steam\userdata";
 
-            Debug.WriteLine($"Checking if VDF file exists at {vdfFilePath}");
+            Debug.WriteLine($"Searching for VDF files in {steamUserDataPath}");
 
-            if (File.Exists(vdfFilePath))
+            if (Directory.Exists(steamUserDataPath))
             {
-                WriteParsedDataToTempFile(vdfFilePath, tempFilePath);
-                nonSteamApps = ReadDataFromTempFile(tempFilePath);
+                foreach (var userDirectory in Directory.GetDirectories(steamUserDataPath))
+                {
+                    var vdfFilePath = Path.Combine(userDirectory, @"config\shortcuts.vdf");
+                    var tempFilePath = Path.GetTempFileName(); // Generates a temporary file path
+
+                    Debug.WriteLine($"Checking if VDF file exists at {vdfFilePath}");
+
+                    if (File.Exists(vdfFilePath))
+                    {
+                        WriteParsedDataToTempFile(vdfFilePath, tempFilePath);
+                        nonSteamApps.AddRange(ReadDataFromTempFile(tempFilePath));
+                    }
+                    else
+                    {
+                        ErrorLogger.LogError(new FileNotFoundException(), $"VDF file not found at {vdfFilePath}");
+                    }
+                }
             }
             else
             {
-                ErrorLogger.LogError(new FileNotFoundException(), $"VDF file not found at {vdfFilePath}");
+                ErrorLogger.LogError(new DirectoryNotFoundException(), $"Steam userdata directory not found at {steamUserDataPath}");
             }
 
             return nonSteamApps;

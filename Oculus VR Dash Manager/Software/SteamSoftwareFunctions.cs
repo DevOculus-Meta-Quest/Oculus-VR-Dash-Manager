@@ -1,12 +1,11 @@
-﻿using Newtonsoft.Json; // Ensure Newtonsoft.Json is installed
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using OVR_Dash_Manager.Functions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
-namespace OVR_Dash_Manager.Software
+namespace OVR_Dash_Manager.Functions
 {
     public static class SteamSoftwareFunctions
     {
@@ -14,6 +13,7 @@ namespace OVR_Dash_Manager.Software
         {
             var nonSteamApps = new List<NonSteamAppDetails>();
             var steamUserDataPath = @"C:\Program Files (x86)\Steam\userdata";
+            var oculusStoreAssetsPath = @"C:\Program Files\Oculus\CoreData\Software\StoreAssets";
 
             Debug.WriteLine($"Searching for VDF files in {steamUserDataPath}");
 
@@ -22,14 +22,20 @@ namespace OVR_Dash_Manager.Software
                 foreach (var userDirectory in Directory.GetDirectories(steamUserDataPath))
                 {
                     var vdfFilePath = Path.Combine(userDirectory, @"config\shortcuts.vdf");
-                    var tempFilePath = Path.GetTempFileName(); // Generates a temporary file path
+                    var tempFilePath = Path.GetTempFileName();
 
                     Debug.WriteLine($"Checking if VDF file exists at {vdfFilePath}");
 
                     if (File.Exists(vdfFilePath))
                     {
                         WriteParsedDataToTempFile(vdfFilePath, tempFilePath);
-                        nonSteamApps.AddRange(ReadDataFromTempFile(tempFilePath));
+                        var apps = ReadDataFromTempFile(tempFilePath);
+                        foreach (var app in apps)
+                        {
+                            app.ImagePath = FindImagePath(oculusStoreAssetsPath, app.Name);
+                            Debug.WriteLine($"Image path for {app.Name}: {app.ImagePath}");
+                        }
+                        nonSteamApps.AddRange(apps);
                     }
                     else
                     {
@@ -103,10 +109,30 @@ namespace OVR_Dash_Manager.Software
             return nonSteamApps;
         }
 
+        private static string FindImagePath(string basePath, string appName)
+        {
+            var searchName = appName.Replace(" ", "");
+            var directories = Directory.GetDirectories(basePath, $"*{searchName}*", SearchOption.AllDirectories);
+
+            foreach (var dir in directories)
+            {
+                var imagePath = Path.Combine(dir, "cover_square_image.jpg");
+                if (File.Exists(imagePath))
+                {
+                    Debug.WriteLine($"Found image for {appName} at {imagePath}");
+                    return imagePath;
+                }
+            }
+
+            Debug.WriteLine($"Image not found for {appName}");
+            return "Image Not Found";
+        }
+
         public class NonSteamAppDetails
         {
             public string Name { get; set; }
             public string ExePath { get; set; }
+            public string ImagePath { get; set; }
         }
     }
 }

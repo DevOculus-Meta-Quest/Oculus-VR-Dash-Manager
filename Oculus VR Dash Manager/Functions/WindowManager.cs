@@ -12,8 +12,8 @@ namespace OculusVRDashManager.Functions
 {
     public class WindowManager
     {
-        TaskbarIcon notifyIcon;
-        Window managedWindow; // The window that this WindowManager is managing
+        private TaskbarIcon notifyIcon;
+        private Window managedWindow; // The window that this WindowManager is managing
 
         public WindowManager(Window window)
         {

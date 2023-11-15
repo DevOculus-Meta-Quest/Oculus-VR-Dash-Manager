@@ -15,10 +15,11 @@ namespace OVR_Dash_Manager.Functions
         public string InstallPath { get; set; }
         public string ImagePath { get; set; }
     }
+
     public static class SteamAppChecker
     {
         // Cache for installed apps
-        static List<string> _installedApps;
+        private static List<string> _installedApps;
 
         /// <summary>
         /// Checks if a specific Steam app is installed.
@@ -71,7 +72,7 @@ namespace OVR_Dash_Manager.Functions
         /// Retrieves the installation path of Steam from the registry.
         /// </summary>
         /// <returns>The installation path of Steam.</returns>
-        static string GetSteamPath()
+        private static string GetSteamPath()
         {
             var steamPath = (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", null);
             return steamPath;
@@ -82,7 +83,7 @@ namespace OVR_Dash_Manager.Functions
         /// </summary>
         /// <param name="steamPath">The installation path of Steam.</param>
         /// <returns>A list of library paths.</returns>
-        static List<string> GetLibraryPaths(string steamPath)
+        private static List<string> GetLibraryPaths(string steamPath)
         {
             var libraryPaths = new List<string> { steamPath };
             var libraryFoldersVdfPath = Path.Combine(steamPath, @"steamapps\libraryfolders.vdf");
@@ -115,7 +116,7 @@ namespace OVR_Dash_Manager.Functions
         /// </summary>
         /// <param name="libraryPaths">A list of library paths to check.</param>
         /// <returns>A list of installed Steam app names.</returns>
-        static List<string> GetInstalledApps(List<string> libraryPaths)
+        private static List<string> GetInstalledApps(List<string> libraryPaths)
         {
             var installedApps = new List<string>();
 
@@ -225,7 +226,7 @@ namespace OVR_Dash_Manager.Functions
             return appDetailsList;
         }
 
-        static string ConvertAppNameToAssetFolderName(string appName)
+        private static string ConvertAppNameToAssetFolderName(string appName)
         {
             return appName.Replace(" ", "-").ToLower() + "_assets";
         }

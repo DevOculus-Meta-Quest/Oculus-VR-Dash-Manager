@@ -9,12 +9,12 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
     public partial class frm_Auto_Program_Launch_Settings : Window
     {
         // Flag to track if any programs were removed during the session
-        bool Programs_Removed;
+        private bool Programs_Removed;
 
         public frm_Auto_Program_Launch_Settings() => InitializeComponent();
 
         // Event handler for adding a program
-        void btn_Add_Program_Click(object sender, RoutedEventArgs e)
+        private void btn_Add_Program_Click(object sender, RoutedEventArgs e)
         {
             // Open a file dialog and get the selected file path
             var FilePath = Functions.FileBrowser.OpenSingle();
@@ -28,7 +28,7 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
         }
 
         // Event handler for removing a program
-        void btn_Remove_Program_Click(object sender, RoutedEventArgs e)
+        private void btn_Remove_Program_Click(object sender, RoutedEventArgs e)
         {
             // Check if a program is selected in the UI
             if (lv_Programs.SelectedItem is Software.Auto_Program Program)
@@ -40,7 +40,7 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
         }
 
         // Event handler for window load event
-        void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Bind the program list to the UI and refresh
             lv_Programs.ItemsSource = Software.Auto_Launch_Programs.Programs;
@@ -48,7 +48,7 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
         }
 
         // Event handler for window closing event
-        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // Check if any programs were removed or changed during the session
             var Changed = Programs_Removed ||
@@ -75,7 +75,7 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
         }
 
         // Event handler for opening the program folder
-        void btn_Open_Program_Folder_Click(object sender, RoutedEventArgs e)
+        private void btn_Open_Program_Folder_Click(object sender, RoutedEventArgs e)
         {
             // Check if a program is selected in the UI
             if (lv_Programs.SelectedItem is Software.Auto_Program Program)

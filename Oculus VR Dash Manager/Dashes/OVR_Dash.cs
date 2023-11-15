@@ -26,10 +26,10 @@ namespace OVR_Dash_Manager.Dashes
         public string AssetName { get; set; } = string.Empty;
         public string ProcessToStop { get; set; } = string.Empty;
 
-        long _Size = -1;
-        bool _DashActive;
-        bool _NeedUpdate;
-        bool _Installed;
+        private long _Size = -1;
+        private bool _DashActive;
+        private bool _NeedUpdate;
+        private bool _Installed;
 
         public bool DashActive
         {
@@ -49,7 +49,7 @@ namespace OVR_Dash_Manager.Dashes
             private set { _Installed = value; }
         }
 
-        string _CurrentVersion;
+        private string _CurrentVersion;
 
         public string CurrentVersion
         {
@@ -57,7 +57,7 @@ namespace OVR_Dash_Manager.Dashes
             private set { _CurrentVersion = value; }
         }
 
-        string _AvaliableVersion;
+        private string _AvaliableVersion;
 
         public string AvaliableVersion
         {
@@ -332,7 +332,7 @@ namespace OVR_Dash_Manager.Dashes
             return Activated;
         }
 
-        bool SwitchFiles(string NewFile, string OldFile)
+        private bool SwitchFiles(string NewFile, string OldFile)
         {
             var Activated = false;
 
@@ -350,7 +350,7 @@ namespace OVR_Dash_Manager.Dashes
             return Activated;
         }
 
-        void CloseProcessBeforeIfRequired()
+        private void CloseProcessBeforeIfRequired()
         {
             if (!string.IsNullOrEmpty(ProcessToStop))
             {

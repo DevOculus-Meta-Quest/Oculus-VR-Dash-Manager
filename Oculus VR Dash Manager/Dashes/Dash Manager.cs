@@ -8,9 +8,9 @@ namespace OVR_Dash_Manager.Dashes
 {
     public static class Dash_Manager
     {
-        static OVR_Dash Oculus_Dash;
-        static OVR_Dash SteamVR_Dash;
-        static MainWindow MainForm;
+        private static OVR_Dash Oculus_Dash;
+        private static OVR_Dash SteamVR_Dash;
+        private static MainWindow MainForm;
 
         /// <summary>
         /// Passes the main form instance to the Dash_Manager.
@@ -61,7 +61,7 @@ namespace OVR_Dash_Manager.Dashes
         /// <summary>
         /// Checks if the dashes are installed.
         /// </summary>
-        static async Task CheckInstalled()
+        private static async Task CheckInstalled()
         {
             Oculus_Dash.CheckInstalled();
             SteamVR_Dash.CheckInstalled();
@@ -109,7 +109,7 @@ namespace OVR_Dash_Manager.Dashes
         /// </summary>
         /// <param name="Dash">Type of dash to set active.</param>
         /// <returns>True if activated, false otherwise.</returns>
-        static bool SetActiveDash(Dash_Type Dash)
+        private static bool SetActiveDash(Dash_Type Dash)
         {
             var activated = false;
 
@@ -173,7 +173,6 @@ namespace OVR_Dash_Manager.Dashes
                 for (int i = 0; i < 10; i++)
                     if (AttemptFastSwitch(Dash))
                         break;
-                
             }
             else
             {
@@ -199,7 +198,7 @@ namespace OVR_Dash_Manager.Dashes
             return Activated;
         }
 
-        static bool AttemptFastSwitch(Dash_Type Dash)
+        private static bool AttemptFastSwitch(Dash_Type Dash)
         {
             var Activated = false;
 
@@ -261,7 +260,7 @@ namespace OVR_Dash_Manager.Dashes
             return Activated;
         }
 
-        static bool IsServiceRunningOrPending(ServiceControllerStatus status)
+        private static bool IsServiceRunningOrPending(ServiceControllerStatus status)
         {
             switch (status)
             {

@@ -11,7 +11,7 @@ namespace OVR_Dash_Manager.Software
 {
     public static class Steam
     {
-        static bool _IsSetup;
+        private static bool _IsSetup;
 
         public delegate void Steam_VR_Running_State_Changed();
 
@@ -133,7 +133,7 @@ namespace OVR_Dash_Manager.Software
         }
 
         // Method to close SteamVR monitor
-        static void CloseSteamVRMonitor()
+        private static void CloseSteamVRMonitor()
         {
             var vrmonitor = Process.GetProcessesByName("vrmonitor");
 
@@ -160,13 +160,13 @@ namespace OVR_Dash_Manager.Software
             }
         }
 
-        static void Process_Watcher_ProcessExited(string pProcessName, int pProcessID) => Set_Running_State(pProcessName, false);
+        private static void Process_Watcher_ProcessExited(string pProcessName, int pProcessID) => Set_Running_State(pProcessName, false);
 
         // Event handlers for process started and exited
-        static void Process_Watcher_ProcessStarted(string pProcessName, int pProcessID) => Set_Running_State(pProcessName, true);
+        private static void Process_Watcher_ProcessStarted(string pProcessName, int pProcessID) => Set_Running_State(pProcessName, true);
 
         // Method to set the running state of Steam related processes
-        static void Set_Running_State(string processName, bool state)
+        private static void Set_Running_State(string processName, bool state)
         {
             switch (processName)
             {
@@ -190,7 +190,7 @@ namespace OVR_Dash_Manager.Software
         }
 
         // Method to start link after a delay
-        static void StartLinkInAMoment()
+        private static void StartLinkInAMoment()
         {
             Thread.Sleep(2000);
             ManagerCalledExit = true;
@@ -202,7 +202,7 @@ namespace OVR_Dash_Manager.Software
         }
 
         // Event handler for Steam VR running state change
-        static void Steam_Steam_VR_Running_State_Changed_Event()
+        private static void Steam_Steam_VR_Running_State_Changed_Event()
         {
             if (!Steam_VR_Server_Running && !ManagerCalledExit && Properties.Settings.Default.ExitLinkOn_UserExit_SteamVR)
             {
@@ -234,7 +234,7 @@ namespace OVR_Dash_Manager.Software
         }
 
         // Method to check SteamVR focus problem
-        static void Check_SteamVR_FocusProblem(object sender, ElapsedEventArgs args)
+        private static void Check_SteamVR_FocusProblem(object sender, ElapsedEventArgs args)
         {
             if (Steam_VR_Server_Running)
             {
@@ -305,7 +305,7 @@ namespace OVR_Dash_Manager.Software
         public static void Set_SteamVR_Runtime() => Run_RemoveUsbHelper_Action("setopenxrruntime");
 
         // Method to run remove USB helper action
-        static void Run_RemoveUsbHelper_Action(string action)
+        private static void Run_RemoveUsbHelper_Action(string action)
         {
             if (Steam.Steam_VR_Installed)
             {

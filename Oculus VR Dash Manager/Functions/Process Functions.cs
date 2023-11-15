@@ -16,9 +16,9 @@ namespace OVR_Dash_Manager.Functions
             return pReturn;
         }
 
-        static WindowsIdentity GetWindowsIdentity() => WindowsIdentity.GetCurrent();
+        private static WindowsIdentity GetWindowsIdentity() => WindowsIdentity.GetCurrent();
 
-        static WindowsPrincipal GetWindowsPrincipal(WindowsIdentity pIdentity)
+        private static WindowsPrincipal GetWindowsPrincipal(WindowsIdentity pIdentity)
         {
             return new WindowsPrincipal(pIdentity);
         }

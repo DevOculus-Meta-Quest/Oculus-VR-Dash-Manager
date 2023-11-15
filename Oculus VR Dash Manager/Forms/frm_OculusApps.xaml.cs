@@ -15,7 +15,7 @@ namespace OVR_Dash_Manager.Forms
             LoadOculusApps();
         }
 
-        void LoadOculusApps()
+        private void LoadOculusApps()
         {
             try
             {

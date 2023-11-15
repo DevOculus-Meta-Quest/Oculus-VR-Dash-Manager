@@ -141,7 +141,6 @@ namespace OVR_Dash_Manager.Functions
 
             foreach (var prop in propertyName)
                 Ignores[type].Add(prop);
-            
         }
 
         // Is the given property for the given type ignored?

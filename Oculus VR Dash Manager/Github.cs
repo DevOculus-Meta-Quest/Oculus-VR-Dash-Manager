@@ -13,8 +13,8 @@ namespace OVR_Dash_Manager
 {
     public class Github
     {
-        readonly HttpClient httpClient = new HttpClient();
-        const string GithubApiBaseUrl = "https://api.github.com/repos/";
+        private readonly HttpClient httpClient = new HttpClient();
+        private const string GithubApiBaseUrl = "https://api.github.com/repos/";
 
         public Github() => httpClient.DefaultRequestHeaders.Add("User-Agent", "OVR-Dash-Manager");
 
@@ -115,12 +115,11 @@ namespace OVR_Dash_Manager
 
             foreach (var asset in gitResponse.assets)
                 assetUrls[asset.name] = asset.browser_download_url;
-            
 
             return new GitHubReply(gitResponse.name, gitResponse.html_url, assetUrls);
         }
 
-        async Task<string> GetJsonAsync(string url)
+        private async Task<string> GetJsonAsync(string url)
         {
             var response = await httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();

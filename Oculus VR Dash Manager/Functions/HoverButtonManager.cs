@@ -8,10 +8,10 @@ namespace OVR_Dash_Manager
 {
     public class HoverButtonManager
     {
-        MainWindow _mainWindow;
-        ProgressBar _pbNormal;
-        ProgressBar _pbExit;
-        Action _activateDash;
+        private MainWindow _mainWindow;
+        private ProgressBar _pbNormal;
+        private ProgressBar _pbExit;
+        private Action _activateDash;
         public Hover_Button Oculus_Dash { get; private set; }
         public Hover_Button Exit_Link { get; private set; }
 
@@ -142,7 +142,7 @@ namespace OVR_Dash_Manager
             _mainWindow.btn_ExitOculusLink.IsEnabled = true;
         }
 
-        void CheckHovering(Hover_Button hoverButton)
+        private void CheckHovering(Hover_Button hoverButton)
         {
             try
             {

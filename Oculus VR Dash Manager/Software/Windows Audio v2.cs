@@ -9,9 +9,9 @@ namespace OVR_Dash_Manager.Software
     public static class Windows_Audio_v2
     {
         // Fields
-        static IAudioController controller;
+        private static IAudioController controller;
 
-        static bool _IsSetup;
+        private static bool _IsSetup;
         public static List<IDevice_Ext> Speakers;
 
         // Method to setup audio controller and initialize speakers list
@@ -89,7 +89,7 @@ namespace OVR_Dash_Manager.Software
 
             public event PropertyChangedEventHandler PropertyChanged;
 
-            void OnPropertyChanged(string propertyName)
+            private void OnPropertyChanged(string propertyName)
             {
                 var handler = PropertyChanged;
 
@@ -109,7 +109,7 @@ namespace OVR_Dash_Manager.Software
             }
 
             // Properties with OnPropertyChanged notification
-            bool _Normal_Speaker;
+            private bool _Normal_Speaker;
 
             public bool Normal_Speaker
             {
@@ -117,7 +117,7 @@ namespace OVR_Dash_Manager.Software
                 set { if (value != _Normal_Speaker) { _Normal_Speaker = value; OnPropertyChanged("Normal_Speaker"); } }
             }
 
-            bool _Quest_Speaker;
+            private bool _Quest_Speaker;
 
             public bool Quest_Speaker
             {
@@ -125,7 +125,7 @@ namespace OVR_Dash_Manager.Software
                 set { if (value != _Quest_Speaker) { _Quest_Speaker = value; OnPropertyChanged("Quest_Speaker"); } }
             }
 
-            string _Name;
+            private string _Name;
 
             public string Name
             {
@@ -133,7 +133,7 @@ namespace OVR_Dash_Manager.Software
                 set { if (value != null && value != _Name) { _Name = value; OnPropertyChanged("Name"); } }
             }
 
-            Guid _ID;
+            private Guid _ID;
 
             public Guid ID
             {

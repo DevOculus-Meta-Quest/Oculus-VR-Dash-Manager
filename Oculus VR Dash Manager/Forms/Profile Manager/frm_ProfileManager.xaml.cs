@@ -19,9 +19,9 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
     /// </summary>
     public partial class frm_ProfileManager : Window
     {
-        Github github;
-        OculusDebugToolFunctions oculusDebugToolFunctions;
-        readonly frm_ProfileManager profileManager; // Moved outside of the constructor
+        private Github github;
+        private OculusDebugToolFunctions oculusDebugToolFunctions;
+        private readonly frm_ProfileManager profileManager; // Moved outside of the constructor
 
         public frm_ProfileManager()
         {
@@ -32,7 +32,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             LoadScriptsAsync();
         }
 
-        void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -40,7 +40,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 }), System.Windows.Threading.DispatcherPriority.ContextIdle);
         }
 
-        void LoadRegistrySettings()
+        private void LoadRegistrySettings()
         {
             var keyLocation = @"Software\Oculus\RemoteHeadset";
 
@@ -98,7 +98,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void SetComboBoxSelection(ComboBox comboBox, string registryValue)
+        private void SetComboBoxSelection(ComboBox comboBox, string registryValue)
         {
             var valueToSelect = registryValue;
 
@@ -182,7 +182,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        async void LoadScriptsAsync()
+        private async void LoadScriptsAsync()
         {
             try
             {
@@ -196,7 +196,6 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 foreach (var file in files)
                     scriptsListView.Items.Add(file.name);
                 // Assuming each file object has a 'name' property
-
             }
             catch (HttpRequestException httpEx)
             {
@@ -218,9 +217,9 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             // Add other necessary properties here
         }
 
-        void RefreshButton_Click(object sender, RoutedEventArgs e) => LoadScriptsAsync();
+        private void RefreshButton_Click(object sender, RoutedEventArgs e) => LoadScriptsAsync();
 
-        async void scriptsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private async void scriptsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var selectedItem = scriptsListView.SelectedItem as string;
 
@@ -280,11 +279,11 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        async void btnExecuteCommand_Click(object sender, EventArgs e)
+        private async void btnExecuteCommand_Click(object sender, EventArgs e)
         {
         }
 
-        void ProfileManagerHelp_Click(object sender, RoutedEventArgs e)
+        private void ProfileManagerHelp_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of the ProfileManagerHelp window
             var helpWindow = new Profile_Manager.ProfileManagerHelp();
@@ -296,7 +295,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             helpWindow.ShowDialog();
         }
 
-        void cb_DistortionCurvature_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cb_DistortionCurvature_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             // Check if SelectedItem is not null before accessing its Content
@@ -371,7 +370,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void cb_VideoCodec_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cb_VideoCodec_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             // Check if SelectedItem is not null before accessing its Content
@@ -447,7 +446,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void cb_slicedEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cb_slicedEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             // Check if SelectedItem is not null before accessing its Content
@@ -523,7 +522,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void txt_EncodeResolutionWidth_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void txt_EncodeResolutionWidth_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // This regex will match any non-digit characters.
             var regex = new Regex("[^0-9]+");
@@ -539,7 +538,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void Txt_EncodeResolutionWidth_LostFocus(object sender, RoutedEventArgs e)
+        private void Txt_EncodeResolutionWidth_LostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
 
@@ -580,7 +579,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void cb_EncodeDynamicBitrate_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cb_EncodeDynamicBitrate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             var keyLocation = @"Software\Oculus\RemoteHeadset";
@@ -634,7 +633,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void txt_DynamicBitrateMax_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void txt_DynamicBitrateMax_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // This regex will match any non-digit characters.
             var regex = new Regex("[^0-9]+");
@@ -650,7 +649,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void Txt_DynamicBitrateMax_LostFocus(object sender, RoutedEventArgs e)
+        private void Txt_DynamicBitrateMax_LostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
 
@@ -701,7 +700,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void txt_EncodeBitrate_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void txt_EncodeBitrate_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // This regex will match any non-digit characters.
             var regex = new Regex("[^0-9]+");
@@ -717,7 +716,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void Txt_EncodeBitrate_LostFocus(object sender, RoutedEventArgs e)
+        private void Txt_EncodeBitrate_LostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
 
@@ -758,7 +757,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void txt_DynamicBitrateOffset_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void txt_DynamicBitrateOffset_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // This regex will match any non-digit characters.
             var regex = new Regex("[^0-9]+");
@@ -774,7 +773,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void Txt_DynamicBitrateOffset_LostFocus(object sender, RoutedEventArgs e)
+        private void Txt_DynamicBitrateOffset_LostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
 
@@ -815,7 +814,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void cb_LinkSharpening_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cb_LinkSharpening_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             var keyLocation = @"Software\Oculus\RemoteHeadset";
@@ -867,7 +866,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void cb_LocalDimming_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cb_LocalDimming_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             var keyLocation = @"Software\Oculus\RemoteHeadset";
@@ -933,7 +932,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void btn_SteamApps_Click(object sender, RoutedEventArgs e)
+        private void btn_SteamApps_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of frm_SteamApps window
             var steamAppsWindow = new frm_SteamApps();
@@ -945,7 +944,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             steamAppsWindow.Show();
         }
 
-        void btn_OculusApps_Click(object sender, RoutedEventArgs e)
+        private void btn_OculusApps_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of frm_SteamApps window
             var OculusAppsWindow = new frm_OculusApps();

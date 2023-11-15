@@ -2,7 +2,7 @@
 {
     public class EventHandlers
     {
-        MainWindow _window;
+        private MainWindow _window;
 
         public EventHandlers(MainWindow window) => _window = window;
 

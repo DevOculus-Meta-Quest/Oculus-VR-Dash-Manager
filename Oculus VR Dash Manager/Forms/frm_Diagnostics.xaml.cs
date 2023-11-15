@@ -13,7 +13,7 @@ namespace OVR_Dash_Manager.Forms
     {
         public frm_Diagnostics() => InitializeComponent();
 
-        void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DiagnosticsChecker();
 
@@ -21,18 +21,18 @@ namespace OVR_Dash_Manager.Forms
             Timer_Functions.StartTimer("Diagnostics Checker");
         }
 
-        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Timer_Functions.StopTimer("Diagnostics Checker");
             Timer_Functions.DisposeTimer("Diagnostics Checker");
         }
 
-        void CallDiagnosticsChecker(object sender, ElapsedEventArgs args)
+        private void CallDiagnosticsChecker(object sender, ElapsedEventArgs args)
         {
             Functions_Old.DoAction(this, new Action(delegate () { DiagnosticsChecker(); }));
         }
 
-        void DiagnosticsChecker()
+        private void DiagnosticsChecker()
         {
             lbl_OculusSoftware.Content = Software.Oculus.Oculus_Is_Installed ? "Installed" : "Not Found";
 
@@ -76,7 +76,7 @@ namespace OVR_Dash_Manager.Forms
             lbl_OculusLocation.Text = Software.Oculus.Oculus_Dash_Directory;
         }
 
-        void btn_OculusDebugTool_Click(object sender, RoutedEventArgs e)
+        private void btn_OculusDebugTool_Click(object sender, RoutedEventArgs e)
         {
             if (File.Exists(Software.Oculus.Oculus_DebugTool_EXE))
                 Process.Start(Software.Oculus.Oculus_DebugTool_EXE);

@@ -29,7 +29,6 @@ namespace OVR_Dash_Manager.Software
 
                 foreach (Match match in matches)
                     libraryFolders.Add(match.Groups[1].Value.Replace(@"\\", @"\"));
-                
             }
 
             // Search each library folder for installed games
@@ -59,12 +58,11 @@ namespace OVR_Dash_Manager.Software
             // Get the image path for each game
             foreach (var game in gamesList)
                 game.ImagePath = GetImagePathForGame(game.ID);
-            
 
             return gamesList;
         }
 
-        string GetImagePathForGame(string gameId)
+        private string GetImagePathForGame(string gameId)
         {
             var imageCacheDirectory = @"C:\Program Files (x86)\Steam\appcache\librarycache"; // Set to your image cache directory
             var searchPattern = gameId + "_library_600x900.*"; // Updated to match the format

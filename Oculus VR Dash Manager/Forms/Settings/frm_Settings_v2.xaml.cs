@@ -6,12 +6,12 @@ namespace OVR_Dash_Manager.Forms.Settings
 {
     public partial class frm_Settings_v2 : Window
     {
-        bool Audio_DevicesChanged;
-        bool FireEvents;
+        private bool Audio_DevicesChanged;
+        private bool FireEvents;
 
         public frm_Settings_v2() => InitializeComponent();
 
-        void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Set the ItemsSource for the combo boxes and select the appropriate speaker for each
             cbo_NormalSpeaker.ItemsSource = Software.Windows_Audio_v2.Speakers;
@@ -25,7 +25,7 @@ namespace OVR_Dash_Manager.Forms.Settings
             FireEvents = true;
         }
 
-        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // Check if audio devices have changed and confirm with the user if they want to save the changes
             if (Audio_DevicesChanged)
@@ -42,7 +42,7 @@ namespace OVR_Dash_Manager.Forms.Settings
             }
         }
 
-        void CheckSpeaker(Software.Windows_Audio_v2.IDevice_Ext speaker, bool isChecked, bool isNormal, bool isQuest)
+        private void CheckSpeaker(Software.Windows_Audio_v2.IDevice_Ext speaker, bool isChecked, bool isNormal, bool isQuest)
         {
             // If FireEvents is false, exit the method early to avoid unnecessary processing
             if (!FireEvents)
@@ -74,7 +74,7 @@ namespace OVR_Dash_Manager.Forms.Settings
             FireEvents = true;
         }
 
-        void btn_Set_Default_Normal_Click(object sender, RoutedEventArgs e)
+        private void btn_Set_Default_Normal_Click(object sender, RoutedEventArgs e)
         {
             // Find the speaker marked as the normal speaker and set it as the default playback device
             var normalSpeaker = Software.Windows_Audio_v2.Speakers.FirstOrDefault(a => a.Normal_Speaker);
@@ -85,7 +85,7 @@ namespace OVR_Dash_Manager.Forms.Settings
                 MessageBox.Show(this, "Normal Speaker Not Found", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
-        void btn_Set_Default_Quest_Click(object sender, RoutedEventArgs e)
+        private void btn_Set_Default_Quest_Click(object sender, RoutedEventArgs e)
         {
             // Find the speaker marked as the quest speaker and set it as the default playback device
             var questSpeaker = Software.Windows_Audio_v2.Speakers.FirstOrDefault(a => a.Quest_Speaker);
@@ -96,7 +96,7 @@ namespace OVR_Dash_Manager.Forms.Settings
                 MessageBox.Show(this, "Quest Speaker Not Set", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
-        void cbo_NormalSpeaker_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cbo_NormalSpeaker_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbo_NormalSpeaker.SelectedItem is Software.Windows_Audio_v2.IDevice_Ext Speaker)
             {
@@ -104,7 +104,7 @@ namespace OVR_Dash_Manager.Forms.Settings
             }
         }
 
-        void cbo_QuestSpeaker_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cbo_QuestSpeaker_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbo_QuestSpeaker.SelectedItem is Software.Windows_Audio_v2.IDevice_Ext Speaker)
             {
@@ -112,7 +112,7 @@ namespace OVR_Dash_Manager.Forms.Settings
             }
         }
 
-        void btn_Open_Auto_Launch_Settings_Click(object sender, RoutedEventArgs e)
+        private void btn_Open_Auto_Launch_Settings_Click(object sender, RoutedEventArgs e)
         {
             var pShow = new Auto_Program_Launch.frm_Auto_Program_Launch_Settings();
             pShow.ShowDialog();

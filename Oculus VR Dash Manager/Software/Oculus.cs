@@ -21,9 +21,9 @@ namespace OVR_Dash_Manager.Software
         public static bool Custom_Dash { get; private set; }
         public static string Current_Dash_Name { get; private set; }
 
-        static bool _ClientJustExited;
-        static bool _Report_ClientJustExited;
-        static bool _IsSetup;
+        private static bool _ClientJustExited;
+        private static bool _Report_ClientJustExited;
+        private static bool _IsSetup;
 
         public static void Setup()
         {
@@ -35,13 +35,13 @@ namespace OVR_Dash_Manager.Software
             }
         }
 
-        static void Process_Watcher_ProcessStarted(string pProcessName, int pProcessID)
+        private static void Process_Watcher_ProcessStarted(string pProcessName, int pProcessID)
         {
             Debug.WriteLine($"Started: {pProcessName} - {DateTime.Now}");
             // Add any specific actions for processes started here
         }
 
-        static void Process_Watcher_ProcessExited(string pProcessName, int pProcessID)
+        private static void Process_Watcher_ProcessExited(string pProcessName, int pProcessID)
         {
             Debug.WriteLine($"Stopped: {pProcessName} - {DateTime.Now}");
 
@@ -77,7 +77,7 @@ namespace OVR_Dash_Manager.Software
             }
         }
 
-        static void WhichDash(string FilePath)
+        private static void WhichDash(string FilePath)
         {
             Normal_Dash = false;
             Custom_Dash = false;
@@ -102,7 +102,7 @@ namespace OVR_Dash_Manager.Software
             }
         }
 
-        static bool Check_Is_OfficialDash(string FilePath)
+        private static bool Check_Is_OfficialDash(string FilePath)
         {
             var cert = X509Certificate.CreateFromSignedFile(FilePath);
             return cert.Issuer == "CN=DigiCert SHA2 Assured ID Code Signing CA, OU=www.digicert.com, O=DigiCert Inc, C=US";
@@ -181,7 +181,6 @@ namespace OVR_Dash_Manager.Software
             {
                 foreach (var client in Process.GetProcessesByName("OculusClient"))
                     client.CloseMainWindow();
-                
             }
 
             if (Properties.Settings.Default.CloseOculusServicesOnExit)

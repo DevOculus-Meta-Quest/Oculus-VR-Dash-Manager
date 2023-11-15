@@ -20,16 +20,16 @@ namespace OVR_Dash_Manager.Forms.Settings
         public string AlertMessage { get; set; }
         public bool MinToTray { get; set; }
 
-        void UserControl_Loaded(object sender, RoutedEventArgs e) => Update_Buttons();
+        private void UserControl_Loaded(object sender, RoutedEventArgs e) => Update_Buttons();
 
-        void btn_Disabled_Checked(object sender, RoutedEventArgs e)
+        private void btn_Disabled_Checked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(false);
         }
 
-        void btn_Enabled_Checked(object sender, RoutedEventArgs e) => Update_Properties_Setting(true);
+        private void btn_Enabled_Checked(object sender, RoutedEventArgs e) => Update_Properties_Setting(true);
 
-        void Update_Buttons()
+        private void Update_Buttons()
         {
             var Current = Get_Properties_Setting(Setting);
 
@@ -37,7 +37,7 @@ namespace OVR_Dash_Manager.Forms.Settings
             btn_Disabled.IsChecked = !Current;
         }
 
-        void Update_Properties_Setting(bool Value)
+        private void Update_Properties_Setting(bool Value)
         {
             bool Current;
 
@@ -67,7 +67,7 @@ namespace OVR_Dash_Manager.Forms.Settings
             }
         }
 
-        bool Get_Properties_Setting(string SettingName)
+        private bool Get_Properties_Setting(string SettingName)
         {
             var Setting = false;
 

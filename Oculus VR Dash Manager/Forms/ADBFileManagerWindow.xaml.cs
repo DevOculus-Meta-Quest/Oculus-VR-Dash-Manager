@@ -20,7 +20,7 @@ namespace OVR_Dash_Manager.Forms
             RefreshFileList();
         }
 
-        void lstFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void lstFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (lstFiles.SelectedItem != null)
             {
@@ -40,28 +40,27 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        string currentDirectory = "/"; // Start at the root directory
+        private string currentDirectory = "/"; // Start at the root directory
 
-        void RefreshFileList()
+        private void RefreshFileList()
         {
             var fileList = ADBFileManager.ListFiles(currentDirectory);
             lstFiles.Items.Clear();
 
             foreach (var file in fileList.Split('\n'))
                 lstFiles.Items.Add(file);
-            
         }
 
         // Call this method when a directory is double-clicked or a navigation button is pressed
-        void NavigateToDirectory(string directory)
+        private void NavigateToDirectory(string directory)
         {
             currentDirectory = directory; // Update the current directory
             RefreshFileList(); // Refresh the file list based on the new directory
         }
 
-        void BtnRefresh_Click(object sender, RoutedEventArgs e) => RefreshFileList();
+        private void BtnRefresh_Click(object sender, RoutedEventArgs e) => RefreshFileList();
 
-        void BtnDelete_Click(object sender, RoutedEventArgs e)
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
             var path = GetSelectedPath(); // Assume this method gets the path of the selected file or directory.
             var message = $"Are you sure you want to delete: {path}?";
@@ -83,7 +82,7 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        void BtnUpload_Click(object sender, RoutedEventArgs e)
+        private void BtnUpload_Click(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new OpenFileDialog();
 
@@ -99,7 +98,7 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        void BtnDownload_Click(object sender, RoutedEventArgs e)
+        private void BtnDownload_Click(object sender, RoutedEventArgs e)
         {
             var fileNameToDownload = ShowInputDialog("Enter the name of the file to download:");
 
@@ -114,7 +113,7 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        void BtnCreateDir_Click(object sender, RoutedEventArgs e)
+        private void BtnCreateDir_Click(object sender, RoutedEventArgs e)
         {
             var newDirName = Interaction.InputBox("Enter the name of the new directory:", "Create Directory");
 
@@ -131,13 +130,13 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        string ShowInputDialog(string text)
+        private string ShowInputDialog(string text)
         {
             var input = Microsoft.VisualBasic.Interaction.InputBox(text, "Input", "Default", -1, -1);
             return input;
         }
 
-        string GetSelectedPath()
+        private string GetSelectedPath()
         {
             if (lstFiles.SelectedItem != null)
             {

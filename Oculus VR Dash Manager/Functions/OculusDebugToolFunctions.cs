@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 public class OculusDebugToolFunctions : IDisposable
 {
-    const string OculusDebugToolPath = @"C:\Program Files\Oculus\Support\oculus-diagnostics\OculusDebugToolCLI.exe";
-    Process process;
-    StreamWriter streamWriter;
+    private const string OculusDebugToolPath = @"C:\Program Files\Oculus\Support\oculus-diagnostics\OculusDebugToolCLI.exe";
+    private Process process;
+    private StreamWriter streamWriter;
 
     public OculusDebugToolFunctions() => InitializeProcess();
 
@@ -84,7 +84,7 @@ public class OculusDebugToolFunctions : IDisposable
         }
     }
 
-    void InitializeProcess()
+    private void InitializeProcess()
     {
         process = new Process
         {

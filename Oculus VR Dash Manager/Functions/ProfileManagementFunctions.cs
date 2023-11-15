@@ -5,7 +5,7 @@ namespace OVR_Dash_Manager.Functions
 {
     public static class ProfileManagementFunctions
     {
-        static readonly string ProfilesDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Profiles");
+        private static readonly string ProfilesDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Profiles");
 
         static ProfileManagementFunctions()
         {
@@ -68,7 +68,6 @@ namespace OVR_Dash_Manager.Functions
 
                 for (int i = 0; i < profileFiles.Length; i++)
                     profileFiles[i] = Path.GetFileNameWithoutExtension(profileFiles[i]);
-                
 
                 return profileFiles;
             }

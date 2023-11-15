@@ -5,9 +5,9 @@ namespace OVR_Dash_Manager.Functions
 {
     public class OculusControllerHandler
     {
-        OvrClient _ovrClient;
-        OvrSession _ovrSession;
-        Action<string> _updateUiAction;
+        private OvrClient _ovrClient;
+        private OvrSession _ovrSession;
+        private Action<string> _updateUiAction;
 
         public OculusControllerHandler(Action<string> updateUiAction)
         {
@@ -15,7 +15,7 @@ namespace OVR_Dash_Manager.Functions
             InitializeOvrClient();
         }
 
-        void InitializeOvrClient()
+        private void InitializeOvrClient()
         {
             var result = OvrClient.TryInitialize(out _ovrClient);
 

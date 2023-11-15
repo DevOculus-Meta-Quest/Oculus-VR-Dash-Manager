@@ -23,7 +23,7 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             LoadColorValues();
         }
 
-        void ConvertToDDS_Click(object sender, RoutedEventArgs e)
+        private void ConvertToDDS_Click(object sender, RoutedEventArgs e)
         {
             var inputFilePath = txtInputFilePath.Text;
             var outputFilePath = txtOutputFilePath.Text;
@@ -45,7 +45,7 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        void ConvertToPNG_Click(object sender, RoutedEventArgs e)
+        private void ConvertToPNG_Click(object sender, RoutedEventArgs e)
         {
             var inputFilePath = txtInputFilePath.Text;
             var outputFilePath = txtOutputFilePath.Text;
@@ -67,7 +67,7 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        void BrowseInputFile_Click(object sender, RoutedEventArgs e)
+        private void BrowseInputFile_Click(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.png;*.dds)|*.png;*.dds|All files (*.*)|*.*";
@@ -78,7 +78,7 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        void BrowseOutputFile_Click(object sender, RoutedEventArgs e)
+        private void BrowseOutputFile_Click(object sender, RoutedEventArgs e)
         {
             var saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "DDS files (*.dds)|*.dds|PNG files (*.png)|*.png|All files (*.*)|*.*";
@@ -89,7 +89,7 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        void LoadColorValues()
+        private void LoadColorValues()
         {
             try
             {
@@ -124,7 +124,7 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        void SaveFogColor(Color color)
+        private void SaveFogColor(Color color)
         {
             try
             {
@@ -144,7 +144,7 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        void colorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        private void colorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
             if (colorPicker.SelectedColor.HasValue)
             {
@@ -167,7 +167,7 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        void btnOpenColorPicker_Click(object sender, RoutedEventArgs e)
+        private void btnOpenColorPicker_Click(object sender, RoutedEventArgs e)
         {
             // Create and configure the ColorPicker dialog
             var colorDialog = new System.Windows.Forms.ColorDialog();
@@ -185,7 +185,7 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        void btnSaveColor_Click(object sender, RoutedEventArgs e)
+        private void btnSaveColor_Click(object sender, RoutedEventArgs e)
         {
             if (colorPicker.SelectedColor.HasValue)
             {
@@ -208,7 +208,7 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        void btn_FloorGrid_Click(object sender, RoutedEventArgs e)
+        private void btn_FloorGrid_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -236,7 +236,7 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        void btn_ReplaceFloorGrid_Click(object sender, RoutedEventArgs e)
+        private void btn_ReplaceFloorGrid_Click(object sender, RoutedEventArgs e)
         {
             var selectedFilePath = txt_FloorGrid.Text;
 

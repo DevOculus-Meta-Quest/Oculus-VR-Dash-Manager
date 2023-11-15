@@ -53,7 +53,8 @@ public static class RegistryManager
 
         return false;
     }
-}
+}
+
 /*
 // To read a value from the registry:
 object value = RegistryManager.ReadRegistryValue(Registry.CurrentUser, @"Software\MyApplication", "MyValue");

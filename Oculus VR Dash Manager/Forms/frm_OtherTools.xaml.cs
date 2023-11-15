@@ -18,7 +18,7 @@ namespace OVR_Dash_Manager.Forms
     public partial class frm_OtherTools : Window
     {
         // Path to the log file
-        static string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OculusKiller", "OculusKiller.log");
+        private static string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OculusKiller", "OculusKiller.log");
 
         public frm_OtherTools()
         {
@@ -27,7 +27,7 @@ namespace OVR_Dash_Manager.Forms
             UpdateDeleteLogButtonStatus();
         }
 
-        void btn_InstallAPK_Click(object sender, RoutedEventArgs e)
+        private void btn_InstallAPK_Click(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new OpenFileDialog
             {
@@ -41,13 +41,13 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        void btn_ADBFileManager_Click(object sender, RoutedEventArgs e)
+        private void btn_ADBFileManager_Click(object sender, RoutedEventArgs e)
         {
             var adbFileManagerWindow = new ADBFileManagerWindow();
             adbFileManagerWindow.ShowDialog();
         }
 
-        void btn_PNG2DDS_Click(object sender, RoutedEventArgs e)
+        private void btn_PNG2DDS_Click(object sender, RoutedEventArgs e)
         {
             var dashCustomizer = new frm_DashCustomizer();
             dashCustomizer.WindowStartupLocation = WindowStartupLocation.CenterScreen; // Center the window
@@ -55,7 +55,7 @@ namespace OVR_Dash_Manager.Forms
             dashCustomizer.ShowDialog(); // Open the window as a modal dialog box
         }
 
-        void btn_ProfileManager1_Click(object sender, RoutedEventArgs e)
+        private void btn_ProfileManager1_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of the frm_ProfileManager window and show it
             var profileManager = new frm_ProfileManager();
@@ -64,10 +64,10 @@ namespace OVR_Dash_Manager.Forms
         }
 
         // Check if the log file exists and enable or disable the button accordingly
-        void CheckLogFile() => btn_OpenLog.IsEnabled = File.Exists(logPath);
+        private void CheckLogFile() => btn_OpenLog.IsEnabled = File.Exists(logPath);
 
         // Handle the button click event to open the log file
-        void btn_OpenLog_Click(object sender, RoutedEventArgs e)
+        private void btn_OpenLog_Click(object sender, RoutedEventArgs e)
         {
             if (File.Exists(logPath))
             {
@@ -80,7 +80,7 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        void btn_DeleteLog_Click(object sender, RoutedEventArgs e)
+        private void btn_DeleteLog_Click(object sender, RoutedEventArgs e)
         {
             var logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OculusKiller", "OculusKiller.log");
 
@@ -105,13 +105,13 @@ namespace OVR_Dash_Manager.Forms
             UpdateDeleteLogButtonStatus();
         }
 
-        void UpdateDeleteLogButtonStatus()
+        private void UpdateDeleteLogButtonStatus()
         {
             var logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OculusKiller", "OculusKiller.log");
             btn_DeleteLog.IsEnabled = File.Exists(logPath);
         }
 
-        void btn_OculusView_Click(object sender, RoutedEventArgs e)
+        private void btn_OculusView_Click(object sender, RoutedEventArgs e)
         {
             // Create a new instance of the OculusView window
             var oculusView = new OculusView();
@@ -126,7 +126,7 @@ namespace OVR_Dash_Manager.Forms
             oculusView.Show();
         }
 
-        void btn_TestSteam_Click(object sender, RoutedEventArgs e)
+        private void btn_TestSteam_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -137,7 +137,6 @@ namespace OVR_Dash_Manager.Forms
                 // Process or display the parsed data
                 foreach (var entry in vdfData)
                     Debug.WriteLine($"{entry.Key}: {FormatValue(entry.Value)}");
-                
             }
             catch (Exception ex)
             {
@@ -145,7 +144,7 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        string FormatValue(object value)
+        private string FormatValue(object value)
         {
             if (value is Dictionary<string, object> nestedDict)
             {
@@ -157,13 +156,12 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        string FormatDictionary(Dictionary<string, object> dict)
+        private string FormatDictionary(Dictionary<string, object> dict)
         {
             var sb = new StringBuilder();
 
             foreach (var entry in dict)
                 sb.AppendLine($"{entry.Key}: {FormatValue(entry.Value)}");
-            
 
             return sb.ToString();
         }

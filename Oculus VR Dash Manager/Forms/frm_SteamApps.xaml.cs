@@ -17,7 +17,7 @@ namespace OVR_Dash_Manager.Forms
             LoadSteamApps();
         }
 
-        async void LoadSteamApps()
+        private async void LoadSteamApps()
         {
             try
             {

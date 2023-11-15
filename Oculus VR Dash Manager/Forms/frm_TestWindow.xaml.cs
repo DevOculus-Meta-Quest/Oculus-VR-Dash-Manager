@@ -11,33 +11,33 @@ namespace OVR_Dash_Manager.Forms
     {
         public frm_TestWindow() => InitializeComponent();
 
-        void AddToReadOut(string Text)
+        private void AddToReadOut(string Text)
         {
             Functions_Old.DoAction(this, new Action(delegate () { txtbx_ReadOut.AppendText(Text + "\r\n"); txtbx_ReadOut.ScrollToEnd(); }));
         }
 
-        void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Timer_Functions.CreateTimer("Test_Function", TimeSpan.FromSeconds(1), Test_Function);
             Timer_Functions.StartTimer("Test_Function");
         }
 
-        void Window_Closed(object sender, EventArgs e)
+        private void Window_Closed(object sender, EventArgs e)
         {
             Timer_Functions.StopTimer("Test_Function");
             Timer_Functions.DisposeTimer("Test_Function");
         }
 
-        void Test_Function(object sender, ElapsedEventArgs args)
+        private void Test_Function(object sender, ElapsedEventArgs args)
         {
         }
 
-        void btn_ChangeSteamRunTime_Click(object sender, RoutedEventArgs e)
+        private void btn_ChangeSteamRunTime_Click(object sender, RoutedEventArgs e)
         {
             Software.Steam_VR_Settings.Set_SteamVR_Runtime();
         }
 
-        void btn_ChangeOculusRunTime_Click(object sender, RoutedEventArgs e)
+        private void btn_ChangeOculusRunTime_Click(object sender, RoutedEventArgs e)
         {
             Software.Oculus_Link.SetToOculusRunTime();
         }

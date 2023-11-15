@@ -29,7 +29,7 @@ namespace OVR_Dash_Manager.Software
         /// </summary>
         /// <param name="oculusPaths">A list of paths to check.</param>
         /// <returns>A list of installed Oculus app names.</returns>
-        static List<string> GetInstalledApps(List<string> oculusPaths)
+        private static List<string> GetInstalledApps(List<string> oculusPaths)
         {
             var installedApps = new List<string>();
 

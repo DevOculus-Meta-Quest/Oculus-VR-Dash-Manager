@@ -20,7 +20,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <!-- ListView for Steam Apps -->
+        <!--  ListView for Steam Apps  -->
         <ListView
             Name="listViewSteamApps"
             Grid.Column="0"
@@ -53,7 +53,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <!-- ListView for Non-Steam Apps -->
+        <!--  ListView for Non-Steam Apps  -->
         <ListView
             Name="listViewNonSteamApps"
             Grid.Column="1"
@@ -68,7 +68,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5" Orientation="Horizontal">
-                        <!-- Customize this template as needed for Non-Steam Apps -->
+                        <!--  Customize this template as needed for Non-Steam Apps  -->
                         <TextBlock
                             FontWeight="Bold"
                             Foreground="White"

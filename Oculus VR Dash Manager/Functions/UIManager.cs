@@ -6,7 +6,7 @@ namespace OVR_Dash_Manager.Functions
 {
     public class UIManager
     {
-        MainWindow _window;
+        private MainWindow _window;
 
         public UIManager(MainWindow window) => _window = window;
 

@@ -25,7 +25,7 @@ namespace OVR_Dash_Manager.Functions
             return DoFileBrowser(defaultDirectory, defaultExtension, fileExtensionFilters, true, mustExist);
         }
 
-        static List<string> DoFileBrowser(
+        private static List<string> DoFileBrowser(
             string defaultDirectory,
             string defaultExtension,
             string fileExtensionFilters,
@@ -91,7 +91,7 @@ namespace OVR_Dash_Manager.Functions
             return files;
         }
 
-        static string ReadDefaultValue(string regKey)
+        private static string ReadDefaultValue(string regKey)
         {
             using (var key = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(regKey, false))
             {
@@ -104,7 +104,7 @@ namespace OVR_Dash_Manager.Functions
             return null;
         }
 
-        static string GetDescription(string ext)
+        private static string GetDescription(string ext)
         {
             if (ext.StartsWith(".") && ext.Length > 1) ext = ext.Substring(1);
 

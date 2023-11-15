@@ -45,7 +45,7 @@ namespace OVR_Dash_Manager.Software
             return nonSteamApps;
         }
 
-        static void WriteParsedDataToTempFile(string vdfFilePath, string tempFilePath)
+        private static void WriteParsedDataToTempFile(string vdfFilePath, string tempFilePath)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace OVR_Dash_Manager.Software
             }
         }
 
-        static List<NonSteamAppDetails> ReadDataFromTempFile(string tempFilePath)
+        private static List<NonSteamAppDetails> ReadDataFromTempFile(string tempFilePath)
         {
             var nonSteamApps = new List<NonSteamAppDetails>();
 

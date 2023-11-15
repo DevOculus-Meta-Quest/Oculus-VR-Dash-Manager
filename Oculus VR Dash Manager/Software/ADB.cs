@@ -9,7 +9,7 @@ namespace OVR_Dash_Manager.Software
 {
     public static class ADB
     {
-        static Process ADBServer;
+        private static Process ADBServer;
 
         public static void Start()
         {
@@ -60,13 +60,13 @@ namespace OVR_Dash_Manager.Software
             }
         }
 
-        static void RemoveWatcher()
+        private static void RemoveWatcher()
         {
             Thread.Sleep(1000);
             Functions.ProcessWatcher.ProcessStarted -= Process_Watcher_ProcessStarted;
         }
 
-        static void Process_Watcher_ProcessStarted(string pProcessName, int pProcessID)
+        private static void Process_Watcher_ProcessStarted(string pProcessName, int pProcessID)
         {
             if (pProcessName == "adb")
                 ADBServer = Process.GetProcessById(pProcessID);

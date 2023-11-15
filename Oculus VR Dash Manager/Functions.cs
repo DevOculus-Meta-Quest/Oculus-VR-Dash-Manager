@@ -62,7 +62,6 @@ namespace OVR_Dash_Manager
                     using (WebResponse webResponse = webRequest.GetResponse())
                     using (StreamReader streamRead = new StreamReader(webResponse.GetResponseStream(), Encoding.UTF8))
                         result = streamRead.ReadToEnd();
-                    
                 }
                 catch (Exception ex)
                 {
@@ -73,7 +72,7 @@ namespace OVR_Dash_Manager
             return result;
         }
 
-        static string HandleWebException(Exception ex)
+        private static string HandleWebException(Exception ex)
         {
             // Log the exception details for future diagnosis.
             ErrorLogger.LogError(ex, "Web request failed");
@@ -154,7 +153,7 @@ namespace OVR_Dash_Manager
         }
 
         [DllImport("User32.dll")]
-        static extern bool SetCursorPos(int X, int Y);
+        private static extern bool SetCursorPos(int X, int Y);
 
         public static void MoveCursor(int X, int Y)
         {
@@ -186,10 +185,10 @@ namespace OVR_Dash_Manager
         }
 
         [DllImport("user32.dll")]
-        static extern IntPtr GetForegroundWindow();
+        private static extern IntPtr GetForegroundWindow();
 
         [DllImport("user32.dll")]
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+        private static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
         public static string GetActiveWindowTitle()
         {
@@ -227,8 +226,8 @@ namespace OVR_Dash_Manager
 
     public static class Timer_Functions
     {
-        static readonly object TimerLock = new object();
-        static Dictionary<string, Timer> Timers = new Dictionary<string, Timer>();
+        private static readonly object TimerLock = new object();
+        private static Dictionary<string, Timer> Timers = new Dictionary<string, Timer>();
 
         public static bool SetNewInterval(string timerID, TimeSpan interval)
         {
@@ -313,7 +312,6 @@ namespace OVR_Dash_Manager
 
             lock (TimerLock)
                 return Timers.ContainsKey(timerID);
-            
         }
 
         public static void DisposeTimer(string timerID)

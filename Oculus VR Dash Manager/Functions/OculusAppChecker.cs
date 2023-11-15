@@ -19,7 +19,7 @@ namespace OVR_Dash_Manager.Functions
     public static class OculusAppChecker
     {
         // Cache for installed apps
-        static List<string> _installedApps;
+        private static List<string> _installedApps;
 
         /// <summary>
         /// Checks if a specific Oculus app is installed.
@@ -64,7 +64,7 @@ namespace OVR_Dash_Manager.Functions
         /// Retrieves all paths where Oculus apps are installed.
         /// </summary>
         /// <returns>A list of Oculus app paths.</returns>
-        static List<string> GetOculusPaths()
+        private static List<string> GetOculusPaths()
         {
             var oculusPaths = new List<string>();
 
@@ -132,7 +132,7 @@ namespace OVR_Dash_Manager.Functions
         /// </summary>
         /// <param name="oculusPaths">A list of paths to check.</param>
         /// <returns>A list of installed Oculus app names.</returns>
-        static List<string> GetInstalledApps(List<string> oculusPaths)
+        private static List<string> GetInstalledApps(List<string> oculusPaths)
         {
             var installedApps = new List<string>();
 
@@ -217,7 +217,7 @@ namespace OVR_Dash_Manager.Functions
             return appDetailsList;
         }
 
-        static string ConvertAppNameToAssetFolderName(string appName)
+        private static string ConvertAppNameToAssetFolderName(string appName)
         {
             // Replace spaces with "-" and append "_assets" to the app name
             return appName.Replace(" ", "-").ToLower() + "_assets";

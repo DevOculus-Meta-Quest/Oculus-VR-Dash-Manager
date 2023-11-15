@@ -7,7 +7,7 @@ namespace OVR_Dash_Manager.Functions
 {
     public static class ErrorLogger
     {
-        static readonly string LogFilePath;
+        private static readonly string LogFilePath;
 
         static ErrorLogger()
         {
@@ -49,7 +49,7 @@ namespace OVR_Dash_Manager.Functions
             }
         }
 
-        static string LogInnerException(Exception ex, string indent)
+        private static string LogInnerException(Exception ex, string indent)
         {
             var innerExceptionDetails = new StringBuilder();
 
@@ -67,7 +67,8 @@ namespace OVR_Dash_Manager.Functions
             return innerExceptionDetails.ToString();
         }
     }
-}
+}
+
 /*
  * Usage Example:
  * Here's how you might use this ErrorLogger in your code:

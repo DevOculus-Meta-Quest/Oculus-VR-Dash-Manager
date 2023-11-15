@@ -2,18 +2,15 @@
 {
     public class EventHandlers
     {
-        private MainWindow _window;
+        MainWindow _window;
 
-        public EventHandlers(MainWindow window)
-        {
-            _window = window;
-        }
+        public EventHandlers(MainWindow window) => _window = window;
 
         public void SteamVRStatusChanged()
         {
-            //... logic for when SteamVR status changes ...
+            // ... logic for when SteamVR status changes ...
         }
 
-        //... other event-handling methods ...
+        // ... other event-handling methods ...
     }
 }

@@ -20,12 +20,12 @@ namespace OVR_Dash_Manager.Forms
             RefreshFileList();
         }
 
-        private void lstFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        void lstFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (lstFiles.SelectedItem != null)
             {
-                string selectedPath = lstFiles.SelectedItem.ToString();
-                string fullPath = System.IO.Path.Combine(currentDirectory, selectedPath); // Combine the current directory with the selected item
+                var selectedPath = lstFiles.SelectedItem.ToString();
+                var fullPath = System.IO.Path.Combine(currentDirectory, selectedPath); // Combine the current directory with the selected item
 
                 // Check if the selected item is a directory
                 if (IsDirectory(fullPath))
@@ -40,35 +40,32 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        private string currentDirectory = "/"; // Start at the root directory
+        string currentDirectory = "/"; // Start at the root directory
 
-        private void RefreshFileList()
+        void RefreshFileList()
         {
-            string fileList = ADBFileManager.ListFiles(currentDirectory);
+            var fileList = ADBFileManager.ListFiles(currentDirectory);
             lstFiles.Items.Clear();
+
             foreach (var file in fileList.Split('\n'))
-            {
                 lstFiles.Items.Add(file);
-            }
+            
         }
 
         // Call this method when a directory is double-clicked or a navigation button is pressed
-        private void NavigateToDirectory(string directory)
+        void NavigateToDirectory(string directory)
         {
             currentDirectory = directory; // Update the current directory
             RefreshFileList(); // Refresh the file list based on the new directory
         }
 
-        private void BtnRefresh_Click(object sender, RoutedEventArgs e)
-        {
-            RefreshFileList();
-        }
+        void BtnRefresh_Click(object sender, RoutedEventArgs e) => RefreshFileList();
 
-        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-            string path = GetSelectedPath(); // Assume this method gets the path of the selected file or directory.
-            string message = $"Are you sure you want to delete: {path}?";
-            MessageBoxResult result = MessageBox.Show(message, "Confirmation", MessageBoxButton.YesNo);
+            var path = GetSelectedPath(); // Assume this method gets the path of the selected file or directory.
+            var message = $"Are you sure you want to delete: {path}?";
+            var result = MessageBox.Show(message, "Confirmation", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes)
             {
@@ -86,12 +83,14 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        private void BtnUpload_Click(object sender, RoutedEventArgs e)
+        void BtnUpload_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            var openFileDialog = new OpenFileDialog();
+
             if (openFileDialog.ShowDialog() == true)
             {
-                string targetPath = ShowInputDialog("Enter the target directory on the device:");
+                var targetPath = ShowInputDialog("Enter the target directory on the device:");
+
                 if (!string.IsNullOrEmpty(targetPath))
                 {
                     ADBFileManager.UploadFile(openFileDialog.FileName, targetPath);
@@ -100,12 +99,14 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        private void BtnDownload_Click(object sender, RoutedEventArgs e)
+        void BtnDownload_Click(object sender, RoutedEventArgs e)
         {
-            string fileNameToDownload = ShowInputDialog("Enter the name of the file to download:");
+            var fileNameToDownload = ShowInputDialog("Enter the name of the file to download:");
+
             if (!string.IsNullOrEmpty(fileNameToDownload))
             {
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                var saveFileDialog = new SaveFileDialog();
+
                 if (saveFileDialog.ShowDialog() == true)
                 {
                     ADBFileManager.DownloadFile($"/path/to/directory/{fileNameToDownload}", saveFileDialog.FileName);
@@ -113,9 +114,9 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        private void BtnCreateDir_Click(object sender, RoutedEventArgs e)
+        void BtnCreateDir_Click(object sender, RoutedEventArgs e)
         {
-            string newDirName = Interaction.InputBox("Enter the name of the new directory:", "Create Directory");
+            var newDirName = Interaction.InputBox("Enter the name of the new directory:", "Create Directory");
 
             if (!string.IsNullOrEmpty(newDirName))
             {
@@ -130,24 +131,25 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        private string ShowInputDialog(string text)
+        string ShowInputDialog(string text)
         {
-            string input = Microsoft.VisualBasic.Interaction.InputBox(text, "Input", "Default", -1, -1);
+            var input = Microsoft.VisualBasic.Interaction.InputBox(text, "Input", "Default", -1, -1);
             return input;
         }
 
-        private string GetSelectedPath()
+        string GetSelectedPath()
         {
             if (lstFiles.SelectedItem != null)
             {
                 return lstFiles.SelectedItem.ToString();
             }
+
             return null;
         }
 
         public static bool IsDirectory(string path)
         {
-            string result = ADB.ADBFileManager.ExecuteADBCommand($"shell ls -ld {path}");
+            var result = ADB.ADBFileManager.ExecuteADBCommand($"shell ls -ld {path}");
             return result.StartsWith("d");
         }
     }

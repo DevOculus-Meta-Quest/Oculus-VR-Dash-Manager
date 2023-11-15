@@ -1,10 +1,10 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json.Linq; // You might need to use Newtonsoft.Json or another JSON library
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json.Linq; // You might need to use Newtonsoft.Json or another JSON library
 
 namespace OVR_Dash_Manager.Functions
 {
@@ -19,7 +19,7 @@ namespace OVR_Dash_Manager.Functions
     public static class OculusAppChecker
     {
         // Cache for installed apps
-        private static List<string> _installedApps;
+        static List<string> _installedApps;
 
         /// <summary>
         /// Checks if a specific Oculus app is installed.
@@ -33,7 +33,7 @@ namespace OVR_Dash_Manager.Functions
                 // Ensure the cache is populated
                 if (_installedApps == null)
                 {
-                    List<string> oculusPaths = GetOculusPaths();
+                    var oculusPaths = GetOculusPaths();
                     _installedApps = GetInstalledApps(oculusPaths);
                 }
 
@@ -64,9 +64,9 @@ namespace OVR_Dash_Manager.Functions
         /// Retrieves all paths where Oculus apps are installed.
         /// </summary>
         /// <returns>A list of Oculus app paths.</returns>
-        private static List<string> GetOculusPaths()
+        static List<string> GetOculusPaths()
         {
-            List<string> oculusPaths = new List<string>();
+            var oculusPaths = new List<string>();
 
             // Check the registry for Oculus paths
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Oculus VR, LLC\Oculus\Libraries"))
@@ -79,11 +79,13 @@ namespace OVR_Dash_Manager.Functions
                         {
                             if (subKey != null)
                             {
-                                string path = (string)subKey.GetValue("OriginalPath");
+                                var path = (string)subKey.GetValue("OriginalPath");
+
                                 if (!string.IsNullOrEmpty(path))
                                 {
                                     // Append "Software/Software" to the path
-                                    string adjustedPath = Path.Combine(path, "Software");
+                                    var adjustedPath = Path.Combine(path, "Software");
+
                                     if (Directory.Exists(adjustedPath))
                                     {
                                         oculusPaths.Add(adjustedPath);
@@ -107,7 +109,8 @@ namespace OVR_Dash_Manager.Functions
                 {
                     if (key != null)
                     {
-                        string installDir = (string)key.GetValue("InstallDir");
+                        var installDir = (string)key.GetValue("InstallDir");
+
                         if (!string.IsNullOrEmpty(installDir) && Directory.Exists(installDir))
                         {
                             return true;
@@ -129,9 +132,9 @@ namespace OVR_Dash_Manager.Functions
         /// </summary>
         /// <param name="oculusPaths">A list of paths to check.</param>
         /// <returns>A list of installed Oculus app names.</returns>
-        private static List<string> GetInstalledApps(List<string> oculusPaths)
+        static List<string> GetInstalledApps(List<string> oculusPaths)
         {
-            List<string> installedApps = new List<string>();
+            var installedApps = new List<string>();
 
             foreach (string oculusPath in oculusPaths)
             {
@@ -214,7 +217,7 @@ namespace OVR_Dash_Manager.Functions
             return appDetailsList;
         }
 
-        private static string ConvertAppNameToAssetFolderName(string appName)
+        static string ConvertAppNameToAssetFolderName(string appName)
         {
             // Replace spaces with "-" and append "_assets" to the app name
             return appName.Replace(" ", "-").ToLower() + "_assets";

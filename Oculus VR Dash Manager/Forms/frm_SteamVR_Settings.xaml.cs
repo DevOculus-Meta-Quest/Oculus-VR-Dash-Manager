@@ -7,9 +7,6 @@ namespace OVR_Dash_Manager.Forms
     /// </summary>
     public partial class frm_SteamVR_Settings : Window
     {
-        public frm_SteamVR_Settings()
-        {
-            InitializeComponent();
-        }
+        public frm_SteamVR_Settings() => InitializeComponent();
     }
 }

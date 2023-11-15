@@ -8,10 +8,10 @@ namespace OVR_Dash_Manager
 {
     public class HoverButtonManager
     {
-        private MainWindow _mainWindow;
-        private ProgressBar _pbNormal;
-        private ProgressBar _pbExit;
-        private Action _activateDash;
+        MainWindow _mainWindow;
+        ProgressBar _pbNormal;
+        ProgressBar _pbExit;
+        Action _activateDash;
         public Hover_Button Oculus_Dash { get; private set; }
         public Hover_Button Exit_Link { get; private set; }
 
@@ -33,7 +33,8 @@ namespace OVR_Dash_Manager
 
         public void GenerateHoverButtons()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher
+                .Invoke(() =>
             {
                 Oculus_Dash = new Hover_Button
                 {
@@ -42,6 +43,7 @@ namespace OVR_Dash_Manager
                     Check_SteamVR = true,
                     Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time
                 };
+
                 Exit_Link = new Hover_Button
                 {
                     Hover_Complete_Action = ExitLinkHoverActivate,
@@ -49,6 +51,7 @@ namespace OVR_Dash_Manager
                     Check_SteamVR = true,
                     Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time
                 };
+
                 _pbNormal.Maximum = Properties.Settings.Default.Hover_Activation_Time * 1000;
                 _pbExit.Maximum = Properties.Settings.Default.Hover_Activation_Time * 1000;
             });
@@ -96,7 +99,8 @@ namespace OVR_Dash_Manager
                 else
                 {
                     // If not, dispatch the UI update to the UI thread
-                    Application.Current.Dispatcher.Invoke(() =>
+                    Application.Current.Dispatcher
+                        .Invoke(() =>
                     {
                         Oculus_Dash.Bar.Value = 0;
                     });
@@ -126,17 +130,19 @@ namespace OVR_Dash_Manager
                 {
                     if (button.Tag is Dashes.Dash_Type Dash)
                     {
-                        bool Enabled = Dashes.Dash_Manager.IsInstalled(Dash);
+                        var Enabled = Dashes.Dash_Manager.IsInstalled(Dash);
                         button.IsEnabled = Enabled;
+
                         if (Enabled)
                             EnableHoverButton(Dash);
                     }
                 }
             }
+
             _mainWindow.btn_ExitOculusLink.IsEnabled = true;
         }
 
-        private void CheckHovering(Hover_Button hoverButton)
+        void CheckHovering(Hover_Button hoverButton)
         {
             try
             {
@@ -152,10 +158,11 @@ namespace OVR_Dash_Manager
                     return;
 
                 // Calculate the time passed since hovering started.
-                TimeSpan Passed = DateTime.Now.Subtract(hoverButton.Hover_Started);
+                var Passed = DateTime.Now.Subtract(hoverButton.Hover_Started);
 
                 // Update the Bar value on the UI thread to avoid potential threading issues.
-                Application.Current.Dispatcher.Invoke(() =>
+                Application.Current.Dispatcher
+                    .Invoke(() =>
                 {
                     hoverButton.Bar.Value = Passed.TotalMilliseconds;
                 });

@@ -12,7 +12,7 @@ namespace OVR_Dash_Manager.Forms.Settings
         public uc_Setting()
         {
             InitializeComponent();
-            this.DataContext = this;
+            DataContext = this;
         }
 
         public string Setting { get; set; }
@@ -20,30 +20,24 @@ namespace OVR_Dash_Manager.Forms.Settings
         public string AlertMessage { get; set; }
         public bool MinToTray { get; set; }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            Update_Buttons();
-        }
+        void UserControl_Loaded(object sender, RoutedEventArgs e) => Update_Buttons();
 
-        private void btn_Disabled_Checked(object sender, RoutedEventArgs e)
+        void btn_Disabled_Checked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(false);
         }
 
-        private void btn_Enabled_Checked(object sender, RoutedEventArgs e)
-        {
-            Update_Properties_Setting(true);
-        }
+        void btn_Enabled_Checked(object sender, RoutedEventArgs e) => Update_Properties_Setting(true);
 
-        private void Update_Buttons()
+        void Update_Buttons()
         {
-            bool Current = Get_Properties_Setting(Setting);
+            var Current = Get_Properties_Setting(Setting);
 
             btn_Enabled.IsChecked = Current;
             btn_Disabled.IsChecked = !Current;
         }
 
-        private void Update_Properties_Setting(bool Value)
+        void Update_Properties_Setting(bool Value)
         {
             bool Current;
 
@@ -73,9 +67,9 @@ namespace OVR_Dash_Manager.Forms.Settings
             }
         }
 
-        private bool Get_Properties_Setting(String SettingName)
+        bool Get_Properties_Setting(string SettingName)
         {
-            bool Setting = false;
+            var Setting = false;
 
             try
             {

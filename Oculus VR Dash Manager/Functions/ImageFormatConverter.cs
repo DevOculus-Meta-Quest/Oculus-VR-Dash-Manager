@@ -27,6 +27,7 @@ namespace OVR_Dash_Manager.Functions
                     }
 
                     var handle = GCHandle.Alloc(image.Data, GCHandleType.Pinned);
+
                     try
                     {
                         var data = Marshal.UnsafeAddrOfPinnedArrayElement(image.Data, 0);

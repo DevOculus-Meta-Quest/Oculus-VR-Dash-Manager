@@ -12,8 +12,8 @@ namespace OculusVRDashManager.Functions
 {
     public class WindowManager
     {
-        private TaskbarIcon notifyIcon;
-        private Window managedWindow; // The window that this WindowManager is managing
+        TaskbarIcon notifyIcon;
+        Window managedWindow; // The window that this WindowManager is managing
 
         public WindowManager(Window window)
         {
@@ -47,10 +47,10 @@ namespace OculusVRDashManager.Functions
             notifyIcon.ToolTipText = "Oculus VR Dash Manager";
 
             // Create the context menu and items
-            ContextMenu contextMenu = new ContextMenu();
-            MenuItem showItem = new MenuItem { Header = "Show" };
+            var contextMenu = new ContextMenu();
+            var showItem = new MenuItem { Header = "Show" };
             showItem.Click += (sender, e) => ShowWindow();
-            MenuItem exitItem = new MenuItem { Header = "Exit" };
+            var exitItem = new MenuItem { Header = "Exit" };
             exitItem.Click += (sender, e) => ExitApplication();
 
             // Add the items to the context menu
@@ -65,7 +65,8 @@ namespace OculusVRDashManager.Functions
 
         public void Minimize()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher
+                .Invoke(() =>
             {
                 managedWindow.WindowState = WindowState.Minimized;
                 MinimizeToTray();
@@ -74,7 +75,8 @@ namespace OculusVRDashManager.Functions
 
         public void MaximizeRestore()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher
+                .Invoke(() =>
             {
                 managedWindow.WindowState = managedWindow.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
             });
@@ -82,7 +84,8 @@ namespace OculusVRDashManager.Functions
 
         public void Close()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher
+                .Invoke(() =>
             {
                 managedWindow.Close();
             });
@@ -90,7 +93,8 @@ namespace OculusVRDashManager.Functions
 
         public void ShowWindow()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher
+                .Invoke(() =>
             {
                 managedWindow.Show();
                 managedWindow.WindowState = WindowState.Normal;
@@ -100,23 +104,22 @@ namespace OculusVRDashManager.Functions
 
         public void HideWindow()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher
+                .Invoke(() =>
             {
                 managedWindow.Hide();
                 notifyIcon.Visibility = Visibility.Visible;
             });
         }
 
-        public void ExitApplication()
-        {
-            Application.Current.Shutdown();
-        }
+        public void ExitApplication() => Application.Current.Shutdown();
 
         public void MinimizeToTray()
         {
             if (OVR_Dash_Manager.Properties.Settings.Default.MinToTray)
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                Application.Current.Dispatcher
+                    .Invoke(() =>
                 {
                     managedWindow.Hide();
                     notifyIcon.Visibility = Visibility.Visible;
@@ -126,7 +129,8 @@ namespace OculusVRDashManager.Functions
             {
                 // Handle the case where MinToTray is false
                 // Perhaps just minimize the window normally
-                Application.Current.Dispatcher.Invoke(() =>
+                Application.Current.Dispatcher
+                    .Invoke(() =>
                 {
                     managedWindow.WindowState = WindowState.Minimized;
                 });
@@ -140,7 +144,8 @@ namespace OculusVRDashManager.Functions
 
         public void ToggleAlwaysOnTop(bool enable)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher
+                .Invoke(() =>
             {
                 managedWindow.Topmost = enable;
             });
@@ -148,7 +153,8 @@ namespace OculusVRDashManager.Functions
 
         public void DragWindow()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher
+                .Invoke(() =>
             {
                 if (managedWindow.WindowState == WindowState.Maximized)
                 {
@@ -159,6 +165,7 @@ namespace OculusVRDashManager.Functions
 
                     // Make sure window gets moved onto the screen
                     if (x < 0) x = 0;
+
                     if (x + width > SystemParameters.WorkArea.Width)
                         x = SystemParameters.WorkArea.Width - width;
 
@@ -168,6 +175,7 @@ namespace OculusVRDashManager.Functions
                     // Restore window to normal state
                     managedWindow.WindowState = WindowState.Normal;
                 }
+
                 managedWindow.DragMove();
             });
         }

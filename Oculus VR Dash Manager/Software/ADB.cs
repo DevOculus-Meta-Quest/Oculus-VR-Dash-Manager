@@ -9,7 +9,7 @@ namespace OVR_Dash_Manager.Software
 {
     public static class ADB
     {
-        private static Process ADBServer;
+        static Process ADBServer;
 
         public static void Start()
         {
@@ -22,17 +22,19 @@ namespace OVR_Dash_Manager.Software
                 if (!AdbServer.Instance.GetStatus().IsRunning)
                 {
                     var server = new AdbServer();
+
                     try
                     {
                         Functions.ProcessWatcher.ProcessStarted += Process_Watcher_ProcessStarted;
 
                         var result = server.StartServer(@".\ADB\adb.exe", false);
+
                         if (result != StartServerResult.Started)
                         {
                             Debug.WriteLine("Can't start adb server");
                         }
 
-                        Thread RemoveWatcherThread = new Thread(RemoveWatcher);
+                        var RemoveWatcherThread = new Thread(RemoveWatcher);
                         RemoveWatcherThread.Start();
                     }
                     catch (Exception ex)
@@ -42,10 +44,12 @@ namespace OVR_Dash_Manager.Software
                 }
                 else
                 {
-                    Process[] ADBs = Process.GetProcessesByName("adb");
+                    var ADBs = Process.GetProcessesByName("adb");
+
                     if (ADBs.Length > 0)
                     {
-                        String MyADBLocation = Path.Combine(Environment.CurrentDirectory, "ADB", "adb.exe");
+                        var MyADBLocation = Path.Combine(Environment.CurrentDirectory, "ADB", "adb.exe");
+
                         foreach (Process item in ADBs)
                         {
                             if (item.MainModule.FileName == MyADBLocation)
@@ -56,13 +60,13 @@ namespace OVR_Dash_Manager.Software
             }
         }
 
-        private static void RemoveWatcher()
+        static void RemoveWatcher()
         {
             Thread.Sleep(1000);
             Functions.ProcessWatcher.ProcessStarted -= Process_Watcher_ProcessStarted;
         }
 
-        private static void Process_Watcher_ProcessStarted(string pProcessName, int pProcessID)
+        static void Process_Watcher_ProcessStarted(string pProcessName, int pProcessID)
         {
             if (pProcessName == "adb")
                 ADBServer = Process.GetProcessById(pProcessID);
@@ -85,7 +89,7 @@ namespace OVR_Dash_Manager.Software
 
         public static void InstallAPK(string apkPath)
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo
+            var startInfo = new ProcessStartInfo
             {
                 FileName = @".\ADB\adb.exe",
                 Arguments = $"install \"{apkPath}\"",
@@ -95,17 +99,17 @@ namespace OVR_Dash_Manager.Software
                 CreateNoWindow = true
             };
 
-            Process process = new Process { StartInfo = startInfo };
+            var process = new Process { StartInfo = startInfo };
             process.Start();
 
-            string errorOutput = process.StandardError.ReadToEnd(); // Read the error output
+            var errorOutput = process.StandardError.ReadToEnd(); // Read the error output
 
             process.WaitForExit();
 
             if (process.ExitCode != 0 || !string.IsNullOrEmpty(errorOutput)) // Check for errors
             {
                 // Create a new Exception with the error message and log it using your ErrorLogger class
-                Exception adbException = new Exception($"Error installing APK. Exit Code: {process.ExitCode}. Error Message: {errorOutput}");
+                var adbException = new Exception($"Error installing APK. Exit Code: {process.ExitCode}. Error Message: {errorOutput}");
                 ErrorLogger.LogError(adbException);
             }
         }
@@ -116,7 +120,7 @@ namespace OVR_Dash_Manager.Software
             {
                 try
                 {
-                    ProcessStartInfo startInfo = new ProcessStartInfo
+                    var startInfo = new ProcessStartInfo
                     {
                         FileName = @".\ADB\adb.exe",
                         Arguments = command,
@@ -129,7 +133,7 @@ namespace OVR_Dash_Manager.Software
                     {
                         using (StreamReader reader = process.StandardOutput)
                         {
-                            string result = reader.ReadToEnd();
+                            var result = reader.ReadToEnd();
                             return result;
                         }
                     }
@@ -141,15 +145,9 @@ namespace OVR_Dash_Manager.Software
                 }
             }
 
-            public static string ListFiles(string directory)
-            {
-                return ExecuteADBCommand($"shell ls {directory}");
-            }
+            public static string ListFiles(string directory) => ExecuteADBCommand($"shell ls {directory}");
 
-            public static void DeleteFile(string filePath)
-            {
-                ExecuteADBCommand($"shell rm {filePath}");
-            }
+            public static void DeleteFile(string filePath) => ExecuteADBCommand($"shell rm {filePath}");
 
             public static void UploadFile(string localPath, string remotePath)
             {

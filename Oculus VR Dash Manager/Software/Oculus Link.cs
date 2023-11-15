@@ -17,6 +17,7 @@ namespace OVR_Dash_Manager.Software
                 System.Threading.Thread.Sleep(1000);
 
                 var connectedDevices = USB_Devices_Functions.GetUSBDevices();
+
                 foreach (var device in connectedDevices)
                 {
                     if (string.IsNullOrEmpty(device.FullSerial) || device.Type != "Quest") continue;
@@ -76,6 +77,7 @@ namespace OVR_Dash_Manager.Software
             {
                 // Update the following line to include the correct namespace for RegistryKeyType
                 var runTimeKey = Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.LocalMachine, @"SOFTWARE\Khronos\OpenXR\1");
+
                 if (runTimeKey != null)
                 {
                     var oculusRunTimePath = Path.Combine(Oculus.Oculus_Main_Directory, "Support\\oculus-runtime\\oculus_openxr_64.json");
@@ -83,7 +85,8 @@ namespace OVR_Dash_Manager.Software
                     if (File.Exists(oculusRunTimePath))
                     {
                         // Specify the value kind as ExpandString when setting a REG_EXPAND_SZ value
-                        Functions.RegistryFunctions.SetKeyValue(runTimeKey, "ActiveRuntime", oculusRunTimePath, RegistryValueKind.ExpandString);
+                        Functions.RegistryFunctions
+                            .SetKeyValue(runTimeKey, "ActiveRuntime", oculusRunTimePath, RegistryValueKind.ExpandString);
                     }
 
                     Functions.RegistryFunctions.CloseKey(runTimeKey);

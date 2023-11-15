@@ -6,16 +6,14 @@ namespace OVR_Dash_Manager.Functions
 {
     public class UIManager
     {
-        private MainWindow _window;
+        MainWindow _window;
 
-        public UIManager(MainWindow window)
-        {
-            _window = window;
-        }
+        public UIManager(MainWindow window) => _window = window;
 
         public void ShowDesktopPlusNotInstalledWarning()
         {
-            _window.Dispatcher.Invoke(() =>
+            _window.Dispatcher
+                .Invoke(() =>
                 {
                     // Temporarily set the main window to not be topmost
                     _window.Topmost = false;
@@ -30,9 +28,11 @@ namespace OVR_Dash_Manager.Functions
 
         public void NotifyNotElevated()
         {
-            _window.Dispatcher.Invoke(() =>
+            _window.Dispatcher
+                .Invoke(() =>
                     {
                         _window.lbl_CurrentSetting.Content = "Run as Admin Required";
+
                         MessageBox.Show(_window,
             "This program must be run with Admin Permissions" + Environment.NewLine +
             Environment.NewLine +
@@ -47,15 +47,17 @@ namespace OVR_Dash_Manager.Functions
 
         public void UpdateSteamVRBetaStatus()
         {
-            _window.Dispatcher.Invoke(() =>
+            _window.Dispatcher
+                .Invoke(() =>
                         {
                             // Temporarily set the main window to not be topmost
                             _window.Topmost = false;
+
                             try
                             {
-                                bool isSteamVRBeta = SteamAppChecker.IsSteamVRBeta();
+                                var isSteamVRBeta = SteamAppChecker.IsSteamVRBeta();
 
-                                string betaStatusText = isSteamVRBeta ? "Beta Edition" : "Normal Edition";
+                                var betaStatusText = isSteamVRBeta ? "Beta Edition" : "Normal Edition";
                                 _window.lbl_SteamVR_BetaStatus.Content = betaStatusText;
                             }
                             catch (Exception ex)
@@ -70,7 +72,8 @@ namespace OVR_Dash_Manager.Functions
 
         public void UpdateStatusLabel(string text)
         {
-            _window.Dispatcher.Invoke(() =>
+            _window.Dispatcher
+                .Invoke(() =>
                             {
                                 _window.lbl_CurrentSetting.Content = text;
                             });
@@ -78,7 +81,8 @@ namespace OVR_Dash_Manager.Functions
 
         public void UpdateSteamVRStatusLabel(string text)
         {
-            _window.Dispatcher.Invoke(() =>
+            _window.Dispatcher
+                .Invoke(() =>
                                 {
                                     _window.lbl_SteamVR_Status.Content = text;
                                 });
@@ -86,9 +90,10 @@ namespace OVR_Dash_Manager.Functions
 
         public void UpdateDesktopPlusStatusLabel(bool isInstalled)
         {
-            string statusText = isInstalled ? "Installed: True" : "Installed: False";
+            var statusText = isInstalled ? "Installed: True" : "Installed: False";
 
-            _window.Dispatcher.Invoke(() =>
+            _window.Dispatcher
+                .Invoke(() =>
                                     {
                                         _window.lbl_DesktopPlusStatus.Content = statusText;
                                     });
@@ -96,7 +101,8 @@ namespace OVR_Dash_Manager.Functions
 
         public void EnableButton(string buttonName, bool isEnabled)
         {
-            _window.Dispatcher.Invoke(() =>
+            _window.Dispatcher
+                .Invoke(() =>
                                         {
                                             switch (buttonName)
                                             {
@@ -116,7 +122,8 @@ namespace OVR_Dash_Manager.Functions
 
         public void ShowMessageBox(string message, string title, MessageBoxButton buttons, MessageBoxImage icon)
         {
-            _window.Dispatcher.Invoke(() =>
+            _window.Dispatcher
+                .Invoke(() =>
                                             {
                                                 MessageBox.Show(_window, message, title, buttons, icon);
                                             });
@@ -124,7 +131,8 @@ namespace OVR_Dash_Manager.Functions
 
         public void OpenDashLocation()
         {
-            _window.Dispatcher.Invoke(() =>
+            _window.Dispatcher
+                .Invoke(() =>
                                                 {
                                                     if (Software.Oculus.Oculus_Is_Installed)
                                                     {
@@ -144,6 +152,6 @@ namespace OVR_Dash_Manager.Functions
                                                 });
         }
 
-        //... Add other UI management methods as needed ...
+        // ... Add other UI management methods as needed ...
     }
 }

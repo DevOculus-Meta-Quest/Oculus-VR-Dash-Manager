@@ -29,15 +29,18 @@ namespace OVR_Dash_Manager
             if (url.Contains("&amp;"))
                 url = url.Replace("&amp;", "&");
 
-            string result = "";
+            var result = "";
+
             if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {
-                HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
+                var webRequest = (HttpWebRequest)WebRequest.Create(url);
                 webRequest.Method = method;
                 webRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0";
                 webRequest.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";
+
                 if (contentType != "")
                     webRequest.ContentType = contentType;
+
                 webRequest.AllowAutoRedirect = true;
                 webRequest.MaximumAutomaticRedirections = 3;
                 webRequest.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
@@ -47,8 +50,9 @@ namespace OVR_Dash_Manager
 
                 if (formParams != "")
                 {
-                    byte[] bytes = Encoding.ASCII.GetBytes(formParams);
+                    var bytes = Encoding.ASCII.GetBytes(formParams);
                     webRequest.ContentLength = bytes.Length;
+
                     using (Stream os = webRequest.GetRequestStream())
                         os.Write(bytes, 0, bytes.Length);
                 }
@@ -57,9 +61,8 @@ namespace OVR_Dash_Manager
                 {
                     using (WebResponse webResponse = webRequest.GetResponse())
                     using (StreamReader streamRead = new StreamReader(webResponse.GetResponseStream(), Encoding.UTF8))
-                    {
                         result = streamRead.ReadToEnd();
-                    }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -70,7 +73,7 @@ namespace OVR_Dash_Manager
             return result;
         }
 
-        private static string HandleWebException(Exception ex)
+        static string HandleWebException(Exception ex)
         {
             // Log the exception details for future diagnosis.
             ErrorLogger.LogError(ex, "Web request failed");
@@ -101,6 +104,7 @@ namespace OVR_Dash_Manager
                     myWebClient.CachePolicy = new RequestCachePolicy(RequestCacheLevel.NoCacheNoStore);
                     myWebClient.DownloadFile(fullUrl, saveTo);
                 }
+
                 return true;
             }
             catch (Exception ex)
@@ -115,11 +119,12 @@ namespace OVR_Dash_Manager
         {
             try
             {
-                ProcessStartInfo ps = new ProcessStartInfo(url)
+                var ps = new ProcessStartInfo(url)
                 {
                     UseShellExecute = true,
                     Verb = "open"
                 };
+
                 Process.Start(ps);
             }
             catch (Exception ex)
@@ -149,7 +154,7 @@ namespace OVR_Dash_Manager
         }
 
         [DllImport("User32.dll")]
-        private static extern bool SetCursorPos(int X, int Y);
+        static extern bool SetCursorPos(int X, int Y);
 
         public static void MoveCursor(int X, int Y)
         {
@@ -181,21 +186,22 @@ namespace OVR_Dash_Manager
         }
 
         [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
+        static extern IntPtr GetForegroundWindow();
 
         [DllImport("user32.dll")]
-        private static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
         public static string GetActiveWindowTitle()
         {
             const int nChars = 256;
-            StringBuilder Buff = new StringBuilder(nChars);
-            IntPtr handle = GetForegroundWindow();
+            var Buff = new StringBuilder(nChars);
+            var handle = GetForegroundWindow();
 
             if (GetWindowText(handle, Buff, nChars) > 0)
             {
                 return Buff.ToString();
             }
+
             return null;
         }
 
@@ -221,8 +227,8 @@ namespace OVR_Dash_Manager
 
     public static class Timer_Functions
     {
-        private static readonly object TimerLock = new object();
-        private static Dictionary<string, Timer> Timers = new Dictionary<string, Timer>();
+        static readonly object TimerLock = new object();
+        static Dictionary<string, Timer> Timers = new Dictionary<string, Timer>();
 
         public static bool SetNewInterval(string timerID, TimeSpan interval)
         {
@@ -232,7 +238,7 @@ namespace OVR_Dash_Manager
             {
                 if (Timers.ContainsKey(timerID))
                 {
-                    Timer timer = Timers[timerID];
+                    var timer = Timers[timerID];
                     timer.Interval = interval.TotalMilliseconds;
                     return true;
                 }
@@ -250,7 +256,7 @@ namespace OVR_Dash_Manager
             {
                 if (!Timers.ContainsKey(timerID))
                 {
-                    Timer timer = new Timer
+                    var timer = new Timer
                     {
                         Interval = interval.TotalMilliseconds,
                         AutoReset = repeat,
@@ -275,7 +281,7 @@ namespace OVR_Dash_Manager
             {
                 if (Timers.ContainsKey(timerID))
                 {
-                    Timer timer = Timers[timerID];
+                    var timer = Timers[timerID];
                     timer.Start();
                     return true;
                 }
@@ -292,7 +298,7 @@ namespace OVR_Dash_Manager
             {
                 if (Timers.ContainsKey(timerID))
                 {
-                    Timer timer = Timers[timerID];
+                    var timer = Timers[timerID];
                     timer.Stop();
                     return true;
                 }
@@ -306,9 +312,8 @@ namespace OVR_Dash_Manager
             if (string.IsNullOrEmpty(timerID)) throw new ArgumentNullException(nameof(timerID));
 
             lock (TimerLock)
-            {
                 return Timers.ContainsKey(timerID);
-            }
+            
         }
 
         public static void DisposeTimer(string timerID)
@@ -319,7 +324,7 @@ namespace OVR_Dash_Manager
             {
                 if (Timers.ContainsKey(timerID))
                 {
-                    Timer timer = Timers[timerID];
+                    var timer = Timers[timerID];
                     Timers.Remove(timerID);
 
                     timer.Stop();

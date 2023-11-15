@@ -1,9 +1,6 @@
 ﻿using OVR_Dash_Manager.Functions;
-using System.Windows; // Make sure you have the correct using directives
 using System;
-using System.Collections.Generic;
-using System.Windows.Controls;
-using System.Windows;
+using System.Windows; // Make sure you have the correct using directives
 
 namespace OVR_Dash_Manager.Forms
 {
@@ -18,7 +15,7 @@ namespace OVR_Dash_Manager.Forms
             LoadOculusApps();
         }
 
-        private void LoadOculusApps()
+        void LoadOculusApps()
         {
             try
             {

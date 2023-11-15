@@ -21,9 +21,10 @@ namespace OVR_Dash_Manager.Software
 
             try
             {
-                string programData = Properties.Settings.Default.Auto_Programs_JSON;
+                var programData = Properties.Settings.Default.Auto_Programs_JSON;
 
                 var slimPrograms = Functions.JsonFunctions.DeserializeClass<List<Slim_Auto_Program>>(programData);
+
                 if (slimPrograms.Count > 0)
                 {
                     foreach (var item in slimPrograms)
@@ -96,10 +97,7 @@ namespace OVR_Dash_Manager.Software
             }
         }
 
-        public static void Remove_Program(Auto_Program program)
-        {
-            Programs.Remove(program);
-        }
+        public static void Remove_Program(Auto_Program program) => Programs.Remove(program);
     }
 
     public class Slim_Auto_Program
@@ -125,7 +123,7 @@ namespace OVR_Dash_Manager.Software
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -161,7 +159,7 @@ namespace OVR_Dash_Manager.Software
 
         public string Full_Path { get; set; }
 
-        private ImageSource _Program_Icon;
+        ImageSource _Program_Icon;
 
         public ImageSource Program_Icon
         {
@@ -169,7 +167,7 @@ namespace OVR_Dash_Manager.Software
             set { if (value != null || value != _Program_Icon) _Program_Icon = value; OnPropertyChanged("Program_Icon"); }
         }
 
-        private string _File_Name;
+        string _File_Name;
 
         public string File_Name
         {
@@ -177,7 +175,7 @@ namespace OVR_Dash_Manager.Software
             set { if (value != null || value != _File_Name) _File_Name = value; OnPropertyChanged("File_Name"); }
         }
 
-        private string _Folder_Path;
+        string _Folder_Path;
 
         public string Folder_Path
         {
@@ -185,7 +183,7 @@ namespace OVR_Dash_Manager.Software
             set { if (value != null || value != _Folder_Path) _Folder_Path = value; OnPropertyChanged("Folder_Path"); }
         }
 
-        private bool _Startup_Launch;
+        bool _Startup_Launch;
 
         public bool Startup_Launch
         {
@@ -193,7 +191,7 @@ namespace OVR_Dash_Manager.Software
             set { if (value != _Startup_Launch) _Startup_Launch = value; OnPropertyChanged("Startup_Launch"); Changed = true; }
         }
 
-        private bool _Closing_Launch;
+        bool _Closing_Launch;
 
         public bool Closing_Launch
         {
@@ -201,7 +199,7 @@ namespace OVR_Dash_Manager.Software
             set { if (value != _Closing_Launch) _Closing_Launch = value; OnPropertyChanged("Closing_Launch"); Changed = true; }
         }
 
-        private bool _Program_Found;
+        bool _Program_Found;
 
         public bool Program_Found
         {

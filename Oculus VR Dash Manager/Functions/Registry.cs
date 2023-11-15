@@ -16,7 +16,7 @@ namespace OVR_Dash_Manager.Functions
     {
         public static RegistryKey GetRegistryKey(RegistryKeyType type, string keyLocation)
         {
-            RegistryKey registryKey = type switch
+            var registryKey = type switch
             {
                 RegistryKeyType.ClassRoot => Registry.ClassesRoot.OpenSubKey(keyLocation, writable: true),
                 RegistryKeyType.CurrentUser => Registry.CurrentUser.OpenSubKey(keyLocation, writable: true),
@@ -39,23 +39,24 @@ namespace OVR_Dash_Manager.Functions
                 switch (valueKind)
                 {
                     case RegistryValueKind.DWord:
-                        int intValue = Convert.ToInt32(value);
+                        var intValue = Convert.ToInt32(value);
                         key.SetValue(keyName, intValue, RegistryValueKind.DWord);
                         break;
 
                     case RegistryValueKind.String:
-                        string stringValue = Convert.ToString(value);
+                        var stringValue = Convert.ToString(value);
                         key.SetValue(keyName, stringValue, RegistryValueKind.String);
                         break;
 
                     case RegistryValueKind.ExpandString:
-                        string expandStringValue = Convert.ToString(value);
+                        var expandStringValue = Convert.ToString(value);
                         key.SetValue(keyName, expandStringValue, RegistryValueKind.ExpandString);
                         break;
                     // Handle other types as necessary
                     default:
                         throw new ArgumentException($"Unsupported registry value kind: {valueKind}");
                 }
+
                 return true;
             }
             catch (Exception ex)
@@ -73,20 +74,17 @@ namespace OVR_Dash_Manager.Functions
 
         public static string GetKeyValueString(RegistryKeyType type, string keyLocation, string keyName)
         {
-            using RegistryKey key = GetRegistryKey(type, keyLocation);
+            using var key = GetRegistryKey(type, keyLocation);
             return GetKeyValueString(key, keyName);
         }
 
-        public static void CloseKey(RegistryKey key)
-        {
-            key?.Close();
-        }
+        public static void CloseKey(RegistryKey key) => key?.Close();
 
         public static RegistryKey CreateRegistryKey(RegistryKeyType type, string keyLocation)
         {
             try
             {
-                RegistryKey baseKey = type switch
+                var baseKey = type switch
                 {
                     RegistryKeyType.ClassRoot => Registry.ClassesRoot,
                     RegistryKeyType.CurrentUser => Registry.CurrentUser,
@@ -96,7 +94,8 @@ namespace OVR_Dash_Manager.Functions
                     _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
                 };
 
-                RegistryKey key = baseKey.CreateSubKey(keyLocation);
+                var key = baseKey.CreateSubKey(keyLocation);
+
                 if (key != null)
                 {
                     // The key was created successfully

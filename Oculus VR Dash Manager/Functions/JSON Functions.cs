@@ -22,7 +22,7 @@ namespace OVR_Dash_Manager.Functions
         // Method to serialize an object to a JSON string
         public static string SerializeClass(object Class, JsonSerializerSettings Settings = null)
         {
-            string Serialized = string.Empty;
+            var Serialized = string.Empty;
 
             Settings ??= JsonSettings;
 
@@ -66,9 +66,9 @@ namespace OVR_Dash_Manager.Functions
 
             if (IgnoreFields.Length > 0)
             {
-                IgnorableSerializerContractResolver jsonResolver = new IgnorableSerializerContractResolver();
+                var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(T), IgnoreFields);
-                JsonSerializerSettings NewSettings = DeepCopySettings(Settings);
+                var NewSettings = DeepCopySettings(Settings);
                 NewSettings.ContractResolver = jsonResolver;
                 Settings = NewSettings;  // Update Settings to use the new contract resolver
             }
@@ -130,40 +130,39 @@ namespace OVR_Dash_Manager.Functions
 
         public IgnorableSerializerContractResolver()
         {
-            this.Ignores = new Dictionary<Type, HashSet<string>>();
+            Ignores = new Dictionary<Type, HashSet<string>>();
         }
 
         // Explicitly ignore the given property(s) for the given type
         public void Ignore(Type type, params string[] propertyName)
         {
             // start bucket if DNE
-            if (!this.Ignores.ContainsKey(type)) this.Ignores[type] = new HashSet<string>();
+            if (!Ignores.ContainsKey(type)) Ignores[type] = new HashSet<string>();
 
             foreach (var prop in propertyName)
-            {
-                this.Ignores[type].Add(prop);
-            }
+                Ignores[type].Add(prop);
+            
         }
 
         // Is the given property for the given type ignored?
         public bool IsIgnored(Type type, string propertyName)
         {
-            if (!this.Ignores.ContainsKey(type)) return false;
+            if (!Ignores.ContainsKey(type)) return false;
 
             // if no properties provided, ignore the type entirely
-            if (this.Ignores[type].Count == 0) return true;
+            if (Ignores[type].Count == 0) return true;
 
-            return this.Ignores[type].Contains(propertyName);
+            return Ignores[type].Contains(propertyName);
         }
 
         // The decision logic goes here
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
-            JsonProperty property = base.CreateProperty(member, memberSerialization);
+            var property = base.CreateProperty(member, memberSerialization);
 
-            if (this.IsIgnored(property.DeclaringType, property.PropertyName))
+            if (IsIgnored(property.DeclaringType, property.PropertyName))
             {
-                property.ShouldSerialize = instance => { return false; };
+                property.ShouldSerialize = instance => false;
             }
 
             return property;

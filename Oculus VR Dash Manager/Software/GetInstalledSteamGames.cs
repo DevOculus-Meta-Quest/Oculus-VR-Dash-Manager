@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Diagnostics; // Ensure this is included for Debug.WriteLine
 
 namespace OVR_Dash_Manager.Software
 {
@@ -18,8 +17,8 @@ namespace OVR_Dash_Manager.Software
         public List<SteamGameDetails> GetInstalledGames()
         {
             var gamesList = new List<SteamGameDetails>();
-            string steamMainFolder = @"C:\Program Files (x86)\Steam"; // Default path, adjust if necessary
-            string libraryFoldersFile = Path.Combine(steamMainFolder, @"steamapps\libraryfolders.vdf");
+            var steamMainFolder = @"C:\Program Files (x86)\Steam"; // Default path, adjust if necessary
+            var libraryFoldersFile = Path.Combine(steamMainFolder, @"steamapps\libraryfolders.vdf");
             var libraryFolders = new List<string> { steamMainFolder };
 
             // Read the library folders file to get all Steam library paths
@@ -27,16 +26,17 @@ namespace OVR_Dash_Manager.Software
             {
                 var libraryFoldersContent = File.ReadAllText(libraryFoldersFile);
                 var matches = Regex.Matches(libraryFoldersContent, "\"path\"\\s*\"([^\"]+)\"");
+
                 foreach (Match match in matches)
-                {
                     libraryFolders.Add(match.Groups[1].Value.Replace(@"\\", @"\"));
-                }
+                
             }
 
             // Search each library folder for installed games
             foreach (var libraryFolder in libraryFolders)
             {
-                string steamAppsFolder = Path.Combine(libraryFolder, "steamapps");
+                var steamAppsFolder = Path.Combine(libraryFolder, "steamapps");
+
                 if (Directory.Exists(steamAppsFolder))
                 {
                     foreach (var filePath in Directory.GetFiles(steamAppsFolder, "appmanifest_*.acf"))
@@ -58,18 +58,18 @@ namespace OVR_Dash_Manager.Software
 
             // Get the image path for each game
             foreach (var game in gamesList)
-            {
                 game.ImagePath = GetImagePathForGame(game.ID);
-            }
+            
 
             return gamesList;
         }
 
-        private string GetImagePathForGame(string gameId)
+        string GetImagePathForGame(string gameId)
         {
-            string imageCacheDirectory = @"C:\Program Files (x86)\Steam\appcache\librarycache"; // Set to your image cache directory
-            string searchPattern = gameId + "_library_600x900.*"; // Updated to match the format
+            var imageCacheDirectory = @"C:\Program Files (x86)\Steam\appcache\librarycache"; // Set to your image cache directory
+            var searchPattern = gameId + "_library_600x900.*"; // Updated to match the format
             var imageFiles = Directory.GetFiles(imageCacheDirectory, searchPattern);
+
             if (imageFiles.Length > 0)
             {
                 // Return the first found image path

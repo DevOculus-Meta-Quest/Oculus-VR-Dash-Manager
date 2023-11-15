@@ -11,12 +11,9 @@ namespace OVR_Dash_Manager.Forms
     /// </summary>
     public partial class frm_Diagnostics : Window
     {
-        public frm_Diagnostics()
-        {
-            InitializeComponent();
-        }
+        public frm_Diagnostics() => InitializeComponent();
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DiagnosticsChecker();
 
@@ -24,22 +21,22 @@ namespace OVR_Dash_Manager.Forms
             Timer_Functions.StartTimer("Diagnostics Checker");
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Timer_Functions.StopTimer("Diagnostics Checker");
             Timer_Functions.DisposeTimer("Diagnostics Checker");
         }
 
-        private void CallDiagnosticsChecker(object sender, ElapsedEventArgs args)
+        void CallDiagnosticsChecker(object sender, ElapsedEventArgs args)
         {
             Functions_Old.DoAction(this, new Action(delegate () { DiagnosticsChecker(); }));
         }
 
-        private void DiagnosticsChecker()
+        void DiagnosticsChecker()
         {
             lbl_OculusSoftware.Content = Software.Oculus.Oculus_Is_Installed ? "Installed" : "Not Found";
 
-            if (!String.IsNullOrEmpty(Software.Oculus.Oculus_Client_EXE))
+            if (!string.IsNullOrEmpty(Software.Oculus.Oculus_Client_EXE))
             {
                 if (File.Exists(Software.Oculus.Oculus_Client_EXE))
                     lbl_OculussClient.Content = "Installed";
@@ -52,8 +49,8 @@ namespace OVR_Dash_Manager.Forms
             lbl_OfficialDash.Content = Dashes.Dash_Manager.IsInstalled(Dashes.Dash_Type.Normal) ? "Installed" : "Not Found";
             lbl_OculusKiller.Content = Dashes.Dash_Manager.IsInstalled(Dashes.Dash_Type.OculusKiller) ? "Installed" : "Not Found";
 
-            FileVersionInfo Info = FileVersionInfo.GetVersionInfo(Software.Oculus.Oculus_Dash_File);
-            Dashes.Dash_Type Current = Dashes.Dash_Manager.CheckWhosDash(Info.ProductName);
+            var Info = FileVersionInfo.GetVersionInfo(Software.Oculus.Oculus_Dash_File);
+            var Current = Dashes.Dash_Manager.CheckWhosDash(Info.ProductName);
             lbl_CurrentDash.Content = Dashes.Dash_Manager.GetDashName(Current);
 
             lbl_OculusLibaryService.Content = $"State: {Service_Manager.GetState("OVRService")} - Startup: {Service_Manager.GetStartup("OVRService")}";
@@ -66,7 +63,7 @@ namespace OVR_Dash_Manager.Forms
 
             lv_OculusDevices.ItemsSource = USB_Devices_Functions.GetUSBDevices();
 
-            Software.Steam_VR_Settings.OpenXR_Runtime CurrentRuntime = Software.Steam_VR_Settings.Read_Runtime();
+            var CurrentRuntime = Software.Steam_VR_Settings.Read_Runtime();
 
             if (CurrentRuntime == Software.Steam_VR_Settings.OpenXR_Runtime.Oculus)
                 lbl_OpenXR_RunTime.Content = "Oculus Runtime";
@@ -79,7 +76,7 @@ namespace OVR_Dash_Manager.Forms
             lbl_OculusLocation.Text = Software.Oculus.Oculus_Dash_Directory;
         }
 
-        private void btn_OculusDebugTool_Click(object sender, RoutedEventArgs e)
+        void btn_OculusDebugTool_Click(object sender, RoutedEventArgs e)
         {
             if (File.Exists(Software.Oculus.Oculus_DebugTool_EXE))
                 Process.Start(Software.Oculus.Oculus_DebugTool_EXE);

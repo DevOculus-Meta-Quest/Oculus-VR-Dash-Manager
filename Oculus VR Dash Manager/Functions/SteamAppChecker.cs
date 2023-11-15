@@ -1,10 +1,10 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json.Linq; // You might need to use Newtonsoft.Json or another JSON library
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json.Linq; // You might need to use Newtonsoft.Json or another JSON library
 
 namespace OVR_Dash_Manager.Functions
 {
@@ -18,7 +18,7 @@ namespace OVR_Dash_Manager.Functions
     public static class SteamAppChecker
     {
         // Cache for installed apps
-        private static List<string> _installedApps;
+        static List<string> _installedApps;
 
         /// <summary>
         /// Checks if a specific Steam app is installed.
@@ -32,14 +32,15 @@ namespace OVR_Dash_Manager.Functions
                 // Ensure the cache is populated
                 if (_installedApps == null)
                 {
-                    string steamPath = GetSteamPath();
+                    var steamPath = GetSteamPath();
+
                     if (string.IsNullOrEmpty(steamPath))
                     {
                         ErrorLogger.LogError(new Exception("Steam path not found or invalid."));
                         return false;
                     }
 
-                    List<string> libraryPaths = GetLibraryPaths(steamPath);
+                    var libraryPaths = GetLibraryPaths(steamPath);
                     _installedApps = GetInstalledApps(libraryPaths);
                 }
 
@@ -70,9 +71,9 @@ namespace OVR_Dash_Manager.Functions
         /// Retrieves the installation path of Steam from the registry.
         /// </summary>
         /// <returns>The installation path of Steam.</returns>
-        private static string GetSteamPath()
+        static string GetSteamPath()
         {
-            string steamPath = (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", null);
+            var steamPath = (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", null);
             return steamPath;
         }
 
@@ -81,20 +82,23 @@ namespace OVR_Dash_Manager.Functions
         /// </summary>
         /// <param name="steamPath">The installation path of Steam.</param>
         /// <returns>A list of library paths.</returns>
-        private static List<string> GetLibraryPaths(string steamPath)
+        static List<string> GetLibraryPaths(string steamPath)
         {
-            List<string> libraryPaths = new List<string> { steamPath };
-            string libraryFoldersVdfPath = Path.Combine(steamPath, @"steamapps\libraryfolders.vdf");
+            var libraryPaths = new List<string> { steamPath };
+            var libraryFoldersVdfPath = Path.Combine(steamPath, @"steamapps\libraryfolders.vdf");
 
             if (File.Exists(libraryFoldersVdfPath))
             {
-                string[] lines = File.ReadAllLines(libraryFoldersVdfPath);
+                var lines = File.ReadAllLines(libraryFoldersVdfPath);
+
                 foreach (string line in lines)
                 {
-                    Match match = Regex.Match(line, "\"path\"\\s+\"([^\"]+)\"");
+                    var match = Regex.Match(line, "\"path\"\\s+\"([^\"]+)\"");
+
                     if (match.Success)
                     {
-                        string path = match.Groups[1].Value.Replace("\\\\", "\\");
+                        var path = match.Groups[1].Value.Replace("\\\\", "\\");
+
                         if (Directory.Exists(path))
                         {
                             libraryPaths.Add(path);
@@ -102,6 +106,7 @@ namespace OVR_Dash_Manager.Functions
                     }
                 }
             }
+
             return libraryPaths;
         }
 
@@ -110,13 +115,13 @@ namespace OVR_Dash_Manager.Functions
         /// </summary>
         /// <param name="libraryPaths">A list of library paths to check.</param>
         /// <returns>A list of installed Steam app names.</returns>
-        private static List<string> GetInstalledApps(List<string> libraryPaths)
+        static List<string> GetInstalledApps(List<string> libraryPaths)
         {
-            List<string> installedApps = new List<string>();
+            var installedApps = new List<string>();
 
             foreach (string libraryPath in libraryPaths)
             {
-                string appsDirectoryPath = Path.Combine(libraryPath, @"steamapps\common");
+                var appsDirectoryPath = Path.Combine(libraryPath, @"steamapps\common");
 
                 if (Directory.Exists(appsDirectoryPath))
                 {
@@ -136,13 +141,13 @@ namespace OVR_Dash_Manager.Functions
         {
             try
             {
-                string steamPath = GetSteamPath();
-                string manifestPath = Path.Combine(steamPath, @"steamapps\appmanifest_250820.acf");
+                var steamPath = GetSteamPath();
+                var manifestPath = Path.Combine(steamPath, @"steamapps\appmanifest_250820.acf");
 
                 if (File.Exists(manifestPath))
                 {
-                    string content = File.ReadAllText(manifestPath);
-                    Match match = Regex.Match(content, "\"betakey\"[^\"]*\"([^\"]+)\"", RegexOptions.IgnoreCase);
+                    var content = File.ReadAllText(manifestPath);
+                    var match = Regex.Match(content, "\"betakey\"[^\"]*\"([^\"]+)\"", RegexOptions.IgnoreCase);
 
                     if (match.Success)
                     {
@@ -181,6 +186,7 @@ namespace OVR_Dash_Manager.Functions
                         var jsonObject = JObject.Parse(jsonData);
 
                         var appName = jsonObject["canonicalName"]?.ToString();
+
                         if (appName != null && appName.Contains("_steamapps_") && !appName.EndsWith("_assets"))
                         {
                             var appID = jsonObject["appId"]?.ToString();
@@ -219,7 +225,7 @@ namespace OVR_Dash_Manager.Functions
             return appDetailsList;
         }
 
-        private static string ConvertAppNameToAssetFolderName(string appName)
+        static string ConvertAppNameToAssetFolderName(string appName)
         {
             return appName.Replace(" ", "-").ToLower() + "_assets";
         }

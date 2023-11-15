@@ -12,7 +12,7 @@ public static class RegistryManager
             {
                 if (key != null)
                 {
-                    object value = key.GetValue(valueName);
+                    var value = key.GetValue(valueName);
                     return value; // Returns null if the value does not exist
                 }
                 else
@@ -25,6 +25,7 @@ public static class RegistryManager
         {
             ErrorLogger.LogError(ex, "ReadRegistryValue Exception");
         }
+
         return null;
     }
 
@@ -49,10 +50,10 @@ public static class RegistryManager
         {
             ErrorLogger.LogError(ex, "WriteRegistryValue Exception");
         }
+
         return false;
     }
-}
-
+}
 /*
 // To read a value from the registry:
 object value = RegistryManager.ReadRegistryValue(Registry.CurrentUser, @"Software\MyApplication", "MyValue");

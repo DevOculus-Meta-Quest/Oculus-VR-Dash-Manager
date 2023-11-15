@@ -23,10 +23,10 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             LoadColorValues();
         }
 
-        private void ConvertToDDS_Click(object sender, RoutedEventArgs e)
+        void ConvertToDDS_Click(object sender, RoutedEventArgs e)
         {
-            string inputFilePath = txtInputFilePath.Text;
-            string outputFilePath = txtOutputFilePath.Text;
+            var inputFilePath = txtInputFilePath.Text;
+            var outputFilePath = txtOutputFilePath.Text;
 
             if (string.IsNullOrWhiteSpace(inputFilePath) || string.IsNullOrWhiteSpace(outputFilePath))
             {
@@ -45,10 +45,10 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        private void ConvertToPNG_Click(object sender, RoutedEventArgs e)
+        void ConvertToPNG_Click(object sender, RoutedEventArgs e)
         {
-            string inputFilePath = txtInputFilePath.Text;
-            string outputFilePath = txtOutputFilePath.Text;
+            var inputFilePath = txtInputFilePath.Text;
+            var outputFilePath = txtOutputFilePath.Text;
 
             if (string.IsNullOrWhiteSpace(inputFilePath) || string.IsNullOrWhiteSpace(outputFilePath))
             {
@@ -67,37 +67,41 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        private void BrowseInputFile_Click(object sender, RoutedEventArgs e)
+        void BrowseInputFile_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            var openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.png;*.dds)|*.png;*.dds|All files (*.*)|*.*";
+
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) // Updated this line
             {
                 txtInputFilePath.Text = openFileDialog.FileName;
             }
         }
 
-        private void BrowseOutputFile_Click(object sender, RoutedEventArgs e)
+        void BrowseOutputFile_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            var saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "DDS files (*.dds)|*.dds|PNG files (*.png)|*.png|All files (*.*)|*.*";
+
             if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) // Updated this line
             {
                 txtOutputFilePath.Text = saveFileDialog.FileName;
             }
         }
 
-        private void LoadColorValues()
+        void LoadColorValues()
         {
             try
             {
-                string glslPath = Oculus.GetTheVoidUniformsPath();
-                string glslContent = File.ReadAllText(glslPath);
-                Match match = Regex.Match(glslContent, @"vec3 u_voidFogColor = \{(.*?)\};");
+                var glslPath = Oculus.GetTheVoidUniformsPath();
+                var glslContent = File.ReadAllText(glslPath);
+                var match = Regex.Match(glslContent, @"vec3 u_voidFogColor = \{(.*?)\};");
+
                 if (match.Success)
                 {
-                    string[] colors = match.Groups[1].Value.Split(',');
-                    Color fogColor = Color.FromRgb(
+                    var colors = match.Groups[1].Value.Split(',');
+
+                    var fogColor = Color.FromRgb(
                     (byte)(float.Parse(colors[0]) * 255),
                     (byte)(float.Parse(colors[1]) * 255),
                     (byte)(float.Parse(colors[2]) * 255));
@@ -120,17 +124,17 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        private void SaveFogColor(Color color)
+        void SaveFogColor(Color color)
         {
             try
             {
-                string glslPath = Oculus.GetTheVoidUniformsPath();
-                string glslContent = File.ReadAllText(glslPath);
-                float r = color.R / 255.0f;
-                float g = color.G / 255.0f;
-                float b = color.B / 255.0f;
-                string newFogColor = $"vec3 u_voidFogColor = {{{r}, {g}, {b}}};";
-                string modifiedGlslContent = Regex.Replace(glslContent, @"vec3 u_voidFogColor = \{.*?\};", newFogColor);
+                var glslPath = Oculus.GetTheVoidUniformsPath();
+                var glslContent = File.ReadAllText(glslPath);
+                var r = color.R / 255.0f;
+                var g = color.G / 255.0f;
+                var b = color.B / 255.0f;
+                var newFogColor = $"vec3 u_voidFogColor = {{{r}, {g}, {b}}};";
+                var modifiedGlslContent = Regex.Replace(glslContent, @"vec3 u_voidFogColor = \{.*?\};", newFogColor);
                 File.WriteAllText(glslPath, modifiedGlslContent);
             }
             catch (Exception ex)
@@ -140,16 +144,16 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        private void colorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        void colorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
             if (colorPicker.SelectedColor.HasValue)
             {
-                Color selectedColor = colorPicker.SelectedColor.Value;
+                var selectedColor = colorPicker.SelectedColor.Value;
 
                 // Calculate the GLSL values
-                float r = selectedColor.R / 255.0f;
-                float g = selectedColor.G / 255.0f;
-                float b = selectedColor.B / 255.0f;
+                var r = selectedColor.R / 255.0f;
+                var g = selectedColor.G / 255.0f;
+                var b = selectedColor.B / 255.0f;
 
                 // Update the TextBlock text with the GLSL values of the selected color with three decimal places
                 tb_PickColor.Text = $"{r:F3}, {g:F3}, {b:F3}";
@@ -163,33 +167,34 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        private void btnOpenColorPicker_Click(object sender, RoutedEventArgs e)
+        void btnOpenColorPicker_Click(object sender, RoutedEventArgs e)
         {
             // Create and configure the ColorPicker dialog
-            System.Windows.Forms.ColorDialog colorDialog = new System.Windows.Forms.ColorDialog();
+            var colorDialog = new System.Windows.Forms.ColorDialog();
+
             if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 // Get the selected color
-                System.Drawing.Color selectedColor = colorDialog.Color;
+                var selectedColor = colorDialog.Color;
 
                 // Convert System.Drawing.Color to System.Windows.Media.Color
-                Color color = Color.FromArgb(selectedColor.A, selectedColor.R, selectedColor.G, selectedColor.B);
+                var color = Color.FromArgb(selectedColor.A, selectedColor.R, selectedColor.G, selectedColor.B);
 
                 // Set the selected color to the colorPicker, this will trigger the colorPicker_SelectedColorChanged event
                 colorPicker.SelectedColor = color;
             }
         }
 
-        private void btnSaveColor_Click(object sender, RoutedEventArgs e)
+        void btnSaveColor_Click(object sender, RoutedEventArgs e)
         {
             if (colorPicker.SelectedColor.HasValue)
             {
-                Color selectedColor = colorPicker.SelectedColor.Value;
+                var selectedColor = colorPicker.SelectedColor.Value;
 
                 // Calculate the GLSL values
-                float r = selectedColor.R / 255.0f;
-                float g = selectedColor.G / 255.0f;
-                float b = selectedColor.B / 255.0f;
+                var r = selectedColor.R / 255.0f;
+                var g = selectedColor.G / 255.0f;
+                var b = selectedColor.B / 255.0f;
 
                 // Save the color to the GLSL file
                 SaveFogColor(selectedColor);
@@ -203,13 +208,14 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        private void btn_FloorGrid_Click(object sender, RoutedEventArgs e)
+        void btn_FloorGrid_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
+                var openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "Image files (*.dds, *.png)|*.dds;*.png|All files (*.*)|*.*";
                 openFileDialog.Title = "Select a DDS or PNG file";
+
                 if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     // Check if the file exists and is accessible
@@ -230,9 +236,10 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
             }
         }
 
-        private void btn_ReplaceFloorGrid_Click(object sender, RoutedEventArgs e)
+        void btn_ReplaceFloorGrid_Click(object sender, RoutedEventArgs e)
         {
-            string selectedFilePath = txt_FloorGrid.Text;
+            var selectedFilePath = txt_FloorGrid.Text;
+
             if (string.IsNullOrWhiteSpace(selectedFilePath) || !File.Exists(selectedFilePath))
             {
                 Xceed.Wpf.Toolkit.MessageBox.Show("Please select a valid file.");
@@ -241,28 +248,31 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
 
             try
             {
-                string oculusFilePath = Oculus.GetGridPlanePath();
+                var oculusFilePath = Oculus.GetGridPlanePath();
 
                 // Creating a backup of the current file
-                string backupFilePath = oculusFilePath + ".backup";
+                var backupFilePath = oculusFilePath + ".backup";
+
                 if (File.Exists(backupFilePath))
                 {
                     File.Delete(backupFilePath); // Delete the existing backup file if it exists
                 }
+
                 File.Copy(oculusFilePath, backupFilePath); // Create a new backup file
 
                 // Check if the selected file is a PNG
                 if (Path.GetExtension(selectedFilePath).ToLower() == ".png")
                 {
                     // Convert PNG to DDS
-                    string tempDdsPath = Path.Combine(Path.GetTempPath(), "converted.dds");
+                    var tempDdsPath = Path.Combine(Path.GetTempPath(), "converted.dds");
                     ImageConverter.ConvertPngToDds(selectedFilePath, tempDdsPath);
                     selectedFilePath = tempDdsPath; // Update the selected file path to the converted DDS file
                 }
 
                 // Replacing the file
                 File.Copy(selectedFilePath, oculusFilePath, overwrite: true);
-                Xceed.Wpf.Toolkit.MessageBox.Show("File replaced successfully. A backup of the original file has been created.");
+                Xceed.Wpf.Toolkit.MessageBox
+                    .Show("File replaced successfully. A backup of the original file has been created.");
             }
             catch (IOException ioEx)
             {

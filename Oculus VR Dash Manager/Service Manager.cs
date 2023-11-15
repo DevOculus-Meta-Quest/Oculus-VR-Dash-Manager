@@ -13,7 +13,7 @@ namespace OVR_Dash_Manager
     public static class Service_Manager
     {
         // Dictionary to hold registered services.
-        private static Dictionary<string, ServiceController> Services = new Dictionary<string, ServiceController>();
+        static Dictionary<string, ServiceController> Services = new Dictionary<string, ServiceController>();
 
         /// <summary>
         /// Registers a service by its name.
@@ -44,6 +44,7 @@ namespace OVR_Dash_Manager
             if (Services.TryGetValue(ServiceName, out var service))
             {
                 service.Refresh();
+
                 if (Running(service.Status))
                 {
                     try
@@ -67,6 +68,7 @@ namespace OVR_Dash_Manager
             if (Services.TryGetValue(ServiceName, out var service))
             {
                 service.Refresh();
+
                 if (!Running(service.Status))
                 {
                     try
@@ -126,7 +128,7 @@ namespace OVR_Dash_Manager
         /// </summary>
         /// <param name="Status">The status of the service.</param>
         /// <returns>True if the service is running; otherwise, false.</returns>
-        private static bool Running(ServiceControllerStatus Status)
+        static bool Running(ServiceControllerStatus Status)
         {
             switch (Status)
             {
@@ -153,6 +155,7 @@ namespace OVR_Dash_Manager
                 service.Refresh();
                 return service.Status.ToString();
             }
+
             return "Not Found";
         }
 
@@ -168,6 +171,7 @@ namespace OVR_Dash_Manager
                 service.Refresh();
                 return service.StartType.ToString();
             }
+
             return "Not Found";
         }
     }
@@ -192,7 +196,7 @@ namespace OVR_Dash_Manager
             string lpDisplayName);
 
         [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        private static extern IntPtr OpenService(
+        static extern IntPtr OpenService(
             IntPtr hSCManager, string lpServiceName, uint dwDesiredAccess);
 
         [DllImport("advapi32.dll", EntryPoint = "OpenSCManagerW", ExactSpelling = true, CharSet = CharSet.Unicode, SetLastError = true)]
@@ -202,10 +206,10 @@ namespace OVR_Dash_Manager
         [DllImport("advapi32.dll", EntryPoint = "CloseServiceHandle")]
         public static extern int CloseServiceHandle(IntPtr hSCObject);
 
-        private const uint SERVICE_NO_CHANGE = 0xFFFFFFFF;
-        private const uint SERVICE_QUERY_CONFIG = 0x00000001;
-        private const uint SERVICE_CHANGE_CONFIG = 0x00000002;
-        private const uint SC_MANAGER_ALL_ACCESS = 0x000F003F;
+        const uint SERVICE_NO_CHANGE = 0xFFFFFFFF;
+        const uint SERVICE_QUERY_CONFIG = 0x00000001;
+        const uint SERVICE_CHANGE_CONFIG = 0x00000002;
+        const uint SC_MANAGER_ALL_ACCESS = 0x000F003F;
 
         /// <summary>
         /// Changes the start mode of a service.
@@ -215,6 +219,7 @@ namespace OVR_Dash_Manager
         public static void ChangeStartMode(ServiceController svc, ServiceStartMode mode)
         {
             var scManagerHandle = OpenSCManager(null, null, SC_MANAGER_ALL_ACCESS);
+
             if (scManagerHandle == IntPtr.Zero)
             {
                 throw new ExternalException("Open Service Manager Error");
@@ -245,8 +250,9 @@ namespace OVR_Dash_Manager
 
             if (result == false)
             {
-                int nError = Marshal.GetLastWin32Error();
+                var nError = Marshal.GetLastWin32Error();
                 var win32Exception = new Win32Exception(nError);
+
                 throw new ExternalException("Could not change service start type: "
                     + win32Exception.Message);
             }

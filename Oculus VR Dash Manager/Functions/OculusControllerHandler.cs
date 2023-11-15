@@ -5,9 +5,9 @@ namespace OVR_Dash_Manager.Functions
 {
     public class OculusControllerHandler
     {
-        private OvrClient _ovrClient;
-        private OvrSession _ovrSession;
-        private Action<string> _updateUiAction;
+        OvrClient _ovrClient;
+        OvrSession _ovrSession;
+        Action<string> _updateUiAction;
 
         public OculusControllerHandler(Action<string> updateUiAction)
         {
@@ -15,9 +15,9 @@ namespace OVR_Dash_Manager.Functions
             InitializeOvrClient();
         }
 
-        private void InitializeOvrClient()
+        void InitializeOvrClient()
         {
-            int result = OvrClient.TryInitialize(out _ovrClient);
+            var result = OvrClient.TryInitialize(out _ovrClient);
 
             if (result >= 0 && _ovrClient != null)
             {
@@ -43,10 +43,10 @@ namespace OVR_Dash_Manager.Functions
         {
             if (_ovrSession != null)
             {
-                OvrControllerType connectedControllers = _ovrSession.GetConnectedControllerTypes();
+                var connectedControllers = _ovrSession.GetConnectedControllerTypes();
                 _updateUiAction($"Connected Controllers: {connectedControllers}");
 
-                int result = _ovrSession.GetInputState(OvrControllerType.Touch, out OvrInputState inputState);
+                var result = _ovrSession.GetInputState(OvrControllerType.Touch, out OvrInputState inputState);
 
                 if (result >= 0)
                 {

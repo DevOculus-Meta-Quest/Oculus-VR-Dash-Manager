@@ -6,7 +6,7 @@ namespace OVR_Dash_Manager.Functions
     {
         public static string GetCurrentProcessDirectory()
         {
-            string assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
             return Path.GetDirectoryName(assemblyLocation);
         }
     }

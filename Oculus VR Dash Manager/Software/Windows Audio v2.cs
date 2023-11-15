@@ -9,9 +9,9 @@ namespace OVR_Dash_Manager.Software
     public static class Windows_Audio_v2
     {
         // Fields
-        private static IAudioController controller;
+        static IAudioController controller;
 
-        private static bool _IsSetup = false;
+        static bool _IsSetup;
         public static List<IDevice_Ext> Speakers;
 
         // Method to setup audio controller and initialize speakers list
@@ -21,11 +21,12 @@ namespace OVR_Dash_Manager.Software
                 return;
 
             controller = new CoreAudioController();
-            IEnumerable<IDevice> Devices = controller.GetDevices();
+            var Devices = controller.GetDevices();
             Speakers = new List<IDevice_Ext>();
+
             foreach (IDevice item in Devices)
             {
-                IDevice_Ext New = new IDevice_Ext(item);
+                var New = new IDevice_Ext(item);
 
                 if (New.ID == Properties.Settings.Default.Normal_Speaker_GUID)
                     New.Normal_Speaker = true;
@@ -51,28 +52,31 @@ namespace OVR_Dash_Manager.Software
         // Overloaded method to set the default playback device using Speaker ID
         public static void Set_Default_PlaybackDevice(Guid Speaker_ID)
         {
-            IDevice Speaker = controller.GetDevice(Speaker_ID);
+            var Speaker = controller.GetDevice(Speaker_ID);
+
             if (Speaker != null)
                 Set_Default_PlaybackDevice(Speaker);
         }
 
         // Method to set to normal speaker automatically
-        public static void Set_To_Normal_Speaker_Auto(Boolean Force = false)
+        public static void Set_To_Normal_Speaker_Auto(bool Force = false)
         {
             if (Properties.Settings.Default.Automatic_Audio_Switching || Force)
             {
-                IDevice Speaker = controller.GetDevice(Properties.Settings.Default.Normal_Speaker_GUID);
+                var Speaker = controller.GetDevice(Properties.Settings.Default.Normal_Speaker_GUID);
+
                 if (Speaker != null)
                     Set_Default_PlaybackDevice(Speaker);
             }
         }
 
         // Method to set to Quest speaker automatically
-        public static void Set_To_Quest_Speaker_Auto(Boolean Force = false)
+        public static void Set_To_Quest_Speaker_Auto(bool Force = false)
         {
             if (Properties.Settings.Default.Automatic_Audio_Switching || Force)
             {
-                IDevice Speaker = controller.GetDevice(Properties.Settings.Default.Quest_Speaker_GUID);
+                var Speaker = controller.GetDevice(Properties.Settings.Default.Quest_Speaker_GUID);
+
                 if (Speaker != null)
                     Set_Default_PlaybackDevice(Speaker);
             }
@@ -85,9 +89,10 @@ namespace OVR_Dash_Manager.Software
 
             public event PropertyChangedEventHandler PropertyChanged;
 
-            private void OnPropertyChanged(string propertyName)
+            void OnPropertyChanged(string propertyName)
             {
-                PropertyChangedEventHandler handler = PropertyChanged;
+                var handler = PropertyChanged;
+
                 if (handler != null)
                 {
                     handler(this, new PropertyChangedEventArgs(propertyName));
@@ -99,12 +104,12 @@ namespace OVR_Dash_Manager.Software
             // Constructor to initialize IDevice_Ext object
             public IDevice_Ext(IDevice Speaker)
             {
-                this.Name = Speaker.FullName;
-                this.ID = Speaker.Id;
+                Name = Speaker.FullName;
+                ID = Speaker.Id;
             }
 
             // Properties with OnPropertyChanged notification
-            private bool _Normal_Speaker;
+            bool _Normal_Speaker;
 
             public bool Normal_Speaker
             {
@@ -112,7 +117,7 @@ namespace OVR_Dash_Manager.Software
                 set { if (value != _Normal_Speaker) { _Normal_Speaker = value; OnPropertyChanged("Normal_Speaker"); } }
             }
 
-            private bool _Quest_Speaker;
+            bool _Quest_Speaker;
 
             public bool Quest_Speaker
             {
@@ -120,7 +125,7 @@ namespace OVR_Dash_Manager.Software
                 set { if (value != _Quest_Speaker) { _Quest_Speaker = value; OnPropertyChanged("Quest_Speaker"); } }
             }
 
-            private string _Name;
+            string _Name;
 
             public string Name
             {
@@ -128,7 +133,7 @@ namespace OVR_Dash_Manager.Software
                 set { if (value != null && value != _Name) { _Name = value; OnPropertyChanged("Name"); } }
             }
 
-            private Guid _ID;
+            Guid _ID;
 
             public Guid ID
             {

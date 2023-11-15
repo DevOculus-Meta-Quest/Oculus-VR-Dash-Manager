@@ -6,7 +6,7 @@ namespace OVR_Dash_Manager.Forms
 {
     public partial class OculusView : Window
     {
-        private OculusControllerHandler _oculusHandler;
+        OculusControllerHandler _oculusHandler;
 
         public OculusView()
         {
@@ -17,20 +17,14 @@ namespace OVR_Dash_Manager.Forms
             Loaded += (s, e) => StartMonitoringController();
         }
 
-        private void UpdateListView(string message)
+        void UpdateListView(string message)
         {
             oculusInfoListView.Items.Add(new { Information = message });
         }
 
-        public void StartMonitoringController()
-        {
-            _oculusHandler.MonitorController();
-        }
+        public void StartMonitoringController() => _oculusHandler.MonitorController();
 
-        public void StopMonitoringController()
-        {
-            _oculusHandler.Cleanup();
-        }
+        public void StopMonitoringController() => _oculusHandler.Cleanup();
 
         // Override the OnClosed method to ensure that the Oculus session is cleaned up properly
         protected override void OnClosed(EventArgs e)

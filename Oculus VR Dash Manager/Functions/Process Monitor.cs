@@ -13,10 +13,10 @@ namespace OVR_Dash_Manager.Functions
 
         public static event ProcessEventHandler ProcessExited;
 
-        private static readonly ManagementEventWatcher ProcessStartEventWatcher;
-        private static readonly ManagementEventWatcher ProcessStopEventWatcher;
+        static readonly ManagementEventWatcher ProcessStartEventWatcher;
+        static readonly ManagementEventWatcher ProcessStopEventWatcher;
 
-        private static readonly HashSet<string> IgnoredExeNames = new HashSet<string>();
+        static readonly HashSet<string> IgnoredExeNames = new HashSet<string>();
 
         static ProcessWatcher()
         {
@@ -70,11 +70,11 @@ namespace OVR_Dash_Manager.Functions
             ProcessStopEventWatcher.Dispose();
         }
 
-        private static void OnProcessStarted(object sender, EventArrivedEventArgs e) => HandleEvent(e, ProcessStarted);
+        static void OnProcessStarted(object sender, EventArrivedEventArgs e) => HandleEvent(e, ProcessStarted);
 
-        private static void OnProcessExited(object sender, EventArrivedEventArgs e) => HandleEvent(e, ProcessExited);
+        static void OnProcessExited(object sender, EventArrivedEventArgs e) => HandleEvent(e, ProcessExited);
 
-        private static void HandleEvent(EventArrivedEventArgs e, ProcessEventHandler handler)
+        static void HandleEvent(EventArrivedEventArgs e, ProcessEventHandler handler)
         {
             if (handler == null) return;
 

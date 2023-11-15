@@ -25,7 +25,7 @@ namespace OVR_Dash_Manager.Functions
             return DoFileBrowser(defaultDirectory, defaultExtension, fileExtensionFilters, true, mustExist);
         }
 
-        private static List<string> DoFileBrowser(
+        static List<string> DoFileBrowser(
             string defaultDirectory,
             string defaultExtension,
             string fileExtensionFilters,
@@ -44,6 +44,7 @@ namespace OVR_Dash_Manager.Functions
             if (!fileExtensionFilters.Contains("*.*"))
             {
                 var splitFilters = fileExtensionFilters.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
                 foreach (var ext in splitFilters)
                 {
                     if (!fileTypes.ContainsKey(ext))
@@ -82,7 +83,7 @@ namespace OVR_Dash_Manager.Functions
                 Multiselect = multipleFiles
             };
 
-            bool? result = dlg.ShowDialog();
+            var result = dlg.ShowDialog();
 
             if (result == true)
                 files.AddRange(dlg.FileNames);
@@ -90,7 +91,7 @@ namespace OVR_Dash_Manager.Functions
             return files;
         }
 
-        private static string ReadDefaultValue(string regKey)
+        static string ReadDefaultValue(string regKey)
         {
             using (var key = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(regKey, false))
             {
@@ -99,10 +100,11 @@ namespace OVR_Dash_Manager.Functions
                     return key.GetValue("") as string;
                 }
             }
+
             return null;
         }
 
-        private static string GetDescription(string ext)
+        static string GetDescription(string ext)
         {
             if (ext.StartsWith(".") && ext.Length > 1) ext = ext.Substring(1);
 

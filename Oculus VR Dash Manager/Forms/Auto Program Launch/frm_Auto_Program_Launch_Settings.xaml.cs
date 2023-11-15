@@ -9,18 +9,15 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
     public partial class frm_Auto_Program_Launch_Settings : Window
     {
         // Flag to track if any programs were removed during the session
-        private bool Programs_Removed = false;
+        bool Programs_Removed;
 
-        public frm_Auto_Program_Launch_Settings()
-        {
-            InitializeComponent();
-        }
+        public frm_Auto_Program_Launch_Settings() => InitializeComponent();
 
         // Event handler for adding a program
-        private void btn_Add_Program_Click(object sender, RoutedEventArgs e)
+        void btn_Add_Program_Click(object sender, RoutedEventArgs e)
         {
             // Open a file dialog and get the selected file path
-            string FilePath = Functions.FileBrowser.OpenSingle();
+            var FilePath = Functions.FileBrowser.OpenSingle();
 
             // If a file was selected, add it to the program list and refresh the UI
             if (!string.IsNullOrEmpty(FilePath))
@@ -31,7 +28,7 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
         }
 
         // Event handler for removing a program
-        private void btn_Remove_Program_Click(object sender, RoutedEventArgs e)
+        void btn_Remove_Program_Click(object sender, RoutedEventArgs e)
         {
             // Check if a program is selected in the UI
             if (lv_Programs.SelectedItem is Software.Auto_Program Program)
@@ -43,7 +40,7 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
         }
 
         // Event handler for window load event
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Bind the program list to the UI and refresh
             lv_Programs.ItemsSource = Software.Auto_Launch_Programs.Programs;
@@ -51,10 +48,10 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
         }
 
         // Event handler for window closing event
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // Check if any programs were removed or changed during the session
-            bool Changed = Programs_Removed ||
+            var Changed = Programs_Removed ||
                            (Software.Auto_Launch_Programs.Programs?.Any(p => p.Changed) == true);
 
             // If changes were made, confirm with the user whether to save them
@@ -78,7 +75,7 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
         }
 
         // Event handler for opening the program folder
-        private void btn_Open_Program_Folder_Click(object sender, RoutedEventArgs e)
+        void btn_Open_Program_Folder_Click(object sender, RoutedEventArgs e)
         {
             // Check if a program is selected in the UI
             if (lv_Programs.SelectedItem is Software.Auto_Program Program)

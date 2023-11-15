@@ -13,12 +13,9 @@ namespace OVR_Dash_Manager.Forms
         // OVRLibraryService
         // OVRService
 
-        public frm_Oculus_Service_Control()
-        {
-            InitializeComponent();
-        }
+        public frm_Oculus_Service_Control() => InitializeComponent();
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        void Window_Loaded(object sender, RoutedEventArgs e)
         {
             ClearLabels();
 
@@ -28,7 +25,7 @@ namespace OVR_Dash_Manager.Forms
             CheckServices();
         }
 
-        private void ClearLabels()
+        void ClearLabels()
         {
             lbl_LibaryServer_Startup.Content = "";
             lbl_LibaryServer_State.Content = "";
@@ -36,12 +33,12 @@ namespace OVR_Dash_Manager.Forms
             lbl_RuntimeServer_State.Content = "";
         }
 
-        private void CallCheckServices(object sender, ElapsedEventArgs args)
+        void CallCheckServices(object sender, ElapsedEventArgs args)
         {
             Functions_Old.DoAction(this, new Action(delegate () { CheckServices(); }));
         }
 
-        private void CheckServices()
+        void CheckServices()
         {
             lbl_LibaryServer_Startup.Content = Service_Manager.GetStartup("OVRLibraryService");
             lbl_LibaryServer_State.Content = Service_Manager.GetState("OVRLibraryService");
@@ -49,31 +46,31 @@ namespace OVR_Dash_Manager.Forms
             lbl_RuntimeServer_State.Content = Service_Manager.GetState("OVRService");
         }
 
-        private void btn_Libary_Server_Manual_Click(object sender, RoutedEventArgs e)
+        void btn_Libary_Server_Manual_Click(object sender, RoutedEventArgs e)
         {
             Service_Manager.Set_Manual_Startup("OVRLibraryService");
             CheckServices();
         }
 
-        private void btn_Libary_Server_Automatic_Click(object sender, RoutedEventArgs e)
+        void btn_Libary_Server_Automatic_Click(object sender, RoutedEventArgs e)
         {
             Service_Manager.Set_Automatic_Startup("OVRLibraryService");
             CheckServices();
         }
 
-        private void btn_Runtime_Server_Manual_Click(object sender, RoutedEventArgs e)
+        void btn_Runtime_Server_Manual_Click(object sender, RoutedEventArgs e)
         {
             Service_Manager.Set_Manual_Startup("OVRService");
             CheckServices();
         }
 
-        private void btn_Runtime_Server_Automatic_Click(object sender, RoutedEventArgs e)
+        void btn_Runtime_Server_Automatic_Click(object sender, RoutedEventArgs e)
         {
             Service_Manager.Set_Automatic_Startup("OVRService");
             CheckServices();
         }
 
-        private Boolean Running(ServiceControllerStatus Status)
+        bool Running(ServiceControllerStatus Status)
         {
             switch (Status)
             {
@@ -97,31 +94,31 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        private void btn_Libary_Server_Stop_Click(object sender, RoutedEventArgs e)
+        void btn_Libary_Server_Stop_Click(object sender, RoutedEventArgs e)
         {
             Service_Manager.StopService("OVRLibraryService");
             CheckServices();
         }
 
-        private void btn_Libary_Server_Start_Click(object sender, RoutedEventArgs e)
+        void btn_Libary_Server_Start_Click(object sender, RoutedEventArgs e)
         {
             Service_Manager.StartService("OVRLibraryService");
             CheckServices();
         }
 
-        private void btn_Runtime_Server_Stop_Click(object sender, RoutedEventArgs e)
+        void btn_Runtime_Server_Stop_Click(object sender, RoutedEventArgs e)
         {
             Service_Manager.StopService("OVRService");
             CheckServices();
         }
 
-        private void btn_Runtime_Server_Start_Click(object sender, RoutedEventArgs e)
+        void btn_Runtime_Server_Start_Click(object sender, RoutedEventArgs e)
         {
             Service_Manager.StartService("OVRService");
             CheckServices();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Timer_Functions.StopTimer("Oculus Service Checker");
             Timer_Functions.DisposeTimer("Oculus Service Checker");

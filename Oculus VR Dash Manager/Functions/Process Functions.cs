@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Security.Principal;
 
@@ -7,29 +6,26 @@ namespace OVR_Dash_Manager.Functions
 {
     public static class Process_Functions
     {
-        public static Boolean IsCurrentProcess_Elevated()
+        public static bool IsCurrentProcess_Elevated()
         {
-            WindowsIdentity vIdentity = GetWindowsIdentity();
-            WindowsPrincipal vPrincipal = GetWindowsPrincipal(vIdentity);
+            var vIdentity = GetWindowsIdentity();
+            var vPrincipal = GetWindowsPrincipal(vIdentity);
 
-            bool pReturn = vPrincipal.IsInRole(WindowsBuiltInRole.Administrator);
+            var pReturn = vPrincipal.IsInRole(WindowsBuiltInRole.Administrator);
             vIdentity.Dispose();
             return pReturn;
         }
 
-        private static WindowsIdentity GetWindowsIdentity()
-        {
-            return WindowsIdentity.GetCurrent();
-        }
+        static WindowsIdentity GetWindowsIdentity() => WindowsIdentity.GetCurrent();
 
-        private static WindowsPrincipal GetWindowsPrincipal(WindowsIdentity pIdentity)
+        static WindowsPrincipal GetWindowsPrincipal(WindowsIdentity pIdentity)
         {
             return new WindowsPrincipal(pIdentity);
         }
 
         public static string GetCurrentProcessDirectory()
         {
-            Process Current = Process.GetCurrentProcess();
+            var Current = Process.GetCurrentProcess();
             return Path.GetDirectoryName(Current.MainModule.FileName);
         }
 
@@ -43,7 +39,7 @@ namespace OVR_Dash_Manager.Functions
             else
             {
                 // try and build full url - else returns same as input
-                string URL = StringFunctions.GetFullUrl(Path);
+                var URL = StringFunctions.GetFullUrl(Path);
                 return Process.Start(URL, Arguments);
                 // Web Site
             }

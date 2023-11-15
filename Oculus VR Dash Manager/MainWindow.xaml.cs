@@ -21,18 +21,18 @@ namespace OVR_Dash_Manager
     /// </summary>
     public partial class MainWindow : Window
     {
-        private WindowManager windowManager;
+        WindowManager windowManager;
 
-        public bool Debug_EmulateReleaseMode = false;
+        public bool Debug_EmulateReleaseMode;
 
         // Declare _hoverButtonManager at the class level
-        private HoverButtonManager _hoverButtonManager;
+        HoverButtonManager _hoverButtonManager;
 
-        private ServiceManager _serviceManager = new ServiceManager();
-        private UIManager _uiManager;
-        private bool Elevated = false;
-        private bool FireUIEvents = false;
-        private InputSimulator Keyboard_Simulator;
+        ServiceManager _serviceManager = new ServiceManager();
+        UIManager _uiManager;
+        bool Elevated;
+        bool FireUIEvents;
+        InputSimulator Keyboard_Simulator;
 
         public MainWindow()
         {
@@ -62,7 +62,7 @@ namespace OVR_Dash_Manager
             Topmost = Properties.Settings.Default.AlwaysOnTop;
         }
 
-        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
             // Check if the Minimize to System Tray setting is enabled
             if (Properties.Settings.Default.MinToTray)
@@ -73,11 +73,11 @@ namespace OVR_Dash_Manager
             else
             {
                 // If the setting is not enabled, just minimize normally
-                this.WindowState = WindowState.Minimized;
+                WindowState = WindowState.Minimized;
             }
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             // Check if the Minimize to System Tray setting is enabled
             if (Properties.Settings.Default.MinToTray)
@@ -89,14 +89,11 @@ namespace OVR_Dash_Manager
             else
             {
                 // If the setting is not enabled, close the application normally
-                this.Close();
+                Close();
             }
         }
 
-        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            this.DragMove();
-        }
+        void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => DragMove();
 
         public void Cancel_TaskView_And_Focus()
         {
@@ -105,12 +102,12 @@ namespace OVR_Dash_Manager
 
             Keyboard_Simulator.Keyboard.KeyPress(VirtualKeyCode.ESCAPE);
 
-            this.Topmost = true;
-            this.BringIntoView();
-            this.Topmost = Properties.Settings.Default.AlwaysOnTop;
+            Topmost = true;
+            BringIntoView();
+            Topmost = Properties.Settings.Default.AlwaysOnTop;
         }
 
-        private void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             // Log the exception using ErrorLogger
             ErrorLogger.LogError(e.Exception, "An unhandled exception occurred in the dispatcher.");
@@ -119,18 +116,15 @@ namespace OVR_Dash_Manager
             e.Handled = true;
         }
 
-        private void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             // Log the exception using ErrorLogger
             ErrorLogger.LogError((Exception)e.ExceptionObject, "An unhandled exception occurred in the application domain.");
         }
 
-        private void btn_ExitSteamVR_Click(object sender, RoutedEventArgs e)
-        {
-            Steam.Close_SteamVR_Server();
-        }
+        void btn_ExitSteamVR_Click(object sender, RoutedEventArgs e) => Steam.Close_SteamVR_Server();
 
-        private void btn_OtherTools_Click(object sender, RoutedEventArgs e)
+        void btn_OtherTools_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of frm_OtherTools window
             var otherToolsWindow = new frm_OtherTools();
@@ -142,7 +136,7 @@ namespace OVR_Dash_Manager
             otherToolsWindow.ShowDialog();
         }
 
-        private void btn_StartSteamVR_Click(object sender, RoutedEventArgs e)
+        void btn_StartSteamVR_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -159,7 +153,7 @@ namespace OVR_Dash_Manager
             }
         }
 
-        private void HandleWindowLoadingException(Exception ex)
+        void HandleWindowLoadingException(Exception ex)
         {
             // Log the exception using ErrorLogger
             ErrorLogger.LogError(ex, "An error occurred during window loading.");
@@ -172,19 +166,16 @@ namespace OVR_Dash_Manager
             Debug.WriteLine(ex.StackTrace);
         }
 
-        private void NotElevated()
-        {
-            _uiManager.NotifyNotElevated();
-        }
+        void NotElevated() => _uiManager.NotifyNotElevated();
 
-        private void RefreshUI()
+        void RefreshUI()
         {
             CheckRunTime();
             _hoverButtonManager.Exit_Link.Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time;
             _hoverButtonManager.Oculus_Dash.Hovered_Seconds_To_Activate = Properties.Settings.Default.Hover_Activation_Time;
         }
 
-        private async Task StartupAsync()
+        async Task StartupAsync()
         {
             try
             {
@@ -293,7 +284,7 @@ namespace OVR_Dash_Manager
             }
 
             // Check if Desktop+ is installed
-            bool isDesktopPlusInstalled = SteamAppChecker.IsAppInstalled("DesktopPlus");
+            var isDesktopPlusInstalled = SteamAppChecker.IsAppInstalled("DesktopPlus");
 
             // Update UI based on Desktop+ installation status
             _uiManager.UpdateDesktopPlusStatusLabel(isDesktopPlusInstalled);
@@ -308,16 +299,16 @@ namespace OVR_Dash_Manager
             _uiManager.UpdateSteamVRBetaStatus();
         }
 
-        private void Steam_Steam_VR_Running_State_Changed_Event()
+        void Steam_Steam_VR_Running_State_Changed_Event()
         {
             // Assuming Software.Steam.Steam_VR_Server_Running is a boolean,
             // you might want to convert it to a string message to display in the UI.
-            string statusText = Software.Steam.Steam_VR_Server_Running ? "Running" : "Not Running";
+            var statusText = Software.Steam.Steam_VR_Server_Running ? "Running" : "Not Running";
             _uiManager.UpdateSteamVRStatusLabel(statusText);
             // Note: If you have multiple buttons to enable/disable based on SteamVR status, consider adding a method in UIManager to handle this.
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             try
             {
@@ -353,7 +344,7 @@ namespace OVR_Dash_Manager
             }
         }
 
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -365,7 +356,7 @@ namespace OVR_Dash_Manager
             }
         }
 
-        private async Task WindowLoadedAsync()
+        async Task WindowLoadedAsync()
         {
             // Disable buttons and update status label
             btn_Diagnostics.IsEnabled = false;
@@ -390,16 +381,16 @@ namespace OVR_Dash_Manager
             // Perform startup actions
             await StartupAsync();
 
-            frm_UpdateChecker updateChecker = new frm_UpdateChecker();
+            var updateChecker = new frm_UpdateChecker();
 
             // Check if updates are available for Dash Manager
-            bool isDashManagerNewVersionAvailable = await updateChecker.CheckDashManagerUpdates();
+            var isDashManagerNewVersionAvailable = await updateChecker.CheckDashManagerUpdates();
 
             // Check if updates are available for OculusKiller
-            bool isOculusKillerNewVersionAvailable = await updateChecker.CheckOculusKillerUpdates();
+            var isOculusKillerNewVersionAvailable = await updateChecker.CheckOculusKillerUpdates();
 
             // Temporarily disable Always on Top property of the main window
-            this.Topmost = false;
+            Topmost = false;
 
             // If a new version of Dash Manager is available, show a MessageBox
             if (isDashManagerNewVersionAvailable)
@@ -414,31 +405,31 @@ namespace OVR_Dash_Manager
             }
 
             // Re-enable Always on Top property of the main window
-            this.Topmost = true;
+            Topmost = true;
         }
 
         #region Dash Buttons
 
-        private void btn_ActivateDash_Click(object sender, RoutedEventArgs e)
+        void btn_ActivateDash_Click(object sender, RoutedEventArgs e)
         {
             Disable_Dash_Buttons();
 
             if (sender is Button button)
                 ActivateDash(button);
 
-            Thread ReactivateButtons = new Thread(Thread_ReactivateButtons);
+            var ReactivateButtons = new Thread(Thread_ReactivateButtons);
             ReactivateButtons.IsBackground = true;
             ReactivateButtons.Start();
 
             CheckRunTime();
         }
 
-        private void btn_OpenDashLocation_Click(object sender, RoutedEventArgs e)
+        void btn_OpenDashLocation_Click(object sender, RoutedEventArgs e)
         {
             _uiManager.OpenDashLocation();
         }
 
-        private void LinkDashesToButtons()
+        void LinkDashesToButtons()
         {
             btn_ExitOculusLink.Tag = Dashes.Dash_Type.Exit;
             btn_Normal.Tag = Dashes.Dash_Type.Normal;
@@ -447,29 +438,29 @@ namespace OVR_Dash_Manager
 
         #region Hover Buttons Enter/Leave
 
-        private void btn_ExitOculusLink_MouseEnter(object sender, MouseEventArgs e)
+        void btn_ExitOculusLink_MouseEnter(object sender, MouseEventArgs e)
         {
             _hoverButtonManager.Exit_Link.SetHovering();
         }
 
-        private void btn_ExitOculusLink_MouseLeave(object sender, MouseEventArgs e)
+        void btn_ExitOculusLink_MouseLeave(object sender, MouseEventArgs e)
         {
             _hoverButtonManager.Exit_Link.StopHovering();
         }
 
-        private void btn_Normal_MouseEnter(object sender, MouseEventArgs e)
+        void btn_Normal_MouseEnter(object sender, MouseEventArgs e)
         {
             _hoverButtonManager.Oculus_Dash.SetHovering();
         }
 
-        private void btn_Normal_MouseLeave(object sender, MouseEventArgs e)
+        void btn_Normal_MouseLeave(object sender, MouseEventArgs e)
         {
             _hoverButtonManager.Oculus_Dash.StopHovering();
         }
 
         #endregion Hover Buttons Enter/Leave
 
-        private void Thread_ReactivateButtons()
+        void Thread_ReactivateButtons()
         {
             Thread.Sleep(5000);
             Functions_Old.DoAction(this, new Action(delegate () { _hoverButtonManager.UpdateDashButtons(); }));
@@ -479,12 +470,12 @@ namespace OVR_Dash_Manager
 
         #region URL Links
 
-        private void lbl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        void lbl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             Functions_Old.OpenURL("https://github.com/DevOculus-Meta-Quest/OculusKiller");
         }
 
-        private void lbl_Title_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        void lbl_Title_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             Functions_Old.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager");
         }
@@ -493,7 +484,7 @@ namespace OVR_Dash_Manager
 
         #region Dynamic Functions
 
-        private void ActivateDash(Button Clicked)
+        void ActivateDash(Button Clicked)
         {
             MoveMouseToElement(lbl_CurrentSetting);
             _hoverButtonManager.ResetHoverButtons();
@@ -516,21 +507,20 @@ namespace OVR_Dash_Manager
             }
         }
 
-        private void Disable_Dash_Buttons()
+        void Disable_Dash_Buttons()
         {
             foreach (UIElement item in gd_DashButtons.Children)
-            {
                 if (item is Button button)
                     button.IsEnabled = false;
-            }
+            
         }
 
-        private void MoveMouseToElement(FrameworkElement Element)
+        void MoveMouseToElement(FrameworkElement Element)
         {
-            Point relativePoint = Element.TransformToAncestor(this).Transform(new Point(0, 0));
-            Point pt = new Point(relativePoint.X + Element.ActualWidth / 2, relativePoint.Y + Element.ActualHeight / 2);
-            Point windowCenterPoint = pt;//new Point(125, 80);
-            Point centerPointRelativeToSCreen = this.PointToScreen(windowCenterPoint);
+            var relativePoint = Element.TransformToAncestor(this).Transform(new Point(0, 0));
+            var pt = new Point(relativePoint.X + Element.ActualWidth / 2, relativePoint.Y + Element.ActualHeight / 2);
+            var windowCenterPoint = pt;//new Point(125, 80);
+            var centerPointRelativeToSCreen = PointToScreen(windowCenterPoint);
             Functions_Old.MoveCursor((int)centerPointRelativeToSCreen.X, (int)centerPointRelativeToSCreen.Y);
         }
 
@@ -538,14 +528,14 @@ namespace OVR_Dash_Manager
 
         #region Forms
 
-        private void btn_CheckForUpdates_Click(object sender, RoutedEventArgs e)
+        void btn_CheckForUpdates_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (!FireUIEvents)
                     return;
 
-                Forms.frm_UpdateChecker Settings = new Forms.frm_UpdateChecker();
+                var Settings = new Forms.frm_UpdateChecker();
                 OpenForm(Settings);
             }
             catch (Exception ex)
@@ -558,11 +548,11 @@ namespace OVR_Dash_Manager
             }
         }
 
-        private void btn_Diagnostics_Click(object sender, RoutedEventArgs e)
+        void btn_Diagnostics_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Forms.frm_Diagnostics Settings = new Forms.frm_Diagnostics();
+                var Settings = new Forms.frm_Diagnostics();
                 OpenForm(Settings);
             }
             catch (Exception ex)
@@ -575,37 +565,37 @@ namespace OVR_Dash_Manager
             }
         }
 
-        private void btn_Help_Click(object sender, RoutedEventArgs e)
+        void btn_Help_Click(object sender, RoutedEventArgs e)
         {
-            Forms.frm_Help Settings = new Forms.frm_Help();
+            var Settings = new Forms.frm_Help();
             OpenForm(Settings);
         }
 
-        private void btn_OculusServiceManager_Click(object sender, RoutedEventArgs e)
+        void btn_OculusServiceManager_Click(object sender, RoutedEventArgs e)
         {
             if (!FireUIEvents)
                 return;
 
-            Forms.frm_Oculus_Service_Control ServiceControl = new Forms.frm_Oculus_Service_Control();
+            var ServiceControl = new Forms.frm_Oculus_Service_Control();
             OpenForm(ServiceControl);
         }
 
-        private void btn_OpenSettings_Click(object sender, RoutedEventArgs e)
+        void btn_OpenSettings_Click(object sender, RoutedEventArgs e)
         {
-            Forms.Settings.frm_Settings_v2 Settings = new Forms.Settings.frm_Settings_v2();
-            //Forms.frm_Settings Settings = new Forms.frm_Settings();
+            var Settings = new Forms.Settings.frm_Settings_v2();
+            // Forms.frm_Settings Settings = new Forms.frm_Settings();
             OpenForm(Settings);
         }
 
-        private void btn_OpenSteamVRSettings_Click(object sender, RoutedEventArgs e)
+        void btn_OpenSteamVRSettings_Click(object sender, RoutedEventArgs e)
         {
-            Forms.frm_SteamVR_Settings Settings = new Forms.frm_SteamVR_Settings();
+            var Settings = new Forms.frm_SteamVR_Settings();
             OpenForm(Settings);
         }
 
-        private bool Get_Properties_Setting(string SettingName)
+        bool Get_Properties_Setting(string SettingName)
         {
-            bool Setting = false;
+            var Setting = false;
 
             try
             {
@@ -619,19 +609,19 @@ namespace OVR_Dash_Manager
             return Setting;
         }
 
-        private void lbl_TestAccess_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        void lbl_TestAccess_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (Keyboard.IsKeyDown(Key.LeftAlt))
             {
                 if (Keyboard.IsKeyDown(Key.LeftShift))
                 {
-                    Forms.frm_TestWindow TestWindow = new Forms.frm_TestWindow();
+                    var TestWindow = new Forms.frm_TestWindow();
                     OpenForm(TestWindow, false);
                 }
             }
         }
 
-        private void OpenForm(Window Form, bool DialogMode = true)
+        void OpenForm(Window Form, bool DialogMode = true)
         {
             Topmost = false;
 
@@ -651,7 +641,7 @@ namespace OVR_Dash_Manager
 
         public void CheckRunTime()
         {
-            Software.Steam_VR_Settings.OpenXR_Runtime CurrentRuntime = Software.Steam_VR_Settings.Read_Runtime();
+            var CurrentRuntime = Software.Steam_VR_Settings.Read_Runtime();
 
             if (CurrentRuntime == Software.Steam_VR_Settings.OpenXR_Runtime.Oculus)
                 Functions_Old.DoAction(this, new Action(delegate () { btn_RunTime_Oculus.IsChecked = true; }));
@@ -660,9 +650,9 @@ namespace OVR_Dash_Manager
                 Functions_Old.DoAction(this, new Action(delegate () { btn_RunTime_SteamVR.IsChecked = true; }));
         }
 
-        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+        void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            ToggleButton toggledButton = (ToggleButton)sender;
+            var toggledButton = (ToggleButton)sender;
 
             if (toggledButton == btn_RunTime_SteamVR)
             {
@@ -676,9 +666,9 @@ namespace OVR_Dash_Manager
             }
         }
 
-        private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            ToggleButton toggledButton = (ToggleButton)sender;
+            var toggledButton = (ToggleButton)sender;
 
             if (toggledButton == btn_RunTime_SteamVR && btn_RunTime_Oculus.IsChecked == false)
             {

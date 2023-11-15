@@ -7,14 +7,11 @@ using System.Threading.Tasks;
 
 public class OculusDebugToolFunctions : IDisposable
 {
-    private const string OculusDebugToolPath = @"C:\Program Files\Oculus\Support\oculus-diagnostics\OculusDebugToolCLI.exe";
-    private Process process;
-    private StreamWriter streamWriter;
+    const string OculusDebugToolPath = @"C:\Program Files\Oculus\Support\oculus-diagnostics\OculusDebugToolCLI.exe";
+    Process process;
+    StreamWriter streamWriter;
 
-    public OculusDebugToolFunctions()
-    {
-        InitializeProcess();
-    }
+    public OculusDebugToolFunctions() => InitializeProcess();
 
     public void Dispose()
     {
@@ -36,10 +33,10 @@ public class OculusDebugToolFunctions : IDisposable
     {
         try
         {
-            StringBuilder outputBuilder = new StringBuilder();
-            StringBuilder errorBuilder = new StringBuilder();
+            var outputBuilder = new StringBuilder();
+            var errorBuilder = new StringBuilder();
 
-            Process process = new Process
+            var process = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
@@ -54,7 +51,7 @@ public class OculusDebugToolFunctions : IDisposable
 
             process.OutputDataReceived += (sender, e) =>
             {
-                if (!String.IsNullOrEmpty(e.Data))
+                if (!string.IsNullOrEmpty(e.Data))
                 {
                     outputBuilder.AppendLine(e.Data);
                 }
@@ -62,7 +59,7 @@ public class OculusDebugToolFunctions : IDisposable
 
             process.ErrorDataReceived += (sender, e) =>
             {
-                if (!String.IsNullOrEmpty(e.Data))
+                if (!string.IsNullOrEmpty(e.Data))
                 {
                     errorBuilder.AppendLine(e.Data);
                 }
@@ -73,8 +70,8 @@ public class OculusDebugToolFunctions : IDisposable
             process.BeginErrorReadLine();
             process.WaitForExit();
 
-            string output = outputBuilder.ToString();
-            string error = errorBuilder.ToString();
+            var output = outputBuilder.ToString();
+            var error = errorBuilder.ToString();
 
             if (!string.IsNullOrEmpty(output) || !string.IsNullOrEmpty(error))
             {
@@ -87,7 +84,7 @@ public class OculusDebugToolFunctions : IDisposable
         }
     }
 
-    private void InitializeProcess()
+    void InitializeProcess()
     {
         process = new Process
         {

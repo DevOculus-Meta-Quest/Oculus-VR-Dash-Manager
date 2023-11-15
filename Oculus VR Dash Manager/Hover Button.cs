@@ -61,10 +61,7 @@ namespace OVR_Dash_Manager
         }
 
         // Stops the hover state and resets the progress bar
-        public void StopHovering()
-        {
-            Reset();
-        }
+        public void StopHovering() => Reset();
 
         public bool IsHovering()
         {
@@ -89,7 +86,7 @@ namespace OVR_Dash_Manager
             else
             {
                 // If the hover has not been active long enough, update the progress bar.
-                double newValue = (DateTime.Now - Hover_Started).TotalSeconds * 1000; // Calculate new progress bar value
+                var newValue = (DateTime.Now - Hover_Started).TotalSeconds * 1000; // Calculate new progress bar value
 
                 // Check if the current thread is the UI thread
                 if (Bar.Dispatcher.CheckAccess())

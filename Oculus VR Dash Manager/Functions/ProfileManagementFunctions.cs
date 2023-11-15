@@ -5,7 +5,7 @@ namespace OVR_Dash_Manager.Functions
 {
     public static class ProfileManagementFunctions
     {
-        private static readonly string ProfilesDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Profiles");
+        static readonly string ProfilesDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Profiles");
 
         static ProfileManagementFunctions()
         {
@@ -19,7 +19,7 @@ namespace OVR_Dash_Manager.Functions
         {
             try
             {
-                string filePath = Path.Combine(ProfilesDirectory, $"{profileName}.json");
+                var filePath = Path.Combine(ProfilesDirectory, $"{profileName}.json");
                 File.WriteAllText(filePath, profileData);
                 return true;
             }
@@ -34,7 +34,8 @@ namespace OVR_Dash_Manager.Functions
         {
             try
             {
-                string filePath = Path.Combine(ProfilesDirectory, $"{profileName}.json");
+                var filePath = Path.Combine(ProfilesDirectory, $"{profileName}.json");
+
                 if (File.Exists(filePath))
                 {
                     return File.ReadAllText(filePath);
@@ -63,11 +64,12 @@ namespace OVR_Dash_Manager.Functions
         {
             try
             {
-                string[] profileFiles = Directory.GetFiles(ProfilesDirectory, "*.json");
+                var profileFiles = Directory.GetFiles(ProfilesDirectory, "*.json");
+
                 for (int i = 0; i < profileFiles.Length; i++)
-                {
                     profileFiles[i] = Path.GetFileNameWithoutExtension(profileFiles[i]);
-                }
+                
+
                 return profileFiles;
             }
             catch (Exception ex)

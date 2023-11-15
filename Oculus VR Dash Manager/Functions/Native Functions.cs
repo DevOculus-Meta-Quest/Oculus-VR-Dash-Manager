@@ -8,16 +8,16 @@ namespace OVR_Dash_Manager.Functions
     public static class NativeFunctions
     {
         // Constants for window show state
-        private const int SW_HIDE = 0;
+        const int SW_HIDE = 0;
 
-        private const int SW_SHOWNORMAL = 1;
-        private const int SW_SHOWMINIMIZED = 2;
-        private const int SW_SHOWMAXIMIZED = 3;
-        private const int SW_SHOW = 5;
+        const int SW_SHOWNORMAL = 1;
+        const int SW_SHOWMINIMIZED = 2;
+        const int SW_SHOWMAXIMIZED = 3;
+        const int SW_SHOW = 5;
 
         // Importing ShowWindow function from User32.dll
         [DllImport("User32")]
-        private static extern int ShowWindow(IntPtr hwnd, int nCmdShow);
+        static extern int ShowWindow(IntPtr hwnd, int nCmdShow);
 
         // Method to show an external window
         public static void ShowExternalWindow(IntPtr hwnd)
@@ -47,10 +47,10 @@ namespace OVR_Dash_Manager.Functions
         // Method to get the text of a window
         public static string GetWindowText(IntPtr pHandle)
         {
-            string pReturn = string.Empty;
-            int pDataLength = GetWindowTextLength(pHandle);
+            var pReturn = string.Empty;
+            var pDataLength = GetWindowTextLength(pHandle);
             pDataLength++;  // Increase 1 for safety
-            StringBuilder buff = new StringBuilder(pDataLength);
+            var buff = new StringBuilder(pDataLength);
 
             if (GetWindowText(pHandle, buff, pDataLength) > 0)
                 pReturn = buff.ToString();

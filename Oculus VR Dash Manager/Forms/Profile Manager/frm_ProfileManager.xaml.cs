@@ -19,20 +19,20 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
     /// </summary>
     public partial class frm_ProfileManager : Window
     {
-        private Github github;
-        private OculusDebugToolFunctions oculusDebugToolFunctions;
-        private readonly frm_ProfileManager profileManager; // Moved outside of the constructor
+        Github github;
+        OculusDebugToolFunctions oculusDebugToolFunctions;
+        readonly frm_ProfileManager profileManager; // Moved outside of the constructor
 
         public frm_ProfileManager()
         {
             InitializeComponent();
-            this.profileManager = profileManager; // Save the reference to the frm_ProfileManager
+            profileManager = profileManager; // Save the reference to the frm_ProfileManager
             github = new Github();
             oculusDebugToolFunctions = new OculusDebugToolFunctions();
             LoadScriptsAsync();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -40,9 +40,9 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 }), System.Windows.Threading.DispatcherPriority.ContextIdle);
         }
 
-        private void LoadRegistrySettings()
+        void LoadRegistrySettings()
         {
-            string keyLocation = @"Software\Oculus\RemoteHeadset";
+            var keyLocation = @"Software\Oculus\RemoteHeadset";
 
             using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
             {
@@ -98,9 +98,9 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        private void SetComboBoxSelection(ComboBox comboBox, string registryValue)
+        void SetComboBoxSelection(ComboBox comboBox, string registryValue)
         {
-            string valueToSelect = registryValue;
+            var valueToSelect = registryValue;
 
             // Translate registry value to ComboBox item content if necessary
             switch (comboBox.Name)
@@ -159,7 +159,8 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
 
             // Now find and select the ComboBoxItem with the matching content
-            bool itemFound = false;
+            var itemFound = false;
+
             foreach (ComboBoxItem item in comboBox.Items)
             {
                 if (item.Content.ToString() == valueToSelect)
@@ -181,20 +182,21 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        private async void LoadScriptsAsync()
+        async void LoadScriptsAsync()
         {
             try
             {
-                string jsonResponse = await github.GetFilesFromDirectoryAsync("DevOculus-Meta-Quest", "OVRDM-Profile-Scripts", "OVRDM-Profile-Scripts");
+                var jsonResponse = await github.GetFilesFromDirectoryAsync("DevOculus-Meta-Quest", "OVRDM-Profile-Scripts", "OVRDM-Profile-Scripts");
 
                 // Deserialize the JSON response
                 var files = JsonConvert.DeserializeObject<List<GitHubFile>>(jsonResponse);
 
                 scriptsListView.Items.Clear();
+
                 foreach (var file in files)
-                {
-                    scriptsListView.Items.Add(file.name); // Assuming each file object has a 'name' property
-                }
+                    scriptsListView.Items.Add(file.name);
+                // Assuming each file object has a 'name' property
+
             }
             catch (HttpRequestException httpEx)
             {
@@ -216,27 +218,25 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             // Add other necessary properties here
         }
 
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            LoadScriptsAsync();
-        }
+        void RefreshButton_Click(object sender, RoutedEventArgs e) => LoadScriptsAsync();
 
-        private async void scriptsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        async void scriptsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var selectedItem = scriptsListView.SelectedItem as string;
+
             if (!string.IsNullOrEmpty(selectedItem))
             {
                 try
                 {
-                    string scriptUrl = await github.GetFileDownloadUrlAsync("DevOculus-Meta-Quest", "OVRDM-Profile-Scripts", $"OVRDM-Profile-Scripts/{selectedItem}");
+                    var scriptUrl = await github.GetFileDownloadUrlAsync("DevOculus-Meta-Quest", "OVRDM-Profile-Scripts", $"OVRDM-Profile-Scripts/{selectedItem}");
 
                     if (scriptUrl != null)
                     {
                         // Download the script content and save it to a temporary file
-                        string tempFilePath = await DownloadAndSaveTempFileAsync(scriptUrl);
+                        var tempFilePath = await DownloadAndSaveTempFileAsync(scriptUrl);
 
                         // Read and display the contents of the temporary file
-                        string fileContents = File.ReadAllText(tempFilePath);
+                        var fileContents = File.ReadAllText(tempFilePath);
 
                         // Execute the downloaded script file
                         oculusDebugToolFunctions.ExecuteCommandWithFile(tempFilePath);
@@ -259,15 +259,15 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
         public async Task<string> DownloadAndSaveTempFileAsync(string downloadUrl)
         {
-            using HttpClient httpClient = new HttpClient();
+            using var httpClient = new HttpClient();
 
-            HttpResponseMessage response = await httpClient.GetAsync(downloadUrl);
+            var response = await httpClient.GetAsync(downloadUrl);
 
             if (response.IsSuccessStatusCode)
             {
-                string fileContent = await response.Content.ReadAsStringAsync();
+                var fileContent = await response.Content.ReadAsStringAsync();
 
-                string tempFilePath = System.IO.Path.GetTempFileName();
+                var tempFilePath = System.IO.Path.GetTempFileName();
 
                 await File.WriteAllTextAsync(tempFilePath, fileContent);
 
@@ -280,14 +280,14 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        private async void btnExecuteCommand_Click(object sender, EventArgs e)
+        async void btnExecuteCommand_Click(object sender, EventArgs e)
         {
         }
 
-        private void ProfileManagerHelp_Click(object sender, RoutedEventArgs e)
+        void ProfileManagerHelp_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of the ProfileManagerHelp window
-            Profile_Manager.ProfileManagerHelp helpWindow = new Profile_Manager.ProfileManagerHelp();
+            var helpWindow = new Profile_Manager.ProfileManagerHelp();
 
             // Set the Topmost property to make sure it appears above all other windows
             helpWindow.Topmost = true;
@@ -296,16 +296,16 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             helpWindow.ShowDialog();
         }
 
-        private void cb_DistortionCurvature_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void cb_DistortionCurvature_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
+            var comboBox = sender as ComboBox;
             // Check if SelectedItem is not null before accessing its Content
             if (comboBox.SelectedItem != null)
             {
-                string selectedValue = ((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
+                var selectedValue = ((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
 
-                string keyLocation = @"Software\Oculus\RemoteHeadset";
-                string keyName = "DistortionCurve";
+                var keyLocation = @"Software\Oculus\RemoteHeadset";
+                var keyName = "DistortionCurve";
 
                 // Use the RegistryFunctions to interact with the registry
                 using (var key = RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
@@ -337,13 +337,14 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                     else
                     {
                         // Log the error using ErrorLogger
-                        string errorMessage = "Unable to open the registry key at " + keyLocation;
+                        var errorMessage = "Unable to open the registry key at " + keyLocation;
                         ErrorLogger.LogError(new Exception(errorMessage));
                         // Optionally, attempt to create the key if it should exist
                         // This depends on the application's requirements and permissions
                         try
                         {
-                            RegistryKey newKey = RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
+                            var newKey = RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
+
                             if (newKey != null)
                             {
                                 ErrorLogger.LogError(new Exception("Registry key created at " + keyLocation));
@@ -370,16 +371,16 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        private void cb_VideoCodec_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void cb_VideoCodec_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
+            var comboBox = sender as ComboBox;
             // Check if SelectedItem is not null before accessing its Content
             if (comboBox.SelectedItem != null)
             {
-                string selectedValue = ((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
+                var selectedValue = ((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
 
-                string keyLocation = @"Software\Oculus\RemoteHeadset";
-                string keyName = "HEVC";
+                var keyLocation = @"Software\Oculus\RemoteHeadset";
+                var keyName = "HEVC";
 
                 // Use the RegistryFunctions to interact with the registry
                 using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
@@ -411,14 +412,15 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                     else
                     {
                         // Log the error using ErrorLogger
-                        string errorMessage = "Unable to open the registry key at " + keyLocation;
+                        var errorMessage = "Unable to open the registry key at " + keyLocation;
                         ErrorLogger.LogError(new Exception(errorMessage));
 
                         // Optionally, attempt to create the key if it should exist
                         // This depends on the application's requirements and permissions
                         try
                         {
-                            RegistryKey newKey = OVR_Dash_Manager.Functions.RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
+                            var newKey = OVR_Dash_Manager.Functions.RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
+
                             if (newKey != null)
                             {
                                 ErrorLogger.LogError(new Exception("Registry key created at " + keyLocation));
@@ -445,16 +447,16 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        private void cb_slicedEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void cb_slicedEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
+            var comboBox = sender as ComboBox;
             // Check if SelectedItem is not null before accessing its Content
             if (comboBox.SelectedItem != null)
             {
-                string selectedValue = ((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
+                var selectedValue = ((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
 
-                string keyLocation = @"Software\Oculus\RemoteHeadset";
-                string keyName = "NumSlices";
+                var keyLocation = @"Software\Oculus\RemoteHeadset";
+                var keyName = "NumSlices";
 
                 // Use the RegistryFunctions to interact with the registry
                 using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
@@ -486,14 +488,15 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                     else
                     {
                         // Log the error using ErrorLogger
-                        string errorMessage = "Unable to open the registry key at " + keyLocation;
+                        var errorMessage = "Unable to open the registry key at " + keyLocation;
                         ErrorLogger.LogError(new Exception(errorMessage));
 
                         // Optionally, attempt to create the key if it should exist
                         // This depends on the application's requirements and permissions
                         try
                         {
-                            RegistryKey newKey = OVR_Dash_Manager.Functions.RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
+                            var newKey = OVR_Dash_Manager.Functions.RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
+
                             if (newKey != null)
                             {
                                 ErrorLogger.LogError(new Exception("Registry key created at " + keyLocation));
@@ -520,13 +523,14 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        private void txt_EncodeResolutionWidth_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        void txt_EncodeResolutionWidth_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // This regex will match any non-digit characters.
-            Regex regex = new Regex("[^0-9]+");
+            var regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
 
-            TextBox textBox = sender as TextBox;
+            var textBox = sender as TextBox;
+
             if (!e.Handled && textBox != null)
             {
                 // Ensure that the LostFocus event is only attached once.
@@ -535,15 +539,16 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        private void Txt_EncodeResolutionWidth_LostFocus(object sender, RoutedEventArgs e)
+        void Txt_EncodeResolutionWidth_LostFocus(object sender, RoutedEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
+            var textBox = sender as TextBox;
+
             if (textBox != null)
             {
                 if (int.TryParse(textBox.Text, out int value))
                 {
-                    string keyLocation = @"Software\Oculus\RemoteHeadset";
-                    string keyName = "EncodeWidth";
+                    var keyLocation = @"Software\Oculus\RemoteHeadset";
+                    var keyName = "EncodeWidth";
 
                     using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                     {
@@ -564,26 +569,28 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         else
                         {
                             // Log the error using ErrorLogger
-                            string errorMessage = "Unable to open the registry key at " + keyLocation;
+                            var errorMessage = "Unable to open the registry key at " + keyLocation;
                             ErrorLogger.LogError(new Exception(errorMessage));
                         }
                     }
                 }
+
                 // Unsubscribe from the LostFocus event
                 textBox.LostFocus -= Txt_EncodeResolutionWidth_LostFocus;
             }
         }
 
-        private void cb_EncodeDynamicBitrate_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void cb_EncodeDynamicBitrate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
-            string keyLocation = @"Software\Oculus\RemoteHeadset";
-            string keyName = "DBR";
+            var comboBox = sender as ComboBox;
+            var keyLocation = @"Software\Oculus\RemoteHeadset";
+            var keyName = "DBR";
 
             if (comboBox != null)
             {
                 // Assuming the ComboBox items are strings. If they are ComboBoxItems, you'll need to extract the string value.
-                string selectedValue = comboBox.SelectedItem as string;
+                var selectedValue = comboBox.SelectedItem as string;
+
                 if (selectedValue == null && comboBox.SelectedItem is ComboBoxItem selectedItem)
                 {
                     selectedValue = selectedItem.Content.ToString();
@@ -612,7 +619,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
                             default:
                                 // Log the error or handle the unexpected value
-                                string errorMessage = $"Unexpected selection: {selectedValue}";
+                                var errorMessage = $"Unexpected selection: {selectedValue}";
                                 ErrorLogger.LogError(new Exception(errorMessage));
                                 break;
                         }
@@ -620,20 +627,21 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                     else
                     {
                         // Log the error using ErrorLogger
-                        string errorMessage = "Unable to open the registry key at " + keyLocation;
+                        var errorMessage = "Unable to open the registry key at " + keyLocation;
                         ErrorLogger.LogError(new Exception(errorMessage));
                     }
                 }
             }
         }
 
-        private void txt_DynamicBitrateMax_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        void txt_DynamicBitrateMax_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // This regex will match any non-digit characters.
-            Regex regex = new Regex("[^0-9]+");
+            var regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
 
-            TextBox textBox = sender as TextBox;
+            var textBox = sender as TextBox;
+
             if (!e.Handled && textBox != null)
             {
                 // Ensure that the LostFocus event is only attached once.
@@ -642,13 +650,14 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        private void Txt_DynamicBitrateMax_LostFocus(object sender, RoutedEventArgs e)
+        void Txt_DynamicBitrateMax_LostFocus(object sender, RoutedEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
+            var textBox = sender as TextBox;
+
             if (textBox != null)
             {
-                string keyLocation = @"Software\Oculus\RemoteHeadset";
-                string keyName = "DBRMax";
+                var keyLocation = @"Software\Oculus\RemoteHeadset";
+                var keyName = "DBRMax";
 
                 if (long.TryParse(textBox.Text, out long value))
                 {
@@ -667,7 +676,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                                 // Ensure the value is within the DWORD range before casting
                                 if (value <= int.MaxValue)
                                 {
-                                    int newValue = (int)value;
+                                    var newValue = (int)value;
                                     OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, newValue, RegistryValueKind.DWord);
                                 }
                                 else
@@ -681,23 +690,25 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         else
                         {
                             // Log the error using ErrorLogger
-                            string errorMessage = "Unable to open the registry key at " + keyLocation;
+                            var errorMessage = "Unable to open the registry key at " + keyLocation;
                             ErrorLogger.LogError(new Exception(errorMessage));
                         }
                     }
                 }
+
                 // Unsubscribe from the LostFocus event
                 textBox.LostFocus -= Txt_DynamicBitrateMax_LostFocus;
             }
         }
 
-        private void txt_EncodeBitrate_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        void txt_EncodeBitrate_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // This regex will match any non-digit characters.
-            Regex regex = new Regex("[^0-9]+");
+            var regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
 
-            TextBox textBox = sender as TextBox;
+            var textBox = sender as TextBox;
+
             if (!e.Handled && textBox != null)
             {
                 // Ensure that the LostFocus event is only attached once.
@@ -706,13 +717,14 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        private void Txt_EncodeBitrate_LostFocus(object sender, RoutedEventArgs e)
+        void Txt_EncodeBitrate_LostFocus(object sender, RoutedEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
+            var textBox = sender as TextBox;
+
             if (textBox != null)
             {
-                string keyLocation = @"Software\Oculus\RemoteHeadset";
-                string keyName = "BitrateMbps";
+                var keyLocation = @"Software\Oculus\RemoteHeadset";
+                var keyName = "BitrateMbps";
 
                 if (int.TryParse(textBox.Text, out int value))
                 {
@@ -735,23 +747,25 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         else
                         {
                             // Log the error using ErrorLogger
-                            string errorMessage = "Unable to open the registry key at " + keyLocation;
+                            var errorMessage = "Unable to open the registry key at " + keyLocation;
                             ErrorLogger.LogError(new Exception(errorMessage));
                         }
                     }
                 }
+
                 // Unsubscribe from the LostFocus event
                 textBox.LostFocus -= Txt_EncodeBitrate_LostFocus;
             }
         }
 
-        private void txt_DynamicBitrateOffset_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        void txt_DynamicBitrateOffset_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // This regex will match any non-digit characters.
-            Regex regex = new Regex("[^0-9]+");
+            var regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
 
-            TextBox textBox = sender as TextBox;
+            var textBox = sender as TextBox;
+
             if (!e.Handled && textBox != null)
             {
                 // Ensure that the LostFocus event is only attached once.
@@ -760,13 +774,14 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        private void Txt_DynamicBitrateOffset_LostFocus(object sender, RoutedEventArgs e)
+        void Txt_DynamicBitrateOffset_LostFocus(object sender, RoutedEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
+            var textBox = sender as TextBox;
+
             if (textBox != null)
             {
-                string keyLocation = @"Software\Oculus\RemoteHeadset";
-                string keyName = "DBROffsetMbps";
+                var keyLocation = @"Software\Oculus\RemoteHeadset";
+                var keyName = "DBROffsetMbps";
 
                 if (int.TryParse(textBox.Text, out int value))
                 {
@@ -789,27 +804,29 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         else
                         {
                             // Log the error using ErrorLogger
-                            string errorMessage = "Unable to open the registry key at " + keyLocation;
+                            var errorMessage = "Unable to open the registry key at " + keyLocation;
                             ErrorLogger.LogError(new Exception(errorMessage));
                         }
                     }
                 }
+
                 // Unsubscribe from the LostFocus event
                 textBox.LostFocus -= Txt_DynamicBitrateOffset_LostFocus;
             }
         }
 
-        private void cb_LinkSharpening_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void cb_LinkSharpening_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
-            string keyLocation = @"Software\Oculus\RemoteHeadset";
-            string keyName = "LinkSharpeningEnabled";
+            var comboBox = sender as ComboBox;
+            var keyLocation = @"Software\Oculus\RemoteHeadset";
+            var keyName = "LinkSharpeningEnabled";
 
             // Check the selected item and set the registry value accordingly
             if (comboBox.SelectedItem is ComboBoxItem selectedItem)
             {
-                string selectedValue = selectedItem.Content.ToString();
-                int valueToSet = selectedValue switch
+                var selectedValue = selectedItem.Content.ToString();
+
+                var valueToSet = selectedValue switch
                 {
                     "Disabled" => 1, // Assuming 0 is the correct value for Disabled
                     "Normal" => 2,   // Assuming 1 is the correct value for Normal
@@ -822,7 +839,8 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 {
                     if (key != null)
                     {
-                        bool result = OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, valueToSet, RegistryValueKind.DWord); // Corrected line
+                        var result = OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, valueToSet, RegistryValueKind.DWord); // Corrected line
+
                         if (result)
                         {
                             Debug.WriteLine($"Successfully set {keyName} to {valueToSet}");
@@ -835,7 +853,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                     else
                     {
                         // Log the error using ErrorLogger
-                        string errorMessage = $"Unable to open the registry key at {keyLocation}";
+                        var errorMessage = $"Unable to open the registry key at {keyLocation}";
                         ErrorLogger.LogError(new Exception(errorMessage));
                         Debug.WriteLine(errorMessage);
                     }
@@ -843,22 +861,22 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
             else
             {
-                string errorMessage = "The selected item is not a ComboBoxItem.";
+                var errorMessage = "The selected item is not a ComboBoxItem.";
                 ErrorLogger.LogError(new Exception(errorMessage));
                 Debug.WriteLine(errorMessage);
             }
         }
 
-        private void cb_LocalDimming_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void cb_LocalDimming_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
-            string keyLocation = @"Software\Oculus\RemoteHeadset";
-            string keyName = "LocalDimming";
+            var comboBox = sender as ComboBox;
+            var keyLocation = @"Software\Oculus\RemoteHeadset";
+            var keyName = "LocalDimming";
 
             // Assuming the ComboBox items are ComboBoxItem objects
             if (comboBox.SelectedItem is ComboBoxItem selectedComboBoxItem)
             {
-                string selectedItemContent = selectedComboBoxItem.Content.ToString();
+                var selectedItemContent = selectedComboBoxItem.Content.ToString();
                 Debug.WriteLine($"Selected item content: '{selectedItemContent}'");
 
                 int? valueToSet = selectedItemContent switch
@@ -884,7 +902,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                             catch (Exception ex)
                             {
                                 // Log the exception using ErrorLogger
-                                string errorMessage = $"Failed to set {keyName} to {valueToSet.Value}: {ex.Message}";
+                                var errorMessage = $"Failed to set {keyName} to {valueToSet.Value}: {ex.Message}";
                                 ErrorLogger.LogError(ex, errorMessage);
                                 Debug.WriteLine(errorMessage);
                             }
@@ -892,7 +910,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         else
                         {
                             // Log the error using ErrorLogger
-                            string errorMessage = "Unable to open the registry key at " + keyLocation;
+                            var errorMessage = "Unable to open the registry key at " + keyLocation;
                             ErrorLogger.LogError(new Exception(errorMessage));
                             Debug.WriteLine(errorMessage);
                         }
@@ -901,7 +919,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 else
                 {
                     // Log the error using ErrorLogger
-                    string errorMessage = $"Invalid selection for Local Dimming: {selectedItemContent}";
+                    var errorMessage = $"Invalid selection for Local Dimming: {selectedItemContent}";
                     ErrorLogger.LogError(new Exception(errorMessage));
                     Debug.WriteLine(errorMessage);
                 }
@@ -909,13 +927,13 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             else
             {
                 // Log the error using ErrorLogger
-                string errorMessage = "The selected item is not a ComboBoxItem.";
+                var errorMessage = "The selected item is not a ComboBoxItem.";
                 ErrorLogger.LogError(new Exception(errorMessage));
                 Debug.WriteLine(errorMessage);
             }
         }
 
-        private void btn_SteamApps_Click(object sender, RoutedEventArgs e)
+        void btn_SteamApps_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of frm_SteamApps window
             var steamAppsWindow = new frm_SteamApps();
@@ -927,7 +945,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             steamAppsWindow.Show();
         }
 
-        private void btn_OculusApps_Click(object sender, RoutedEventArgs e)
+        void btn_OculusApps_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of frm_SteamApps window
             var OculusAppsWindow = new frm_OculusApps();

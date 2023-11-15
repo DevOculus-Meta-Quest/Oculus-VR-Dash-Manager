@@ -1,8 +1,8 @@
 ﻿using OVR_Dash_Manager.Functions;
-using System.Windows; // Ensure correct using directives
 using OVR_Dash_Manager.Software;
 using System;
 using System.Threading.Tasks;
+using System.Windows; // Ensure correct using directives
 
 namespace OVR_Dash_Manager.Forms
 {
@@ -17,7 +17,7 @@ namespace OVR_Dash_Manager.Forms
             LoadSteamApps();
         }
 
-        private async void LoadSteamApps()
+        async void LoadSteamApps()
         {
             try
             {

@@ -37,6 +37,7 @@ namespace OVR_Dash_Manager.Functions
             {
                 return url.StartsWith("http", StringComparison.OrdinalIgnoreCase) ? url : "http://" + url;
             }
+
             return url;
         }
     }

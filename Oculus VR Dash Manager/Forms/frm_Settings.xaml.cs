@@ -9,17 +9,11 @@ namespace OVR_Dash_Manager.Forms
     /// </summary>
     public partial class frm_Settings : Window
     {
-        public frm_Settings()
-        {
-            InitializeComponent();
-        }
+        public frm_Settings() => InitializeComponent();
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            UpdateCheckBoxes();
-        }
+        void Window_Loaded(object sender, RoutedEventArgs e) => UpdateCheckBoxes();
 
-        private void UpdateCheckBoxes()
+        void UpdateCheckBoxes()
         {
             foreach (UIElement item in gd_Settings.Children)
             {
@@ -31,9 +25,9 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        private void Update_Properties_Setting(String SettingName, bool Value, CheckBox DisplayBox = null)
+        void Update_Properties_Setting(string SettingName, bool Value, CheckBox DisplayBox = null)
         {
-            bool Setting = false;
+            var Setting = false;
 
             try
             {
@@ -55,9 +49,9 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        private bool Get_Properties_Setting(String SettingName)
+        bool Get_Properties_Setting(string SettingName)
         {
-            bool Setting = false;
+            var Setting = false;
 
             try
             {
@@ -71,82 +65,82 @@ namespace OVR_Dash_Manager.Forms
             return Setting;
         }
 
-        private void chkbx_AlwaysOnTop_Checked(object sender, RoutedEventArgs e)
+        void chkbx_AlwaysOnTop_Checked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_AlwaysOnTop.Tag.ToString(), true, chkbx_AlwaysOnTop);
         }
 
-        private void chkbx_AlwaysOnTop_Unchecked(object sender, RoutedEventArgs e)
+        void chkbx_AlwaysOnTop_Unchecked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_AlwaysOnTop.Tag.ToString(), false, chkbx_AlwaysOnTop);
         }
 
-        private void chkbx_FastSwitch_Checked(object sender, RoutedEventArgs e)
+        void chkbx_FastSwitch_Checked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_FastSwitch.Tag.ToString(), true, chkbx_FastSwitch);
         }
 
-        private void chkbx_FastSwitch_Unchecked(object sender, RoutedEventArgs e)
+        void chkbx_FastSwitch_Unchecked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_FastSwitch.Tag.ToString(), false, chkbx_FastSwitch);
         }
 
-        private void chkbx_ShutdownServices_Checked(object sender, RoutedEventArgs e)
+        void chkbx_ShutdownServices_Checked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_ShutdownServices.Tag.ToString(), true, chkbx_ShutdownServices);
         }
 
-        private void chkbx_ShutdownServices_Unchecked(object sender, RoutedEventArgs e)
+        void chkbx_ShutdownServices_Unchecked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_ShutdownServices.Tag.ToString(), false, chkbx_ShutdownServices);
         }
 
-        private void chkbx_StartOculusClientOnLaunch_Checked(object sender, RoutedEventArgs e)
+        void chkbx_StartOculusClientOnLaunch_Checked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_StartOculusClientOnLaunch.Tag.ToString(), true, chkbx_StartOculusClientOnLaunch);
         }
 
-        private void chkbx_StartOculusClientOnLaunch_Unchecked(object sender, RoutedEventArgs e)
+        void chkbx_StartOculusClientOnLaunch_Unchecked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_StartOculusClientOnLaunch.Tag.ToString(), false, chkbx_StartOculusClientOnLaunch);
         }
 
-        private void chkbx_SteamVRFocusFix_Checked(object sender, RoutedEventArgs e)
+        void chkbx_SteamVRFocusFix_Checked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_SteamVRFocusFix.Tag.ToString(), true, chkbx_SteamVRFocusFix);
         }
 
-        private void chkbx_SteamVRFocusFix_Unchecked(object sender, RoutedEventArgs e)
+        void chkbx_SteamVRFocusFix_Unchecked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_SteamVRFocusFix.Tag.ToString(), false, chkbx_SteamVRFocusFix);
         }
 
-        private void chkbx_ExitLink_OnUserClose_Steam_Checked(object sender, RoutedEventArgs e)
+        void chkbx_ExitLink_OnUserClose_Steam_Checked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_ExitLink_OnUserClose_Steam.Tag.ToString(), true, chkbx_ExitLink_OnUserClose_Steam);
         }
 
-        private void chkbx_ExitLink_OnUserClose_Steam_Unchecked(object sender, RoutedEventArgs e)
+        void chkbx_ExitLink_OnUserClose_Steam_Unchecked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_ExitLink_OnUserClose_Steam.Tag.ToString(), false, chkbx_ExitLink_OnUserClose_Steam);
         }
 
-        private void chkbx_CloseOculusClientOnLaunch_Checked(object sender, RoutedEventArgs e)
+        void chkbx_CloseOculusClientOnLaunch_Checked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_CloseOculusClientOnLaunch.Tag.ToString(), true, chkbx_CloseOculusClientOnLaunch);
         }
 
-        private void chkbx_CloseOculusClientOnLaunch_Unchecked(object sender, RoutedEventArgs e)
+        void chkbx_CloseOculusClientOnLaunch_Unchecked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_CloseOculusClientOnLaunch.Tag.ToString(), false, chkbx_CloseOculusClientOnLaunch);
         }
 
-        private void chkbx_MinimizeOculusClientOnClientLaunch_Checked(object sender, RoutedEventArgs e)
+        void chkbx_MinimizeOculusClientOnClientLaunch_Checked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_MinimizeOculusClientOnClientLaunch.Tag.ToString(), true, chkbx_MinimizeOculusClientOnClientLaunch);
         }
 
-        private void chkbx_MinimizeOculusClientOnClientLaunch_Unchecked(object sender, RoutedEventArgs e)
+        void chkbx_MinimizeOculusClientOnClientLaunch_Unchecked(object sender, RoutedEventArgs e)
         {
             Update_Properties_Setting(chkbx_MinimizeOculusClientOnClientLaunch.Tag.ToString(), false, chkbx_MinimizeOculusClientOnClientLaunch);
         }

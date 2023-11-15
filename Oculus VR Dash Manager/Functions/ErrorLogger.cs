@@ -7,13 +7,13 @@ namespace OVR_Dash_Manager.Functions
 {
     public static class ErrorLogger
     {
-        private static readonly string LogFilePath;
+        static readonly string LogFilePath;
 
         static ErrorLogger()
         {
             // Get the path of the executable and create a log file in the same directory.
-            string exePath = Assembly.GetExecutingAssembly().Location;
-            string exeDirectory = Path.GetDirectoryName(exePath);
+            var exePath = Assembly.GetExecutingAssembly().Location;
+            var exeDirectory = Path.GetDirectoryName(exePath);
             LogFilePath = Path.Combine(exeDirectory, "ErrorLog.txt");
         }
 
@@ -22,7 +22,7 @@ namespace OVR_Dash_Manager.Functions
             try
             {
                 // Create a string builder to hold the error details.
-                StringBuilder errorDetails = new StringBuilder();
+                var errorDetails = new StringBuilder();
 
                 errorDetails.AppendLine("Timestamp: " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                 errorDetails.AppendLine("Additional Info: " + additionalInfo);
@@ -49,9 +49,9 @@ namespace OVR_Dash_Manager.Functions
             }
         }
 
-        private static string LogInnerException(Exception ex, string indent)
+        static string LogInnerException(Exception ex, string indent)
         {
-            StringBuilder innerExceptionDetails = new StringBuilder();
+            var innerExceptionDetails = new StringBuilder();
 
             innerExceptionDetails.AppendLine(indent + "Exception Type: " + ex.GetType().Name);
             innerExceptionDetails.AppendLine(indent + "Message: " + ex.Message);
@@ -67,8 +67,7 @@ namespace OVR_Dash_Manager.Functions
             return innerExceptionDetails.ToString();
         }
     }
-}
-
+}
 /*
  * Usage Example:
  * Here's how you might use this ErrorLogger in your code:

@@ -13,22 +13,20 @@ namespace OVR_Dash_Manager
 {
     public class Github
     {
-        private readonly HttpClient httpClient = new HttpClient();
-        private const string GithubApiBaseUrl = "https://api.github.com/repos/";
+        readonly HttpClient httpClient = new HttpClient();
+        const string GithubApiBaseUrl = "https://api.github.com/repos/";
 
-        public Github()
-        {
-            httpClient.DefaultRequestHeaders.Add("User-Agent", "OVR-Dash-Manager");
-        }
+        public Github() => httpClient.DefaultRequestHeaders.Add("User-Agent", "OVR-Dash-Manager");
 
         public async Task<string> GetFileDownloadUrlAsync(string owner, string repo, string filePath)
         {
             // Constructing the URL to point to the raw content of the file
-            string apiUrl = $"https://raw.githubusercontent.com/{owner}/{repo}/main/{filePath}";
+            var apiUrl = $"https://raw.githubusercontent.com/{owner}/{repo}/main/{filePath}";
 
             Debug.WriteLine($"Constructed URL: {apiUrl}"); // Log the constructed URL
 
-            HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+            var response = await httpClient.GetAsync(apiUrl);
+
             if (response.IsSuccessStatusCode)
             {
                 return apiUrl; // Return the URL if the file exists
@@ -42,11 +40,11 @@ namespace OVR_Dash_Manager
 
         public async Task<string> DownloadFileAsync(string downloadUrl)
         {
-            HttpResponseMessage response = await httpClient.GetAsync(downloadUrl);
+            var response = await httpClient.GetAsync(downloadUrl);
             response.EnsureSuccessStatusCode();
 
-            string tempFilePath = Path.GetTempFileName();
-            byte[] fileBytes = await response.Content.ReadAsByteArrayAsync();
+            var tempFilePath = Path.GetTempFileName();
+            var fileBytes = await response.Content.ReadAsByteArrayAsync();
             await File.WriteAllBytesAsync(tempFilePath, fileBytes);
 
             return tempFilePath;
@@ -54,13 +52,13 @@ namespace OVR_Dash_Manager
 
         public async Task<string> GetFilesFromDirectoryAsync(string owner, string repo, string directoryPath, string branch = "main")
         {
-            string url = $"{GithubApiBaseUrl}{owner}/{repo}/contents/{directoryPath}?ref={branch}";
+            var url = $"{GithubApiBaseUrl}{owner}/{repo}/contents/{directoryPath}?ref={branch}";
 
             var response = await httpClient.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
             {
-                string jsonResult = await response.Content.ReadAsStringAsync();
+                var jsonResult = await response.Content.ReadAsStringAsync();
                 return jsonResult;
             }
             else
@@ -73,6 +71,7 @@ namespace OVR_Dash_Manager
         {
             var json = await GetJsonAsync($"https://api.github.com/repos/{repo}/{project}/releases/latest");
             var gitResponse = JsonConvert.DeserializeObject<GitResponse>(json);
+
             foreach (var asset in gitResponse.assets)
             {
                 if (asset.name == assetName)
@@ -80,6 +79,7 @@ namespace OVR_Dash_Manager
                     return asset.size;
                 }
             }
+
             return 0;
         }
 
@@ -94,6 +94,7 @@ namespace OVR_Dash_Manager
         {
             var json = await GetJsonAsync($"https://api.github.com/repos/{repo}/{project}/releases/latest");
             var gitResponse = JsonConvert.DeserializeObject<GitResponse>(json);
+
             foreach (var asset in gitResponse.assets)
             {
                 if (asset.name == assetName)
@@ -111,14 +112,15 @@ namespace OVR_Dash_Manager
             var json = await GetJsonAsync($"https://api.github.com/repos/{repo}/{project}/releases/latest");
             var gitResponse = JsonConvert.DeserializeObject<GitResponse>(json);
             var assetUrls = new Dictionary<string, string>();
+
             foreach (var asset in gitResponse.assets)
-            {
                 assetUrls[asset.name] = asset.browser_download_url;
-            }
+            
+
             return new GitHubReply(gitResponse.name, gitResponse.html_url, assetUrls);
         }
 
-        private async Task<string> GetJsonAsync(string url)
+        async Task<string> GetJsonAsync(string url)
         {
             var response = await httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();

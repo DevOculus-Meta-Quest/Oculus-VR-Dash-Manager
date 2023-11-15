@@ -8,18 +8,15 @@ namespace OVR_Dash_Manager.Dashes
 {
     public static class Dash_Manager
     {
-        private static OVR_Dash Oculus_Dash;
-        private static OVR_Dash SteamVR_Dash;
-        private static MainWindow MainForm;
+        static OVR_Dash Oculus_Dash;
+        static OVR_Dash SteamVR_Dash;
+        static MainWindow MainForm;
 
         /// <summary>
         /// Passes the main form instance to the Dash_Manager.
         /// </summary>
         /// <param name="Form">Instance of the main form.</param>
-        public static void PassMainForm(MainWindow Form)
-        {
-            MainForm = Form;
-        }
+        public static void PassMainForm(MainWindow Form) => MainForm = Form;
 
         /// <summary>
         /// Fixes the task view issue on the main form.
@@ -43,10 +40,7 @@ namespace OVR_Dash_Manager.Dashes
         /// Emulates the release mode.
         /// </summary>
         /// <returns>True if in debug mode, false otherwise.</returns>
-        public static bool EmulateReleaseMode()
-        {
-            return MainForm?.Debug_EmulateReleaseMode ?? false;
-        }
+        public static bool EmulateReleaseMode() => MainForm?.Debug_EmulateReleaseMode ?? false;
 
         /// <summary>
         /// Generates the dashes.
@@ -67,7 +61,7 @@ namespace OVR_Dash_Manager.Dashes
         /// <summary>
         /// Checks if the dashes are installed.
         /// </summary>
-        private static async Task CheckInstalled()
+        static async Task CheckInstalled()
         {
             Oculus_Dash.CheckInstalled();
             SteamVR_Dash.CheckInstalled();
@@ -86,8 +80,8 @@ namespace OVR_Dash_Manager.Dashes
             else if (Software.Oculus.Normal_Dash)
             {
                 // Check if Oculus Updated and check is Oculus Dash has changed by "Length"
-                FileInfo CurrentDash = new FileInfo(Path.Combine(Software.Oculus.Oculus_Dash_Directory, Oculus_Dash.DashFileName));
-                FileInfo OculusDashFile = new FileInfo(Software.Oculus.Oculus_Dash_File);
+                var CurrentDash = new FileInfo(Path.Combine(Software.Oculus.Oculus_Dash_Directory, Oculus_Dash.DashFileName));
+                var OculusDashFile = new FileInfo(Software.Oculus.Oculus_Dash_File);
 
                 // Update File
                 if (CurrentDash.Length != OculusDashFile.Length)
@@ -115,9 +109,9 @@ namespace OVR_Dash_Manager.Dashes
         /// </summary>
         /// <param name="Dash">Type of dash to set active.</param>
         /// <returns>True if activated, false otherwise.</returns>
-        private static bool SetActiveDash(Dash_Type Dash)
+        static bool SetActiveDash(Dash_Type Dash)
         {
-            bool activated = false;
+            var activated = false;
 
             switch (Dash)
             {
@@ -137,12 +131,12 @@ namespace OVR_Dash_Manager.Dashes
             return activated;
         }
 
-        public static Dash_Type CheckWhosDash(String File_ProductName)
+        public static Dash_Type CheckWhosDash(string File_ProductName)
         {
             if (SteamVR_Dash.IsThisYourDash(File_ProductName))
                 return Dash_Type.OculusKiller;
 
-            if (String.IsNullOrEmpty(File_ProductName))
+            if (string.IsNullOrEmpty(File_ProductName))
                 return Dash_Type.Normal;
 
             return Dash_Type.Unknown;
@@ -168,65 +162,66 @@ namespace OVR_Dash_Manager.Dashes
             }
         }
 
-        public static Boolean Activate_FastTransition(Dash_Type Dash)
+        public static bool Activate_FastTransition(Dash_Type Dash)
         {
-            Boolean Activated = false;
+            var Activated = false;
 
             if (Dash != Dash_Type.Exit)
             {
                 Debug.WriteLine("Starting Fast Activation: " + Dash.ToString());
 
                 for (int i = 0; i < 10; i++)
-                {
                     if (AttemptFastSwitch(Dash))
                         break;
-                }
+                
             }
             else
             {
                 Software.Steam.Close_SteamVR_ResetLink();
 
-                //ServiceController Service = new ServiceController("OVRService");
-                //Boolean OVRServiceRunning = Running(Service.Status);
+                // ServiceController Service = new ServiceController("OVRService");
+                // Boolean OVRServiceRunning = Running(Service.Status);
 
-                //try
-                //{
+                // try
+                // {
                 //    Debug.WriteLine("Stopping OVRService");
 
                 //    Service.Stop();
                 //    if (OVRServiceRunning)
                 //        Service.Start();
-                //}
-                //catch (Exception ex)
-                //{
+                // }
+                // catch (Exception ex)
+                // {
                 //    Debug.WriteLine(ex.Message);
-                //}
+                // }
             }
+
             return Activated;
         }
 
-        private static Boolean AttemptFastSwitch(Dash_Type Dash)
+        static bool AttemptFastSwitch(Dash_Type Dash)
         {
-            Boolean Activated = false;
+            var Activated = false;
 
             Activated = SetActiveDash(Dash);
 
             return Activated;
         }
 
-        public static Boolean Activate(Dash_Type Dash)
+        public static bool Activate(Dash_Type Dash)
         {
             Debug.WriteLine("Starting Activation: " + Dash.ToString());
 
-            Boolean Activated = false;
+            var Activated = false;
 
-            Boolean OVRServiceRunning = (Service_Manager.GetState("OVRService") == "Running");
-            Boolean OVRService_WasRunning = false;
-            Boolean CanAccess = true;
+            var OVRServiceRunning = (Service_Manager.GetState("OVRService") == "Running");
+            var OVRService_WasRunning = false;
+            var CanAccess = true;
 
             if (OVRServiceRunning)
             {
                 OVRService_WasRunning = true;
+
                 try
                 {
                     Debug.WriteLine("Stopping OVRService");
@@ -266,7 +261,7 @@ namespace OVR_Dash_Manager.Dashes
             return Activated;
         }
 
-        private static bool IsServiceRunningOrPending(ServiceControllerStatus status)
+        static bool IsServiceRunningOrPending(ServiceControllerStatus status)
         {
             switch (status)
             {
@@ -282,10 +277,7 @@ namespace OVR_Dash_Manager.Dashes
             }
         }
 
-        public static bool Oculus_Official_Dash_Installed()
-        {
-            return Oculus_Dash.Installed;
-        }
+        public static bool Oculus_Official_Dash_Installed() => Oculus_Dash.Installed;
 
         public static OVR_Dash GetDash(Dash_Type Dash)
         {

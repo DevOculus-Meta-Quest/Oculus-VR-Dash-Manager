@@ -24,6 +24,7 @@ namespace OVR_Dash_Manager.Functions
                         serviceController.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(30));
                     }
                 }
+
                 return true;
             }
             catch (Exception ex)

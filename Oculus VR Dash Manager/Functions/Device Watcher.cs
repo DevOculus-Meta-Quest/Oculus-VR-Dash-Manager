@@ -13,18 +13,18 @@ namespace OVR_Dash_Manager.Functions
         public static event NewDevice DeviceConnected;
 
         // ManagementEventWatcher instance to monitor device connection events.
-        private static ManagementEventWatcher _connected;
+        static ManagementEventWatcher _connected;
 
         // Flags to indicate whether the setup is done and whether the watcher is running.
-        private static bool _isSetup;
+        static bool _isSetup;
 
-        private static bool _running;
+        static bool _running;
 
         // Timestamp to track the last connection event.
-        private static DateTime _lastConnectionTime;
+        static DateTime _lastConnectionTime;
 
         // Setup method to initialize the ManagementEventWatcher instance.
-        private static void Setup()
+        static void Setup()
         {
             if (_isSetup) return;
 
@@ -54,6 +54,7 @@ namespace OVR_Dash_Manager.Functions
             Setup();
 
             if (_connected == null || _running) return;
+
             try
             {
                 _connected.Start();
@@ -69,6 +70,7 @@ namespace OVR_Dash_Manager.Functions
         public static void Stop()
         {
             if (_connected == null || !_running) return;
+
             try
             {
                 _connected.Stop();
@@ -81,7 +83,7 @@ namespace OVR_Dash_Manager.Functions
         }
 
         // Event handler to process device connection events.
-        private static void Handle_DeviceConnected(object sender, EventArrivedEventArgs e)
+        static void Handle_DeviceConnected(object sender, EventArrivedEventArgs e)
         {
             // If nothing is subscribed to the event
             if (DeviceConnected == null) return;

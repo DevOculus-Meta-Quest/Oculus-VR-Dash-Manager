@@ -21,9 +21,9 @@ namespace OVR_Dash_Manager.Software
         public static bool Custom_Dash { get; private set; }
         public static string Current_Dash_Name { get; private set; }
 
-        private static bool _ClientJustExited = false;
-        private static bool _Report_ClientJustExited = false;
-        private static bool _IsSetup = false;
+        static bool _ClientJustExited;
+        static bool _Report_ClientJustExited;
+        static bool _IsSetup;
 
         public static void Setup()
         {
@@ -35,15 +35,16 @@ namespace OVR_Dash_Manager.Software
             }
         }
 
-        private static void Process_Watcher_ProcessStarted(string pProcessName, int pProcessID)
+        static void Process_Watcher_ProcessStarted(string pProcessName, int pProcessID)
         {
             Debug.WriteLine($"Started: {pProcessName} - {DateTime.Now}");
             // Add any specific actions for processes started here
         }
 
-        private static void Process_Watcher_ProcessExited(string pProcessName, int pProcessID)
+        static void Process_Watcher_ProcessExited(string pProcessName, int pProcessID)
         {
             Debug.WriteLine($"Stopped: {pProcessName} - {DateTime.Now}");
+
             if (pProcessName == "OculusClient.exe" && _Report_ClientJustExited)
             {
                 Debug.WriteLine("Set Client Minimize Exit Trigger");
@@ -54,7 +55,8 @@ namespace OVR_Dash_Manager.Software
 
         public static void Check_Oculus_Is_Installed()
         {
-            string OculusPath = Environment.GetEnvironmentVariable("OculusBase");
+            var OculusPath = Environment.GetEnvironmentVariable("OculusBase");
+
             if (Directory.Exists(OculusPath))
             {
                 Oculus_Main_Directory = OculusPath;
@@ -75,14 +77,14 @@ namespace OVR_Dash_Manager.Software
             }
         }
 
-        private static void WhichDash(string FilePath)
+        static void WhichDash(string FilePath)
         {
             Normal_Dash = false;
             Custom_Dash = false;
             Current_Dash_Name = "Checking";
 
-            FileVersionInfo Info = FileVersionInfo.GetVersionInfo(FilePath);
-            Dashes.Dash_Type Current = Dashes.Dash_Manager.CheckWhosDash(Info.ProductName);
+            var Info = FileVersionInfo.GetVersionInfo(FilePath);
+            var Current = Dashes.Dash_Manager.CheckWhosDash(Info.ProductName);
             Current_Dash_Name = Dashes.Dash_Manager.GetDashName(Current);
 
             if (Current_Dash_Name != Dashes.Dash_Manager.GetDashName(Dashes.Dash_Type.Normal))
@@ -100,9 +102,9 @@ namespace OVR_Dash_Manager.Software
             }
         }
 
-        private static bool Check_Is_OfficialDash(string FilePath)
+        static bool Check_Is_OfficialDash(string FilePath)
         {
-            X509Certificate cert = X509Certificate.CreateFromSignedFile(FilePath);
+            var cert = X509Certificate.CreateFromSignedFile(FilePath);
             return cert.Issuer == "CN=DigiCert SHA2 Assured ID Code Signing CA, OU=www.digicert.com, O=DigiCert Inc, C=US";
         }
 
@@ -123,6 +125,7 @@ namespace OVR_Dash_Manager.Software
                     for (int i = 0; i < 100; i++)
                     {
                         Thread.Sleep(1000);
+
                         if (Process.GetProcessesByName("OVRRedir").Length > 0)
                         {
                             Debug.WriteLine("OVRRedir Started");
@@ -137,6 +140,7 @@ namespace OVR_Dash_Manager.Software
                     WorkingDirectory = Path.GetDirectoryName(Oculus_Client_EXE),
                     FileName = Oculus_Client_EXE
                 };
+
                 var client = Process.Start(clientInfo);
 
                 if (Properties.Settings.Default.Minimize_Oculus_Client_OnClientStart)
@@ -151,7 +155,8 @@ namespace OVR_Dash_Manager.Software
 
                     _Report_ClientJustExited = false;
 
-                    Rect location = new Rect();
+                    var location = new Rect();
+
                     for (int i = 0; i < 20; i++)
                     {
                         Functions.NativeFunctions.MinimizeExternalWindow(client.MainWindowHandle);
@@ -175,9 +180,8 @@ namespace OVR_Dash_Manager.Software
             if (Properties.Settings.Default.CloseOculusClientOnExit)
             {
                 foreach (var client in Process.GetProcessesByName("OculusClient"))
-                {
                     client.CloseMainWindow();
-                }
+                
             }
 
             if (Properties.Settings.Default.CloseOculusServicesOnExit)
@@ -196,13 +200,13 @@ namespace OVR_Dash_Manager.Software
 
         public static string GetTheVoidUniformsPath()
         {
-            string OculusPath = Environment.GetEnvironmentVariable("OculusBase");
+            var OculusPath = Environment.GetEnvironmentVariable("OculusBase");
             return Path.Combine(OculusPath, @"Support\oculus-dash\dash\data\shaders\theVoid\theVoidUniforms.glsl");
         }
 
         public static string GetGridPlanePath()
         {
-            string OculusPath = Environment.GetEnvironmentVariable("OculusBase");
+            var OculusPath = Environment.GetEnvironmentVariable("OculusBase");
             return Path.Combine(OculusPath, @"Support\oculus-dash\dash\assets\raw\textures\environment\the_void\grid_plane_006.dds");
         }
     }

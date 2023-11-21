@@ -20,6 +20,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
             Checked="chkDontShowAgain_Checked"
-            Content="Don't show again" Foreground="Gray" />
+            Content="Don't show again"
+            Foreground="Gray" />
     </Grid>
 </Window>

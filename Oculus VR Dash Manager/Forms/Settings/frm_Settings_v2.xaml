@@ -91,8 +91,8 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Checked="chk_ShowSplashScreen_Checked"
-                    Unchecked="chk_ShowSplashScreen_Unchecked"
-                    Content="Dont Show SplashScreen on Startup" />
+                    Content="Dont Show SplashScreen on Startup"
+                    Unchecked="chk_ShowSplashScreen_Unchecked" />
             </Grid>
         </GroupBox>
         <GroupBox

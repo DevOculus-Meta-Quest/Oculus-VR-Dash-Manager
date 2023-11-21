@@ -20,7 +20,7 @@ namespace OVR_Dash_Manager
                 // Use Dispatcher to handle the delay and closing of the splash screen
                 Dispatcher.Invoke(async () =>
                 {
-                    await Task.Delay(7000);
+                    await Task.Delay(3000);
                     splashScreen.Close();
                     mainWindow.Show();
                 });

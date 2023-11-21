@@ -22,6 +22,12 @@ namespace OVR_Dash_Manager
         public Splash()
         {
             InitializeComponent();
+
+            // Center the window on the screen
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            // Keep the window always on top
+            this.Topmost = true;
         }
 
         private void chkDontShowAgain_Checked(object sender, RoutedEventArgs e)

@@ -13,13 +13,13 @@
     WindowStyle="None"
     mc:Ignorable="d">
     <Grid>
-        <Image Source="/splash_image.png" />
+        <Image Source="/splash_image.png" Stretch="Fill" />
         <CheckBox
             x:Name="chkDontShowAgain"
             Margin="10"
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
             Checked="chkDontShowAgain_Checked"
-            Content="Don't show again" />
+            Content="Don't show again" Foreground="Gray" />
     </Grid>
 </Window>

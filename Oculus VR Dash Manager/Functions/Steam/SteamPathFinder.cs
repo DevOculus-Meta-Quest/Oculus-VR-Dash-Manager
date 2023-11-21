@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using OVR_Dash_Manager.Functions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace OVR_Dash_Manager.Software
+namespace OVR_Dash_Manager.Functions.Steam
 {
     internal class SteamPathFinder
     {
@@ -124,5 +123,5 @@ namespace OVR_Dash_Manager.Software
                 return new List<string>();
             }
         }
-    } 
+    }
 }

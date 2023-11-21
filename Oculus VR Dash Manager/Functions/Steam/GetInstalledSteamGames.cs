@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace OVR_Dash_Manager.Software
+namespace OVR_Dash_Manager.Functions.Steam
 {
     internal class SteamGameManager
     {

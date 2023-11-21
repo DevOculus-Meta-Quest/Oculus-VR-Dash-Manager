@@ -1,7 +1,7 @@
 ﻿using nkast.LibOVR;
 using System;
 
-namespace OVR_Dash_Manager.Functions
+namespace OVR_Dash_Manager.Functions.Oculus
 {
     public class OculusControllerHandler
     {

@@ -9,7 +9,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace OVR_Dash_Manager.Software
+namespace OVR_Dash_Manager.Functions
 {
     public static class Auto_Launch_Programs
     {
@@ -23,7 +23,7 @@ namespace OVR_Dash_Manager.Software
             {
                 var programData = Properties.Settings.Default.Auto_Programs_JSON;
 
-                var slimPrograms = Functions.JsonFunctions.DeserializeClass<List<Slim_Auto_Program>>(programData);
+                var slimPrograms = JsonFunctions.DeserializeClass<List<Slim_Auto_Program>>(programData);
 
                 if (slimPrograms.Count > 0)
                 {
@@ -55,7 +55,7 @@ namespace OVR_Dash_Manager.Software
             foreach (var item in Programs)
             {
                 if (item.Startup_Launch)
-                    Functions.Process_Functions.StartProcess(item.Full_Path);
+                    Process_Functions.StartProcess(item.Full_Path);
             }
         }
 
@@ -64,7 +64,7 @@ namespace OVR_Dash_Manager.Software
             foreach (var item in Programs)
             {
                 if (item.Closing_Launch)
-                    Functions.Process_Functions.StartProcess(item.Full_Path);
+                    Process_Functions.StartProcess(item.Full_Path);
             }
         }
 
@@ -78,7 +78,7 @@ namespace OVR_Dash_Manager.Software
                 item.Changed = false;
             }
 
-            Properties.Settings.Default.Auto_Programs_JSON = Functions.JsonFunctions.SerializeClass(slimPrograms);
+            Properties.Settings.Default.Auto_Programs_JSON = JsonFunctions.SerializeClass(slimPrograms);
             Properties.Settings.Default.Save();
         }
 

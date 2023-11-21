@@ -1,5 +1,5 @@
 ﻿using OVR_Dash_Manager.Functions;
-using OVR_Dash_Manager.Software;
+using OVR_Dash_Manager.Functions.Oculus;
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -93,7 +93,7 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
         {
             try
             {
-                var glslPath = Oculus.GetTheVoidUniformsPath();
+                var glslPath = OculusRunning.GetTheVoidUniformsPath();
                 var glslContent = File.ReadAllText(glslPath);
                 var match = Regex.Match(glslContent, @"vec3 u_voidFogColor = \{(.*?)\};");
 
@@ -128,7 +128,7 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
         {
             try
             {
-                var glslPath = Oculus.GetTheVoidUniformsPath();
+                var glslPath = OculusRunning.GetTheVoidUniformsPath();
                 var glslContent = File.ReadAllText(glslPath);
                 var r = color.R / 255.0f;
                 var g = color.G / 255.0f;
@@ -248,7 +248,7 @@ namespace OVR_Dash_Manager.Forms.Dash_Customizer
 
             try
             {
-                var oculusFilePath = Oculus.GetGridPlanePath();
+                var oculusFilePath = OculusRunning.GetGridPlanePath();
 
                 // Creating a backup of the current file
                 var backupFilePath = oculusFilePath + ".backup";

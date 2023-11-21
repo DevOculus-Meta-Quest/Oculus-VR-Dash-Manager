@@ -1,5 +1,5 @@
 ﻿using OVR_Dash_Manager.Functions;
-using OVR_Dash_Manager.Software;
+using OVR_Dash_Manager.Functions.Steam;
 using System;
 using System.Threading.Tasks;
 using System.Windows; // Ensure correct using directives

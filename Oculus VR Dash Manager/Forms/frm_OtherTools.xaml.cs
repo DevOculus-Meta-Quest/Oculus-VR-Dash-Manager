@@ -2,7 +2,7 @@
 using OVR_Dash_Manager.Forms.Dash_Customizer;
 using OVR_Dash_Manager.Forms.Profile_Manager;
 using OVR_Dash_Manager.Functions;
-using OVR_Dash_Manager.Software;
+using OVR_Dash_Manager.Functions.Android;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

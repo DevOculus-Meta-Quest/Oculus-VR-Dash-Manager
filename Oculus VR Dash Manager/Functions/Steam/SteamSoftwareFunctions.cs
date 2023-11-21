@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
-namespace OVR_Dash_Manager.Functions
+namespace OVR_Dash_Manager.Functions.Steam
 {
     public static class SteamSoftwareFunctions
     {

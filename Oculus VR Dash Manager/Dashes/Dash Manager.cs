@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.IO;
 using System.ServiceProcess;
 using System.Threading.Tasks;
+using OVR_Dash_Manager.Functions.Oculus;
+using OVR_Dash_Manager.Functions.Steam;
 
 namespace OVR_Dash_Manager.Dashes
 {
@@ -47,13 +49,13 @@ namespace OVR_Dash_Manager.Dashes
         /// </summary>
         public static async Task GenerateDashesAsync()
         {
-            Software.Oculus.Check_Current_Dash();
+            OculusRunning.Check_Current_Dash();
 
             Oculus_Dash = new OVR_Dash("Official Oculus Dash", "OculusDash_Normal.exe", ProcessToStop: "vrmonitor");
             SteamVR_Dash = new OVR_Dash("DevOculus-Meta-Quest - Oculus Killer", "Oculus_Killer.exe", "Oculus Killer", "DevOculus-Meta-Quest", "OculusKiller", "OculusDash.exe");
 
-            Software.Oculus.Setup();
-            Software.Oculus.Check_Oculus_Is_Installed();
+            OculusRunning.Setup();
+            OculusRunning.Check_Oculus_Is_Installed();
 
             await CheckInstalled();
         }
@@ -69,23 +71,23 @@ namespace OVR_Dash_Manager.Dashes
             if (!SteamVR_Dash.Installed)
                 await SteamVR_Dash.DownloadAsync();
 
-            Software.Oculus.Check_Current_Dash();
+            OculusRunning.Check_Current_Dash();
 
-            if (!Oculus_Dash.Installed && Software.Oculus.Normal_Dash)
+            if (!Oculus_Dash.Installed && OculusRunning.Normal_Dash)
             {
                 // Copy Default Oculus Dash if not already done
-                File.Copy(Software.Oculus.Oculus_Dash_File, Path.Combine(Software.Oculus.Oculus_Dash_Directory, Oculus_Dash.DashFileName), true);
+                File.Copy(OculusRunning.Oculus_Dash_File, Path.Combine(OculusRunning.Oculus_Dash_Directory, Oculus_Dash.DashFileName), true);
                 Oculus_Dash.CheckInstalled();
             }
-            else if (Software.Oculus.Normal_Dash)
+            else if (OculusRunning.Normal_Dash)
             {
                 // Check if Oculus Updated and check is Oculus Dash has changed by "Length"
-                var CurrentDash = new FileInfo(Path.Combine(Software.Oculus.Oculus_Dash_Directory, Oculus_Dash.DashFileName));
-                var OculusDashFile = new FileInfo(Software.Oculus.Oculus_Dash_File);
+                var CurrentDash = new FileInfo(Path.Combine(OculusRunning.Oculus_Dash_Directory, Oculus_Dash.DashFileName));
+                var OculusDashFile = new FileInfo(OculusRunning.Oculus_Dash_File);
 
                 // Update File
                 if (CurrentDash.Length != OculusDashFile.Length)
-                    File.Copy(Software.Oculus.Oculus_Dash_File, Path.Combine(Software.Oculus.Oculus_Dash_Directory, Oculus_Dash.DashFileName), true);
+                    File.Copy(OculusRunning.Oculus_Dash_File, Path.Combine(OculusRunning.Oculus_Dash_Directory, Oculus_Dash.DashFileName), true);
             }
         }
 
@@ -116,7 +118,7 @@ namespace OVR_Dash_Manager.Dashes
             switch (Dash)
             {
                 case Dash_Type.Normal:
-                    Software.Steam.ManagerCalledExit = true;
+                    SteamRunning.ManagerCalledExit = true;
                     activated = Properties.Settings.Default.FastSwitch ? Oculus_Dash.Activate_Dash_Fast_v2() : Oculus_Dash.Activate_Dash();
                     break;
 
@@ -176,7 +178,7 @@ namespace OVR_Dash_Manager.Dashes
             }
             else
             {
-                Software.Steam.Close_SteamVR_ResetLink();
+                SteamRunning.Close_SteamVR_ResetLink();
 
                 // ServiceController Service = new ServiceController("OVRService");
                 // Boolean OVRServiceRunning = Running(Service.Status);
@@ -224,7 +226,7 @@ namespace OVR_Dash_Manager.Dashes
                 try
                 {
                     Debug.WriteLine("Stopping OVRService");
-                    Software.Steam.ManagerCalledExit = true;
+                    SteamRunning.ManagerCalledExit = true;
                     Service_Manager.StopService("OVRService");
                 }
                 catch (Exception ex)

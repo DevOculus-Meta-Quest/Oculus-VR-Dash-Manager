@@ -56,7 +56,6 @@ https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager</PackageReleaseNo
 
   <ItemGroup>
     <Compile Remove="ElevatedTaskService.cs" />
-    <Compile Remove="Software\Windows Audio.cs" />
   </ItemGroup>
 
   <ItemGroup>

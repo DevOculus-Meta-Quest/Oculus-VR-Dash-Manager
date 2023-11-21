@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using OVR_Dash_Manager.Functions.Oculus;
 
 // Disable the warning.
 #pragma warning disable SYSLIB0014
@@ -164,7 +165,7 @@ namespace OVR_Dash_Manager.Forms
             if (OculusKillerMod != null && OculusKillerMod.Installed)
             {
                 // Ensure this path correctly points to the OculusKiller executable
-                var Info = FileVersionInfo.GetVersionInfo(Path.Combine(Software.Oculus.Oculus_Dash_Directory, OculusKillerMod.DashFileName));
+                var Info = FileVersionInfo.GetVersionInfo(Path.Combine(OculusRunning.Oculus_Dash_Directory, OculusKillerMod.DashFileName));
 
                 // Using FileVersion to get the version information
                 Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = Info.FileVersion; }));

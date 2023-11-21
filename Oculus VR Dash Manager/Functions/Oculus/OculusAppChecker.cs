@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace OVR_Dash_Manager.Functions
+namespace OVR_Dash_Manager.Functions.Oculus
 {
     public class OculusAppDetails
     {

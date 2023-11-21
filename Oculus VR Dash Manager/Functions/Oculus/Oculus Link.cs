@@ -1,9 +1,11 @@
 ﻿using AdvancedSharpAdbClient;
 using Microsoft.Win32;
+using OVR_Dash_Manager.Functions.Android;
+using OVR_Dash_Manager.Functions.Steam;
 using System.IO;
 using System.Linq;
 
-namespace OVR_Dash_Manager.Software
+namespace OVR_Dash_Manager.Functions.Oculus
 {
     public static class Oculus_Link
     {
@@ -42,12 +44,12 @@ namespace OVR_Dash_Manager.Software
         {
             if (Service_Manager.GetState("OVRService") == "Running")
             {
-                Steam.ManagerCalledExit = true;
+                SteamRunning.ManagerCalledExit = true;
 
                 Service_Manager.StopService("OVRService");
                 Service_Manager.StartService("OVRService");
 
-                Steam.ManagerCalledExit = true;
+                SteamRunning.ManagerCalledExit = true;
             }
         }
 
@@ -55,11 +57,11 @@ namespace OVR_Dash_Manager.Software
         {
             if (Service_Manager.GetState("OVRService") == "Running")
             {
-                Steam.ManagerCalledExit = true;
+                SteamRunning.ManagerCalledExit = true;
 
                 Service_Manager.StopService("OVRService");
 
-                Steam.ManagerCalledExit = true;
+                SteamRunning.ManagerCalledExit = true;
             }
         }
 
@@ -73,23 +75,23 @@ namespace OVR_Dash_Manager.Software
 
         public static void SetToOculusRunTime()
         {
-            if (Oculus.Oculus_Is_Installed)
+            if (OculusRunning.Oculus_Is_Installed)
             {
                 // Update the following line to include the correct namespace for RegistryKeyType
-                var runTimeKey = Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.LocalMachine, @"SOFTWARE\Khronos\OpenXR\1");
+                var runTimeKey = RegistryFunctions.GetRegistryKey(RegistryKeyType.LocalMachine, @"SOFTWARE\Khronos\OpenXR\1");
 
                 if (runTimeKey != null)
                 {
-                    var oculusRunTimePath = Path.Combine(Oculus.Oculus_Main_Directory, "Support\\oculus-runtime\\oculus_openxr_64.json");
+                    var oculusRunTimePath = Path.Combine(OculusRunning.Oculus_Main_Directory, "Support\\oculus-runtime\\oculus_openxr_64.json");
 
                     if (File.Exists(oculusRunTimePath))
                     {
                         // Specify the value kind as ExpandString when setting a REG_EXPAND_SZ value
-                        Functions.RegistryFunctions
+                        RegistryFunctions
                             .SetKeyValue(runTimeKey, "ActiveRuntime", oculusRunTimePath, RegistryValueKind.ExpandString);
                     }
 
-                    Functions.RegistryFunctions.CloseKey(runTimeKey);
+                    RegistryFunctions.CloseKey(runTimeKey);
 
                     Dashes.Dash_Manager.MainForm_CheckRunTime();
                 }

@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualBasic;
 using Microsoft.Win32;
 using OVR_Dash_Manager.Functions;
-using OVR_Dash_Manager.Software;
+using OVR_Dash_Manager.Functions.Android;
 using System;
 using System.Windows;
 using System.Windows.Input;
-using static OVR_Dash_Manager.Software.ADB;
+using static OVR_Dash_Manager.Functions.Android.ADB;
 
 namespace OVR_Dash_Manager.Forms
 {

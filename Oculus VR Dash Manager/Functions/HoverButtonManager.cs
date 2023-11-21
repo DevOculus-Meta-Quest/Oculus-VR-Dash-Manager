@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using OVR_Dash_Manager.Functions.Steam;
 
 namespace OVR_Dash_Manager
 {
@@ -119,7 +120,7 @@ namespace OVR_Dash_Manager
         public void ExitLinkHoverActivate()
         {
             Exit_Link.Bar.Value = 0;
-            Software.Steam.Close_SteamVR_ResetLink();
+            SteamRunning.Close_SteamVR_ResetLink();
         }
 
         public void UpdateDashButtons()
@@ -154,7 +155,7 @@ namespace OVR_Dash_Manager
                 // check if Steam_VR_Server_Running is false. If it is, exit the method early.
                 if (hoverButton.Check_SteamVR &&
                     !Properties.Settings.Default.Ignore_SteamVR_Status_HoverButtonAction &&
-                    !Software.Steam.Steam_VR_Server_Running)
+                    !SteamRunning.Steam_VR_Server_Running)
                     return;
 
                 // Calculate the time passed since hovering started.

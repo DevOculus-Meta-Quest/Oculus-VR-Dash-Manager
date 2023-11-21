@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 
-namespace OVR_Dash_Manager.Software
+namespace OVR_Dash_Manager.Functions.Android
 {
     public static class ADB
     {
@@ -25,7 +25,7 @@ namespace OVR_Dash_Manager.Software
 
                     try
                     {
-                        Functions.ProcessWatcher.ProcessStarted += Process_Watcher_ProcessStarted;
+                        ProcessWatcher.ProcessStarted += Process_Watcher_ProcessStarted;
 
                         var result = server.StartServer(@".\ADB\adb.exe", false);
 
@@ -63,7 +63,7 @@ namespace OVR_Dash_Manager.Software
         private static void RemoveWatcher()
         {
             Thread.Sleep(1000);
-            Functions.ProcessWatcher.ProcessStarted -= Process_Watcher_ProcessStarted;
+            ProcessWatcher.ProcessStarted -= Process_Watcher_ProcessStarted;
         }
 
         private static void Process_Watcher_ProcessStarted(string pProcessName, int pProcessID)

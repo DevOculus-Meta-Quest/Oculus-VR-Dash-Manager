@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OVR_Dash_Manager.Functions.Oculus;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,9 +8,9 @@ using System.Linq;
 using System.Threading;
 using System.Timers;
 
-namespace OVR_Dash_Manager.Software
+namespace OVR_Dash_Manager.Functions.Steam
 {
-    public static class Steam
+    public static class SteamRunning
     {
         private static bool _IsSetup;
 
@@ -88,7 +89,7 @@ namespace OVR_Dash_Manager.Software
         public static void Close_SteamVR_ResetLink()
         {
             Close_SteamVR_Server();
-            Software.Oculus_Link.StopLink();
+            Oculus_Link.StopLink();
             Close_SteamVR_Server();
 
             var inAMomentThread = new Thread(StartLinkInAMoment);
@@ -117,8 +118,8 @@ namespace OVR_Dash_Manager.Software
             _IsSetup = true;
             CheckInstalled();
             Steam_VR_Running_State_Changed_Event += Steam_Steam_VR_Running_State_Changed_Event;
-            Functions.ProcessWatcher.ProcessStarted += Process_Watcher_ProcessStarted;
-            Functions.ProcessWatcher.ProcessExited += Process_Watcher_ProcessExited;
+            ProcessWatcher.ProcessStarted += Process_Watcher_ProcessStarted;
+            ProcessWatcher.ProcessExited += Process_Watcher_ProcessExited;
             Timer_Functions.CreateTimer("SteamVR Focus Fix", TimeSpan.FromSeconds(1), Check_SteamVR_FocusProblem);
 
             var processNamesToCheck = new List<string> { "steam", "vrserver", "vrmonitor" };
@@ -195,7 +196,7 @@ namespace OVR_Dash_Manager.Software
             Thread.Sleep(2000);
             ManagerCalledExit = true;
             Close_SteamVR_Server();
-            Software.Oculus_Link.StartLink();
+            Oculus_Link.StartLink();
             Thread.Sleep(2000);
             ManagerCalledExit = true;
             Close_SteamVR_Server();
@@ -282,7 +283,7 @@ namespace OVR_Dash_Manager.Software
         public static OpenXR_Runtime Read_Runtime()
         {
             // Use the correct RegistryKeyType enum from the OVR_Dash_Manager.Functions namespace
-            var oculusRunTimePath = Functions.RegistryFunctions.GetKeyValueString(OVR_Dash_Manager.Functions.RegistryKeyType.LocalMachine, @"SOFTWARE\Khronos\OpenXR\1", "ActiveRuntime");
+            var oculusRunTimePath = RegistryFunctions.GetKeyValueString(RegistryKeyType.LocalMachine, @"SOFTWARE\Khronos\OpenXR\1", "ActiveRuntime");
 
             if (oculusRunTimePath.Contains("oculus-runtime\\oculus_openxr_64.json"))
                 Current_Open_XR_Runtime = OpenXR_Runtime.Oculus;
@@ -307,11 +308,11 @@ namespace OVR_Dash_Manager.Software
         // Method to run remove USB helper action
         private static void Run_RemoveUsbHelper_Action(string action)
         {
-            if (Steam.Steam_VR_Installed)
+            if (SteamRunning.Steam_VR_Installed)
             {
-                if (Directory.Exists(Steam.Steam_VR_Directory))
+                if (Directory.Exists(SteamRunning.Steam_VR_Directory))
                 {
-                    var helper = Path.Combine(Steam.Steam_VR_Directory, "bin\\win32\\removeusbhelper.exe");
+                    var helper = Path.Combine(SteamRunning.Steam_VR_Directory, "bin\\win32\\removeusbhelper.exe");
 
                     if (File.Exists(helper))
                         Process.Start(helper, action);

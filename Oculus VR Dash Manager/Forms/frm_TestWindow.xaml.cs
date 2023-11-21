@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Timers;
 using System.Windows;
+using OVR_Dash_Manager.Functions.Oculus;
+using OVR_Dash_Manager.Functions.Steam;
 
 namespace OVR_Dash_Manager.Forms
 {
@@ -34,12 +36,12 @@ namespace OVR_Dash_Manager.Forms
 
         private void btn_ChangeSteamRunTime_Click(object sender, RoutedEventArgs e)
         {
-            Software.Steam_VR_Settings.Set_SteamVR_Runtime();
+            Steam_VR_Settings.Set_SteamVR_Runtime();
         }
 
         private void btn_ChangeOculusRunTime_Click(object sender, RoutedEventArgs e)
         {
-            Software.Oculus_Link.SetToOculusRunTime();
+            Oculus_Link.SetToOculusRunTime();
         }
     }
 }

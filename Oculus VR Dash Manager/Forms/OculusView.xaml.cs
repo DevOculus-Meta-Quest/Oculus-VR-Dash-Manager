@@ -1,4 +1,4 @@
-﻿using OVR_Dash_Manager.Functions;
+﻿using OVR_Dash_Manager.Functions.Oculus;
 using System;
 using System.Windows;
 

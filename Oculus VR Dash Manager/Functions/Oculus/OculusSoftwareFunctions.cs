@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace OVR_Dash_Manager.Software
+namespace OVR_Dash_Manager.Functions.Oculus
 {
     public static class OculusSoftwareFunctions
     {

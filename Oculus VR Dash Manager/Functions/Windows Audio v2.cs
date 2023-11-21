@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace OVR_Dash_Manager.Software
+namespace OVR_Dash_Manager.Functions
 {
     public static class Windows_Audio_v2
     {

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using OVR_Dash_Manager.Functions.Oculus;
+using OVR_Dash_Manager.Functions.Steam;
 
 namespace OVR_Dash_Manager.Functions
 {
@@ -134,11 +136,11 @@ namespace OVR_Dash_Manager.Functions
             _window.Dispatcher
                 .Invoke(() =>
                                                 {
-                                                    if (Software.Oculus.Oculus_Is_Installed)
+                                                    if (OculusRunning.Oculus_Is_Installed)
                                                     {
-                                                        if (Directory.Exists(Software.Oculus.Oculus_Dash_Directory))
+                                                        if (Directory.Exists(OculusRunning.Oculus_Dash_Directory))
                                                         {
-                                                            Functions_Old.ShowFileInDirectory(Software.Oculus.Oculus_Dash_Directory);
+                                                            Functions_Old.ShowFileInDirectory(OculusRunning.Oculus_Dash_Directory);
                                                         }
                                                         else
                                                         {

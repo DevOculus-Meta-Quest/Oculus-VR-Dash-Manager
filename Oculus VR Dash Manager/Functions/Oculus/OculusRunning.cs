@@ -5,9 +5,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Windows;
 
-namespace OVR_Dash_Manager.Software
+namespace OVR_Dash_Manager.Functions.Oculus
 {
-    public static class Oculus
+    public static class OculusRunning
     {
         // Properties
         public static string Oculus_Main_Directory { get; private set; }
@@ -30,8 +30,8 @@ namespace OVR_Dash_Manager.Software
             if (!_IsSetup)
             {
                 _IsSetup = true;
-                Functions.ProcessWatcher.ProcessStarted += Process_Watcher_ProcessStarted;
-                Functions.ProcessWatcher.ProcessExited += Process_Watcher_ProcessExited;
+                ProcessWatcher.ProcessStarted += Process_Watcher_ProcessStarted;
+                ProcessWatcher.ProcessExited += Process_Watcher_ProcessExited;
             }
         }
 
@@ -159,9 +159,9 @@ namespace OVR_Dash_Manager.Software
 
                     for (int i = 0; i < 20; i++)
                     {
-                        Functions.NativeFunctions.MinimizeExternalWindow(client.MainWindowHandle);
+                        NativeFunctions.MinimizeExternalWindow(client.MainWindowHandle);
                         Thread.Sleep(250);
-                        Functions.NativeFunctions.GetWindowRect(client.MainWindowHandle, ref location);
+                        NativeFunctions.GetWindowRect(client.MainWindowHandle, ref location);
                         if (double.IsNaN(location.Left)) break;
                     }
 

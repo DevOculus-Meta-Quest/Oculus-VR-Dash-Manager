@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq; // Ensure Newtonsoft.Json is installed
+using Newtonsoft.Json.Linq;
 
-namespace OVR_Dash_Manager.Software
+namespace OVR_Dash_Manager.Functions.Steam
 {
     internal class SteamApiManager
     {

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Windows;
+using OVR_Dash_Manager.Functions;
 
 namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
 {
@@ -22,7 +23,7 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
             // If a file was selected, add it to the program list and refresh the UI
             if (!string.IsNullOrEmpty(FilePath))
             {
-                Software.Auto_Launch_Programs.Add_New_Program(FilePath);
+                Auto_Launch_Programs.Add_New_Program(FilePath);
                 lv_Programs.Items.Refresh();
             }
         }
@@ -31,10 +32,10 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
         private void btn_Remove_Program_Click(object sender, RoutedEventArgs e)
         {
             // Check if a program is selected in the UI
-            if (lv_Programs.SelectedItem is Software.Auto_Program Program)
+            if (lv_Programs.SelectedItem is Auto_Program Program)
             {
                 Programs_Removed = true;
-                Software.Auto_Launch_Programs.Remove_Program(Program);
+                Auto_Launch_Programs.Remove_Program(Program);
                 lv_Programs.Items.Refresh();
             }
         }
@@ -43,7 +44,7 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Bind the program list to the UI and refresh
-            lv_Programs.ItemsSource = Software.Auto_Launch_Programs.Programs;
+            lv_Programs.ItemsSource = Auto_Launch_Programs.Programs;
             lv_Programs.Items.Refresh();
         }
 
@@ -52,7 +53,7 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
         {
             // Check if any programs were removed or changed during the session
             var Changed = Programs_Removed ||
-                           (Software.Auto_Launch_Programs.Programs?.Any(p => p.Changed) == true);
+                           (Auto_Launch_Programs.Programs?.Any(p => p.Changed) == true);
 
             // If changes were made, confirm with the user whether to save them
             if (Changed)
@@ -64,12 +65,12 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
                                     MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     // Save the changes
-                    Software.Auto_Launch_Programs.Save_Program_List();
+                    Auto_Launch_Programs.Save_Program_List();
                 }
                 else
                 {
                     // Discard the changes
-                    Software.Auto_Launch_Programs.Generate_List();
+                    Auto_Launch_Programs.Generate_List();
                 }
             }
         }
@@ -78,7 +79,7 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
         private void btn_Open_Program_Folder_Click(object sender, RoutedEventArgs e)
         {
             // Check if a program is selected in the UI
-            if (lv_Programs.SelectedItem is Software.Auto_Program Program)
+            if (lv_Programs.SelectedItem is Auto_Program Program)
             {
                 // Open the program's folder in File Explorer
                 Functions.Process_Functions.StartProcess("explorer.exe", Program.Folder_Path);

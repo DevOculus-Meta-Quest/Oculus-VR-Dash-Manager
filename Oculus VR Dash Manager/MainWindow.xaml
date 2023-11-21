@@ -349,7 +349,7 @@
                 Header="SteamVR Status" />
             <GroupBox
                 x:Name="gb_DashStatus"
-                Margin="185,218,208,161"
+                Margin="202,222,182,157"
                 Header="Current Dash" />
             <Label
                 x:Name="lbl_DesktopPlusStatus"

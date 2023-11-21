@@ -85,13 +85,14 @@
                 <!--  New Show SplashScreen on Startup Setting  -->
                 <CheckBox
                     x:Name="chk_ShowSpashScreen"
-                    Width="240"
+                    Width="297"
                     Height="30"
-                    Margin="571,3,0,0"
+                    Margin="514,3,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Checked="chk_ShowSplashScreen_Checked"
-                    Content="Show SplashScreen on Startup" />
+                    Unchecked="chk_ShowSplashScreen_Unchecked"
+                    Content="Dont Show SplashScreen on Startup" />
             </Grid>
         </GroupBox>
         <GroupBox

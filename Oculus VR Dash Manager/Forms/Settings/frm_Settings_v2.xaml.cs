@@ -121,8 +121,17 @@ namespace OVR_Dash_Manager.Forms.Settings
 
         private void chk_ShowSplashScreen_Checked(object sender, RoutedEventArgs e)
         {
-            // Update the ShowSplashScreen setting to false when the checkbox is checked
+            // Set the ShowSplashScreen setting to true when the checkbox is checked
             OVR_Dash_Manager.Properties.Settings.Default.ShowSplashScreen = false;
+
+            // Save the updated settings
+            OVR_Dash_Manager.Properties.Settings.Default.Save();
+        }
+
+        private void chk_ShowSplashScreen_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // Set the ShowSplashScreen setting to false when the checkbox is unchecked
+            OVR_Dash_Manager.Properties.Settings.Default.ShowSplashScreen = true;
 
             // Save the updated settings
             OVR_Dash_Manager.Properties.Settings.Default.Save();

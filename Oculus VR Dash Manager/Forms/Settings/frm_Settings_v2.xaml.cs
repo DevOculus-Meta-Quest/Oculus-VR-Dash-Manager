@@ -118,5 +118,14 @@ namespace OVR_Dash_Manager.Forms.Settings
             var pShow = new Auto_Program_Launch.frm_Auto_Program_Launch_Settings();
             pShow.ShowDialog();
         }
+
+        private void chk_ShowSplashScreen_Checked(object sender, RoutedEventArgs e)
+        {
+            // Update the ShowSplashScreen setting to false when the checkbox is checked
+            OVR_Dash_Manager.Properties.Settings.Default.ShowSplashScreen = false;
+
+            // Save the updated settings
+            OVR_Dash_Manager.Properties.Settings.Default.Save();
+        }
     }
 }

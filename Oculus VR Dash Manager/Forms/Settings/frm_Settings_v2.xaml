@@ -82,6 +82,16 @@
                     Margin="166,117,10,0"
                     VerticalAlignment="Top"
                     Content="Minimize to System Tray" />
+                <!--  New Show SplashScreen on Startup Setting  -->
+                <CheckBox
+                    x:Name="chk_ShowSpashScreen"
+                    Width="240"
+                    Height="30"
+                    Margin="571,3,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Checked="chk_ShowSplashScreen_Checked"
+                    Content="Show SplashScreen on Startup" />
             </Grid>
         </GroupBox>
         <GroupBox

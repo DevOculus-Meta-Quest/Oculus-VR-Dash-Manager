@@ -48,14 +48,11 @@ https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager</PackageReleaseNo
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Images\**" />
-    <EmbeddedResource Remove="Images\**" />
-    <None Remove="Images\**" />
-    <Page Remove="Images\**" />
+    <Compile Remove="ElevatedTaskService.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="ElevatedTaskService.cs" />
+    <None Remove="splash_image.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -119,6 +116,7 @@ https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager</PackageReleaseNo
 
   <ItemGroup>
     <Folder Include="ADB\" />
+    <Folder Include="Images\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -133,6 +131,10 @@ https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager</PackageReleaseNo
       <HintPath>nkast.LibOVR.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="splash_image.png" />
   </ItemGroup>
 
 </Project>

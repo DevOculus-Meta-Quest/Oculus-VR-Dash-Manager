@@ -2,8 +2,7 @@
     x:Class="OVR_Dash_Manager.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    ShutdownMode="OnMainWindowClose"
-    StartupUri="MainWindow.xaml">
+    ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <!--  Your resources go here  -->
     </Application.Resources>

@@ -58,6 +58,9 @@
     <Compile Update="Forms\Settings\uc_Setting.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Splash.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Forms\ADBFileManagerWindow.xaml">

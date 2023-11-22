@@ -12,22 +12,22 @@ namespace OVR_Dash_Manager.Forms
 
         private void btn_GitHub_Click(object sender, RoutedEventArgs e)
         {
-            Functions_Old.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager");
+            FunctionsOld.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager");
         }
 
         private void btn_GitIssue_Click(object sender, RoutedEventArgs e)
         {
-            Functions_Old.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc");
+            FunctionsOld.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc");
         }
 
         private void btn_GitDiscussions_Click(object sender, RoutedEventArgs e)
         {
-            Functions_Old.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/discussions");
+            FunctionsOld.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/discussions");
         }
 
         private void btn_GetDesktopPlus_Click(object sender, RoutedEventArgs e)
         {
-            Functions_Old.OpenURL("https://store.steampowered.com/app/1494460/Desktop/");
+            FunctionsOld.OpenURL("https://store.steampowered.com/app/1494460/Desktop/");
         }
     }
 }

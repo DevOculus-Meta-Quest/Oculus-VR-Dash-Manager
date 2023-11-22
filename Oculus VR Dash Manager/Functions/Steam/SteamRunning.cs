@@ -58,7 +58,7 @@ namespace OVR_Dash_Manager.Functions.Steam
                             Steam_VR_Directory = config.runtime.FirstOrDefault();
 
                             if (!string.IsNullOrEmpty(Steam_Directory))
-                                Steam_Directory = Functions_Old.RemoveStringFromEnd(Steam_Directory, @"\\config");
+                                Steam_Directory = FunctionsOld.RemoveStringFromEnd(Steam_Directory, @"\\config");
                         }
                     }
                     catch (Exception)
@@ -120,7 +120,7 @@ namespace OVR_Dash_Manager.Functions.Steam
             Steam_VR_Running_State_Changed_Event += Steam_Steam_VR_Running_State_Changed_Event;
             ProcessWatcher.ProcessStarted += Process_Watcher_ProcessStarted;
             ProcessWatcher.ProcessExited += Process_Watcher_ProcessExited;
-            Timer_Functions.CreateTimer("SteamVR Focus Fix", TimeSpan.FromSeconds(1), Check_SteamVR_FocusProblem);
+            TimerFunctions.CreateTimer("SteamVR Focus Fix", TimeSpan.FromSeconds(1), Check_SteamVR_FocusProblem);
 
             var processNamesToCheck = new List<string> { "steam", "vrserver", "vrmonitor" };
 
@@ -226,9 +226,9 @@ namespace OVR_Dash_Manager.Functions.Steam
                 {
                     if (vrmonitor[0].MainWindowHandle != IntPtr.Zero)
                     {
-                        Functions_Old.BringWindowToTop(vrmonitor[0].MainWindowHandle);
-                        Functions_Old.SetForegroundWindow(vrmonitor[0].MainWindowHandle);
-                        Functions_Old.SetFocus(vrmonitor[0].MainWindowHandle);
+                        FunctionsOld.BringWindowToTop(vrmonitor[0].MainWindowHandle);
+                        FunctionsOld.SetForegroundWindow(vrmonitor[0].MainWindowHandle);
+                        FunctionsOld.SetFocus(vrmonitor[0].MainWindowHandle);
                     }
                 }
             }
@@ -241,7 +241,7 @@ namespace OVR_Dash_Manager.Functions.Steam
             {
                 if (Properties.Settings.Default.SteamVRFocusFix)
                 {
-                    switch (Functions_Old.GetActiveWindowTitle())
+                    switch (FunctionsOld.GetActiveWindowTitle())
                     {
                         case "Task View":
                             Dashes.Dash_Manager.MainForm_FixTaskViewIssue();

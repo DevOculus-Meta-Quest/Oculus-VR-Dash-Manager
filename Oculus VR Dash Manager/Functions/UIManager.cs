@@ -140,7 +140,7 @@ namespace OVR_Dash_Manager.Functions
                                                     {
                                                         if (Directory.Exists(OculusRunning.Oculus_Dash_Directory))
                                                         {
-                                                            Functions_Old.ShowFileInDirectory(OculusRunning.Oculus_Dash_Directory);
+                                                            FunctionsOld.ShowFileInDirectory(OculusRunning.Oculus_Dash_Directory);
                                                         }
                                                         else
                                                         {

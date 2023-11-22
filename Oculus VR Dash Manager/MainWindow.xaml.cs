@@ -201,7 +201,7 @@ namespace OVR_Dash_Manager
                 if (Elevated)
                 {
                     // Check for installed dashes and updates
-                    Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Checking Installed Dashes & Updates"; }));
+                    FunctionsOld.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Checking Installed Dashes & Updates"; }));
 
                     // Generate dashes asynchronously
                     await Dashes.Dash_Manager.GenerateDashesAsync();
@@ -209,37 +209,37 @@ namespace OVR_Dash_Manager
                     // Check if Oculus is installed
                     if (!OculusRunning.Oculus_Is_Installed)
                     {
-                        Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Oculus Directory Not Found"; }));
+                        FunctionsOld.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Oculus Directory Not Found"; }));
                         return;
                     }
 
                     // Check if the official Oculus Dash is installed
                     if (!Dashes.Dash_Manager.Oculus_Official_Dash_Installed())
                     {
-                        Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Official Oculus Dash Not Found, Replace Original Oculus Dash"; }));
+                        FunctionsOld.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Official Oculus Dash Not Found, Replace Original Oculus Dash"; }));
                         return;
                     }
 
                     // Start Steam Watcher
-                    Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Steam Watcher"; }));
+                    FunctionsOld.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Steam Watcher"; }));
                     SteamRunning.Setup();
 
                     // Initialize hover buttons
-                    Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Hover Buttons"; }));
+                    FunctionsOld.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Hover Buttons"; }));
 
                     // Set up and start the hover checker timer
-                    Timer_Functions.CreateTimer("Hover Checker", TimeSpan.FromMilliseconds(250), _hoverButtonManager.CheckHover);
-                    Timer_Functions.StartTimer("Hover Checker");
+                    TimerFunctions.CreateTimer("Hover Checker", TimeSpan.FromMilliseconds(250), _hoverButtonManager.CheckHover);
+                    TimerFunctions.StartTimer("Hover Checker");
 
                     // Start the service manager
-                    Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Service Manager"; }));
+                    FunctionsOld.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Service Manager"; }));
                     Service_Manager.RegisterService("OVRLibraryService");
                     Service_Manager.RegisterService("OVRService");
 
                     // Start Oculus Client if set to run on startup
                     if (Properties.Settings.Default.RunOculusClientOnStartup)
                     {
-                        Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Oculus Client"; }));
+                        FunctionsOld.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Oculus Client"; }));
                         OculusRunning.StartOculusClient();
                     }
 
@@ -254,7 +254,7 @@ namespace OVR_Dash_Manager
                     Auto_Launch_Programs.Run_Startup_Programs();
 
                     // Update UI elements
-                    Functions_Old.DoAction(this, new Action(delegate ()
+                    FunctionsOld.DoAction(this, new Action(delegate ()
                     {
                         btn_Diagnostics.IsEnabled = true;
                         btn_OpenSettings.IsEnabled = true;
@@ -324,8 +324,8 @@ namespace OVR_Dash_Manager
                 Functions.ProcessWatcher.Stop();
 
                 // Stop and dispose the "Hover Checker" timer
-                Timer_Functions.StopTimer("Hover Checker");
-                Timer_Functions.DisposeTimer("Hover Checker");
+                TimerFunctions.StopTimer("Hover Checker");
+                TimerFunctions.DisposeTimer("Hover Checker");
 
                 // Hide the window
                 Hide();
@@ -465,7 +465,7 @@ namespace OVR_Dash_Manager
         private void Thread_ReactivateButtons()
         {
             Thread.Sleep(5000);
-            Functions_Old.DoAction(this, new Action(delegate () { _hoverButtonManager.UpdateDashButtons(); }));
+            FunctionsOld.DoAction(this, new Action(delegate () { _hoverButtonManager.UpdateDashButtons(); }));
         }
 
         #endregion Dash Buttons
@@ -474,12 +474,12 @@ namespace OVR_Dash_Manager
 
         private void lbl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            Functions_Old.OpenURL("https://github.com/DevOculus-Meta-Quest/OculusKiller");
+            FunctionsOld.OpenURL("https://github.com/DevOculus-Meta-Quest/OculusKiller");
         }
 
         private void lbl_Title_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            Functions_Old.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager");
+            FunctionsOld.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager");
         }
 
         #endregion URL Links
@@ -496,7 +496,7 @@ namespace OVR_Dash_Manager
                 if (Dashes.Dash_Manager.IsInstalled(Dash))
                 {
                     if (Properties.Settings.Default.FastSwitch)
-                        Dashes.Dash_Manager.Activate_FastTransition(Dash);
+                        Dashes.Dash_Manager.ActivateFastTransition(Dash);
                     else
                         Dashes.Dash_Manager.Activate(Dash);
 
@@ -522,7 +522,7 @@ namespace OVR_Dash_Manager
             var pt = new Point(relativePoint.X + Element.ActualWidth / 2, relativePoint.Y + Element.ActualHeight / 2);
             var windowCenterPoint = pt;//new Point(125, 80);
             var centerPointRelativeToSCreen = PointToScreen(windowCenterPoint);
-            Functions_Old.MoveCursor((int)centerPointRelativeToSCreen.X, (int)centerPointRelativeToSCreen.Y);
+            FunctionsOld.MoveCursor((int)centerPointRelativeToSCreen.X, (int)centerPointRelativeToSCreen.Y);
         }
 
         #endregion Dynamic Functions
@@ -645,10 +645,10 @@ namespace OVR_Dash_Manager
             var CurrentRuntime = Steam_VR_Settings.Read_Runtime();
 
             if (CurrentRuntime == Steam_VR_Settings.OpenXR_Runtime.Oculus)
-                Functions_Old.DoAction(this, new Action(delegate () { btn_RunTime_Oculus.IsChecked = true; }));
+                FunctionsOld.DoAction(this, new Action(delegate () { btn_RunTime_Oculus.IsChecked = true; }));
 
             if (CurrentRuntime == Steam_VR_Settings.OpenXR_Runtime.SteamVR)
-                Functions_Old.DoAction(this, new Action(delegate () { btn_RunTime_SteamVR.IsChecked = true; }));
+                FunctionsOld.DoAction(this, new Action(delegate () { btn_RunTime_SteamVR.IsChecked = true; }));
         }
 
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)

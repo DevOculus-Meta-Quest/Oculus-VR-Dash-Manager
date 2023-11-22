@@ -27,7 +27,7 @@ namespace OVR_Dash_Manager.Dashes
         public static void MainForm_FixTaskViewIssue()
         {
             if (MainForm != null)
-                Functions_Old.DoAction(MainForm, new Action(delegate () { MainForm.Cancel_TaskView_And_Focus(); }));
+                FunctionsOld.DoAction(MainForm, new Action(delegate () { MainForm.Cancel_TaskView_And_Focus(); }));
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace OVR_Dash_Manager.Dashes
         public static void MainForm_CheckRunTime()
         {
             if (MainForm != null)
-                Functions_Old.DoAction(MainForm, new Action(delegate () { MainForm.CheckRunTime(); }));
+                FunctionsOld.DoAction(MainForm, new Action(delegate () { MainForm.CheckRunTime(); }));
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace OVR_Dash_Manager.Dashes
             }
         }
 
-        public static bool Activate_FastTransition(Dash_Type Dash)
+        public static bool ActivateFastTransition(Dash_Type Dash)
         {
             var Activated = false;
 

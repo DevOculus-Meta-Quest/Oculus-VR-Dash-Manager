@@ -20,19 +20,19 @@ namespace OVR_Dash_Manager.Forms
         {
             DiagnosticsChecker();
 
-            Timer_Functions.CreateTimer("Diagnostics Checker", TimeSpan.FromSeconds(10), CallDiagnosticsChecker);
-            Timer_Functions.StartTimer("Diagnostics Checker");
+            TimerFunctions.CreateTimer("Diagnostics Checker", TimeSpan.FromSeconds(10), CallDiagnosticsChecker);
+            TimerFunctions.StartTimer("Diagnostics Checker");
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Timer_Functions.StopTimer("Diagnostics Checker");
-            Timer_Functions.DisposeTimer("Diagnostics Checker");
+            TimerFunctions.StopTimer("Diagnostics Checker");
+            TimerFunctions.DisposeTimer("Diagnostics Checker");
         }
 
         private void CallDiagnosticsChecker(object sender, ElapsedEventArgs args)
         {
-            Functions_Old.DoAction(this, new Action(delegate () { DiagnosticsChecker(); }));
+            FunctionsOld.DoAction(this, new Action(delegate () { DiagnosticsChecker(); }));
         }
 
         private void DiagnosticsChecker()

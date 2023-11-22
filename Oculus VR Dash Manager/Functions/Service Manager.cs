@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.ServiceProcess;
 
-namespace OVR_Dash_Manager
+namespace OVR_Dash_Manager.Functions
 {
     /// <summary>
     /// Manages Windows services.

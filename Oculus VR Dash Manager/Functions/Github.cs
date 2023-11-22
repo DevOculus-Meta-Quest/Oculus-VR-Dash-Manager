@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 // Disable the warning.
 #pragma warning disable SYSLIB0014
 
-namespace OVR_Dash_Manager
+namespace OVR_Dash_Manager.Functions
 {
     public class Github
     {

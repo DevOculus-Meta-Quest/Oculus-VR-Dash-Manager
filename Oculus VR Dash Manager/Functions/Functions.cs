@@ -1,5 +1,4 @@
-﻿using OVR_Dash_Manager.Functions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -15,7 +14,7 @@ using System.Windows.Threading;
 // Disable the warning.
 #pragma warning disable SYSLIB0014
 
-namespace OVR_Dash_Manager
+namespace OVR_Dash_Manager.Functions
 {
     public static class Functions_Old
     {
@@ -213,15 +212,6 @@ namespace OVR_Dash_Manager
 
         [DllImport("user32.dll")]
         public static extern IntPtr SetFocus(IntPtr hWnd);
-    }
-
-    public enum RegistryKeyType
-    {
-        ClassRoot = 0,
-        CurrentUser = 1,
-        LocalMachine = 2,
-        Users = 3,
-        CurrentConfig = 4
     }
 
     public static class Timer_Functions

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Management;
 
-namespace OVR_Dash_Manager
+namespace OVR_Dash_Manager.Functions
 {
     public static class USB_Devices_Functions
     {
@@ -29,7 +29,7 @@ namespace OVR_Dash_Manager
         private static List<USBDeviceInfo> ReadSearcher(ManagementObjectCollection Devices)
         {
             // Dictionary to map device IDs to human-readable names
-            Dictionary<String, String> DeviceIDs = new Dictionary<string, string>
+            Dictionary<string, string> DeviceIDs = new Dictionary<string, string>
             {
             { "VID_2833&PID_2031", "Rift CV1" },
             { "VID_2833&PID_3031", "Rift CV1" },
@@ -59,8 +59,8 @@ namespace OVR_Dash_Manager
             {
                 try
                 {
-                    String DeviceID = TryGetProperty(oDevice, "DeviceID").ToString();
-                    String DeviceCaption = TryGetProperty(oDevice, "Caption").ToString();
+                    string DeviceID = TryGetProperty(oDevice, "DeviceID").ToString();
+                    string DeviceCaption = TryGetProperty(oDevice, "Caption").ToString();
 
                     string[] Data = DeviceID.Split('\\');
                     string Type = "";
@@ -117,7 +117,7 @@ namespace OVR_Dash_Manager
             {
                 retval = wmiObj.GetPropertyValue(propertyName);
             }
-            catch (System.Management.ManagementException)
+            catch (ManagementException)
             {
                 retval = null;
             }

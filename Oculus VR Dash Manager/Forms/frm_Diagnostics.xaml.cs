@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Timers;
 using System.Windows;
+using OVR_Dash_Manager.Functions;
 using OVR_Dash_Manager.Functions.Oculus;
 using OVR_Dash_Manager.Functions.Steam;
 

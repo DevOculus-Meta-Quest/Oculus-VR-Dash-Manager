@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using OVR_Dash_Manager.Functions;
 using OVR_Dash_Manager.Functions.Oculus;
 
 // Disable the warning.

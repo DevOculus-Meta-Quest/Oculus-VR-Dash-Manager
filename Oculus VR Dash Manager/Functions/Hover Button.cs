@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace OVR_Dash_Manager
+namespace OVR_Dash_Manager.Functions
 {
     public class Hover_Button
     {

@@ -20,8 +20,6 @@ namespace OVR_Dash_Manager.Forms
     /// </summary>
     public partial class frm_UpdateChecker : Window
     {
-        private GitHubReply GitHub;
-
         public frm_UpdateChecker() => InitializeComponent();
 
         public async Task<bool> CheckDashManagerUpdates()

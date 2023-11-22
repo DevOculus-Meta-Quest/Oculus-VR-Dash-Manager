@@ -228,8 +228,8 @@ namespace OVR_Dash_Manager
                     FunctionsOld.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Hover Buttons"; }));
 
                     // Set up and start the hover checker timer
-                    TimerFunctions.CreateTimer("Hover Checker", TimeSpan.FromMilliseconds(250), _hoverButtonManager.CheckHover);
-                    TimerFunctions.StartTimer("Hover Checker");
+                    TimerManager.CreateTimer("Hover Checker", TimeSpan.FromMilliseconds(250), _hoverButtonManager.CheckHover);
+                    TimerManager.StartTimer("Hover Checker");
 
                     // Start the service manager
                     FunctionsOld.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Service Manager"; }));
@@ -324,8 +324,8 @@ namespace OVR_Dash_Manager
                 Functions.ProcessWatcher.Stop();
 
                 // Stop and dispose the "Hover Checker" timer
-                TimerFunctions.StopTimer("Hover Checker");
-                TimerFunctions.DisposeTimer("Hover Checker");
+                TimerManager.StopTimer("Hover Checker");
+                TimerManager.DisposeTimer("Hover Checker");
 
                 // Hide the window
                 Hide();

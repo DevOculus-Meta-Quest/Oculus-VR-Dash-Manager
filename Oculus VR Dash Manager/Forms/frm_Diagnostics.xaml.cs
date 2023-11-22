@@ -20,14 +20,14 @@ namespace OVR_Dash_Manager.Forms
         {
             DiagnosticsChecker();
 
-            TimerFunctions.CreateTimer("Diagnostics Checker", TimeSpan.FromSeconds(10), CallDiagnosticsChecker);
-            TimerFunctions.StartTimer("Diagnostics Checker");
+            TimerManager.CreateTimer("Diagnostics Checker", TimeSpan.FromSeconds(10), CallDiagnosticsChecker);
+            TimerManager.StartTimer("Diagnostics Checker");
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            TimerFunctions.StopTimer("Diagnostics Checker");
-            TimerFunctions.DisposeTimer("Diagnostics Checker");
+            TimerManager.StopTimer("Diagnostics Checker");
+            TimerManager.DisposeTimer("Diagnostics Checker");
         }
 
         private void CallDiagnosticsChecker(object sender, ElapsedEventArgs args)

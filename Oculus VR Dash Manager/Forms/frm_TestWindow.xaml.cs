@@ -21,14 +21,14 @@ namespace OVR_Dash_Manager.Forms
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            TimerFunctions.CreateTimer("Test_Function", TimeSpan.FromSeconds(1), Test_Function);
-            TimerFunctions.StartTimer("Test_Function");
+            TimerManager.CreateTimer("Test_Function", TimeSpan.FromSeconds(1), Test_Function);
+            TimerManager.StartTimer("Test_Function");
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            TimerFunctions.StopTimer("Test_Function");
-            TimerFunctions.DisposeTimer("Test_Function");
+            TimerManager.StopTimer("Test_Function");
+            TimerManager.DisposeTimer("Test_Function");
         }
 
         private void Test_Function(object sender, ElapsedEventArgs args)

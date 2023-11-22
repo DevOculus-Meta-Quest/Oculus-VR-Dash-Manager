@@ -120,7 +120,7 @@ namespace OVR_Dash_Manager.Functions.Steam
             Steam_VR_Running_State_Changed_Event += Steam_Steam_VR_Running_State_Changed_Event;
             ProcessWatcher.ProcessStarted += Process_Watcher_ProcessStarted;
             ProcessWatcher.ProcessExited += Process_Watcher_ProcessExited;
-            TimerFunctions.CreateTimer("SteamVR Focus Fix", TimeSpan.FromSeconds(1), Check_SteamVR_FocusProblem);
+            TimerManager.CreateTimer("SteamVR Focus Fix", TimeSpan.FromSeconds(1), Check_SteamVR_FocusProblem);
 
             var processNamesToCheck = new List<string> { "steam", "vrserver", "vrmonitor" };
 

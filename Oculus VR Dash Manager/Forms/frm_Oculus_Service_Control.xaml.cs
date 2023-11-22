@@ -20,8 +20,8 @@ namespace OVR_Dash_Manager.Forms
         {
             ClearLabels();
 
-            TimerFunctions.CreateTimer("Oculus Service Checker", TimeSpan.FromSeconds(5), CallCheckServices);
-            TimerFunctions.StartTimer("Oculus Service Checker");
+            TimerManager.CreateTimer("Oculus Service Checker", TimeSpan.FromSeconds(5), CallCheckServices);
+            TimerManager.StartTimer("Oculus Service Checker");
 
             CheckServices();
         }
@@ -121,8 +121,8 @@ namespace OVR_Dash_Manager.Forms
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            TimerFunctions.StopTimer("Oculus Service Checker");
-            TimerFunctions.DisposeTimer("Oculus Service Checker");
+            TimerManager.StopTimer("Oculus Service Checker");
+            TimerManager.DisposeTimer("Oculus Service Checker");
         }
     }
 }

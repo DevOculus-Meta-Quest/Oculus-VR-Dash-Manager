@@ -16,7 +16,7 @@ using System.Windows.Threading;
 
 namespace OVR_Dash_Manager.Functions
 {
-    public static class Functions_Old
+    public static class FunctionsOld
     {
         public static void ShowFileInDirectory(string fullPath)
         {
@@ -91,26 +91,6 @@ namespace OVR_Dash_Manager.Functions
 
             // Return a generic error message.
             return "An error occurred while fetching the webpage.";
-        }
-
-        public static bool Get_File(string fullUrl, string saveTo)
-        {
-            try
-            {
-                using (WebClient myWebClient = new WebClient())
-                {
-                    myWebClient.CachePolicy = new RequestCachePolicy(RequestCacheLevel.NoCacheNoStore);
-                    myWebClient.DownloadFile(fullUrl, saveTo);
-                }
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                // Log the exception with your ErrorLogger
-                ErrorLogger.LogError(ex, $"Failed to download file from {fullUrl} to {saveTo}");
-                return false;
-            }
         }
 
         public static void OpenURL(string url)
@@ -214,7 +194,7 @@ namespace OVR_Dash_Manager.Functions
         public static extern IntPtr SetFocus(IntPtr hWnd);
     }
 
-    public static class Timer_Functions
+    public static class TimerFunctions
     {
         private static readonly object TimerLock = new object();
         private static Dictionary<string, Timer> Timers = new Dictionary<string, Timer>();

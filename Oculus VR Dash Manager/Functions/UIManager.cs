@@ -28,6 +28,24 @@ namespace OVR_Dash_Manager.Functions
                 });
         }
 
+        public void ShowFrameworkNotInstalledWarning(string missingFrameworks)
+        {
+            _window.Dispatcher.Invoke(() =>
+            {
+                // Temporarily set the main window to not be topmost
+                _window.Topmost = false;
+
+                MessageBox.Show(_window,
+                    $"The following .NET Frameworks are not installed: {missingFrameworks}. " +
+                    "Please install the required frameworks to ensure all features work correctly.\n\n" +
+                    "Download from: https://dotnet.microsoft.com/download/dotnet",
+                    "Framework Missing", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                // Set the main window back to topmost
+                _window.Topmost = true;
+            });
+        }
+
         public void NotifyNotElevated()
         {
             _window.Dispatcher

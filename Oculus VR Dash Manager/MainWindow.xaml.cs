@@ -284,6 +284,30 @@ namespace OVR_Dash_Manager
                 Debug.WriteLine(ex.StackTrace);
             }
 
+            // Check if .NET Framework 4.8 is installed
+            bool isDotNet48Installed = FrameworkChecker.IsDotNet48Installed();
+            Debug.WriteLine(".NET Framework 4.8 Installed: " + isDotNet48Installed);
+
+            // Check if .NET 5 or above is installed
+            bool isDotNet5OrAboveInstalled = FrameworkChecker.IsDotNet5OrAboveInstalled();
+            Debug.WriteLine(".NET 5 or above Installed: " + isDotNet5OrAboveInstalled);
+
+            // Notify the user if the required .NET Frameworks are not installed
+            if (!isDotNet48Installed || !isDotNet5OrAboveInstalled)
+            {
+                string missingFrameworks = "";
+                if (!isDotNet48Installed) missingFrameworks += ".NET Framework 4.8, ";
+                if (!isDotNet5OrAboveInstalled) missingFrameworks += ".NET 5 or above, ";
+                missingFrameworks = missingFrameworks.TrimEnd(',', ' ');
+
+                // Log the error
+                var missingFrameworksException = new Exception("Missing required .NET Frameworks: " + missingFrameworks);
+                ErrorLogger.LogError(missingFrameworksException, "Required .NET Frameworks are not installed.");
+
+                // Show message box
+                _uiManager.ShowFrameworkNotInstalledWarning(missingFrameworks);
+            }
+
             // Check if Desktop+ is installed
             var isDesktopPlusInstalled = SteamAppChecker.IsAppInstalled("DesktopPlus");
 

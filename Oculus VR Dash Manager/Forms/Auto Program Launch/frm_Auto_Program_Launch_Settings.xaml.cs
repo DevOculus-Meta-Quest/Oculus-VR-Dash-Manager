@@ -82,7 +82,7 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
             if (lv_Programs.SelectedItem is Auto_Program Program)
             {
                 // Open the program's folder in File Explorer
-                Functions.Process_Functions.StartProcess("explorer.exe", Program.Folder_Path);
+                Functions.ProcessFunctions.StartProcess("explorer.exe", Program.Folder_Path);
             }
         }
     }

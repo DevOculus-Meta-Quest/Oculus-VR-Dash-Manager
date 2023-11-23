@@ -55,7 +55,7 @@ namespace OVR_Dash_Manager.Functions
             foreach (var item in Programs)
             {
                 if (item.Startup_Launch)
-                    Process_Functions.StartProcess(item.Full_Path);
+                    ProcessFunctions.StartProcess(item.Full_Path);
             }
         }
 
@@ -64,7 +64,7 @@ namespace OVR_Dash_Manager.Functions
             foreach (var item in Programs)
             {
                 if (item.Closing_Launch)
-                    Process_Functions.StartProcess(item.Full_Path);
+                    ProcessFunctions.StartProcess(item.Full_Path);
             }
         }
 

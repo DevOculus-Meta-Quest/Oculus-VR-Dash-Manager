@@ -36,7 +36,7 @@ namespace OVR_Dash_Manager.Functions
 
             if (string.IsNullOrEmpty(defaultDirectory))
             {
-                defaultDirectory = OVR_Dash_Manager.Functions.ProcessFunctions.GetCurrentProcessDirectory();
+                defaultDirectory = OVR_Dash_Manager.Functions.ProcessFunctions.GetCurrentExecutableDirectory();
             }
 
             var fileTypes = new Dictionary<string, string>();

@@ -365,7 +365,7 @@ namespace OVR_Dash_Manager
             _uiManager.UpdateStatusLabel("Starting Up");
 
             // Check if the current process is elevated
-            Elevated = Functions.Process_Functions.IsCurrentProcess_Elevated();
+            Elevated = Functions.ProcessFunctions.IsCurrentProcessElevated();
 
             // Configure dash buttons and hover buttons
             Disable_Dash_Buttons();

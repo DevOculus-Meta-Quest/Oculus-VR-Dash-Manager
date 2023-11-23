@@ -16,7 +16,7 @@ namespace OVR_Dash_Manager.Forms
 
         private void AddToReadOut(string Text)
         {
-            FunctionsOld.DoAction(this, new Action(delegate () { txtbx_ReadOut.AppendText(Text + "\r\n"); txtbx_ReadOut.ScrollToEnd(); }));
+            UIManager.DoAction(this, new Action(delegate () { txtbx_ReadOut.AppendText(Text + "\r\n"); txtbx_ReadOut.ScrollToEnd(); }));
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

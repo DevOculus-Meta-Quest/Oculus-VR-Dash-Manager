@@ -226,9 +226,9 @@ namespace OVR_Dash_Manager.Functions.Steam
                 {
                     if (vrmonitor[0].MainWindowHandle != IntPtr.Zero)
                     {
-                        FunctionsOld.BringWindowToTop(vrmonitor[0].MainWindowHandle);
-                        FunctionsOld.SetForegroundWindow(vrmonitor[0].MainWindowHandle);
-                        FunctionsOld.SetFocus(vrmonitor[0].MainWindowHandle);
+                        WindowUtilities.BringWindowToTop(vrmonitor[0].MainWindowHandle);
+                        WindowUtilities.SetForegroundWindow(vrmonitor[0].MainWindowHandle);
+                        WindowUtilities.SetFocus(vrmonitor[0].MainWindowHandle);
                     }
                 }
             }
@@ -241,7 +241,7 @@ namespace OVR_Dash_Manager.Functions.Steam
             {
                 if (Properties.Settings.Default.SteamVRFocusFix)
                 {
-                    switch (FunctionsOld.GetActiveWindowTitle())
+                    switch (WindowUtilities.GetActiveWindowTitle())
                     {
                         case "Task View":
                             Dashes.Dash_Manager.MainForm_FixTaskViewIssue();

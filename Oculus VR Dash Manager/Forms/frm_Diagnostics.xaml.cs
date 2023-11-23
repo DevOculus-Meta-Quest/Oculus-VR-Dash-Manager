@@ -32,7 +32,7 @@ namespace OVR_Dash_Manager.Forms
 
         private void CallDiagnosticsChecker(object sender, ElapsedEventArgs args)
         {
-            FunctionsOld.DoAction(this, new Action(delegate () { DiagnosticsChecker(); }));
+            UIManager.DoAction(this, new Action(delegate () { DiagnosticsChecker(); }));
         }
 
         private void DiagnosticsChecker()

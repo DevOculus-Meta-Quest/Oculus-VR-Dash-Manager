@@ -73,12 +73,12 @@ namespace OVR_Dash_Manager.Forms
 
         private void btn_DashManager_OpenWebsite_Click(object sender, RoutedEventArgs e)
         {
-            FunctionsOld.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager");
+            WebUtilities.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager");
         }
 
         private void btn_OpenWebsite_Click(object sender, RoutedEventArgs e)
         {
-            FunctionsOld.OpenURL("https://github.com/DevOculus-Meta-Quest/OculusKiller");
+            WebUtilities.OpenURL("https://github.com/DevOculus-Meta-Quest/OculusKiller");
         }
 
         private async Task CheckUpdates()
@@ -114,7 +114,7 @@ namespace OVR_Dash_Manager.Forms
 
             var CurrentVersion = typeof(MainWindow).Assembly.GetName().Version.ToString();
 
-            FunctionsOld.DoAction(this, new Action(delegate ()
+            UIManager.DoAction(this, new Action(delegate ()
             {
                 lbl_DashManager_LastCheck.Content = DateTime.Now.ToString();
                 lbl_DashManager_CurrentVersion.Content = CurrentVersion;
@@ -167,14 +167,14 @@ namespace OVR_Dash_Manager.Forms
                 var Info = FileVersionInfo.GetVersionInfo(Path.Combine(OculusRunning.Oculus_Dash_Directory, OculusKillerMod.DashFileName));
 
                 // Using FileVersion to get the version information
-                FunctionsOld.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = Info.FileVersion; }));
+                UIManager.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = Info.FileVersion; }));
             }
             else
             {
-                FunctionsOld.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = "Not Available"; }));
+                UIManager.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = "Not Available"; }));
             }
 
-            FunctionsOld.DoAction(this, new Action(delegate ()
+            UIManager.DoAction(this, new Action(delegate ()
             {
                 lbl_LastCheck.Content = DateTime.Now.ToString();
                 lbl_AvaliableVersion.Content = Version;

@@ -27,7 +27,7 @@ namespace OVR_Dash_Manager.Dashes
         public static void MainForm_FixTaskViewIssue()
         {
             if (MainForm != null)
-                FunctionsOld.DoAction(MainForm, new Action(delegate () { MainForm.Cancel_TaskView_And_Focus(); }));
+                UIManager.DoAction(MainForm, new Action(delegate () { MainForm.Cancel_TaskView_And_Focus(); }));
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace OVR_Dash_Manager.Dashes
         public static void MainForm_CheckRunTime()
         {
             if (MainForm != null)
-                FunctionsOld.DoAction(MainForm, new Action(delegate () { MainForm.CheckRunTime(); }));
+                UIManager.DoAction(MainForm, new Action(delegate () { MainForm.CheckRunTime(); }));
         }
 
         /// <summary>

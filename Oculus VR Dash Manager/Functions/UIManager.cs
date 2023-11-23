@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Threading;
 using OVR_Dash_Manager.Functions.Oculus;
 using OVR_Dash_Manager.Functions.Steam;
 
@@ -170,6 +171,22 @@ namespace OVR_Dash_Manager.Functions
                                                         // Optionally: Handle the case where Oculus is not installed
                                                     }
                                                 });
+        }
+
+        public static void DoAction(Window form, Action doAction)
+        {
+            if (form == null || doAction == null)
+                throw new ArgumentNullException(form == null ? nameof(form) : nameof(doAction));
+
+            try
+            {
+                form.Dispatcher.Invoke(doAction, DispatcherPriority.Normal);
+            }
+            catch (Exception ex)
+            {
+                // Log error and handle as per your application's policy
+                ErrorLogger.LogError(ex, "Error performing UI action.");
+            }
         }
 
         // ... Add other UI management methods as needed ...

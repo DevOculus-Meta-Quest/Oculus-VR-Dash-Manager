@@ -58,6 +58,9 @@
     <Compile Update="Forms\Settings\uc_Setting.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Forms\WelcomeWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Splash.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -112,6 +115,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\Settings\uc_Setting.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\WelcomeWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">

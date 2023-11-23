@@ -1,0 +1,40 @@
+﻿<Window
+    x:Class="OVR_Dash_Manager.Forms.WelcomeWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Welcome"
+    Width="500"
+    Height="300"
+    ResizeMode="NoResize"
+    Topmost="True"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None">
+    <Grid Background="Black">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock
+                Margin="10"
+                Foreground="White"
+                TextAlignment="Center"
+                TextWrapping="Wrap">
+                Thank you for using Oculus VR Dash Manager! This project is a labor of love, and while it's completely free and open-source, any support through donations is greatly appreciated.
+            </TextBlock>
+            <TextBlock Foreground="LightBlue" TextAlignment="Center">
+                <Hyperlink NavigateUri="https://www.paypal.com/donate/?business=X76ZW4RHA6T9C&amp;no_recurring=0&amp;item_name=Support+the+evolution+of+Oculus+VR+Dash+Manager%21+Your+donation+fuels+innovation+and+enhanced+virtual+experiences.+%F0%9F%9A%80%F0%9F%8C%90&amp;currency_code=USD" RequestNavigate="Hyperlink_RequestNavigate">
+                    Donate to Support
+                </Hyperlink>
+            </TextBlock>
+            <TextBlock
+                Margin="10"
+                Foreground="Gray"
+                TextAlignment="Center"
+                TextWrapping="Wrap">
+                This message will only appear once.
+            </TextBlock>
+            <Button
+                Margin="10"
+                HorizontalAlignment="Center"
+                Click="CloseButton_Click"
+                Content="Close" />
+        </StackPanel>
+    </Grid>
+</Window>

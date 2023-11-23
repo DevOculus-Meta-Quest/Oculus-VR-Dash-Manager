@@ -7,18 +7,10 @@ using System.ServiceProcess;
 
 namespace OVR_Dash_Manager.Functions
 {
-    /// <summary>
-    /// Manages Windows services.
-    /// </summary>
     public static class Service_Manager
     {
-        // Dictionary to hold registered services.
         private static Dictionary<string, ServiceController> Services = new Dictionary<string, ServiceController>();
 
-        /// <summary>
-        /// Registers a service by its name.
-        /// </summary>
-        /// <param name="ServiceName">The name of the service.</param>
         public static void RegisterService(string ServiceName)
         {
             if (!Services.ContainsKey(ServiceName))
@@ -35,10 +27,6 @@ namespace OVR_Dash_Manager.Functions
             }
         }
 
-        /// <summary>
-        /// Stops a registered service.
-        /// </summary>
-        /// <param name="ServiceName">The name of the service.</param>
         public static void StopService(string ServiceName)
         {
             if (Services.TryGetValue(ServiceName, out var service))
@@ -50,6 +38,7 @@ namespace OVR_Dash_Manager.Functions
                     try
                     {
                         service.Stop();
+                        service.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(30));
                     }
                     catch (Exception ex)
                     {
@@ -59,10 +48,6 @@ namespace OVR_Dash_Manager.Functions
             }
         }
 
-        /// <summary>
-        /// Starts a registered service.
-        /// </summary>
-        /// <param name="ServiceName">The name of the service.</param>
         public static void StartService(string ServiceName)
         {
             if (Services.TryGetValue(ServiceName, out var service))
@@ -74,6 +59,7 @@ namespace OVR_Dash_Manager.Functions
                     try
                     {
                         service.Start();
+                        service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(30));
                     }
                     catch (Exception ex)
                     {
@@ -83,10 +69,6 @@ namespace OVR_Dash_Manager.Functions
             }
         }
 
-        /// <summary>
-        /// Sets a registered service to start automatically.
-        /// </summary>
-        /// <param name="ServiceName">The name of the service.</param>
         public static void Set_Automatic_Startup(string ServiceName)
         {
             if (Services.TryGetValue(ServiceName, out var service))
@@ -103,10 +85,6 @@ namespace OVR_Dash_Manager.Functions
             }
         }
 
-        /// <summary>
-        /// Sets a registered service to start manually.
-        /// </summary>
-        /// <param name="ServiceName">The name of the service.</param>
         public static void Set_Manual_Startup(string ServiceName)
         {
             if (Services.TryGetValue(ServiceName, out var service))
@@ -123,11 +101,6 @@ namespace OVR_Dash_Manager.Functions
             }
         }
 
-        /// <summary>
-        /// Checks if a service is running based on its status.
-        /// </summary>
-        /// <param name="Status">The status of the service.</param>
-        /// <returns>True if the service is running; otherwise, false.</returns>
         private static bool Running(ServiceControllerStatus Status)
         {
             switch (Status)
@@ -143,11 +116,6 @@ namespace OVR_Dash_Manager.Functions
             }
         }
 
-        /// <summary>
-        /// Gets the current state of a registered service.
-        /// </summary>
-        /// <param name="ServiceName">The name of the service.</param>
-        /// <returns>The current state of the service.</returns>
         public static string GetState(string ServiceName)
         {
             if (Services.TryGetValue(ServiceName, out var service))
@@ -159,11 +127,6 @@ namespace OVR_Dash_Manager.Functions
             return "Not Found";
         }
 
-        /// <summary>
-        /// Gets the startup mode of a registered service.
-        /// </summary>
-        /// <param name="ServiceName">The name of the service.</param>
-        /// <returns>The startup mode of the service.</returns>
         public static string GetStartup(string ServiceName)
         {
             if (Services.TryGetValue(ServiceName, out var service))
@@ -174,11 +137,30 @@ namespace OVR_Dash_Manager.Functions
 
             return "Not Found";
         }
+
+        public static bool ManageService(string serviceName, bool startService)
+        {
+            try
+            {
+                if (startService)
+                {
+                    StartService(serviceName);
+                }
+                else
+                {
+                    StopService(serviceName);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error managing the service: {ex.Message}");
+                return false;
+            }
+        }
     }
 
-    /// <summary>
-    /// Helper class to change the startup mode of a service.
-    /// </summary>
     public static class ServiceHelper
     {
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
@@ -211,11 +193,6 @@ namespace OVR_Dash_Manager.Functions
         private const uint SERVICE_CHANGE_CONFIG = 0x00000002;
         private const uint SC_MANAGER_ALL_ACCESS = 0x000F003F;
 
-        /// <summary>
-        /// Changes the start mode of a service.
-        /// </summary>
-        /// <param name="svc">The service controller.</param>
-        /// <param name="mode">The start mode.</param>
         public static void ChangeStartMode(ServiceController svc, ServiceStartMode mode)
         {
             var scManagerHandle = OpenSCManager(null, null, SC_MANAGER_ALL_ACCESS);

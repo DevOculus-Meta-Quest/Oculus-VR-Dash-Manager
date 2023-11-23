@@ -30,7 +30,6 @@ namespace OVR_Dash_Manager
         // Declare _hoverButtonManager at the class level
         private HoverButtonManager _hoverButtonManager;
 
-        private ServiceManager _serviceManager = new ServiceManager();
         private UIManager _uiManager;
         private bool Elevated;
         private bool FireUIEvents;

@@ -106,7 +106,7 @@ namespace OVR_Dash_Manager.Dashes
         /// </summary>
         /// <param name="Dash">Type of dash to set active.</param>
         /// <returns>True if activated, false otherwise.</returns>
-        private static bool SetActiveDash(Dash_Type Dash)
+        public static bool SetActiveDash(Dash_Type Dash)
         {
             var activated = false;
 
@@ -200,59 +200,6 @@ namespace OVR_Dash_Manager.Dashes
             var Activated = false;
 
             Activated = SetActiveDash(Dash);
-
-            return Activated;
-        }
-
-        public static bool Activate(Dash_Type Dash)
-        {
-            Debug.WriteLine("Starting Activation: " + Dash.ToString());
-
-            var Activated = false;
-
-            var OVRServiceRunning = (Service_Manager.GetState("OVRService") == "Running");
-            var OVRService_WasRunning = false;
-            var CanAccess = true;
-
-            if (OVRServiceRunning)
-            {
-                OVRService_WasRunning = true;
-
-                try
-                {
-                    Debug.WriteLine("Stopping OVRService");
-                    SteamRunning.ManagerCalledExit = true;
-                    Service_Manager.StopService("OVRService");
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                    CanAccess = false;
-                }
-            }
-
-            if (CanAccess)
-            {
-                Debug.WriteLine("Checking OVRService");
-
-                OVRServiceRunning = (Service_Manager.GetState("OVRService") == "Running");
-
-                if (!OVRServiceRunning)
-                {
-                    Debug.WriteLine("Activating Dash");
-                    Activated = SetActiveDash(Dash);
-                }
-                else
-                    Debug.WriteLine("!!!!!! OVRService Can Not Be Stopped");
-
-                if (OVRService_WasRunning)
-                {
-                    Debug.WriteLine("Restarting OVRService");
-                    Service_Manager.StartService("OVRService");
-                }
-            }
-            else
-                Debug.WriteLine("!!!!!! OVRService Can Not Be Accessed");
 
             return Activated;
         }

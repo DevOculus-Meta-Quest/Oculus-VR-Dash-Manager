@@ -537,7 +537,7 @@ namespace OVR_Dash_Manager
                     if (Properties.Settings.Default.FastSwitch)
                         Dashes.Dash_Manager.ActivateFastTransition(Dash);
                     else
-                        Dashes.Dash_Manager.Activate(Dash);
+                        ServiceHelper.Activate(Dash);
 
                     OculusRunning.Check_Current_Dash();
 

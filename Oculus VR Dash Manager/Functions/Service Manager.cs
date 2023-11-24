@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OVR_Dash_Manager.Dashes;
+using OVR_Dash_Manager.Functions.Steam;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -236,6 +238,44 @@ namespace OVR_Dash_Manager.Functions
 
             CloseServiceHandle(serviceHandle);
             CloseServiceHandle(scManagerHandle);
+        }
+
+        public static bool Activate(Dash_Type Dash)
+        {
+            Debug.WriteLine("Starting Activation: " + Dash.ToString());
+
+            var Activated = false;
+            var OVRServiceRunning = (Service_Manager.GetState("OVRService") == "Running");
+            var OVRService_WasRunning = false;
+
+            if (OVRServiceRunning)
+            {
+                OVRService_WasRunning = true;
+                Debug.WriteLine("Stopping OVRService");
+                SteamRunning.ManagerCalledExit = true;
+                Service_Manager.StopService("OVRService");
+            }
+
+            Debug.WriteLine("Checking OVRService");
+            OVRServiceRunning = (Service_Manager.GetState("OVRService") == "Running");
+
+            if (!OVRServiceRunning)
+            {
+                Debug.WriteLine("Activating Dash");
+                Activated = Dashes.Dash_Manager.SetActiveDash(Dash);
+            }
+            else
+            {
+                Debug.WriteLine("!!!!!! OVRService Can Not Be Stopped");
+            }
+
+            if (OVRService_WasRunning)
+            {
+                Debug.WriteLine("Restarting OVRService");
+                Service_Manager.StartService("OVRService");
+            }
+
+            return Activated;
         }
     }
 }

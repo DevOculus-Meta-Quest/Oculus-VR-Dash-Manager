@@ -277,5 +277,31 @@ namespace OVR_Dash_Manager.Functions
 
             return Activated;
         }
+
+        public static void StopOculusServices(MainWindow mainForm)
+        {
+            if (Debugger.IsAttached && !Dashes.UtilityFunctions.EmulateReleaseMode(mainForm))
+            {
+                return;
+            }
+            if (Properties.Settings.Default.CloseOculusClientOnExit)
+            {
+                foreach (var client in Process.GetProcessesByName("OculusClient"))
+                    client.CloseMainWindow();
+            }
+
+            if (Properties.Settings.Default.CloseOculusServicesOnExit)
+            {
+                if (Service_Manager.GetStartup("OVRLibraryService") == "Manual")
+                {
+                    Service_Manager.StopService("OVRLibraryService");
+                }
+
+                if (Service_Manager.GetStartup("OVRService") == "Manual")
+                {
+                    Service_Manager.StopService("OVRService");
+                }
+            }
+        }
     }
 }

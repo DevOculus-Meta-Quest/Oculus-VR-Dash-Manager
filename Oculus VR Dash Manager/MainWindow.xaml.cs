@@ -371,7 +371,7 @@ namespace OVR_Dash_Manager
                 Hide();
 
                 // Stop Oculus services
-                OculusRunning.StopOculusServices(this);
+                ServiceHelper.StopOculusServices(this);
 
                 // Run programs that are set to execute upon closing
                 Auto_Launch_Programs.Run_Closing_Programs();

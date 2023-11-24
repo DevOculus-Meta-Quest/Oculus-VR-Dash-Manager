@@ -2,9 +2,8 @@
 using System.Diagnostics;
 using System.ServiceProcess;
 using OVR_Dash_Manager.Functions;
-using OVR_Dash_Manager.Dashes;
 
-namespace OVR_Dash_Manager.Dashes
+namespace OVR_Dash_Manager.Functions.Dashes
 {
     public static class UtilityFunctions
     {

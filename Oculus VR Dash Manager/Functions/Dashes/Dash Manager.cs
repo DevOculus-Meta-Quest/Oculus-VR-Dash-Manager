@@ -7,7 +7,7 @@ using OVR_Dash_Manager.Functions;
 using OVR_Dash_Manager.Functions.Oculus;
 using OVR_Dash_Manager.Functions.Steam;
 
-namespace OVR_Dash_Manager.Dashes
+namespace OVR_Dash_Manager.Functions.Dashes
 {
     public static class Dash_Manager
     {

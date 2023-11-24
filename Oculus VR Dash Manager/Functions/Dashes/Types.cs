@@ -1,4 +1,4 @@
-﻿namespace OVR_Dash_Manager.Dashes
+﻿namespace OVR_Dash_Manager.Functions.Dashes
 {
     public enum Dash_Type
     {

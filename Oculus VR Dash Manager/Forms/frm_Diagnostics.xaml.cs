@@ -4,6 +4,7 @@ using System.IO;
 using System.Timers;
 using System.Windows;
 using OVR_Dash_Manager.Functions;
+using OVR_Dash_Manager.Functions.Dashes;
 using OVR_Dash_Manager.Functions.Oculus;
 using OVR_Dash_Manager.Functions.Steam;
 
@@ -49,12 +50,12 @@ namespace OVR_Dash_Manager.Forms
             else
                 lbl_OculussClient.Content = "Not Found";
 
-            lbl_OfficialDash.Content = Dashes.Dash_Manager.IsInstalled(Dashes.Dash_Type.Normal) ? "Installed" : "Not Found";
-            lbl_OculusKiller.Content = Dashes.Dash_Manager.IsInstalled(Dashes.Dash_Type.OculusKiller) ? "Installed" : "Not Found";
+            lbl_OfficialDash.Content = Dash_Manager.IsInstalled(Dash_Type.Normal) ? "Installed" : "Not Found";
+            lbl_OculusKiller.Content = Dash_Manager.IsInstalled(Dash_Type.OculusKiller) ? "Installed" : "Not Found";
 
             var Info = FileVersionInfo.GetVersionInfo(OculusRunning.Oculus_Dash_File);
-            var Current = Dashes.Dash_Manager.CheckWhosDash(Info.ProductName);
-            lbl_CurrentDash.Content = Dashes.Dash_Manager.GetDashName(Current);
+            var Current = Dash_Manager.CheckWhosDash(Info.ProductName);
+            lbl_CurrentDash.Content = Dash_Manager.GetDashName(Current);
 
             lbl_OculusLibaryService.Content = $"State: {Service_Manager.GetState("OVRService")} - Startup: {Service_Manager.GetStartup("OVRService")}";
             lbl_OculusRuntimeService.Content = $"State: {Service_Manager.GetState("OVRService")} - Startup: {Service_Manager.GetStartup("OVRService")}";

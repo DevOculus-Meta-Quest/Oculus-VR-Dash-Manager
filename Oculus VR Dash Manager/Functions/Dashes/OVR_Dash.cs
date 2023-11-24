@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using OVR_Dash_Manager.Functions;
 using OVR_Dash_Manager.Functions.Oculus;
 
-namespace OVR_Dash_Manager.Dashes
+namespace OVR_Dash_Manager.Functions.Dashes
 {
     public class OVR_Dash
     {

@@ -4,6 +4,7 @@ using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Windows;
+using OVR_Dash_Manager.Functions.Dashes;
 
 namespace OVR_Dash_Manager.Functions.Oculus
 {
@@ -84,10 +85,10 @@ namespace OVR_Dash_Manager.Functions.Oculus
             Current_Dash_Name = "Checking";
 
             var Info = FileVersionInfo.GetVersionInfo(FilePath);
-            var Current = Dashes.Dash_Manager.CheckWhosDash(Info.ProductName);
-            Current_Dash_Name = Dashes.Dash_Manager.GetDashName(Current);
+            var Current = Dash_Manager.CheckWhosDash(Info.ProductName);
+            Current_Dash_Name = Dash_Manager.GetDashName(Current);
 
-            if (Current_Dash_Name != Dashes.Dash_Manager.GetDashName(Dashes.Dash_Type.Normal))
+            if (Current_Dash_Name != Dash_Manager.GetDashName(Dashes.Dash_Type.Normal))
             {
                 Custom_Dash = true;
             }

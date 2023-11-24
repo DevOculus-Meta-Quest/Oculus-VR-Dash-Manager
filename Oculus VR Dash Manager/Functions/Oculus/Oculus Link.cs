@@ -1,6 +1,7 @@
 ﻿using AdvancedSharpAdbClient;
 using Microsoft.Win32;
 using OVR_Dash_Manager.Functions.Android;
+using OVR_Dash_Manager.Functions.Dashes;
 using OVR_Dash_Manager.Functions.Steam;
 using System.IO;
 using System.Linq;
@@ -93,7 +94,7 @@ namespace OVR_Dash_Manager.Functions.Oculus
 
                     RegistryManager.CloseKey(runTimeKey);
 
-                    Dashes.Dash_Manager.MainForm_CheckRunTime();
+                    Dash_Manager.MainForm_CheckRunTime();
                 }
             }
         }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using OVR_Dash_Manager.Functions;
+using OVR_Dash_Manager.Functions.Dashes;
 using OVR_Dash_Manager.Functions.Oculus;
 
 // Disable the warning.
@@ -159,7 +160,7 @@ namespace OVR_Dash_Manager.Forms
             // Remove non-numeric characters except the dot from the version string
             Version = Regex.Replace(Version, @"[^\d.]", "");
 
-            var OculusKillerMod = Dashes.Dash_Manager.GetDash(Dashes.Dash_Type.OculusKiller);
+            var OculusKillerMod = Dash_Manager.GetDash(Dash_Type.OculusKiller);
 
             if (OculusKillerMod != null && OculusKillerMod.Installed)
             {

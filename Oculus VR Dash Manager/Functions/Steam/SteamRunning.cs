@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OVR_Dash_Manager.Functions.Dashes;
 using OVR_Dash_Manager.Functions.Oculus;
 using System;
 using System.Collections.Generic;
@@ -244,7 +245,7 @@ namespace OVR_Dash_Manager.Functions.Steam
                     switch (WindowUtilities.GetActiveWindowTitle())
                     {
                         case "Task View":
-                            Dashes.Dash_Manager.MainForm_FixTaskViewIssue();
+                            Dash_Manager.MainForm_FixTaskViewIssue();
                             Focus_Steam_VR_Monitor_Window();
                             break;
 

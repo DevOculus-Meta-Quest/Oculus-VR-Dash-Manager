@@ -4,6 +4,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using OVR_Dash_Manager.Functions;
+using OVR_Dash_Manager.Functions.Dashes;
 using OVR_Dash_Manager.Functions.Steam;
 
 namespace OVR_Dash_Manager
@@ -65,15 +66,15 @@ namespace OVR_Dash_Manager
             CheckHovering(Exit_Link);
         }
 
-        public void EnableHoverButton(Dashes.Dash_Type Dash)
+        public void EnableHoverButton(Dash_Type Dash)
         {
             switch (Dash)
             {
-                case Dashes.Dash_Type.Exit:
+                case Dash_Type.Exit:
                     Exit_Link.Enabled = true;
                     break;
 
-                case Dashes.Dash_Type.Normal:
+                case Dash_Type.Normal:
                     Oculus_Dash.Enabled = true;
                     break;
             }
@@ -130,9 +131,9 @@ namespace OVR_Dash_Manager
             {
                 if (item is Button button)
                 {
-                    if (button.Tag is Dashes.Dash_Type Dash)
+                    if (button.Tag is Dash_Type Dash)
                     {
-                        var Enabled = Dashes.Dash_Manager.IsInstalled(Dash);
+                        var Enabled = Dash_Manager.IsInstalled(Dash);
                         button.IsEnabled = Enabled;
 
                         if (Enabled)

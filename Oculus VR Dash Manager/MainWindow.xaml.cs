@@ -2,6 +2,7 @@
 using OVR_Dash_Manager.Forms;
 using OVR_Dash_Manager.Functions;
 using OVR_Dash_Manager.Functions.Android;
+using OVR_Dash_Manager.Functions.Dashes;
 using OVR_Dash_Manager.Functions.Oculus;
 using OVR_Dash_Manager.Functions.Steam;
 using System;
@@ -219,7 +220,7 @@ namespace OVR_Dash_Manager
                     UIManager.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Checking Installed Dashes & Updates"; }));
 
                     // Generate dashes asynchronously
-                    await Dashes.Dash_Manager.GenerateDashesAsync();
+                    await Dash_Manager.GenerateDashesAsync();
 
                     // Check if Oculus is installed
                     if (!OculusRunning.Oculus_Is_Installed)
@@ -229,7 +230,7 @@ namespace OVR_Dash_Manager
                     }
 
                     // Check if the official Oculus Dash is installed
-                    if (!Dashes.UtilityFunctions.Oculus_Official_Dash_Installed(Dashes.Dash_Manager.GetDash(Dashes.Dash_Type.Normal)))
+                    if (!UtilityFunctions.Oculus_Official_Dash_Installed(Dash_Manager.GetDash(Dash_Type.Normal)))
                     {
                         UIManager.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Official Oculus Dash Not Found, Replace Original Oculus Dash"; }));
                         return;
@@ -413,7 +414,7 @@ namespace OVR_Dash_Manager
             _hoverButtonManager.GenerateHoverButtons();
 
             // Pass the main form and subscribe to events
-            Dashes.Dash_Manager.PassMainForm(this);
+            Dash_Manager.PassMainForm(this);
             SteamRunning.Steam_VR_Running_State_Changed_Event += Steam_Steam_VR_Running_State_Changed_Event;
 
             // Generate the list of auto-launch programs
@@ -472,9 +473,9 @@ namespace OVR_Dash_Manager
 
         private void LinkDashesToButtons()
         {
-            btn_ExitOculusLink.Tag = Dashes.Dash_Type.Exit;
-            btn_Normal.Tag = Dashes.Dash_Type.Normal;
-            btn_SteamVR.Tag = Dashes.Dash_Type.OculusKiller;
+            btn_ExitOculusLink.Tag = Dash_Type.Exit;
+            btn_Normal.Tag = Dash_Type.Normal;
+            btn_SteamVR.Tag = Dash_Type.OculusKiller;
         }
 
         #region Hover Buttons Enter/Leave
@@ -530,12 +531,12 @@ namespace OVR_Dash_Manager
             MoveMouseToElement(lbl_CurrentSetting);
             _hoverButtonManager.ResetHoverButtons();
 
-            if (Clicked.Tag is Dashes.Dash_Type Dash)
+            if (Clicked.Tag is Dash_Type Dash)
             {
-                if (Dashes.Dash_Manager.IsInstalled(Dash))
+                if (Dash_Manager.IsInstalled(Dash))
                 {
                     if (Properties.Settings.Default.FastSwitch)
-                        Dashes.Dash_Manager.ActivateFastTransition(Dash);
+                        Dash_Manager.ActivateFastTransition(Dash);
                     else
                         ServiceHelper.Activate(Dash);
 
@@ -544,7 +545,7 @@ namespace OVR_Dash_Manager
                     lbl_CurrentSetting.Content = OculusRunning.Current_Dash_Name;
                 }
                 else
-                    lbl_CurrentSetting.Content = Dashes.Dash_Manager.GetDashName(Dash) + " Not Installed";
+                    lbl_CurrentSetting.Content = Dash_Manager.GetDashName(Dash) + " Not Installed";
             }
         }
 

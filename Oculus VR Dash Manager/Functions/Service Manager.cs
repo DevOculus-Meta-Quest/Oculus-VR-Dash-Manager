@@ -1,4 +1,4 @@
-﻿using OVR_Dash_Manager.Dashes;
+﻿using OVR_Dash_Manager.Functions.Dashes;
 using OVR_Dash_Manager.Functions.Steam;
 using System;
 using System.Collections.Generic;
@@ -262,7 +262,7 @@ namespace OVR_Dash_Manager.Functions
             if (!OVRServiceRunning)
             {
                 Debug.WriteLine("Activating Dash");
-                Activated = Dashes.Dash_Manager.SetActiveDash(Dash);
+                Activated = Dash_Manager.SetActiveDash(Dash);
             }
             else
             {

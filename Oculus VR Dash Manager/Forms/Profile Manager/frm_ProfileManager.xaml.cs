@@ -44,7 +44,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
         {
             var keyLocation = @"Software\Oculus\RemoteHeadset";
 
-            using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+            using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
             {
                 if (key != null)
                 {
@@ -306,8 +306,8 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 var keyLocation = @"Software\Oculus\RemoteHeadset";
                 var keyName = "DistortionCurve";
 
-                // Use the RegistryFunctions to interact with the registry
-                using (var key = RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                // Use the RegistryManager to interact with the registry
+                using (var key = RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                 {
                     if (key != null)
                     {
@@ -315,12 +315,12 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         {
                             case "Low":
                                 // Set the value to 0 for Low
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
                                 break;
 
                             case "High":
                                 // Set the value to 1 for High
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
                                 break;
 
                             case "Default":
@@ -342,7 +342,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         // This depends on the application's requirements and permissions
                         try
                         {
-                            var newKey = RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
+                            var newKey = RegistryManager.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
 
                             if (newKey != null)
                             {
@@ -381,8 +381,8 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 var keyLocation = @"Software\Oculus\RemoteHeadset";
                 var keyName = "HEVC";
 
-                // Use the RegistryFunctions to interact with the registry
-                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                // Use the RegistryManager to interact with the registry
+                using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                 {
                     if (key != null)
                     {
@@ -395,12 +395,12 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
                             case "H.264":
                                 // Set the value to 0 for H.264
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
                                 break;
 
                             case "H.265":
                                 // Set the value to 1 for H.265
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
                                 break;
 
                             default:
@@ -418,7 +418,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         // This depends on the application's requirements and permissions
                         try
                         {
-                            var newKey = OVR_Dash_Manager.Functions.RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
+                            var newKey = OVR_Dash_Manager.Functions.RegistryManager.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
 
                             if (newKey != null)
                             {
@@ -457,8 +457,8 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 var keyLocation = @"Software\Oculus\RemoteHeadset";
                 var keyName = "NumSlices";
 
-                // Use the RegistryFunctions to interact with the registry
-                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                // Use the RegistryManager to interact with the registry
+                using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                 {
                     if (key != null)
                     {
@@ -471,12 +471,12 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
                             case "On":
                                 // Set the value to 5 for On
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 5, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 5, RegistryValueKind.DWord);
                                 break;
 
                             case "Off":
                                 // Set the value to 1 for Off
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
                                 break;
 
                             default:
@@ -494,7 +494,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         // This depends on the application's requirements and permissions
                         try
                         {
-                            var newKey = OVR_Dash_Manager.Functions.RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
+                            var newKey = OVR_Dash_Manager.Functions.RegistryManager.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
 
                             if (newKey != null)
                             {
@@ -549,7 +549,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                     var keyLocation = @"Software\Oculus\RemoteHeadset";
                     var keyName = "EncodeWidth";
 
-                    using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                    using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                     {
                         if (key != null)
                         {
@@ -561,7 +561,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                             else if (value >= 1 && value <= 9999)
                             {
                                 // Set the value if it's within the valid range
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, value, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, value, RegistryValueKind.DWord);
                             }
                             // If the value is not numeric or not in range, do not update the registry.
                         }
@@ -595,7 +595,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                     selectedValue = selectedItem.Content.ToString();
                 }
 
-                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                 {
                     if (key != null)
                     {
@@ -608,12 +608,12 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
                             case "Enabled":
                                 // Set the key value to 1 if "Enabled" is selected
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
                                 break;
 
                             case "Disabled":
                                 // Set the key value to 0 if "Disabled" is selected
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
                                 break;
 
                             default:
@@ -660,7 +660,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
                 if (long.TryParse(textBox.Text, out long value))
                 {
-                    using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                    using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                     {
                         if (key != null)
                         {
@@ -676,7 +676,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                                 if (value <= int.MaxValue)
                                 {
                                     var newValue = (int)value;
-                                    OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, newValue, RegistryValueKind.DWord);
+                                    OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, newValue, RegistryValueKind.DWord);
                                 }
                                 else
                                 {
@@ -727,7 +727,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
                 if (int.TryParse(textBox.Text, out int value))
                 {
-                    using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                    using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                     {
                         if (key != null)
                         {
@@ -739,7 +739,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                             else if (value > 0 && value <= 500)
                             {
                                 // Set the key value to the input value if it's within the valid range
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, value, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, value, RegistryValueKind.DWord);
                             }
                             // If the value is not in range, do not update the registry.
                         }
@@ -784,7 +784,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
                 if (int.TryParse(textBox.Text, out int value))
                 {
-                    using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                    using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                     {
                         if (key != null)
                         {
@@ -796,7 +796,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                             else if (value > 0 && value <= 999999999)
                             {
                                 // Set the key value to the input value if it's within the valid range
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, value, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, value, RegistryValueKind.DWord);
                             }
                             // If the value is not in range, do not update the registry.
                         }
@@ -834,11 +834,11 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 };
 
                 // Update the registry with the new value
-                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                 {
                     if (key != null)
                     {
-                        var result = OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, valueToSet, RegistryValueKind.DWord); // Corrected line
+                        var result = OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, valueToSet, RegistryValueKind.DWord); // Corrected line
 
                         if (result)
                         {
@@ -888,7 +888,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 if (valueToSet != null)
                 {
                     // Update the registry with the new value
-                    using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                    using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                     {
                         if (key != null)
                         {

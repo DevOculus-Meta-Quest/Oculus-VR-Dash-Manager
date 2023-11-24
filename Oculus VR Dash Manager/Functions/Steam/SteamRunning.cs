@@ -283,7 +283,7 @@ namespace OVR_Dash_Manager.Functions.Steam
         public static OpenXR_Runtime Read_Runtime()
         {
             // Use the correct RegistryKeyType enum from the OVR_Dash_Manager.Functions namespace
-            var oculusRunTimePath = RegistryFunctions.GetKeyValueString(RegistryKeyType.LocalMachine, @"SOFTWARE\Khronos\OpenXR\1", "ActiveRuntime");
+            var oculusRunTimePath = RegistryManager.GetKeyValueString(RegistryKeyType.LocalMachine, @"SOFTWARE\Khronos\OpenXR\1", "ActiveRuntime");
 
             if (oculusRunTimePath.Contains("oculus-runtime\\oculus_openxr_64.json"))
                 Current_Open_XR_Runtime = OpenXR_Runtime.Oculus;

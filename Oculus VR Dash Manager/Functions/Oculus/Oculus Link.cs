@@ -78,7 +78,7 @@ namespace OVR_Dash_Manager.Functions.Oculus
             if (OculusRunning.Oculus_Is_Installed)
             {
                 // Update the following line to include the correct namespace for RegistryKeyType
-                var runTimeKey = RegistryFunctions.GetRegistryKey(RegistryKeyType.LocalMachine, @"SOFTWARE\Khronos\OpenXR\1");
+                var runTimeKey = RegistryManager.GetRegistryKey(RegistryKeyType.LocalMachine, @"SOFTWARE\Khronos\OpenXR\1");
 
                 if (runTimeKey != null)
                 {
@@ -87,11 +87,11 @@ namespace OVR_Dash_Manager.Functions.Oculus
                     if (File.Exists(oculusRunTimePath))
                     {
                         // Specify the value kind as ExpandString when setting a REG_EXPAND_SZ value
-                        RegistryFunctions
+                        RegistryManager
                             .SetKeyValue(runTimeKey, "ActiveRuntime", oculusRunTimePath, RegistryValueKind.ExpandString);
                     }
 
-                    RegistryFunctions.CloseKey(runTimeKey);
+                    RegistryManager.CloseKey(runTimeKey);
 
                     Dashes.Dash_Manager.MainForm_CheckRunTime();
                 }

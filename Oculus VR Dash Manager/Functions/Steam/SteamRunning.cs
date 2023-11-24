@@ -58,7 +58,7 @@ namespace OVR_Dash_Manager.Functions.Steam
                             Steam_VR_Directory = config.runtime.FirstOrDefault();
 
                             if (!string.IsNullOrEmpty(Steam_Directory))
-                                Steam_Directory = FunctionsOld.RemoveStringFromEnd(Steam_Directory, @"\\config");
+                                Steam_Directory = StringManipulationUtilities.RemoveStringFromEnd(Steam_Directory, @"\\config");
                         }
                     }
                     catch (Exception)

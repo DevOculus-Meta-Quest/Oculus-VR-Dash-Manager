@@ -1,22 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Net.Cache;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Timers;
-using System.Windows;
-using System.Windows.Threading;
-
-// Disable the warning.
-#pragma warning disable SYSLIB0014
 
 namespace OVR_Dash_Manager.Functions
 {
-    public static class FunctionsOld
+    internal class StringManipulationUtilities
     {
         public static string RemoveStringFromEnd(string text, string remove)
         {

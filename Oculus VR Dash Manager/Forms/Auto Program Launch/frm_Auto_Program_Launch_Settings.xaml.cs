@@ -18,7 +18,7 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
         private void btn_Add_Program_Click(object sender, RoutedEventArgs e)
         {
             // Open a file dialog and get the selected file path
-            var FilePath = Functions.FileBrowser.OpenSingle();
+            var FilePath = Functions.FileExplorerUtilities.OpenSingle();
 
             // If a file was selected, add it to the program list and refresh the UI
             if (!string.IsNullOrEmpty(FilePath))

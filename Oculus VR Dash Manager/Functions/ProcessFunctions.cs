@@ -41,7 +41,7 @@ namespace OVR_Dash_Manager.Functions
             else
             {
                 // Try to build full URL or return the same input
-                var url = StringFunctions.GetFullUrl(path);
+                var url = StringManipulationUtilities.GetFullUrl(path);
                 return Process.Start(url, arguments);
             }
         }

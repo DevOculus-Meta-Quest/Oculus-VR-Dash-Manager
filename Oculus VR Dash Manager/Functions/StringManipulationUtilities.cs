@@ -19,5 +19,21 @@ namespace OVR_Dash_Manager.Functions
 
             return text;
         }
+
+        public static bool IsValidUrl(string url)
+        {
+            return Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+        }
+
+        public static string GetFullUrl(string url)
+        {
+            if (IsValidUrl(url))
+            {
+                return url.StartsWith("http", StringComparison.OrdinalIgnoreCase) ? url : "http://" + url;
+            }
+
+            return url;
+        }
     }
 }

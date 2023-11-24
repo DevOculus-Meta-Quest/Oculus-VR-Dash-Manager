@@ -108,9 +108,9 @@ namespace OVR_Dash_Manager.Functions.Oculus
             return cert.Issuer == "CN=DigiCert SHA2 Assured ID Code Signing CA, OU=www.digicert.com, O=DigiCert Inc, C=US";
         }
 
-        public static void StartOculusClient()
+        public static void StartOculusClient(MainWindow mainForm)
         {
-            if (Debugger.IsAttached && !Dashes.Dash_Manager.EmulateReleaseMode())
+            if (Debugger.IsAttached && !Dashes.UtilityFunctions.EmulateReleaseMode(mainForm))
             {
                 return;
             }
@@ -170,13 +170,12 @@ namespace OVR_Dash_Manager.Functions.Oculus
             }
         }
 
-        public static void StopOculusServices()
+        public static void StopOculusServices(MainWindow mainForm)
         {
-            if (Debugger.IsAttached && !Dashes.Dash_Manager.EmulateReleaseMode())
+            if (Debugger.IsAttached && !Dashes.UtilityFunctions.EmulateReleaseMode(mainForm))
             {
                 return;
             }
-
             if (Properties.Settings.Default.CloseOculusClientOnExit)
             {
                 foreach (var client in Process.GetProcessesByName("OculusClient"))

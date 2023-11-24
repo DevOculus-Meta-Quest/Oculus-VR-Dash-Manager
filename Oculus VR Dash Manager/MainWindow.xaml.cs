@@ -229,7 +229,7 @@ namespace OVR_Dash_Manager
                     }
 
                     // Check if the official Oculus Dash is installed
-                    if (!Dashes.Dash_Manager.Oculus_Official_Dash_Installed())
+                    if (!Dashes.UtilityFunctions.Oculus_Official_Dash_Installed(Dashes.Dash_Manager.GetDash(Dashes.Dash_Type.Normal)))
                     {
                         UIManager.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Official Oculus Dash Not Found, Replace Original Oculus Dash"; }));
                         return;
@@ -255,7 +255,7 @@ namespace OVR_Dash_Manager
                     if (Properties.Settings.Default.RunOculusClientOnStartup)
                     {
                         UIManager.DoAction(this, new Action(delegate () { lbl_CurrentSetting.Content = "Starting Oculus Client"; }));
-                        OculusRunning.StartOculusClient();
+                        OculusRunning.StartOculusClient(this);
                     }
 
                     // Check runtime
@@ -370,7 +370,7 @@ namespace OVR_Dash_Manager
                 Hide();
 
                 // Stop Oculus services
-                OculusRunning.StopOculusServices();
+                OculusRunning.StopOculusServices(this);
 
                 // Run programs that are set to execute upon closing
                 Auto_Launch_Programs.Run_Closing_Programs();

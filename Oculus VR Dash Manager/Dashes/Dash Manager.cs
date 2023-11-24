@@ -40,12 +40,6 @@ namespace OVR_Dash_Manager.Dashes
         }
 
         /// <summary>
-        /// Emulates the release mode.
-        /// </summary>
-        /// <returns>True if in debug mode, false otherwise.</returns>
-        public static bool EmulateReleaseMode() => MainForm?.Debug_EmulateReleaseMode ?? false;
-
-        /// <summary>
         /// Generates the dashes.
         /// </summary>
         public static async Task GenerateDashesAsync()
@@ -278,8 +272,6 @@ namespace OVR_Dash_Manager.Dashes
                     return false;
             }
         }
-
-        public static bool Oculus_Official_Dash_Installed() => Oculus_Dash.Installed;
 
         public static OVR_Dash GetDash(Dash_Type Dash)
         {

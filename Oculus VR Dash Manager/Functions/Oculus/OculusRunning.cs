@@ -159,9 +159,9 @@ namespace OVR_Dash_Manager.Functions.Oculus
 
                     for (int i = 0; i < 20; i++)
                     {
-                        NativeFunctions.MinimizeExternalWindow(client.MainWindowHandle);
+                        WindowUtilities.MinimizeExternalWindow(client.MainWindowHandle);
                         Thread.Sleep(250);
-                        NativeFunctions.GetWindowRect(client.MainWindowHandle, ref location);
+                        WindowUtilities.GetWindowRect(client.MainWindowHandle, ref location);
                         if (double.IsNaN(location.Left)) break;
                     }
 

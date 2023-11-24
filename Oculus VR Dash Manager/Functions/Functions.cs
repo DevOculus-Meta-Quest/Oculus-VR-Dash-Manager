@@ -18,11 +18,6 @@ namespace OVR_Dash_Manager.Functions
 {
     public static class FunctionsOld
     {
-        public static void ShowFileInDirectory(string fullPath)
-        {
-            Process.Start("explorer.exe", $@"/select,""{fullPath}""");
-        }
-
         public static string RemoveStringFromEnd(string text, string remove)
         {
             if (text.EndsWith(remove))

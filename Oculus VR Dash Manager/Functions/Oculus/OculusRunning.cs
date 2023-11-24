@@ -31,22 +31,22 @@ namespace OVR_Dash_Manager.Functions.Oculus
             if (!_IsSetup)
             {
                 _IsSetup = true;
-                ProcessWatcher.ProcessStarted += Process_Watcher_ProcessStarted;
-                ProcessWatcher.ProcessExited += Process_Watcher_ProcessExited;
+                ProcessWatcher.ProcessStarted += ProcessWatcher_ProcessStarted;
+                ProcessWatcher.ProcessExited += ProcessWatcher_ProcessExited;
             }
         }
 
-        private static void Process_Watcher_ProcessStarted(string pProcessName, int pProcessID)
+        private static void ProcessWatcher_ProcessStarted(string processName, int processId)
         {
-            Debug.WriteLine($"Started: {pProcessName} - {DateTime.Now}");
+            Debug.WriteLine($"Started: {processName} - {DateTime.Now}");
             // Add any specific actions for processes started here
         }
 
-        private static void Process_Watcher_ProcessExited(string pProcessName, int pProcessID)
+        private static void ProcessWatcher_ProcessExited(string processName, int processId)
         {
-            Debug.WriteLine($"Stopped: {pProcessName} - {DateTime.Now}");
+            Debug.WriteLine($"Stopped: {processName} - {DateTime.Now}");
 
-            if (pProcessName == "OculusClient.exe" && _Report_ClientJustExited)
+            if (processName == "OculusClient.exe" && _Report_ClientJustExited)
             {
                 Debug.WriteLine("Set Client Minimize Exit Trigger");
                 _ClientJustExited = true;

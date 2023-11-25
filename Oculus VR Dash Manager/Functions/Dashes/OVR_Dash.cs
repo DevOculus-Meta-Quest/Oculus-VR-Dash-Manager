@@ -1,9 +1,9 @@
-﻿using System;
+﻿using OVR_Dash_Manager.Functions.Oculus;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using OVR_Dash_Manager.Functions;
-using OVR_Dash_Manager.Functions.Oculus;
+using System.Windows;
 
 namespace OVR_Dash_Manager.Functions.Dashes
 {
@@ -123,6 +123,9 @@ namespace OVR_Dash_Manager.Functions.Dashes
 
             if (ShouldUpdate)
             {
+                // Show message box before starting the download
+                MessageBox.Show($"It appears this is your first time running this application, or the 'Oculus_Killer.exe' file is missing. To ensure smooth operation, 'OculusDash.exe' will be downloaded and saved as 'Oculus_Killer.exe' in {OculusRunning.Oculus_Dash_Directory}. This process is a one-time setup and should not recur once completed. The application will be ready for use immediately after this initial setup.", "Initial Setup Notification");
+
                 var Repo = new Github();
 
                 try

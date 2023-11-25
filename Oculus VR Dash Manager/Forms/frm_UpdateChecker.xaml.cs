@@ -1,4 +1,9 @@
-﻿using System;
+﻿// Ignore Spelling: OVR frm
+
+using OVR_Dash_Manager.Functions;
+using OVR_Dash_Manager.Functions.Dashes;
+using OVR_Dash_Manager.Functions.Oculus;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -7,9 +12,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using OVR_Dash_Manager.Functions;
-using OVR_Dash_Manager.Functions.Dashes;
-using OVR_Dash_Manager.Functions.Oculus;
 
 // Disable the warning.
 #pragma warning disable SYSLIB0014

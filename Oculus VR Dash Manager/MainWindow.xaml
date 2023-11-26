@@ -9,9 +9,8 @@
     Height="505"
     Closing="Window_Closing"
     Loaded="Window_Loaded"
-    ResizeMode="NoResize"
+    ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
-    WindowStyle="None"
     mc:Ignorable="d">
 
     <Window.Resources>
@@ -45,43 +44,6 @@
     </Window.Resources>
 
     <Grid>
-        <!--  Custom Title Bar  -->
-        <Border
-            Height="30"
-            VerticalAlignment="Top"
-            Background="Gray"
-            MouseLeftButtonDown="Border_MouseLeftButtonDown">
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <!--  Custom Minimize Button  -->
-                <Button
-                    Width="30"
-                    Height="30"
-                    Padding="0"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    Background="Gray"
-                    Click="MinimizeButton_Click">
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontFamily="Arial"
-                        FontSize="22"
-                        Text="-" />
-                </Button>
-                <!--  Custom Close Button  -->
-                <Button
-                    Width="30"
-                    Height="30"
-                    Padding="0"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    Background="Gray"
-                    Click="CloseButton_Click">
-                    X
-                </Button>
-            </StackPanel>
-        </Border>
-
         <!--  Main content grid  -->
         <Grid Height="465" Background="#FF212121">
             <!--  Content goes here  -->

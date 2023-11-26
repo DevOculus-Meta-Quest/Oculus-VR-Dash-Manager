@@ -67,34 +67,13 @@ namespace OVR_Dash_Manager
             Topmost = Properties.Settings.Default.AlwaysOnTop;
         }
 
-        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        private void OnWindowStateChanged(object sender, EventArgs e)
         {
-            // Check if the Minimize to System Tray setting is enabled
-            if (Properties.Settings.Default.MinToTray)
+            if (this.WindowState == WindowState.Minimized)
             {
-                // Use the WindowManager to minimize to the system tray
+                // Call the MinimizeToTray method from your WindowManager
+                // Assuming you have an instance of WindowManager in your MainWindow
                 windowManager.MinimizeToTray();
-            }
-            else
-            {
-                // If the setting is not enabled, just minimize normally
-                WindowState = WindowState.Minimized;
-            }
-        }
-
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Check if the Minimize to System Tray setting is enabled
-            if (Properties.Settings.Default.MinToTray)
-            {
-                // Use the WindowManager to minimize to the system tray
-                windowManager.MinimizeToTray();
-                // Optionally, you can cancel the close event here if needed
-            }
-            else
-            {
-                // If the setting is not enabled, close the application normally
-                Close();
             }
         }
 

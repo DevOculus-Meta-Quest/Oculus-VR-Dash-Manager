@@ -149,10 +149,12 @@
             IsEnabled="False" />
         <Button
             x:Name="btn_TestSteam"
+            Grid.Column="1"
             Margin="49,181,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Test Steam" Click="btn_TestSteam_Click" Grid.Column="1" />
+            Click="btn_TestSteam_Click"
+            Content="Test Steam" />
         <Button
             x:Name="btn_OculusView"
             Grid.ColumnSpan="2"

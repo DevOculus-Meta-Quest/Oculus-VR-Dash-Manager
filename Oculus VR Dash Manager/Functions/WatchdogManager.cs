@@ -7,7 +7,7 @@ namespace OVR_Dash_Manager.Functions
 {
     public static class WatchdogManager
     {
-        static Timer _watchdogTimer;
+        private static Timer _watchdogTimer;
 
         public static void StartWatchdog()
         {
@@ -15,7 +15,7 @@ namespace OVR_Dash_Manager.Functions
             _watchdogTimer = new Timer(CheckIfApplicationIsResponding, null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1));
         }
 
-        static void CheckIfApplicationIsResponding(object state)
+        private static void CheckIfApplicationIsResponding(object state)
         {
             // Get the current process
             var currentProcess = Process.GetCurrentProcess();
@@ -28,7 +28,7 @@ namespace OVR_Dash_Manager.Functions
             }
         }
 
-        static void RestartApplication()
+        private static void RestartApplication()
         {
             // Your restart logic here
             // Example: Restart the application

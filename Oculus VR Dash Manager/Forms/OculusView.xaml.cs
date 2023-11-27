@@ -1,4 +1,4 @@
-﻿using OVR_Dash_Manager.Functions;
+﻿using OVR_Dash_Manager.Functions.Oculus;
 using System;
 using System.Windows;
 
@@ -6,7 +6,7 @@ namespace OVR_Dash_Manager.Forms
 {
     public partial class OculusView : Window
     {
-        OculusControllerHandler _oculusHandler;
+        private OculusControllerHandler _oculusHandler;
 
         public OculusView()
         {
@@ -17,7 +17,7 @@ namespace OVR_Dash_Manager.Forms
             Loaded += (s, e) => StartMonitoringController();
         }
 
-        void UpdateListView(string message)
+        private void UpdateListView(string message)
         {
             oculusInfoListView.Items.Add(new { Information = message });
         }

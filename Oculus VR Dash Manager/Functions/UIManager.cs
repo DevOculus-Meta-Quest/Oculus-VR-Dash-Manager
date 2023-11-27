@@ -1,12 +1,15 @@
-﻿using System;
+﻿using OVR_Dash_Manager.Functions.Oculus;
+using OVR_Dash_Manager.Functions.Steam;
+using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace OVR_Dash_Manager.Functions
 {
     public class UIManager
     {
-        MainWindow _window;
+        private MainWindow _window;
 
         public UIManager(MainWindow window) => _window = window;
 
@@ -24,6 +27,24 @@ namespace OVR_Dash_Manager.Functions
                     // Set the main window back to topmost
                     _window.Topmost = true;
                 });
+        }
+
+        public void ShowFrameworkNotInstalledWarning(string missingFrameworks)
+        {
+            _window.Dispatcher.Invoke(() =>
+            {
+                // Temporarily set the main window to not be topmost
+                _window.Topmost = false;
+
+                MessageBox.Show(_window,
+                    $"The following .NET Frameworks are not installed: {missingFrameworks}. " +
+                    "Please install the required frameworks to ensure all features work correctly.\n\n" +
+                    "Download from: https://dotnet.microsoft.com/download/dotnet",
+                    "Framework Missing", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                // Set the main window back to topmost
+                _window.Topmost = true;
+            });
         }
 
         public void NotifyNotElevated()
@@ -134,11 +155,11 @@ namespace OVR_Dash_Manager.Functions
             _window.Dispatcher
                 .Invoke(() =>
                                                 {
-                                                    if (Software.Oculus.Oculus_Is_Installed)
+                                                    if (OculusRunning.Oculus_Is_Installed)
                                                     {
-                                                        if (Directory.Exists(Software.Oculus.Oculus_Dash_Directory))
+                                                        if (Directory.Exists(OculusRunning.Oculus_Dash_Directory))
                                                         {
-                                                            Functions_Old.ShowFileInDirectory(Software.Oculus.Oculus_Dash_Directory);
+                                                            FileExplorerUtilities.ShowFileInDirectory(OculusRunning.Oculus_Dash_Directory);
                                                         }
                                                         else
                                                         {
@@ -150,6 +171,22 @@ namespace OVR_Dash_Manager.Functions
                                                         // Optionally: Handle the case where Oculus is not installed
                                                     }
                                                 });
+        }
+
+        public static void DoAction(Window form, Action doAction)
+        {
+            if (form == null || doAction == null)
+                throw new ArgumentNullException(form == null ? nameof(form) : nameof(doAction));
+
+            try
+            {
+                form.Dispatcher.Invoke(doAction, DispatcherPriority.Normal);
+            }
+            catch (Exception ex)
+            {
+                // Log error and handle as per your application's policy
+                ErrorLogger.LogError(ex, "Error performing UI action.");
+            }
         }
 
         // ... Add other UI management methods as needed ...

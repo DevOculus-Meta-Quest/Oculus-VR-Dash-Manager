@@ -19,9 +19,9 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
     /// </summary>
     public partial class frm_ProfileManager : Window
     {
-        Github github;
-        OculusDebugToolFunctions oculusDebugToolFunctions;
-        readonly frm_ProfileManager profileManager; // Moved outside of the constructor
+        private Github github;
+        private OculusDebugToolFunctions oculusDebugToolFunctions;
+        private readonly frm_ProfileManager profileManager; // Moved outside of the constructor
 
         public frm_ProfileManager()
         {
@@ -32,7 +32,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             LoadScriptsAsync();
         }
 
-        void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -40,11 +40,11 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 }), System.Windows.Threading.DispatcherPriority.ContextIdle);
         }
 
-        void LoadRegistrySettings()
+        private void LoadRegistrySettings()
         {
             var keyLocation = @"Software\Oculus\RemoteHeadset";
 
-            using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+            using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
             {
                 if (key != null)
                 {
@@ -98,7 +98,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void SetComboBoxSelection(ComboBox comboBox, string registryValue)
+        private void SetComboBoxSelection(ComboBox comboBox, string registryValue)
         {
             var valueToSelect = registryValue;
 
@@ -182,7 +182,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        async void LoadScriptsAsync()
+        private async void LoadScriptsAsync()
         {
             try
             {
@@ -196,7 +196,6 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 foreach (var file in files)
                     scriptsListView.Items.Add(file.name);
                 // Assuming each file object has a 'name' property
-
             }
             catch (HttpRequestException httpEx)
             {
@@ -218,9 +217,9 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             // Add other necessary properties here
         }
 
-        void RefreshButton_Click(object sender, RoutedEventArgs e) => LoadScriptsAsync();
+        private void RefreshButton_Click(object sender, RoutedEventArgs e) => LoadScriptsAsync();
 
-        async void scriptsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private async void scriptsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var selectedItem = scriptsListView.SelectedItem as string;
 
@@ -280,11 +279,11 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        async void btnExecuteCommand_Click(object sender, EventArgs e)
+        private async void btnExecuteCommand_Click(object sender, EventArgs e)
         {
         }
 
-        void ProfileManagerHelp_Click(object sender, RoutedEventArgs e)
+        private void ProfileManagerHelp_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of the ProfileManagerHelp window
             var helpWindow = new Profile_Manager.ProfileManagerHelp();
@@ -296,7 +295,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             helpWindow.ShowDialog();
         }
 
-        void cb_DistortionCurvature_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cb_DistortionCurvature_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             // Check if SelectedItem is not null before accessing its Content
@@ -307,8 +306,8 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 var keyLocation = @"Software\Oculus\RemoteHeadset";
                 var keyName = "DistortionCurve";
 
-                // Use the RegistryFunctions to interact with the registry
-                using (var key = RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                // Use the RegistryManager to interact with the registry
+                using (var key = RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                 {
                     if (key != null)
                     {
@@ -316,12 +315,12 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         {
                             case "Low":
                                 // Set the value to 0 for Low
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
                                 break;
 
                             case "High":
                                 // Set the value to 1 for High
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
                                 break;
 
                             case "Default":
@@ -343,7 +342,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         // This depends on the application's requirements and permissions
                         try
                         {
-                            var newKey = RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
+                            var newKey = RegistryManager.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
 
                             if (newKey != null)
                             {
@@ -371,7 +370,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void cb_VideoCodec_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cb_VideoCodec_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             // Check if SelectedItem is not null before accessing its Content
@@ -382,8 +381,8 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 var keyLocation = @"Software\Oculus\RemoteHeadset";
                 var keyName = "HEVC";
 
-                // Use the RegistryFunctions to interact with the registry
-                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                // Use the RegistryManager to interact with the registry
+                using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                 {
                     if (key != null)
                     {
@@ -396,12 +395,12 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
                             case "H.264":
                                 // Set the value to 0 for H.264
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
                                 break;
 
                             case "H.265":
                                 // Set the value to 1 for H.265
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
                                 break;
 
                             default:
@@ -419,7 +418,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         // This depends on the application's requirements and permissions
                         try
                         {
-                            var newKey = OVR_Dash_Manager.Functions.RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
+                            var newKey = OVR_Dash_Manager.Functions.RegistryManager.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
 
                             if (newKey != null)
                             {
@@ -447,7 +446,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void cb_slicedEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cb_slicedEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             // Check if SelectedItem is not null before accessing its Content
@@ -458,8 +457,8 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 var keyLocation = @"Software\Oculus\RemoteHeadset";
                 var keyName = "NumSlices";
 
-                // Use the RegistryFunctions to interact with the registry
-                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                // Use the RegistryManager to interact with the registry
+                using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                 {
                     if (key != null)
                     {
@@ -472,12 +471,12 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
                             case "On":
                                 // Set the value to 5 for On
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 5, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 5, RegistryValueKind.DWord);
                                 break;
 
                             case "Off":
                                 // Set the value to 1 for Off
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
                                 break;
 
                             default:
@@ -495,7 +494,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                         // This depends on the application's requirements and permissions
                         try
                         {
-                            var newKey = OVR_Dash_Manager.Functions.RegistryFunctions.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
+                            var newKey = OVR_Dash_Manager.Functions.RegistryManager.CreateRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation);
 
                             if (newKey != null)
                             {
@@ -523,7 +522,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void txt_EncodeResolutionWidth_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void txt_EncodeResolutionWidth_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // This regex will match any non-digit characters.
             var regex = new Regex("[^0-9]+");
@@ -539,7 +538,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void Txt_EncodeResolutionWidth_LostFocus(object sender, RoutedEventArgs e)
+        private void Txt_EncodeResolutionWidth_LostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
 
@@ -550,7 +549,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                     var keyLocation = @"Software\Oculus\RemoteHeadset";
                     var keyName = "EncodeWidth";
 
-                    using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                    using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                     {
                         if (key != null)
                         {
@@ -562,7 +561,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                             else if (value >= 1 && value <= 9999)
                             {
                                 // Set the value if it's within the valid range
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, value, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, value, RegistryValueKind.DWord);
                             }
                             // If the value is not numeric or not in range, do not update the registry.
                         }
@@ -580,7 +579,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void cb_EncodeDynamicBitrate_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cb_EncodeDynamicBitrate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             var keyLocation = @"Software\Oculus\RemoteHeadset";
@@ -596,7 +595,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                     selectedValue = selectedItem.Content.ToString();
                 }
 
-                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                 {
                     if (key != null)
                     {
@@ -609,12 +608,12 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
                             case "Enabled":
                                 // Set the key value to 1 if "Enabled" is selected
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 1, RegistryValueKind.DWord);
                                 break;
 
                             case "Disabled":
                                 // Set the key value to 0 if "Disabled" is selected
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, 0, RegistryValueKind.DWord);
                                 break;
 
                             default:
@@ -634,7 +633,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void txt_DynamicBitrateMax_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void txt_DynamicBitrateMax_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // This regex will match any non-digit characters.
             var regex = new Regex("[^0-9]+");
@@ -650,7 +649,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void Txt_DynamicBitrateMax_LostFocus(object sender, RoutedEventArgs e)
+        private void Txt_DynamicBitrateMax_LostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
 
@@ -661,7 +660,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
                 if (long.TryParse(textBox.Text, out long value))
                 {
-                    using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                    using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                     {
                         if (key != null)
                         {
@@ -677,7 +676,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                                 if (value <= int.MaxValue)
                                 {
                                     var newValue = (int)value;
-                                    OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, newValue, RegistryValueKind.DWord);
+                                    OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, newValue, RegistryValueKind.DWord);
                                 }
                                 else
                                 {
@@ -701,7 +700,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void txt_EncodeBitrate_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void txt_EncodeBitrate_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // This regex will match any non-digit characters.
             var regex = new Regex("[^0-9]+");
@@ -717,7 +716,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void Txt_EncodeBitrate_LostFocus(object sender, RoutedEventArgs e)
+        private void Txt_EncodeBitrate_LostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
 
@@ -728,7 +727,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
                 if (int.TryParse(textBox.Text, out int value))
                 {
-                    using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                    using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                     {
                         if (key != null)
                         {
@@ -740,7 +739,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                             else if (value > 0 && value <= 500)
                             {
                                 // Set the key value to the input value if it's within the valid range
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, value, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, value, RegistryValueKind.DWord);
                             }
                             // If the value is not in range, do not update the registry.
                         }
@@ -758,7 +757,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void txt_DynamicBitrateOffset_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void txt_DynamicBitrateOffset_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // This regex will match any non-digit characters.
             var regex = new Regex("[^0-9]+");
@@ -774,7 +773,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void Txt_DynamicBitrateOffset_LostFocus(object sender, RoutedEventArgs e)
+        private void Txt_DynamicBitrateOffset_LostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
 
@@ -785,7 +784,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
 
                 if (int.TryParse(textBox.Text, out int value))
                 {
-                    using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                    using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                     {
                         if (key != null)
                         {
@@ -797,7 +796,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                             else if (value > 0 && value <= 999999999)
                             {
                                 // Set the key value to the input value if it's within the valid range
-                                OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, value, RegistryValueKind.DWord);
+                                OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, value, RegistryValueKind.DWord);
                             }
                             // If the value is not in range, do not update the registry.
                         }
@@ -815,7 +814,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void cb_LinkSharpening_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cb_LinkSharpening_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             var keyLocation = @"Software\Oculus\RemoteHeadset";
@@ -835,11 +834,11 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 };
 
                 // Update the registry with the new value
-                using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                 {
                     if (key != null)
                     {
-                        var result = OVR_Dash_Manager.Functions.RegistryFunctions.SetKeyValue(key, keyName, valueToSet, RegistryValueKind.DWord); // Corrected line
+                        var result = OVR_Dash_Manager.Functions.RegistryManager.SetKeyValue(key, keyName, valueToSet, RegistryValueKind.DWord); // Corrected line
 
                         if (result)
                         {
@@ -867,7 +866,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void cb_LocalDimming_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cb_LocalDimming_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             var keyLocation = @"Software\Oculus\RemoteHeadset";
@@ -889,7 +888,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
                 if (valueToSet != null)
                 {
                     // Update the registry with the new value
-                    using (var key = OVR_Dash_Manager.Functions.RegistryFunctions.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
+                    using (var key = OVR_Dash_Manager.Functions.RegistryManager.GetRegistryKey(OVR_Dash_Manager.Functions.RegistryKeyType.CurrentUser, keyLocation))
                     {
                         if (key != null)
                         {
@@ -933,7 +932,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             }
         }
 
-        void btn_SteamApps_Click(object sender, RoutedEventArgs e)
+        private void btn_SteamApps_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of frm_SteamApps window
             var steamAppsWindow = new frm_SteamApps();
@@ -945,7 +944,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
             steamAppsWindow.Show();
         }
 
-        void btn_OculusApps_Click(object sender, RoutedEventArgs e)
+        private void btn_OculusApps_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of frm_SteamApps window
             var OculusAppsWindow = new frm_OculusApps();

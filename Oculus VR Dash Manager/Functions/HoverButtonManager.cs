@@ -1,4 +1,7 @@
-﻿using System;
+﻿using OVR_Dash_Manager.Functions;
+using OVR_Dash_Manager.Functions.Dashes;
+using OVR_Dash_Manager.Functions.Steam;
+using System;
 using System.Diagnostics;
 using System.Timers;
 using System.Windows;
@@ -8,10 +11,10 @@ namespace OVR_Dash_Manager
 {
     public class HoverButtonManager
     {
-        MainWindow _mainWindow;
-        ProgressBar _pbNormal;
-        ProgressBar _pbExit;
-        Action _activateDash;
+        private MainWindow _mainWindow;
+        private ProgressBar _pbNormal;
+        private ProgressBar _pbExit;
+        private Action _activateDash;
         public Hover_Button Oculus_Dash { get; private set; }
         public Hover_Button Exit_Link { get; private set; }
 
@@ -63,15 +66,15 @@ namespace OVR_Dash_Manager
             CheckHovering(Exit_Link);
         }
 
-        public void EnableHoverButton(Dashes.Dash_Type Dash)
+        public void EnableHoverButton(Dash_Type Dash)
         {
             switch (Dash)
             {
-                case Dashes.Dash_Type.Exit:
+                case Dash_Type.Exit:
                     Exit_Link.Enabled = true;
                     break;
 
-                case Dashes.Dash_Type.Normal:
+                case Dash_Type.Normal:
                     Oculus_Dash.Enabled = true;
                     break;
             }
@@ -119,7 +122,7 @@ namespace OVR_Dash_Manager
         public void ExitLinkHoverActivate()
         {
             Exit_Link.Bar.Value = 0;
-            Software.Steam.Close_SteamVR_ResetLink();
+            SteamRunning.Close_SteamVR_ResetLink();
         }
 
         public void UpdateDashButtons()
@@ -128,9 +131,9 @@ namespace OVR_Dash_Manager
             {
                 if (item is Button button)
                 {
-                    if (button.Tag is Dashes.Dash_Type Dash)
+                    if (button.Tag is Dash_Type Dash)
                     {
-                        var Enabled = Dashes.Dash_Manager.IsInstalled(Dash);
+                        var Enabled = Dash_Manager.IsInstalled(Dash);
                         button.IsEnabled = Enabled;
 
                         if (Enabled)
@@ -142,7 +145,7 @@ namespace OVR_Dash_Manager
             _mainWindow.btn_ExitOculusLink.IsEnabled = true;
         }
 
-        void CheckHovering(Hover_Button hoverButton)
+        private void CheckHovering(Hover_Button hoverButton)
         {
             try
             {
@@ -154,7 +157,7 @@ namespace OVR_Dash_Manager
                 // check if Steam_VR_Server_Running is false. If it is, exit the method early.
                 if (hoverButton.Check_SteamVR &&
                     !Properties.Settings.Default.Ignore_SteamVR_Status_HoverButtonAction &&
-                    !Software.Steam.Steam_VR_Server_Running)
+                    !SteamRunning.Steam_VR_Server_Running)
                     return;
 
                 // Calculate the time passed since hovering started.

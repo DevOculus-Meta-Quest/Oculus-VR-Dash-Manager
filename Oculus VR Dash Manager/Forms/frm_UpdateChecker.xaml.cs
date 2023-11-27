@@ -1,4 +1,9 @@
-﻿using System;
+﻿// Ignore Spelling: OVR frm
+
+using OVR_Dash_Manager.Functions;
+using OVR_Dash_Manager.Functions.Dashes;
+using OVR_Dash_Manager.Functions.Oculus;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -18,8 +23,6 @@ namespace OVR_Dash_Manager.Forms
     /// </summary>
     public partial class frm_UpdateChecker : Window
     {
-        GitHubReply GitHub;
-
         public frm_UpdateChecker() => InitializeComponent();
 
         public async Task<bool> CheckDashManagerUpdates()
@@ -34,7 +37,7 @@ namespace OVR_Dash_Manager.Forms
             return btn_DownloadLatestOculusKiller.IsEnabled; // Assuming the button is enabled only when an update is available
         }
 
-        async void btnDownloadLatestDashManager_Click(object sender, RoutedEventArgs e)
+        private async void btnDownloadLatestDashManager_Click(object sender, RoutedEventArgs e)
         {
             var Check = new Github();
 
@@ -71,23 +74,23 @@ namespace OVR_Dash_Manager.Forms
             }
         }
 
-        void btn_DashManager_OpenWebsite_Click(object sender, RoutedEventArgs e)
+        private void btn_DashManager_OpenWebsite_Click(object sender, RoutedEventArgs e)
         {
-            Functions_Old.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager");
+            WebUtilities.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager");
         }
 
-        void btn_OpenWebsite_Click(object sender, RoutedEventArgs e)
+        private void btn_OpenWebsite_Click(object sender, RoutedEventArgs e)
         {
-            Functions_Old.OpenURL("https://github.com/DevOculus-Meta-Quest/OculusKiller");
+            WebUtilities.OpenURL("https://github.com/DevOculus-Meta-Quest/OculusKiller");
         }
 
-        async Task CheckUpdates()
+        private async Task CheckUpdates()
         {
             await Check_DashManager_Update(btnDownloadLatestDashManager);
             await Check_Update();
         }
 
-        async void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             lbl_DashManager_LastCheck.Content = "Checking";
             lbl_LastCheck.Content = "Checking";
@@ -104,7 +107,7 @@ namespace OVR_Dash_Manager.Forms
             await CheckUpdates(); // This is the method for the other program
         }
 
-        async Task Check_DashManager_Update(Button downloadButton)
+        private async Task Check_DashManager_Update(Button downloadButton)
         {
             var Check = new Github();
             var Version = await Check.GetLatestReleaseNameAsync("DevOculus-Meta-Quest", "Oculus-VR-Dash-Manager");
@@ -114,7 +117,7 @@ namespace OVR_Dash_Manager.Forms
 
             var CurrentVersion = typeof(MainWindow).Assembly.GetName().Version.ToString();
 
-            Functions_Old.DoAction(this, new Action(delegate ()
+            UIManager.DoAction(this, new Action(delegate ()
             {
                 lbl_DashManager_LastCheck.Content = DateTime.Now.ToString();
                 lbl_DashManager_CurrentVersion.Content = CurrentVersion;
@@ -128,7 +131,7 @@ namespace OVR_Dash_Manager.Forms
             }));
         }
 
-        bool IsNewVersion(string newVersion, string currentVersion)
+        private bool IsNewVersion(string newVersion, string currentVersion)
         {
             var newVersionParts = newVersion.Split('.');
             var currentVersionParts = currentVersion.Split('.');
@@ -151,7 +154,7 @@ namespace OVR_Dash_Manager.Forms
             return newVersionParts.Length > currentVersionParts.Length;
         }
 
-        async Task Check_Update()
+        private async Task Check_Update()
         {
             var Check = new Github();
             var Version = await Check.GetLatestReleaseNameAsync("DevOculus-Meta-Quest", "OculusKiller");
@@ -159,22 +162,22 @@ namespace OVR_Dash_Manager.Forms
             // Remove non-numeric characters except the dot from the version string
             Version = Regex.Replace(Version, @"[^\d.]", "");
 
-            var OculusKillerMod = Dashes.Dash_Manager.GetDash(Dashes.Dash_Type.OculusKiller);
+            var OculusKillerMod = Dash_Manager.GetDash(Dash_Type.OculusKiller);
 
             if (OculusKillerMod != null && OculusKillerMod.Installed)
             {
                 // Ensure this path correctly points to the OculusKiller executable
-                var Info = FileVersionInfo.GetVersionInfo(Path.Combine(Software.Oculus.Oculus_Dash_Directory, OculusKillerMod.DashFileName));
+                var Info = FileVersionInfo.GetVersionInfo(Path.Combine(OculusRunning.Oculus_Dash_Directory, OculusKillerMod.DashFileName));
 
                 // Using FileVersion to get the version information
-                Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = Info.FileVersion; }));
+                UIManager.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = Info.FileVersion; }));
             }
             else
             {
-                Functions_Old.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = "Not Available"; }));
+                UIManager.DoAction(this, new Action(delegate () { lbl_CurrentVersion.Content = "Not Available"; }));
             }
 
-            Functions_Old.DoAction(this, new Action(delegate ()
+            UIManager.DoAction(this, new Action(delegate ()
             {
                 lbl_LastCheck.Content = DateTime.Now.ToString();
                 lbl_AvaliableVersion.Content = Version;
@@ -187,7 +190,7 @@ namespace OVR_Dash_Manager.Forms
             }));
         }
 
-        async void btn_DownloadLatestOculusKiller_Click(object sender, RoutedEventArgs e)
+        private async void btn_DownloadLatestOculusKiller_Click(object sender, RoutedEventArgs e)
         {
             var Check = new Github();
             var gitHubReply = await Check.GetLatestReleaseInfoAsync("DevOculus-Meta-Quest", "OculusKiller");

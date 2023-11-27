@@ -12,8 +12,8 @@ namespace OculusVRDashManager.Functions
 {
     public class WindowManager
     {
-        TaskbarIcon notifyIcon;
-        Window managedWindow; // The window that this WindowManager is managing
+        private TaskbarIcon notifyIcon;
+        private Window managedWindow; // The window that this WindowManager is managing
 
         public WindowManager(Window window)
         {
@@ -61,6 +61,18 @@ namespace OculusVRDashManager.Functions
             notifyIcon.ContextMenu = contextMenu;
 
             notifyIcon.TrayMouseDoubleClick += (sender, args) => ShowWindow();
+
+            // Subscribe to the StateChanged event
+            managedWindow.StateChanged += ManagedWindow_StateChanged;
+        }
+
+        private void ManagedWindow_StateChanged(object sender, EventArgs e)
+        {
+            // Check if the window was minimized
+            if (managedWindow.WindowState == WindowState.Minimized)
+            {
+                MinimizeToTray();
+            }
         }
 
         public void Minimize()

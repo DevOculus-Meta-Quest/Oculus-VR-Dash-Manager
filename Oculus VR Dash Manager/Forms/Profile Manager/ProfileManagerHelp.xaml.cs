@@ -9,7 +9,7 @@ namespace OVR_Dash_Manager.Forms.Profile_Manager
     {
         public ProfileManagerHelp() => InitializeComponent();
 
-        void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
             var psi = new System.Diagnostics.ProcessStartInfo
             {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OVR_Dash_Manager.Functions
 {
-    class VdfParser
+    internal class VdfParser
     {
         public Dictionary<string, object> ParseVdf(string filePath)
         {
@@ -14,7 +14,6 @@ namespace OVR_Dash_Manager.Functions
                 using (FileStream fs = new FileStream(filePath, FileMode.Open))
                 using (BinaryReader br = new BinaryReader(fs))
                     return ReadNextObject(br);
-                
             }
             catch (Exception ex)
             {
@@ -23,7 +22,7 @@ namespace OVR_Dash_Manager.Functions
             }
         }
 
-        Dictionary<string, object> ReadNextObject(BinaryReader br)
+        private Dictionary<string, object> ReadNextObject(BinaryReader br)
         {
             var result = new Dictionary<string, object>();
 
@@ -62,7 +61,7 @@ namespace OVR_Dash_Manager.Functions
             return result;
         }
 
-        string ReadString(BinaryReader br)
+        private string ReadString(BinaryReader br)
         {
             var bytes = new List<byte>();
 
@@ -98,7 +97,7 @@ namespace OVR_Dash_Manager.Functions
         }
     }
 
-    class ShortcutInfo
+    internal class ShortcutInfo
     {
         public string AppName { get; set; }
         public string Exe { get; set; }

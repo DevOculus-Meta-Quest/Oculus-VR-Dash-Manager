@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using OVR_Dash_Manager.Functions;
+using System.Linq;
 using System.Windows;
 
 namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
@@ -9,50 +10,50 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
     public partial class frm_Auto_Program_Launch_Settings : Window
     {
         // Flag to track if any programs were removed during the session
-        bool Programs_Removed;
+        private bool Programs_Removed;
 
         public frm_Auto_Program_Launch_Settings() => InitializeComponent();
 
         // Event handler for adding a program
-        void btn_Add_Program_Click(object sender, RoutedEventArgs e)
+        private void btn_Add_Program_Click(object sender, RoutedEventArgs e)
         {
             // Open a file dialog and get the selected file path
-            var FilePath = Functions.FileBrowser.OpenSingle();
+            var FilePath = Functions.FileExplorerUtilities.OpenSingle();
 
             // If a file was selected, add it to the program list and refresh the UI
             if (!string.IsNullOrEmpty(FilePath))
             {
-                Software.Auto_Launch_Programs.Add_New_Program(FilePath);
+                Auto_Launch_Programs.Add_New_Program(FilePath);
                 lv_Programs.Items.Refresh();
             }
         }
 
         // Event handler for removing a program
-        void btn_Remove_Program_Click(object sender, RoutedEventArgs e)
+        private void btn_Remove_Program_Click(object sender, RoutedEventArgs e)
         {
             // Check if a program is selected in the UI
-            if (lv_Programs.SelectedItem is Software.Auto_Program Program)
+            if (lv_Programs.SelectedItem is Auto_Program Program)
             {
                 Programs_Removed = true;
-                Software.Auto_Launch_Programs.Remove_Program(Program);
+                Auto_Launch_Programs.Remove_Program(Program);
                 lv_Programs.Items.Refresh();
             }
         }
 
         // Event handler for window load event
-        void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Bind the program list to the UI and refresh
-            lv_Programs.ItemsSource = Software.Auto_Launch_Programs.Programs;
+            lv_Programs.ItemsSource = Auto_Launch_Programs.Programs;
             lv_Programs.Items.Refresh();
         }
 
         // Event handler for window closing event
-        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // Check if any programs were removed or changed during the session
             var Changed = Programs_Removed ||
-                           (Software.Auto_Launch_Programs.Programs?.Any(p => p.Changed) == true);
+                           (Auto_Launch_Programs.Programs?.Any(p => p.Changed) == true);
 
             // If changes were made, confirm with the user whether to save them
             if (Changed)
@@ -64,24 +65,24 @@ namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
                                     MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     // Save the changes
-                    Software.Auto_Launch_Programs.Save_Program_List();
+                    Auto_Launch_Programs.Save_Program_List();
                 }
                 else
                 {
                     // Discard the changes
-                    Software.Auto_Launch_Programs.Generate_List();
+                    Auto_Launch_Programs.Generate_List();
                 }
             }
         }
 
         // Event handler for opening the program folder
-        void btn_Open_Program_Folder_Click(object sender, RoutedEventArgs e)
+        private void btn_Open_Program_Folder_Click(object sender, RoutedEventArgs e)
         {
             // Check if a program is selected in the UI
-            if (lv_Programs.SelectedItem is Software.Auto_Program Program)
+            if (lv_Programs.SelectedItem is Auto_Program Program)
             {
                 // Open the program's folder in File Explorer
-                Functions.Process_Functions.StartProcess("explorer.exe", Program.Folder_Path);
+                Functions.ProcessFunctions.StartProcess("explorer.exe", Program.Folder_Path);
             }
         }
     }

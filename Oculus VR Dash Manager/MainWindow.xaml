@@ -1,8 +1,8 @@
 ﻿<Window
     x:Class="OVR_Dash_Manager.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Oculus VR Dash Manager"
     Width="855"
@@ -91,6 +91,7 @@
                 VerticalAlignment="Top"
                 Header="VR-Dashes">
                 <Grid x:Name="gd_DashButtons">
+                    <!--  Normal Button  -->
                     <Button
                         x:Name="btn_Normal"
                         Width="230"
@@ -101,34 +102,28 @@
                         Content="Official Dash&#10;&#10;(SteamVR)&#10;Hover to activate"
                         MouseEnter="btn_Normal_MouseEnter"
                         MouseLeave="btn_Normal_MouseLeave" />
+                    <!--  ProgressBar for Normal Button  -->
                     <ProgressBar
                         x:Name="pb_Normal"
                         Width="230"
                         Height="23"
+                        Margin="0,0,0,23"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
                         Maximum="5000"
+                        Opacity="0"
                         SmallChange="10" />
-                    <Label
-                        x:Name="lbl_ItsKaitlyn03"
-                        Width="210"
-                        Height="32"
-                        Margin="276,0,0,-4"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Bottom"
-                        HorizontalContentAlignment="Right"
-                        VerticalContentAlignment="Bottom"
-                        Content="Visit Oculus Killer (Github)"
-                        Cursor="Hand"
-                        FontSize="12"
-                        PreviewMouseDown="lbl_PreviewMouseDown" />
+
+                    <!--  OculusKiller Button  -->
                     <Button
                         x:Name="btn_SteamVR"
                         Width="196"
                         Margin="0,0,0,23"
                         HorizontalAlignment="Center"
                         Click="btn_ActivateDash_Click"
-                        Content="          OculusKiller&#xA;&#xA;     (SteamVR Mode Only)" />
+                        Content="OculusKiller&#xA;&#xA;(SteamVR Mode Only)" />
+
+                    <!--  Exit Button  -->
                     <Button
                         x:Name="btn_ExitOculusLink"
                         Width="230"
@@ -138,14 +133,19 @@
                         Content="Exit Link&#10;&#10;(SteamVR)&#10;Hover to activate"
                         MouseEnter="btn_ExitOculusLink_MouseEnter"
                         MouseLeave="btn_ExitOculusLink_MouseLeave" />
+                    <!--  ProgressBar for Exit Button  -->
                     <ProgressBar
                         x:Name="pb_Exit"
                         Width="230"
                         Height="23"
+                        Margin="0,0,0,23"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         Maximum="5000"
+                        Opacity="0"
                         SmallChange="10" />
+
+                    <!--  Other elements...  -->
                 </Grid>
             </GroupBox>
             <Button

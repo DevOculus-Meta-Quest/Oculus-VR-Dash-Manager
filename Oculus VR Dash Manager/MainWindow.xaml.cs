@@ -13,6 +13,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WindowsInput;
 using WindowsInput.Native;
@@ -459,24 +460,58 @@ namespace OVR_Dash_Manager
 
         #region Hover Buttons Enter/Leave
 
+        // Event handler for mouse enter event on the 'Exit Oculus Link' button.
         private void btn_ExitOculusLink_MouseEnter(object sender, MouseEventArgs e)
         {
-            _hoverButtonManager.Exit_Link.SetHovering();
+            FadeInProgressBar(pb_Exit); // Fade in the progress bar for the 'Exit Oculus Link' button.
+            _hoverButtonManager.Exit_Link.SetHovering(); // Notifies the hover button manager that the 'Exit Oculus Link' button is being hovered over.
         }
 
+        // Event handler for mouse leave event on the 'Exit Oculus Link' button.
         private void btn_ExitOculusLink_MouseLeave(object sender, MouseEventArgs e)
         {
-            _hoverButtonManager.Exit_Link.StopHovering();
+            FadeOutProgressBar(pb_Exit); // Fade out the progress bar for the 'Exit Oculus Link' button.
+            _hoverButtonManager.Exit_Link.StopHovering(); // Notifies the hover button manager that the mouse is no longer hovering over the 'Exit Oculus Link' button.
         }
 
+        // Event handler for mouse enter event on the 'Normal' button.
         private void btn_Normal_MouseEnter(object sender, MouseEventArgs e)
         {
-            _hoverButtonManager.Oculus_Dash.SetHovering();
+            FadeInProgressBar(pb_Normal); // Fade in the progress bar for the 'Normal' button.
+            _hoverButtonManager.Oculus_Dash.SetHovering(); // Notifies the hover button manager that the 'Normal' button is being hovered over.
         }
 
+        // Event handler for mouse leave event on the 'Normal' button.
         private void btn_Normal_MouseLeave(object sender, MouseEventArgs e)
         {
-            _hoverButtonManager.Oculus_Dash.StopHovering();
+            FadeOutProgressBar(pb_Normal); // Fade out the progress bar for the 'Normal' button.
+            _hoverButtonManager.Oculus_Dash.StopHovering(); // Notifies the hover button manager that the mouse is no longer hovering over the 'Normal' button.
+        }
+
+        // Method to start the fade-in animation for a specific progress bar.
+        private void FadeInProgressBar(ProgressBar progressBar)
+        {
+            DoubleAnimation fadeInAnimation = new DoubleAnimation
+            {
+                From = 0, // The starting opacity (completely transparent).
+                To = 1, // The ending opacity (completely opaque).
+                Duration = TimeSpan.FromSeconds(0.5) // The duration of the animation (0.5 seconds).
+            };
+            // Applies the animation to the specified progress bar's opacity property.
+            progressBar.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+        }
+
+        // Method to start the fade-out animation for a specific progress bar.
+        private void FadeOutProgressBar(ProgressBar progressBar)
+        {
+            DoubleAnimation fadeOutAnimation = new DoubleAnimation
+            {
+                From = 1, // The starting opacity (completely opaque).
+                To = 0, // The ending opacity (completely transparent).
+                Duration = TimeSpan.FromSeconds(0.5) // The duration of the animation (0.5 seconds).
+            };
+            // Applies the animation to the specified progress bar's opacity property.
+            progressBar.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
         }
 
         #endregion Hover Buttons Enter/Leave

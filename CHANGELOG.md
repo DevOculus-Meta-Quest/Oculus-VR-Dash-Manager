@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.8.0.0](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/tree/v1.8.0.0) (2023-11-27)
+
+[Full Changelog](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/compare/v1.7.0.1...v1.8.0.0)
+
 ## [v1.7.0.1](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/tree/v1.7.0.1) (2023-11-15)
 
 [Full Changelog](https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager/compare/v1.7.0.0...v1.7.0.1)

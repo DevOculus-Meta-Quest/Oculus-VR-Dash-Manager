@@ -524,20 +524,6 @@ namespace OVR_Dash_Manager
 
         #endregion Dash Buttons
 
-        #region URL Links
-
-        private void lbl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            WebUtilities.OpenURL("https://github.com/DevOculus-Meta-Quest/OculusKiller");
-        }
-
-        private void lbl_Title_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            WebUtilities.OpenURL("https://github.com/DevOculus-Meta-Quest/Oculus-VR-Dash-Manager");
-        }
-
-        #endregion URL Links
-
         #region Dynamic Functions
 
         private void ActivateDash(Button Clicked)

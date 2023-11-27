@@ -58,8 +58,7 @@
                 Cursor="Hand"
                 FontFamily="Copperplate Gothic Bold"
                 FontSize="36"
-                FontWeight="Bold"
-                PreviewMouseDown="lbl_Title_PreviewMouseDown">
+                FontWeight="Bold">
                 <Label.Foreground>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                         <GradientStop Color="Black" />

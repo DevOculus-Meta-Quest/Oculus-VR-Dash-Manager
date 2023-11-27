@@ -1,9 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.ServiceProcess;
-using OVR_Dash_Manager.Functions;
-
-namespace OVR_Dash_Manager.Functions.Dashes
+﻿namespace OVR_Dash_Manager.Functions.Dashes
 {
     public static class UtilityFunctions
     {
@@ -17,5 +12,4 @@ namespace OVR_Dash_Manager.Functions.Dashes
             return oculusDash?.Installed ?? false;
         }
     }
-
 }

@@ -3,10 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace OVR_Dash_Manager.Functions.Steam
 {
@@ -65,7 +62,7 @@ namespace OVR_Dash_Manager.Functions.Steam
             }
         }
 
-        static string GetSteamPath()
+        private static string GetSteamPath()
         {
             string registryKeyPath = @"SOFTWARE\WOW6432Node\Valve\Steam";
             string registryValueName = "InstallPath";

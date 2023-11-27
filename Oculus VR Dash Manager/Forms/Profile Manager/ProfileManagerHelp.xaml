@@ -1,8 +1,8 @@
 ﻿<Window
     x:Class="OVR_Dash_Manager.Forms.Profile_Manager.ProfileManagerHelp"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Profile Manager Help"
     Width="800"
@@ -37,13 +37,13 @@
                 <Bold>🔹 Contribute Your Scripts:</Bold>
                 <LineBreak />
                 If you wish to contribute your own scripts or explore the existing ones, feel free to visit our GitHub repository:<Hyperlink
-                           Foreground="DodgerBlue"
-                           NavigateUri="https://github.com/DevOculus-Meta-Quest/OVRDM-Profile-Scripts"
-                           RequestNavigate="Hyperlink_RequestNavigate">
+                    Foreground="DodgerBlue"
+                    NavigateUri="https://github.com/DevOculus-Meta-Quest/OVRDM-Profile-Scripts"
+                    RequestNavigate="Hyperlink_RequestNavigate">
                     OVRDM-Profile-Scripts
                 </Hyperlink>
                 . You can create pull requests to add your own scripts if you wish to contribute.
-            Utilize the Profile Manager to effortlessly apply sophisticated scripts, optimize your settings, and immerse yourself in a refined and enriched virtual reality experience.</TextBlock>
+                Utilize the Profile Manager to effortlessly apply sophisticated scripts, optimize your settings, and immerse yourself in a refined and enriched virtual reality experience.</TextBlock>
         </ScrollViewer>
     </Grid>
 </Window>

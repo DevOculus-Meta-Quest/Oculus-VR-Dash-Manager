@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using OVR_Dash_Manager.Functions;
+using System.Linq;
 using System.Windows;
-using OVR_Dash_Manager.Functions;
 
 namespace OVR_Dash_Manager.Forms.Auto_Program_Launch
 {

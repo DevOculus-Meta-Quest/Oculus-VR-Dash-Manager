@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using OVR_Dash_Manager.Functions;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using OVR_Dash_Manager.Functions;
 
 namespace OVR_Dash_Manager.Forms.Settings
 {

@@ -1,11 +1,10 @@
-﻿using System;
+﻿using OVR_Dash_Manager.Functions.Oculus;
+using OVR_Dash_Manager.Functions.Steam;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.ServiceProcess;
 using System.Threading.Tasks;
-using OVR_Dash_Manager.Functions;
-using OVR_Dash_Manager.Functions.Oculus;
-using OVR_Dash_Manager.Functions.Steam;
 
 namespace OVR_Dash_Manager.Functions.Dashes
 {

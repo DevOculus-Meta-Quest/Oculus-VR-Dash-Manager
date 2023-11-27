@@ -1,9 +1,9 @@
-﻿using System;
-using System.Timers;
-using System.Windows;
-using OVR_Dash_Manager.Functions;
+﻿using OVR_Dash_Manager.Functions;
 using OVR_Dash_Manager.Functions.Oculus;
 using OVR_Dash_Manager.Functions.Steam;
+using System;
+using System.Timers;
+using System.Windows;
 
 namespace OVR_Dash_Manager.Forms
 {

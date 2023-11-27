@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using OVR_Dash_Manager.Functions;
+﻿using OVR_Dash_Manager.Functions;
+using System.Windows;
 
 namespace OVR_Dash_Manager.Forms
 {

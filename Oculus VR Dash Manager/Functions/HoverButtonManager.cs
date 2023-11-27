@@ -1,11 +1,11 @@
-﻿using System;
+﻿using OVR_Dash_Manager.Functions;
+using OVR_Dash_Manager.Functions.Dashes;
+using OVR_Dash_Manager.Functions.Steam;
+using System;
 using System.Diagnostics;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using OVR_Dash_Manager.Functions;
-using OVR_Dash_Manager.Functions.Dashes;
-using OVR_Dash_Manager.Functions.Steam;
 
 namespace OVR_Dash_Manager
 {

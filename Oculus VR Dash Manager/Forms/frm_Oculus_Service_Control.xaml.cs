@@ -1,8 +1,8 @@
-﻿using System;
+﻿using OVR_Dash_Manager.Functions;
+using System;
 using System.ServiceProcess;
 using System.Timers;
 using System.Windows;
-using OVR_Dash_Manager.Functions;
 
 namespace OVR_Dash_Manager.Forms
 {

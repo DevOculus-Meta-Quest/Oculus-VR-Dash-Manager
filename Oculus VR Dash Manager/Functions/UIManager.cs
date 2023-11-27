@@ -1,9 +1,9 @@
-﻿using System;
+﻿using OVR_Dash_Manager.Functions.Oculus;
+using OVR_Dash_Manager.Functions.Steam;
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Threading;
-using OVR_Dash_Manager.Functions.Oculus;
-using OVR_Dash_Manager.Functions.Steam;
 
 namespace OVR_Dash_Manager.Functions
 {
